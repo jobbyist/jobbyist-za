@@ -5,7 +5,7 @@ import { Menu, X, User, LogOut, Shield } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { useAdmin } from "@/hooks/useAdmin";
-import logoImage from "@/assets/jobbyist-logo.jpeg";
+import logoImage from "@/assets/logo-header.jpeg";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

@@ -1,4 +1,4 @@
-import logoImage from "@/assets/jobbyist-logo.jpeg";
+import logoImage from "@/assets/logo-footer.jpeg";
 
 const Footer = () => {
   const footerLinks = {
@@ -23,7 +23,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-foreground text-background py-16">
+    <footer className="bg-black text-white py-16">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* Brand */}
@@ -31,13 +31,13 @@ const Footer = () => {
             <img 
               src={logoImage} 
               alt="Jobbyist" 
-              className="h-12 w-auto mb-4 brightness-0 invert"
+              className="h-12 w-auto mb-4"
             />
-            <p className="text-background/70 max-w-sm mb-6">
+            <p className="text-white/70 max-w-sm mb-6">
               Africa's premier job discovery and career management platform. 
               Connecting talent with opportunity across the continent.
             </p>
-            <p className="text-sm text-background/50">
+            <p className="text-sm text-white/50">
               © {new Date().getFullYear()} Jobbyist. All rights reserved.
             </p>
           </div>
@@ -51,7 +51,7 @@ const Footer = () => {
                   <li key={link.name}>
                     <a
                       href={link.href}
-                      className="text-sm text-background/70 hover:text-background transition-colors"
+                      className="text-sm text-white/70 hover:text-white transition-colors"
                     >
                       {link.name}
                     </a>
