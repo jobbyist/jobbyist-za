@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import Jobs from "./pages/Jobs";
+import CountryJobs from "./pages/CountryJobs";
 import JobDetail from "./pages/JobDetail";
 import WaitingList from "./pages/WaitingList";
 import AdminLayout from "./pages/admin/AdminLayout";
@@ -32,7 +33,8 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/jobs" element={<Jobs />} />
-            <Route path="/jobs/:jobId" element={<JobDetail />} />
+            <Route path="/jobs/:countryCode" element={<CountryJobs />} />
+            <Route path="/job/:jobId" element={<JobDetail />} />
             <Route path="/waiting-list/:countryCode" element={<WaitingList />} />
             
             {/* Admin Routes */}
