@@ -3,11 +3,12 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useJob } from '@/hooks/useJobs';
 import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
+import { useSavedJobs } from '@/hooks/useSavedJobs';
 import { supabase } from '@/integrations/supabase/client';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -24,6 +25,7 @@ import {
   ExternalLink,
   Share2,
   Bookmark,
+  BookmarkCheck,
   Users
 } from 'lucide-react';
 import { formatSalary, getCountryByCode, type CountryCode } from '@/lib/countries';
@@ -34,11 +36,22 @@ const JobDetail = () => {
   const { user } = useAuth();
   const { profile, canApplyToJobs } = useProfile();
   const { job, loading } = useJob(jobId);
+  const { isJobSaved, toggleSaveJob } = useSavedJobs();
   
   const [coverLetter, setCoverLetter] = useState('');
   const [isApplying, setIsApplying] = useState(false);
   const [showApplyDialog, setShowApplyDialog] = useState(false);
   const [hasApplied, setHasApplied] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleSaveJob = async () => {
+    if (!job) return;
+    setIsSaving(true);
+    await toggleSaveJob(job.id);
+    setIsSaving(false);
+  };
+
+  const saved = job ? isJobSaved(job.id) : false;
 
   const handleApply = async () => {
     if (!user || !job) return;
@@ -337,9 +350,18 @@ const JobDetail = () => {
                       <Share2 className="h-4 w-4 mr-2" />
                       Share
                     </Button>
-                    <Button variant="outline" className="flex-1">
-                      <Bookmark className="h-4 w-4 mr-2" />
-                      Save
+                    <Button 
+                      variant={saved ? "default" : "outline"} 
+                      className="flex-1" 
+                      onClick={handleSaveJob}
+                      disabled={isSaving}
+                    >
+                      {saved ? (
+                        <BookmarkCheck className="h-4 w-4 mr-2" />
+                      ) : (
+                        <Bookmark className="h-4 w-4 mr-2" />
+                      )}
+                      {saved ? 'Saved' : 'Save'}
                     </Button>
                   </div>
                 </CardContent>
