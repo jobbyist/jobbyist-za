@@ -1,20 +1,33 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Link } from "react-router-dom";
 
-const companies = [
-  { name: "Deloitte", location: "Global", initial: "D", color: "bg-green-500" },
-  { name: "Vodacom Group", location: "South Africa", initial: "V", color: "bg-red-500" },
-  { name: "Capitec Bank", location: "South Africa", initial: "C", color: "bg-blue-500" },
-  { name: "Amazon", location: "Global", initial: "A", color: "bg-orange-500" },
-  { name: "IBM", location: "Global", initial: "I", color: "bg-blue-600" },
-  { name: "Woolworths", location: "South Africa", initial: "W", color: "bg-purple-500" },
-  { name: "Shoprite", location: "South Africa", initial: "S", color: "bg-red-600" },
-  { name: "Standard Bank", location: "South Africa", initial: "S", color: "bg-blue-700" },
-  { name: "Discovery", location: "South Africa", initial: "D", color: "bg-teal-500" },
-  { name: "Takealot", location: "South Africa", initial: "T", color: "bg-blue-500" },
+const companyColors = [
+  "bg-black",
+  "bg-neutral-700",
+  "bg-neutral-600",
+  "bg-neutral-800",
+  "bg-neutral-500",
 ];
 
 const FeaturedCompanies = () => {
+  const { data: companies, isLoading } = useQuery({
+    queryKey: ['featured-companies'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('companies')
+        .select('*')
+        .eq('is_active', true)
+        .limit(10);
+      
+      if (error) throw error;
+      return data;
+    }
+  });
+
   return (
     <section id="companies" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
@@ -27,27 +40,51 @@ const FeaturedCompanies = () => {
 
         {/* Company grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-10">
-          {companies.map((company) => (
-            <div
-              key={company.name}
-              className="group bg-card rounded-xl p-6 border border-border hover:border-primary/20 hover:shadow-lg transition-all duration-300 cursor-pointer"
-            >
-              <div className={`w-12 h-12 ${company.color} rounded-lg flex items-center justify-center text-white font-bold text-xl mb-4 group-hover:scale-110 transition-transform`}>
-                {company.initial}
+          {isLoading ? (
+            Array(10).fill(0).map((_, i) => (
+              <div key={i} className="bg-card rounded-xl p-6 border border-border">
+                <Skeleton className="w-12 h-12 rounded-lg mb-4" />
+                <Skeleton className="h-4 w-24 mb-2" />
+                <Skeleton className="h-3 w-16" />
               </div>
-              <h3 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">
-                {company.name}
-              </h3>
-              <p className="text-xs text-muted-foreground">{company.location}</p>
+            ))
+          ) : companies && companies.length > 0 ? (
+            companies.map((company, index) => (
+              <div
+                key={company.id}
+                className="group bg-card rounded-xl p-6 border border-border hover:border-primary/20 hover:shadow-lg transition-all duration-300 cursor-pointer"
+              >
+                {company.logo_url ? (
+                  <img 
+                    src={company.logo_url} 
+                    alt={company.name}
+                    className="w-12 h-12 rounded-lg object-cover mb-4 group-hover:scale-110 transition-transform"
+                  />
+                ) : (
+                  <div className={`w-12 h-12 ${companyColors[index % companyColors.length]} rounded-lg flex items-center justify-center text-white font-bold text-xl mb-4 group-hover:scale-110 transition-transform`}>
+                    {company.name.charAt(0).toUpperCase()}
+                  </div>
+                )}
+                <h3 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">
+                  {company.name}
+                </h3>
+                <p className="text-xs text-muted-foreground">{company.location || company.country}</p>
+              </div>
+            ))
+          ) : (
+            <div className="col-span-full text-center py-12 text-muted-foreground">
+              No companies available yet. Check back soon!
             </div>
-          ))}
+          )}
         </div>
 
         <div className="text-center">
-          <Button variant="outline" className="group">
-            View All Companies
-            <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-          </Button>
+          <Link to="/jobs">
+            <Button variant="outline" className="group">
+              View All Companies
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
