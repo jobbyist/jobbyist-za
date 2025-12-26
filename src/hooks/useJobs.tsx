@@ -45,6 +45,8 @@ interface UseJobsOptions {
   jobType?: string;
   experienceLevel?: string;
   isRemote?: boolean;
+  salaryMin?: number;
+  salaryMax?: number;
   limit?: number;
 }
 
@@ -55,7 +57,7 @@ export function useJobs(options: UseJobsOptions = {}) {
 
   useEffect(() => {
     fetchJobs();
-  }, [options.country, options.search, options.jobType, options.experienceLevel, options.isRemote]);
+  }, [options.country, options.search, options.jobType, options.experienceLevel, options.isRemote, options.salaryMin, options.salaryMax]);
 
   const fetchJobs = async () => {
     try {
@@ -87,6 +89,14 @@ export function useJobs(options: UseJobsOptions = {}) {
 
       if (options.isRemote !== undefined) {
         query = query.eq('is_remote', options.isRemote);
+      }
+
+      if (options.salaryMin) {
+        query = query.gte('salary_max', options.salaryMin);
+      }
+
+      if (options.salaryMax) {
+        query = query.lte('salary_min', options.salaryMax);
       }
 
       if (options.limit) {

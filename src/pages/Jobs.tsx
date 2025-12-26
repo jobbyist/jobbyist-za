@@ -5,10 +5,11 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Slider } from '@/components/ui/slider';
 import { useJobs } from '@/hooks/useJobs';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import { Search, MapPin, Wifi, Briefcase, Clock, ArrowRight, Building2 } from 'lucide-react';
+import { Search, MapPin, Wifi, Briefcase, Clock, ArrowRight, Building2, DollarSign } from 'lucide-react';
 import { activeCountries, formatSalary, type CountryCode } from '@/lib/countries';
 
 const Jobs = () => {
@@ -20,6 +21,7 @@ const Jobs = () => {
   const [jobType, setJobType] = useState<string | undefined>(searchParams.get('type') || undefined);
   const [experienceLevel, setExperienceLevel] = useState<string | undefined>(searchParams.get('level') || undefined);
   const [isRemote, setIsRemote] = useState(searchParams.get('remote') === 'true');
+  const [salaryRange, setSalaryRange] = useState<[number, number]>([0, 200000]);
 
   const { jobs, loading } = useJobs({
     country,
@@ -27,6 +29,8 @@ const Jobs = () => {
     jobType: jobType === 'all' ? undefined : jobType,
     experienceLevel: experienceLevel === 'all' ? undefined : experienceLevel,
     isRemote: isRemote ? true : undefined,
+    salaryMin: salaryRange[0] > 0 ? salaryRange[0] : undefined,
+    salaryMax: salaryRange[1] < 200000 ? salaryRange[1] : undefined,
   });
 
   const handleSearch = (e: React.FormEvent) => {
@@ -104,12 +108,30 @@ const Jobs = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">All Levels</SelectItem>
-                    <SelectItem value="Entry">Entry Level</SelectItem>
-                    <SelectItem value="Mid">Mid Level</SelectItem>
+                    <SelectItem value="Entry Level">Entry Level</SelectItem>
+                    <SelectItem value="Mid Level">Mid Level</SelectItem>
                     <SelectItem value="Senior">Senior</SelectItem>
-                    <SelectItem value="Executive">Executive</SelectItem>
+                    <SelectItem value="Lead">Lead</SelectItem>
                   </SelectContent>
                 </Select>
+
+                <div className="flex items-center gap-2 flex-1 min-w-[200px]">
+                  <DollarSign className="h-4 w-4 text-muted-foreground" />
+                  <div className="flex-1">
+                    <Slider
+                      value={salaryRange}
+                      onValueChange={(value) => setSalaryRange(value as [number, number])}
+                      min={0}
+                      max={200000}
+                      step={5000}
+                      className="w-full"
+                    />
+                    <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                      <span>{salaryRange[0] > 0 ? `R${salaryRange[0].toLocaleString()}` : 'Any'}</span>
+                      <span>{salaryRange[1] < 200000 ? `R${salaryRange[1].toLocaleString()}` : 'Any'}</span>
+                    </div>
+                  </div>
+                </div>
 
                 <div className="flex items-center space-x-2">
                   <Checkbox
@@ -156,6 +178,7 @@ const Jobs = () => {
                 setJobType(undefined);
                 setExperienceLevel(undefined);
                 setIsRemote(false);
+                setSalaryRange([0, 200000]);
                 setSearchParams({});
               }}>
                 Clear Filters
