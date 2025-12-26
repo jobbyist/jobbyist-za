@@ -8,6 +8,3 @@ verify_jwt = false
 
 [functions.import-jobs]
 verify_jwt = false
-
-[functions.notify-job-match]
-verify_jwt = false
