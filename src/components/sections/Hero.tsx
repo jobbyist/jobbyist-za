@@ -26,9 +26,9 @@ const Hero = () => {
 
           {/* Subheadline */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-slide-up" style={{ animationDelay: "0.1s" }}>
-            Discover the most highly sought after, expertly curated job opportunities 
-            offered by world-class, verified companies, employers and recruiters 
-            looking for talent across Africa.
+            Discover expertly curated job opportunities from verified companies 
+            across South Africa, Nigeria, Kenya, and beyond. Your next career 
+            breakthrough awaits.
           </p>
 
           {/* CTA Buttons */}
