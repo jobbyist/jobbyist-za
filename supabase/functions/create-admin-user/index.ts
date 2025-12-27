@@ -11,6 +11,68 @@ Deno.serve(async (req) => {
   }
 
   try {
+    // SECURITY: Require authentication
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      console.error('No authorization header provided');
+      return new Response(
+        JSON.stringify({ success: false, error: 'Unauthorized - no auth header' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    
+    // Create client with user's token to verify identity
+    const supabaseAuth = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } },
+      auth: { autoRefreshToken: false, persistSession: false },
+    });
+
+    // Verify the requesting user
+    const { data: { user: requestingUser }, error: userError } = await supabaseAuth.auth.getUser();
+    if (userError || !requestingUser) {
+      console.error('Failed to verify requesting user:', userError);
+      return new Response(
+        JSON.stringify({ success: false, error: 'Unauthorized - invalid token' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    console.log('Request from user:', requestingUser.id);
+
+    // Create service client for admin operations
+    const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+      auth: { autoRefreshToken: false, persistSession: false },
+    });
+
+    // SECURITY: Verify requesting user is an admin
+    const { data: adminRole, error: roleCheckError } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', requestingUser.id)
+      .eq('role', 'admin')
+      .maybeSingle();
+
+    if (roleCheckError) {
+      console.error('Error checking admin role:', roleCheckError);
+      return new Response(
+        JSON.stringify({ success: false, error: 'Failed to verify admin status' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    if (!adminRole) {
+      console.error('Non-admin user attempted to create admin:', requestingUser.id);
+      return new Response(
+        JSON.stringify({ success: false, error: 'Only admins can create admin users' }),
+        { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Parse and validate request body
     const { email, password } = await req.json();
 
     if (!email || !password) {
@@ -20,17 +82,24 @@ Deno.serve(async (req) => {
       );
     }
 
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    
-    const supabase = createClient(supabaseUrl, supabaseServiceKey, {
-      auth: {
-        autoRefreshToken: false,
-        persistSession: false,
-      },
-    });
+    // Validate email format
+    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/i;
+    if (!emailRegex.test(email)) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'Invalid email format' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
 
-    console.log('Creating user:', email);
+    // Validate password length
+    if (password.length < 8) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'Password must be at least 8 characters' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    console.log('Creating admin user:', email, 'by admin:', requestingUser.email);
 
     // Create the user using the admin API
     const { data: authData, error: authError } = await supabase.auth.admin.createUser({
@@ -68,7 +137,7 @@ Deno.serve(async (req) => {
       }
     }
 
-    console.log('Admin role assigned successfully');
+    console.log('Admin user created successfully by:', requestingUser.email);
 
     return new Response(
       JSON.stringify({ 

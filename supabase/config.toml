@@ -1,5 +1,8 @@
 project_id = "vkwnhhwacizjiwusbmcm"
 
+[functions.create-admin-user]
+verify_jwt = true
+
 [functions.scrape-jobs]
 verify_jwt = false
 

@@ -104,18 +104,36 @@ export function useProfile() {
 
       if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage
+      // Use signed URL for private resumes instead of public URL
+      const { data: signedUrlData, error: signedUrlError } = await supabase.storage
         .from('resumes')
-        .getPublicUrl(fileName);
+        .createSignedUrl(fileName, 86400); // 24 hour expiry
 
-      await updateProfile({ resume_url: publicUrl });
+      if (signedUrlError) throw signedUrlError;
+
+      // Store the file path in profile (not the signed URL, as it expires)
+      // The signed URL will be generated on-demand when viewing
+      await updateProfile({ resume_url: fileName });
       
-      return { error: null, url: publicUrl };
+      return { error: null, url: signedUrlData.signedUrl };
     } catch (error: any) {
       console.error('Error uploading resume:', error);
       toast.error('Failed to upload resume');
       return { error, url: null };
     }
+  };
+
+  // Generate a signed URL for viewing a resume
+  const getResumeUrl = async (filePath: string, expiresIn: number = 3600) => {
+    const { data, error } = await supabase.storage
+      .from('resumes')
+      .createSignedUrl(filePath, expiresIn);
+    
+    if (error) {
+      console.error('Error generating signed URL:', error);
+      return null;
+    }
+    return data.signedUrl;
   };
 
   const uploadAvatar = async (file: File) => {
@@ -153,6 +171,7 @@ export function useProfile() {
     updateProfile,
     uploadResume,
     uploadAvatar,
+    getResumeUrl,
     refetch: fetchProfile,
     canApplyToJobs,
   };
