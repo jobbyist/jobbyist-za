@@ -1,9 +1,26 @@
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Play, Headphones, ArrowRight, Clock } from "lucide-react";
+import { Play, Pause, Headphones, ArrowRight, Clock } from "lucide-react";
+import podcastThumbnail from "@/assets/podcast-episode-1.png";
 
 const Podcast = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const togglePlay = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
   return (
     <section className="py-20">
+      <audio ref={audioRef} src="/audio/podcast-s1e1.mp3" preload="metadata" />
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
@@ -19,9 +36,23 @@ const Podcast = () => {
             <div className="grid md:grid-cols-2 gap-8 items-center">
               {/* Episode artwork */}
               <div className="relative group">
-                <div className="aspect-square bg-gradient-to-br from-brand-orange via-brand-pink to-brand-purple rounded-xl flex items-center justify-center">
-                  <div className="w-24 h-24 bg-background/20 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:scale-110 transition-transform cursor-pointer">
-                    <Play className="h-12 w-12 text-background fill-current ml-1" />
+                <div className="aspect-square rounded-xl overflow-hidden">
+                  <img 
+                    src={podcastThumbnail} 
+                    alt="Jobbyist Podcast Episode 1" 
+                    className="w-full h-full object-cover"
+                  />
+                  <div 
+                    onClick={togglePlay}
+                    className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors cursor-pointer"
+                  >
+                    <div className="w-24 h-24 bg-background/20 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                      {isPlaying ? (
+                        <Pause className="h-12 w-12 text-background fill-current" />
+                      ) : (
+                        <Play className="h-12 w-12 text-background fill-current ml-1" />
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -47,9 +78,13 @@ const Podcast = () => {
                 </p>
 
                 <div className="flex flex-wrap gap-4">
-                  <Button variant="brand" className="group">
-                    <Play className="h-4 w-4 mr-2 fill-current" />
-                    Play Episode
+                  <Button variant="brand" className="group" onClick={togglePlay}>
+                    {isPlaying ? (
+                      <Pause className="h-4 w-4 mr-2 fill-current" />
+                    ) : (
+                      <Play className="h-4 w-4 mr-2 fill-current" />
+                    )}
+                    {isPlaying ? "Pause Episode" : "Play Episode"}
                   </Button>
                   <Button variant="outline" className="group">
                     See All Episodes
