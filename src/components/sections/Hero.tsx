@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Briefcase, Building2, TrendingUp, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   const badges = [
-    { icon: Briefcase, text: "New jobs added every day" },
-    { icon: Building2, text: "Verified Companies Only" },
-    { icon: TrendingUp, text: "Daily Updates" },
+    { icon: Briefcase, text: "1000+ SA Jobs" },
+    { icon: Building2, text: "Verified SA Companies" },
+    { icon: TrendingUp, text: "Updated Daily" },
   ];
 
   return (
@@ -20,25 +21,27 @@ const Hero = () => {
         <div className="max-w-4xl mx-auto text-center">
           {/* Main headline */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 animate-slide-up text-foreground">
-            Africa's Premier Job Discovery &{" "}
-            <span className="gradient-brand-text">Career Management</span> Platform
+            South Africa's Premier{" "}
+            <span className="gradient-brand-text">Job Discovery</span> Platform
           </h1>
 
           {/* Subheadline */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-slide-up" style={{ animationDelay: "0.1s" }}>
-            Discover expertly curated job opportunities from verified companies 
-            across South Africa, Nigeria, Kenya, and beyond. Your next career 
-            breakthrough awaits.
+            Discover expertly curated job opportunities from verified South African 
+            companies. From Johannesburg to Cape Town, Durban to Pretoria — your next 
+            career breakthrough awaits.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-slide-up" style={{ animationDelay: "0.2s" }}>
-            <Button variant="hero" size="xl" className="group">
-              Find Your Dream Job
-              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            <Link to="/jobs">
+              <Button variant="hero" size="xl" className="group">
+                Find Jobs in South Africa
+                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
             <Button variant="hero-outline" size="xl">
-              For Employers
+              For SA Employers
             </Button>
           </div>
 

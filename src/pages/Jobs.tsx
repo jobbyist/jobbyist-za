@@ -9,22 +9,21 @@ import { Slider } from '@/components/ui/slider';
 import { useJobs } from '@/hooks/useJobs';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import { SEOHead } from '@/components/SEOHead';
 import { Search, MapPin, Wifi, Briefcase, Clock, ArrowRight, Building2, DollarSign } from 'lucide-react';
-import { activeCountries, formatSalary, type CountryCode } from '@/lib/countries';
+import { formatSalary } from '@/lib/countries';
 
 const Jobs = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState(searchParams.get('search') || '');
-  const [country, setCountry] = useState<CountryCode | undefined>(
-    (searchParams.get('country') as CountryCode) || undefined
-  );
   const [jobType, setJobType] = useState<string | undefined>(searchParams.get('type') || undefined);
   const [experienceLevel, setExperienceLevel] = useState<string | undefined>(searchParams.get('level') || undefined);
   const [isRemote, setIsRemote] = useState(searchParams.get('remote') === 'true');
   const [salaryRange, setSalaryRange] = useState<[number, number]>([0, 200000]);
 
+  // Fetch SA jobs + remote jobs that South Africans can apply for
   const { jobs, loading } = useJobs({
-    country,
+    country: 'ZA',
     search,
     jobType: jobType === 'all' ? undefined : jobType,
     experienceLevel: experienceLevel === 'all' ? undefined : experienceLevel,
@@ -37,7 +36,6 @@ const Jobs = () => {
     e.preventDefault();
     const params = new URLSearchParams();
     if (search) params.set('search', search);
-    if (country) params.set('country', country);
     if (jobType && jobType !== 'all') params.set('type', jobType);
     if (experienceLevel && experienceLevel !== 'all') params.set('level', experienceLevel);
     if (isRemote) params.set('remote', 'true');
@@ -46,16 +44,22 @@ const Jobs = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Jobs in South Africa | Find SA Job Opportunities | Jobbyist"
+        description={`Browse ${jobs.length}+ verified job opportunities in South Africa. Find full-time, part-time, remote & contract jobs in Johannesburg, Cape Town, Durban & more.`}
+        canonicalUrl="https://jobbyist.co.za/jobs"
+        keywords={['jobs South Africa', 'SA jobs', 'Johannesburg jobs', 'Cape Town jobs', 'Durban jobs', 'remote jobs SA', 'IT jobs South Africa', 'finance jobs SA']}
+      />
       <Navbar />
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4">
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-3xl md:text-4xl font-bold mb-4">
-              Find Your Next <span className="gradient-brand-text">Opportunity</span>
+              Jobs in <span className="gradient-brand-text">South Africa</span>
             </h1>
             <p className="text-muted-foreground">
-              Explore {jobs.length}+ curated job opportunities across Africa
+              Explore {jobs.length}+ curated job opportunities across South Africa
             </p>
           </div>
 
@@ -72,19 +76,6 @@ const Jobs = () => {
                     onChange={(e) => setSearch(e.target.value)}
                   />
                 </div>
-                <Select value={country || 'all'} onValueChange={(v) => setCountry(v === 'all' ? undefined : v as CountryCode)}>
-                  <SelectTrigger className="w-full md:w-48">
-                    <SelectValue placeholder="All Countries" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Countries</SelectItem>
-                    {activeCountries.map((c) => (
-                      <SelectItem key={c.code} value={c.code}>
-                        {c.flag} {c.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
                 <Button type="submit">Search Jobs</Button>
               </div>
 
@@ -174,7 +165,6 @@ const Jobs = () => {
               </p>
               <Button variant="outline" onClick={() => {
                 setSearch('');
-                setCountry(undefined);
                 setJobType(undefined);
                 setExperienceLevel(undefined);
                 setIsRemote(false);
@@ -189,7 +179,7 @@ const Jobs = () => {
               {jobs.map((job) => (
                 <Link
                   key={job.id}
-                  to={`/jobs/${job.id}`}
+                  to={`/job/${job.id}`}
                   className="group bg-card rounded-xl p-6 border hover:border-primary/20 hover:shadow-xl transition-all duration-300"
                 >
                   {/* Header */}

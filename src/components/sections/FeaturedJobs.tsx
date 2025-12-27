@@ -6,7 +6,7 @@ import { useJobs } from "@/hooks/useJobs";
 
 const FeaturedJobs = () => {
   const navigate = useNavigate();
-  const { jobs, loading } = useJobs({ limit: 6 });
+  const { jobs, loading } = useJobs({ country: 'ZA', limit: 6 });
 
   const getCompanyColor = (name: string) => {
     const colors = [
@@ -32,9 +32,9 @@ const FeaturedJobs = () => {
     <section id="jobs" className="py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Jobs</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured South African Jobs</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Explore curated opportunities from top companies across Africa
+            Explore curated opportunities from top companies across South Africa
           </p>
         </div>
 

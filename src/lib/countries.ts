@@ -11,8 +11,8 @@ export interface Country {
 
 export const countries: Country[] = [
   { code: 'ZA', name: 'South Africa', flag: '🇿🇦', currency: 'ZAR', currencySymbol: 'R', isActive: true },
-  { code: 'NG', name: 'Nigeria', flag: '🇳🇬', currency: 'NGN', currencySymbol: '₦', isActive: true },
-  { code: 'KE', name: 'Kenya', flag: '🇰🇪', currency: 'KES', currencySymbol: 'KSh', isActive: true },
+  { code: 'NG', name: 'Nigeria', flag: '🇳🇬', currency: 'NGN', currencySymbol: '₦', isActive: false },
+  { code: 'KE', name: 'Kenya', flag: '🇰🇪', currency: 'KES', currencySymbol: 'KSh', isActive: false },
   { code: 'SZ', name: 'eSwatini', flag: '🇸🇿', currency: 'SZL', currencySymbol: 'E', isActive: false },
   { code: 'BW', name: 'Botswana', flag: '🇧🇼', currency: 'BWP', currencySymbol: 'P', isActive: false },
   { code: 'ZM', name: 'Zambia', flag: '🇿🇲', currency: 'ZMW', currencySymbol: 'K', isActive: false },

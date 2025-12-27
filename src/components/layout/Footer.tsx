@@ -34,8 +34,8 @@ const Footer = () => {
               className="h-12 w-auto mb-4"
             />
             <p className="text-white/70 max-w-sm mb-6">
-              Africa's premier job discovery and career management platform. 
-              Connecting talent with opportunity across the continent.
+              South Africa's leading job discovery and career management platform. 
+              Connecting SA talent with top opportunities nationwide.
             </p>
             <p className="text-sm text-white/50">
               © {new Date().getFullYear()} Jobbyist. All rights reserved.

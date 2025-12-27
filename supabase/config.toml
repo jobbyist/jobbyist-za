@@ -11,3 +11,9 @@ verify_jwt = false
 
 [functions.auto-publish-jobs]
 verify_jwt = false
+
+[functions.firecrawl-scrape]
+verify_jwt = false
+
+[functions.scrape-sa-jobs]
+verify_jwt = false
