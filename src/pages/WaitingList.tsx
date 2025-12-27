@@ -28,19 +28,56 @@ const WaitingList = () => {
     e.preventDefault();
     if (!country) return;
 
+    // Client-side validation
+    const email = form.email.trim();
+    const firstName = form.firstName.trim();
+    const lastName = form.lastName.trim();
+    const userType = form.userType;
+
+    // Validate email format
+    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/i;
+    if (!emailRegex.test(email)) {
+      toast.error('Please enter a valid email address');
+      return;
+    }
+
+    if (email.length > 255) {
+      toast.error('Email is too long (max 255 characters)');
+      return;
+    }
+
+    // Validate name lengths
+    if (firstName.length > 50) {
+      toast.error('First name is too long (max 50 characters)');
+      return;
+    }
+
+    if (lastName.length > 50) {
+      toast.error('Last name is too long (max 50 characters)');
+      return;
+    }
+
+    // Validate user type
+    if (!['job_seeker', 'employer'].includes(userType)) {
+      toast.error('Invalid user type selected');
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       const { error } = await supabase.from('waiting_list').insert({
-        email: form.email,
-        first_name: form.firstName || null,
-        last_name: form.lastName || null,
+        email: email,
+        first_name: firstName || null,
+        last_name: lastName || null,
         country: country.code,
-        user_type: form.userType,
+        user_type: userType,
       });
 
       if (error) {
         if (error.code === '23505') {
           toast.error('This email is already on the waiting list!');
+        } else if (error.code === '23514') {
+          toast.error('Please check your input and try again.');
         } else {
           throw error;
         }
