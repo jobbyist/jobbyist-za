@@ -144,7 +144,7 @@ export const generateJobPostingSchema = (job: {
     'Temporary': 'TEMPORARY',
   };
 
-  const schema: any = {
+  const schema: Record<string, unknown> = {
     '@context': 'https://schema.org/',
     '@type': 'JobPosting',
     title: job.title,

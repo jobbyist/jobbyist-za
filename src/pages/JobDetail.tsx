@@ -11,6 +11,7 @@ import { useProfile } from '@/hooks/useProfile';
 import { supabase } from '@/integrations/supabase/client';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import { SEOHead, generateJobPostingSchema } from '@/components/SEOHead';
 import { toast } from 'sonner';
 import { 
   ArrowLeft, 
@@ -131,8 +132,25 @@ const JobDetail = () => {
 
   const country = getCountryByCode(job.country as CountryCode);
 
+  // Generate structured data for Google Jobs
+  const jobSchema = generateJobPostingSchema(job);
+
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title={`${job.title} at ${job.company?.name} | Jobbyist`}
+        description={job.description?.substring(0, 160) + '...' || 'Job opportunity in South Africa'}
+        canonicalUrl={`https://jobbyist.co.za/job/${job.id}`}
+        ogImage={job.company?.logo_url || undefined}
+        structuredData={jobSchema}
+        keywords={[
+          job.title,
+          job.company?.name || '',
+          job.location,
+          'jobs South Africa',
+          ...(job.skills || [])
+        ]}
+      />
       <Navbar />
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-4xl">
