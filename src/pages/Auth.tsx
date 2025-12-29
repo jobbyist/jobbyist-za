@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
 import { Mail, Lock, User, ArrowLeft } from 'lucide-react';
-import logoImage from '@/assets/jobbyist-logo.jpeg';
+
 import { z } from 'zod';
 
 const emailSchema = z.string().email('Invalid email address');
@@ -124,7 +124,7 @@ const Auth = () => {
             <ArrowLeft className="h-4 w-4" />
             Back to Home
           </a>
-          <img src={logoImage} alt="Jobbyist" className="h-12 mx-auto mb-4" />
+          <img src="/jobbyistza.svg" alt="Jobbyist" className="h-12 mx-auto mb-4" />
           <p className="text-muted-foreground">Africa's Premier Job Platform</p>
         </div>
 

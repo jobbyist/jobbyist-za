@@ -1,4 +1,4 @@
-import logoImage from "@/assets/logo-footer.jpeg";
+
 
 const Footer = () => {
   const footerLinks = {
@@ -29,7 +29,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-2">
             <img 
-              src={logoImage} 
+              src="/jobbyistza.svg" 
               alt="Jobbyist" 
               className="h-12 w-auto mb-4"
             />

@@ -5,7 +5,7 @@ import { Menu, X, User, LogOut, Shield } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { useAdmin } from "@/hooks/useAdmin";
-import logoImage from "@/assets/logo-header.jpeg";
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +28,7 @@ const Navbar = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
       <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <img src={logoImage} alt="Jobbyist" className="h-10 w-auto" />
+          <img src="/jobbyistza.svg" alt="Jobbyist" className="h-10 w-auto" />
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
