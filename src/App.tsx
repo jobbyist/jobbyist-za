@@ -11,6 +11,7 @@ import Jobs from "./pages/Jobs";
 import CountryJobs from "./pages/CountryJobs";
 import JobDetail from "./pages/JobDetail";
 import WaitingList from "./pages/WaitingList";
+import Pro from "./pages/Pro";
 import AdminLayout from "./pages/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminJobs from "./pages/admin/AdminJobs";
@@ -36,6 +37,7 @@ const App = () => (
             <Route path="/jobs/:countryCode" element={<CountryJobs />} />
             <Route path="/job/:jobId" element={<JobDetail />} />
             <Route path="/waiting-list/:countryCode" element={<WaitingList />} />
+            <Route path="/pro" element={<Pro />} />
             
             {/* Admin Routes */}
             <Route path="/admin" element={<AdminLayout />}>
