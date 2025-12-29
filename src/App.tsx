@@ -23,6 +23,7 @@ import AdminJobs from "./pages/admin/AdminJobs";
 import AdminCompanies from "./pages/admin/AdminCompanies";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminScraper from "./pages/admin/AdminScraper";
+import Builder from "./pages/Builder";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -61,6 +62,7 @@ const App = () => {
               <Route path="/companies" element={<Companies />} />
               <Route path="/company/:slug" element={<CompanyDetail />} />
               <Route path="/waiting-list/:countryCode" element={<WaitingList />} />
+              <Route path="/builder" element={<Builder />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminLayout />}>
