@@ -8,7 +8,6 @@ const Preloader = () => {
     const timer = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
-          clearInterval(timer);
           return 100;
         }
         return prev + 10;
