@@ -48,16 +48,18 @@ interface UseJobsOptions {
   salaryMin?: number;
   salaryMax?: number;
   limit?: number;
+  offset?: number;
 }
 
 export function useJobs(options: UseJobsOptions = {}) {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+  const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
     fetchJobs();
-  }, [options.country, options.search, options.jobType, options.experienceLevel, options.isRemote, options.salaryMin, options.salaryMax]);
+  }, [options.country, options.search, options.jobType, options.experienceLevel, options.isRemote, options.salaryMin, options.salaryMax, options.limit, options.offset]);
 
   const fetchJobs = async () => {
     try {
@@ -67,7 +69,7 @@ export function useJobs(options: UseJobsOptions = {}) {
         .select(`
           *,
           company:companies(id, name, logo_url, location, industry)
-        `)
+        `, { count: 'exact' })
         .eq('status', 'active')
         .order('posted_at', { ascending: false });
 
@@ -103,10 +105,15 @@ export function useJobs(options: UseJobsOptions = {}) {
         query = query.limit(options.limit);
       }
 
-      const { data, error } = await query;
+      if (options.offset) {
+        query = query.range(options.offset, options.offset + (options.limit || 10) - 1);
+      }
+
+      const { data, error, count } = await query;
 
       if (error) throw error;
       setJobs(data || []);
+      setTotalCount(count || 0);
     } catch (err: any) {
       console.error('Error fetching jobs:', err);
       setError(err);
@@ -115,7 +122,7 @@ export function useJobs(options: UseJobsOptions = {}) {
     }
   };
 
-  return { jobs, loading, error, refetch: fetchJobs };
+  return { jobs, loading, error, totalCount, refetch: fetchJobs };
 }
 
 export function useJob(jobId: string | undefined) {
