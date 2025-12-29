@@ -2,22 +2,22 @@
 const Footer = () => {
   const footerLinks = {
     "For Job Seekers": [
-      { name: "Browse Jobs", href: "#jobs" },
-      { name: "Companies", href: "#companies" },
-      { name: "Resume Builder", href: "#resume" },
-      { name: "Career Resources", href: "#" },
+      { name: "Browse Jobs", href: "/jobs" },
+      { name: "Upskilling", href: "/companies" },
+      { name: "Resume Builder", href: "/builder" },
+      { name: "Career Resources", href: "/resources" },
     ],
     "For Employers": [
-      { name: "Post a Job", href: "#" },
+      { name: "Company Directory", href: "#" },
       { name: "Browse Candidates", href: "#" },
-      { name: "Pricing", href: "#" },
-      { name: "Recruitment Suite", href: "#" },
+      { name: "Brand Partnerships", href: "#" },
+      { name: "Recruitment Suite", href: "#suite" },
     ],
     Company: [
-      { name: "About Us", href: "#" },
-      { name: "Blog", href: "#" },
-      { name: "Contact", href: "#" },
-      { name: "Privacy Policy", href: "#" },
+      { name: "About", href: "/about" },
+      { name: "Terms", href: "/terms" },
+      { name: "Privacy", href: "/privacy" },
+      { name: "Contact", href: "/contact" },
     ],
   };
 
