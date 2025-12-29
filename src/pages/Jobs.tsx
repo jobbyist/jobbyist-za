@@ -63,6 +63,10 @@ const Jobs = () => {
     return `?${params.toString()}`;
   };
 
+  const getFullPageUrl = (page: number) => {
+    return `https://jobbyist.co.za/jobs${getPageUrl(page)}`;
+  };
+
   const goToPage = (page: number) => {
     const params = new URLSearchParams(searchParams);
     params.set('page', page.toString());
@@ -78,10 +82,10 @@ const Jobs = () => {
         keywords={['jobs South Africa', 'SA jobs', 'Johannesburg jobs', 'Cape Town jobs', 'Durban jobs', 'remote jobs SA', 'IT jobs South Africa', 'finance jobs SA']}
       />
       {hasPrevPage && (
-        <link rel="prev" href={`https://jobbyist.co.za/jobs${getPageUrl(currentPage - 1)}`} />
+        <link rel="prev" href={getFullPageUrl(currentPage - 1)} />
       )}
       {hasNextPage && (
-        <link rel="next" href={`https://jobbyist.co.za/jobs${getPageUrl(currentPage + 1)}`} />
+        <link rel="next" href={getFullPageUrl(currentPage + 1)} />
       )}
       <Navbar />
       <main className="pt-24 pb-16">

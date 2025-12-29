@@ -101,11 +101,11 @@ export function useJobs(options: UseJobsOptions = {}) {
         query = query.lte('salary_min', options.salaryMax);
       }
 
-      if (options.limit) {
+      if (options.limit && options.offset === undefined) {
         query = query.limit(options.limit);
       }
 
-      if (options.offset) {
+      if (options.offset !== undefined) {
         query = query.range(options.offset, options.offset + (options.limit || 10) - 1);
       }
 
