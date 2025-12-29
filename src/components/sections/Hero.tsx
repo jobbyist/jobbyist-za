@@ -1,10 +1,14 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Briefcase, Building2, TrendingUp, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import RecruitmentSuiteModal from "@/components/RecruitmentSuiteModal";
 
 const Hero = () => {
+  const [isRecruitmentModalOpen, setIsRecruitmentModalOpen] = useState(false);
+  
   const badges = [
-    { icon: Briefcase, text: "1000+ SA Jobs" },
+    { icon: Briefcase, text: "10,000+ Curated Job Listings" },
     { icon: Building2, text: "Verified SA Companies" },
     { icon: TrendingUp, text: "Updated Daily" },
   ];
@@ -40,8 +44,12 @@ const Hero = () => {
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
-            <Button variant="hero-outline" size="xl">
-              For SA Employers
+            <Button 
+              variant="hero-outline" 
+              size="xl"
+              onClick={() => setIsRecruitmentModalOpen(true)}
+            >
+              For Employers & Recruiters
             </Button>
           </div>
 
@@ -59,6 +67,11 @@ const Hero = () => {
           </div>
         </div>
       </div>
+      
+      <RecruitmentSuiteModal 
+        open={isRecruitmentModalOpen}
+        onOpenChange={setIsRecruitmentModalOpen}
+      />
     </section>
   );
 };

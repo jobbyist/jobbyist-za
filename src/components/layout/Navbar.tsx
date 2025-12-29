@@ -3,9 +3,18 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, User, LogOut, Shield } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { useAdmin } from "@/hooks/useAdmin";
-
+import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,10 +23,17 @@ const Navbar = () => {
   const { isAdmin } = useAdmin();
 
   const navLinks = [
-    { name: "Jobs", href: "/jobs" },
-    { name: "Pro", href: "/pro" },
-    { name: "Upskilling Programs", href: "#upskilling" },
+    { name: "Browse Jobs", href: "/jobs" },
+    { name: "Company Directory", href: "#companies" },
+    { name: "Knowledge Center", href: "#knowledge" },
+  ];
+
+  const moreMenuItems = [
+    { name: "Resume Audit", href: "#resume-audit" },
     { name: "Resume Builder", href: "#resume" },
+    { name: "Upskilling Programs", href: "#upskilling" },
+    { name: "The Job Post Podcast", href: "#podcast" },
+    { name: "Community Forum", href: "#community" },
   ];
 
   const handleSignOut = async () => {
@@ -32,16 +48,43 @@ const Navbar = () => {
           <img src="/jobbyistza.svg" alt="Jobbyist" className="h-10 w-auto" />
         </Link>
 
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              to={link.href}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {link.name}
-            </Link>
-          ))}
+        <div className="hidden md:flex items-center gap-6">
+          <NavigationMenu>
+            <NavigationMenuList>
+              {navLinks.map((link) => (
+                <NavigationMenuItem key={link.name}>
+                  <Link to={link.href}>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                      {link.name}
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+              ))}
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>More</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                    {moreMenuItems.map((item) => (
+                      <li key={item.name}>
+                        <NavigationMenuLink asChild>
+                          <a
+                            href={item.href}
+                            className={cn(
+                              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                            )}
+                          >
+                            <div className="text-sm font-medium leading-none">
+                              {item.name}
+                            </div>
+                          </a>
+                        </NavigationMenuLink>
+                      </li>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
         </div>
 
         <div className="hidden md:flex items-center gap-3">
@@ -108,6 +151,19 @@ const Navbar = () => {
               >
                 {link.name}
               </Link>
+            ))}
+            <div className="text-sm font-semibold text-foreground pt-2 border-t border-border">
+              More
+            </div>
+            {moreMenuItems.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2 pl-4"
+                onClick={() => setIsOpen(false)}
+              >
+                {item.name}
+              </a>
             ))}
             <div className="flex flex-col gap-2 pt-4 border-t border-border">
               {user ? (
