@@ -139,7 +139,7 @@ const JobDetail = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title={`${job.title} at ${job.company?.name} | Jobbyist`}
-        description={job.description.substring(0, 160) + '...'}
+        description={job.description?.substring(0, 160) + '...' || 'Job opportunity in South Africa'}
         canonicalUrl={`https://jobbyist.co.za/job/${job.id}`}
         ogImage={job.company?.logo_url || undefined}
         structuredData={jobSchema}
@@ -148,7 +148,7 @@ const JobDetail = () => {
           job.company?.name || '',
           job.location,
           'jobs South Africa',
-          ...job.skills
+          ...(job.skills || [])
         ]}
       />
       <Navbar />

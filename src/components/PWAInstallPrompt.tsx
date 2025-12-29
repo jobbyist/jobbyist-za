@@ -17,13 +17,13 @@ const PWAInstallPrompt = () => {
   useEffect(() => {
     // Check if already installed (standalone mode)
     const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches ||
-      (window.navigator as any).standalone ||
+      ('standalone' in window.navigator && (window.navigator as any).standalone === true) ||
       document.referrer.includes('android-app://');
     
     setIsStandalone(isInStandaloneMode);
 
     // Check if iOS
-    const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+    const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !('MSStream' in window);
     setIsIOS(iOS);
 
     // Listen for the beforeinstallprompt event
