@@ -12,6 +12,7 @@ import Profile from "./pages/Profile";
 import Jobs from "./pages/Jobs";
 import CountryJobs from "./pages/CountryJobs";
 import JobDetail from "./pages/JobDetail";
+import Companies from "./pages/Companies";
 import CompanyDetail from "./pages/CompanyDetail";
 import WaitingList from "./pages/WaitingList";
 import Pro from "./pages/Pro";
@@ -54,6 +55,7 @@ const App = () => {
               <Route path="/jobs" element={<Jobs />} />
               <Route path="/jobs/:countryCode" element={<CountryJobs />} />
               <Route path="/job/:jobId" element={<JobDetail />} />
+              <Route path="/companies" element={<Companies />} />
               <Route path="/company/:slug" element={<CompanyDetail />} />
               <Route path="/waiting-list/:countryCode" element={<WaitingList />} />
               

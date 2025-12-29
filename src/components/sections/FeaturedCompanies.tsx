@@ -85,7 +85,7 @@ const FeaturedCompanies = () => {
         </div>
 
         <div className="text-center">
-          <Link to="/jobs">
+          <Link to="/companies">
             <Button variant="outline" className="group">
               View All Companies
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
