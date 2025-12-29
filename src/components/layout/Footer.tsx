@@ -34,7 +34,7 @@ const Footer = () => {
             />
             <p className="text-white/70 max-w-sm mb-6">
               South Africa's leading job discovery and career management platform. 
-              Connecting SA talent with top opportunities nationwide.
+              Connecting SA talent with top opportunities worldwide.
             </p>
             
             {/* App Store Badges */}
