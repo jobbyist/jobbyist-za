@@ -3,14 +3,14 @@ const Footer = () => {
   const footerLinks = {
     "For Job Seekers": [
       { name: "Browse Jobs", href: "/jobs" },
-      { name: "Upskilling", href: "/companies" },
+      { name: "Upskilling", href: "#" },
       { name: "Resume Builder", href: "/builder" },
-      { name: "Career Resources", href: "/resources" },
+      { name: "Knowledge Hub", href: "#" },
     ],
     "For Employers": [
-      { name: "Company Directory", href: "#" },
-      { name: "Browse Candidates", href: "#" },
-      { name: "Brand Partnerships", href: "#" },
+      { name: "Company Directory", href: "/companies" },
+      { name: "Browse Candidates", href: "/profiles" },
+      { name: "Whitepaper 2026/27", href: "#" },
       { name: "Recruitment Suite", href: "#suite" },
     ],
     Company: [
