@@ -200,7 +200,6 @@ const MultiStepSignup = () => {
       toast.success('Account created successfully! Please check your email to verify your account.');
       navigate('/profile');
     } catch (error: any) {
-      console.error('Signup error:', error);
       toast.error('An error occurred during signup. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -482,7 +481,7 @@ const MultiStepSignup = () => {
                       <SelectItem value="2">Junior (2-3 years)</SelectItem>
                       <SelectItem value="4">Mid-Level (4-6 years)</SelectItem>
                       <SelectItem value="7">Senior (7-10 years)</SelectItem>
-                      <SelectItem value="11">Expert (10+ years)</SelectItem>
+                      <SelectItem value="10">Expert (10+ years)</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
