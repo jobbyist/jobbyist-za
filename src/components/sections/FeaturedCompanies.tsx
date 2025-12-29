@@ -21,6 +21,7 @@ const FeaturedCompanies = () => {
         .from('companies')
         .select('*')
         .eq('is_active', true)
+        .eq('country', 'ZA')
         .limit(10);
       
       if (error) throw error;
@@ -32,9 +33,9 @@ const FeaturedCompanies = () => {
     <section id="companies" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Companies</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured South African Companies</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Discover career opportunities with top employers across South Africa and beyond
+            Discover career opportunities with top employers across South Africa
           </p>
         </div>
 
@@ -50,8 +51,9 @@ const FeaturedCompanies = () => {
             ))
           ) : companies && companies.length > 0 ? (
             companies.map((company, index) => (
-              <div
+              <Link
                 key={company.id}
+                to={`/company/${company.slug}`}
                 className="group bg-card rounded-xl p-6 border border-border hover:border-primary/20 hover:shadow-lg transition-all duration-300 cursor-pointer"
               >
                 {company.logo_url ? (
@@ -59,17 +61,21 @@ const FeaturedCompanies = () => {
                     src={company.logo_url} 
                     alt={company.name}
                     className="w-12 h-12 rounded-lg object-cover mb-4 group-hover:scale-110 transition-transform"
+                    onError={(e) => {
+                      // Fallback to initial if logo fails to load
+                      e.currentTarget.style.display = 'none';
+                      e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                    }}
                   />
-                ) : (
-                  <div className={`w-12 h-12 ${companyColors[index % companyColors.length]} rounded-lg flex items-center justify-center text-white font-bold text-xl mb-4 group-hover:scale-110 transition-transform`}>
-                    {company.name.charAt(0).toUpperCase()}
-                  </div>
-                )}
+                ) : null}
+                <div className={`w-12 h-12 ${company.logo_url ? 'hidden' : ''} ${companyColors[index % companyColors.length]} rounded-lg flex items-center justify-center text-white font-bold text-xl mb-4 group-hover:scale-110 transition-transform`}>
+                  {company.name.charAt(0).toUpperCase()}
+                </div>
                 <h3 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">
                   {company.name}
                 </h3>
                 <p className="text-xs text-muted-foreground">{company.location || company.country}</p>
-              </div>
+              </Link>
             ))
           ) : (
             <div className="col-span-full text-center py-12 text-muted-foreground">
