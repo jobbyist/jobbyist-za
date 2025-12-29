@@ -39,7 +39,7 @@ const Preloader = () => {
         <img 
           src="/jobbyistpreloader.svg" 
           alt="Jobbyist" 
-          className="h-24 w-auto animate-pulse"
+          className="h-40 w-auto animate-pulse"
         />
         <div className="w-full space-y-3">
           <Progress value={progress} className="w-full" />

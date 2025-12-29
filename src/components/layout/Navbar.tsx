@@ -123,8 +123,8 @@ const Navbar = () => {
               <Link to="/auth">
                 <Button variant="ghost" size="sm">Sign In</Button>
               </Link>
-              <Link to="/auth">
-                <Button variant="brand" size="sm">Post a Job</Button>
+              <Link to="/pro">
+                <Button variant="brand" size="sm">Become A Pro</Button>
               </Link>
             </>
           )}
@@ -180,8 +180,8 @@ const Navbar = () => {
                   <Link to="/auth" onClick={() => setIsOpen(false)}>
                     <Button variant="ghost" className="w-full justify-center">Sign In</Button>
                   </Link>
-                  <Link to="/auth" onClick={() => setIsOpen(false)}>
-                    <Button variant="brand" className="w-full justify-center">Post a Job</Button>
+                  <Link to="/pro" onClick={() => setIsOpen(false)}>
+                    <Button variant="brand" className="w-full justify-center">Become A Pro</Button>
                   </Link>
                 </>
               )}
