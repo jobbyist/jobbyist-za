@@ -19,9 +19,9 @@ const Index = () => {
         <FeaturedCompanies />
         <FeaturedJobs />
         <UpskillingPrograms />
-        <RecruitmentSuite />
         <PromoStrip />
         <ResumeBuilder />
+        <RecruitmentSuite />
         <Podcast />
         <BlogSection />
       </main>
