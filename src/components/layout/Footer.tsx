@@ -28,7 +28,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-2">
             <img 
-              src="/jobbyistza.svg" 
+              src="/jobbyistwhite.svg" 
               alt="Jobbyist" 
               className="h-12 w-auto mb-4"
             />
