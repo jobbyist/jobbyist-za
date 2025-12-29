@@ -19,6 +19,8 @@ interface RecruitmentSuiteModalProps {
   onOpenChange: (open: boolean) => void;
 }
 
+const MODAL_CLOSE_DELAY = 2000;
+
 const RecruitmentSuiteModal = ({
   open,
   onOpenChange,
@@ -95,7 +97,7 @@ const RecruitmentSuiteModal = ({
             email: email,
             first_name: firstName || null,
             last_name: lastName || null,
-            user_type: "employer",
+            user_type: userType === "recruiter" ? "employer" : userType,
             country: "ZA",
           });
 
@@ -114,7 +116,7 @@ const RecruitmentSuiteModal = ({
               userType: "employer",
               companyName: "",
             });
-            setTimeout(() => onOpenChange(false), 2000);
+            setTimeout(() => onOpenChange(false), MODAL_CLOSE_DELAY);
           }
         } else {
           throw error;
@@ -128,7 +130,7 @@ const RecruitmentSuiteModal = ({
           userType: "employer",
           companyName: "",
         });
-        setTimeout(() => onOpenChange(false), 2000);
+        setTimeout(() => onOpenChange(false), MODAL_CLOSE_DELAY);
       }
     } catch (error) {
       console.error("Error joining Early Access Program:", error);
