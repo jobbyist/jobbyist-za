@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const footerLinks = {
@@ -86,12 +87,21 @@ const Footer = () => {
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link.name}>
-                    <a
-                      href={link.href}
-                      className="text-sm text-white/70 hover:text-white transition-colors"
-                    >
-                      {link.name}
-                    </a>
+                    {link.href.startsWith('#') ? (
+                      <a
+                        href={link.href}
+                        className="text-sm text-white/70 hover:text-white transition-colors"
+                      >
+                        {link.name}
+                      </a>
+                    ) : (
+                      <Link
+                        to={link.href}
+                        className="text-sm text-white/70 hover:text-white transition-colors"
+                      >
+                        {link.name}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>

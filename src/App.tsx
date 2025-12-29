@@ -17,6 +17,7 @@ import Companies from "./pages/Companies";
 import CompanyDetail from "./pages/CompanyDetail";
 import WaitingList from "./pages/WaitingList";
 import Pro from "./pages/Pro";
+import About from "./pages/About";
 import AdminLayout from "./pages/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminJobs from "./pages/admin/AdminJobs";
@@ -55,6 +56,7 @@ const App = () => {
               <Route path="/auth" element={<Auth />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/pro" element={<Pro />} />
+              <Route path="/about" element={<About />} />
               <Route path="/jobs" element={<Jobs />} />
               <Route path="/jobs/:countryCode" element={<CountryJobs />} />
               <Route path="/job/:jobId" element={<JobDetail />} />

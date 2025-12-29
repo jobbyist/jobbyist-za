@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,8 +10,10 @@ import { useJobs } from '@/hooks/useJobs';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { SEOHead } from '@/components/SEOHead';
-import { Search, MapPin, Wifi, Briefcase, Clock, ArrowRight, Building2, DollarSign } from 'lucide-react';
+import { Search, MapPin, Wifi, Briefcase, Clock, ArrowRight, Building2, DollarSign, ChevronLeft, ChevronRight } from 'lucide-react';
 import { formatSalary } from '@/lib/countries';
+
+const JOBS_PER_PAGE = 12;
 
 const Jobs = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -20,9 +22,10 @@ const Jobs = () => {
   const [experienceLevel, setExperienceLevel] = useState<string | undefined>(searchParams.get('level') || undefined);
   const [isRemote, setIsRemote] = useState(searchParams.get('remote') === 'true');
   const [salaryRange, setSalaryRange] = useState<[number, number]>([0, 200000]);
+  const currentPage = parseInt(searchParams.get('page') || '1', 10);
 
   // Fetch SA jobs + remote jobs that South Africans can apply for
-  const { jobs, loading } = useJobs({
+  const { jobs, loading, totalCount } = useJobs({
     country: 'ZA',
     search,
     jobType: jobType === 'all' ? undefined : jobType,
@@ -30,7 +33,18 @@ const Jobs = () => {
     isRemote: isRemote ? true : undefined,
     salaryMin: salaryRange[0] > 0 ? salaryRange[0] : undefined,
     salaryMax: salaryRange[1] < 200000 ? salaryRange[1] : undefined,
+    limit: JOBS_PER_PAGE,
+    offset: (currentPage - 1) * JOBS_PER_PAGE,
   });
+
+  const totalPages = Math.ceil(totalCount / JOBS_PER_PAGE);
+  const hasNextPage = currentPage < totalPages;
+  const hasPrevPage = currentPage > 1;
+
+  // Scroll to top when page changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentPage]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,17 +53,40 @@ const Jobs = () => {
     if (jobType && jobType !== 'all') params.set('type', jobType);
     if (experienceLevel && experienceLevel !== 'all') params.set('level', experienceLevel);
     if (isRemote) params.set('remote', 'true');
+    params.set('page', '1'); // Reset to page 1 on new search
+    setSearchParams(params);
+  };
+
+  const getPageUrl = (page: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('page', page.toString());
+    return `?${params.toString()}`;
+  };
+
+  const getFullPageUrl = (page: number) => {
+    return `https://jobbyist.co.za/jobs${getPageUrl(page)}`;
+  };
+
+  const goToPage = (page: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('page', page.toString());
     setSearchParams(params);
   };
 
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Jobs in South Africa | Find SA Job Opportunities | Jobbyist"
-        description={`Browse ${jobs.length}+ verified job opportunities in South Africa. Find full-time, part-time, remote & contract jobs in Johannesburg, Cape Town, Durban & more.`}
-        canonicalUrl="https://jobbyist.co.za/jobs"
+        title={`Jobs in South Africa${currentPage > 1 ? ` - Page ${currentPage}` : ''} | Find SA Job Opportunities | Jobbyist`}
+        description={`Browse ${totalCount}+ verified job opportunities in South Africa. Find full-time, part-time, remote & contract jobs in Johannesburg, Cape Town, Durban & more.`}
+        canonicalUrl={`https://jobbyist.co.za/jobs${currentPage > 1 ? `?page=${currentPage}` : ''}`}
         keywords={['jobs South Africa', 'SA jobs', 'Johannesburg jobs', 'Cape Town jobs', 'Durban jobs', 'remote jobs SA', 'IT jobs South Africa', 'finance jobs SA']}
       />
+      {hasPrevPage && (
+        <link rel="prev" href={getFullPageUrl(currentPage - 1)} />
+      )}
+      {hasNextPage && (
+        <link rel="next" href={getFullPageUrl(currentPage + 1)} />
+      )}
       <Navbar />
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4">
@@ -59,7 +96,8 @@ const Jobs = () => {
               Jobs in <span className="gradient-brand-text">South Africa</span>
             </h1>
             <p className="text-muted-foreground">
-              Explore {jobs.length}+ curated job opportunities across South Africa
+              Explore {totalCount}+ curated job opportunities across South Africa
+              {currentPage > 1 && ` - Page ${currentPage} of ${totalPages}`}
             </p>
           </div>
 
@@ -257,6 +295,91 @@ const Jobs = () => {
                   </div>
                 </Link>
               ))}
+            </div>
+          )}
+
+          {/* Pagination Controls */}
+          {!loading && jobs.length > 0 && (
+            <div className="mt-12 flex flex-col items-center gap-6">
+              {/* Page Navigation */}
+              <div className="flex items-center gap-2">
+                {hasPrevPage && (
+                  <>
+                    <Link to={getPageUrl(1)} className="inline-flex">
+                      <Button variant="outline" size="sm">
+                        First
+                      </Button>
+                    </Link>
+                    <Link to={getPageUrl(currentPage - 1)} className="inline-flex">
+                      <Button variant="outline" size="sm">
+                        <ChevronLeft className="h-4 w-4 mr-1" />
+                        Previous
+                      </Button>
+                    </Link>
+                  </>
+                )}
+                
+                <div className="flex items-center gap-2 mx-2">
+                  {/* Show page numbers */}
+                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                    let pageNum;
+                    if (totalPages <= 5) {
+                      pageNum = i + 1;
+                    } else if (currentPage <= 3) {
+                      pageNum = i + 1;
+                    } else if (currentPage >= totalPages - 2) {
+                      pageNum = totalPages - 4 + i;
+                    } else {
+                      pageNum = currentPage - 2 + i;
+                    }
+                    
+                    return (
+                      <Link key={pageNum} to={getPageUrl(pageNum)} className="inline-flex">
+                        <Button
+                          variant={currentPage === pageNum ? 'default' : 'outline'}
+                          size="sm"
+                          className="min-w-[40px]"
+                        >
+                          {pageNum}
+                        </Button>
+                      </Link>
+                    );
+                  })}
+                </div>
+
+                {hasNextPage && (
+                  <>
+                    <Link to={getPageUrl(currentPage + 1)} className="inline-flex">
+                      <Button variant="outline" size="sm">
+                        Next
+                        <ChevronRight className="h-4 w-4 ml-1" />
+                      </Button>
+                    </Link>
+                    <Link to={getPageUrl(totalPages)} className="inline-flex">
+                      <Button variant="outline" size="sm">
+                        Last
+                      </Button>
+                    </Link>
+                  </>
+                )}
+              </div>
+
+              {/* Load More Button (Alternative approach for infinite scroll) */}
+              {hasNextPage && (
+                <div className="text-center">
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Showing {(currentPage - 1) * JOBS_PER_PAGE + 1} - {Math.min(currentPage * JOBS_PER_PAGE, totalCount)} of {totalCount} jobs
+                  </p>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    onClick={() => goToPage(currentPage + 1)}
+                    className="min-w-[200px]"
+                  >
+                    Load More Jobs
+                  </Button>
+                </div>
+              )}
             </div>
           )}
         </div>
