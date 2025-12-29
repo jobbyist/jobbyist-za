@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BookOpen, Award, Users, ArrowRight } from "lucide-react";
+import ComingSoonModal from "@/components/ComingSoonModal";
 
 const features = [
   {
@@ -21,7 +23,16 @@ const features = [
 ];
 
 const UpskillingPrograms = () => {
+  const [showComingSoon, setShowComingSoon] = useState(false);
+
   return (
+    <>
+      <ComingSoonModal
+        open={showComingSoon}
+        onOpenChange={setShowComingSoon}
+        title="Learning Paths Coming Soon!"
+        description="We're building comprehensive learning paths to help you master in-demand skills. From frontend development to data science, our structured courses will give you the training you need to advance your career."
+      />
     <section id="upskilling" className="py-20 bg-muted/30 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -60,7 +71,12 @@ const UpskillingPrograms = () => {
           </div>
 
           <div className="text-center">
-            <Button variant="brand" size="lg" className="group">
+            <Button 
+              variant="brand" 
+              size="lg" 
+              className="group"
+              onClick={() => setShowComingSoon(true)}
+            >
               Explore Learning Paths
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Button>
@@ -68,6 +84,7 @@ const UpskillingPrograms = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Star, Briefcase, MessageSquare, ArrowRight } from "lucide-react";
@@ -42,10 +43,12 @@ const PromoStrip = () => {
             ))}
           </div>
 
-          <Button size="lg" className="bg-background text-foreground hover:bg-background/90 group">
-            Find Out More
-            <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-          </Button>
+          <Link to="/pro">
+            <Button size="lg" className="bg-background text-foreground hover:bg-background/90 group">
+              Find Out More
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
 
           <p className="text-sm text-primary-foreground/60 mt-6">
             7-day free trial • Cancel anytime • R99/month

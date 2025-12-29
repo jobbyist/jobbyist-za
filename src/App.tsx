@@ -13,6 +13,7 @@ import Jobs from "./pages/Jobs";
 import CountryJobs from "./pages/CountryJobs";
 import JobDetail from "./pages/JobDetail";
 import WaitingList from "./pages/WaitingList";
+import Pro from "./pages/Pro";
 import AdminLayout from "./pages/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminJobs from "./pages/admin/AdminJobs";
@@ -72,5 +73,39 @@ const App = () => {
     </QueryClientProvider>
   );
 };
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <AuthProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/jobs" element={<Jobs />} />
+            <Route path="/jobs/:countryCode" element={<CountryJobs />} />
+            <Route path="/job/:jobId" element={<JobDetail />} />
+            <Route path="/waiting-list/:countryCode" element={<WaitingList />} />
+            <Route path="/pro" element={<Pro />} />
+            
+            {/* Admin Routes */}
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="jobs" element={<AdminJobs />} />
+              <Route path="companies" element={<AdminCompanies />} />
+              <Route path="users" element={<AdminUsers />} />
+              <Route path="scraper" element={<AdminScraper />} />
+            </Route>
+            
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </AuthProvider>
+  </QueryClientProvider>
+);
 
 export default App;
