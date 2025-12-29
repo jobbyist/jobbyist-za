@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import CompanyLogo from '@/components/ui/company-logo';
 import { Building2, MapPin, Users, Search, CheckCircle } from 'lucide-react';
 import { useState } from 'react';
 
@@ -109,24 +110,11 @@ const Companies = () => {
                   <Card className="h-full hover:shadow-lg hover:border-primary/50 transition-all duration-300 cursor-pointer">
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between mb-4">
-                        {company.logo_url ? (
-                          <img
-                            src={company.logo_url}
-                            alt={company.name}
-                            className="w-16 h-16 rounded-lg object-cover border bg-white"
-                            onError={(e) => {
-                              e.currentTarget.style.display = 'none';
-                              e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                            }}
-                          />
-                        ) : null}
-                        <div
-                          className={`w-16 h-16 ${
-                            company.logo_url ? 'hidden' : ''
-                          } bg-primary rounded-lg flex items-center justify-center text-white font-bold text-2xl`}
-                        >
-                          {company.name.charAt(0).toUpperCase()}
-                        </div>
+                        <CompanyLogo 
+                          logoUrl={company.logo_url}
+                          companyName={company.name}
+                          size="lg"
+                        />
                         {company.is_verified && (
                           <Badge className="bg-green-500 ml-2">
                             <CheckCircle className="h-3 w-3 mr-1" />

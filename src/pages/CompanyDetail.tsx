@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { Skeleton } from '@/components/ui/skeleton';
+import CompanyLogo from '@/components/ui/company-logo';
 import { toast } from 'sonner';
 import { Building2, MapPin, Users, Globe, CheckCircle, AlertCircle, Briefcase } from 'lucide-react';
 import { useState } from 'react';
@@ -132,21 +133,12 @@ const CompanyDetail = () => {
           <div className="flex flex-col md:flex-row gap-8 items-start">
             {/* Company Logo */}
             <div className="flex-shrink-0">
-              {company.logo_url ? (
-                <img
-                  src={company.logo_url}
-                  alt={company.name}
-                  className="w-32 h-32 rounded-2xl object-cover border-2 border-border shadow-lg bg-white"
-                  onError={(e) => {
-                    // Fallback if logo fails to load
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                  }}
-                />
-              ) : null}
-              <div className={`w-32 h-32 ${company.logo_url ? 'hidden' : ''} bg-primary rounded-2xl flex items-center justify-center text-white font-bold text-5xl shadow-lg`}>
-                {company.name.charAt(0).toUpperCase()}
-              </div>
+              <CompanyLogo 
+                logoUrl={company.logo_url}
+                companyName={company.name}
+                size="xl"
+                className="border-2 border-border shadow-lg"
+              />
             </div>
 
             {/* Company Info */}

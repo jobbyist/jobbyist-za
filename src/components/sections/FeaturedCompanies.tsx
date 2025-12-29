@@ -4,14 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "react-router-dom";
-
-const companyColors = [
-  "bg-black",
-  "bg-neutral-700",
-  "bg-neutral-600",
-  "bg-neutral-800",
-  "bg-neutral-500",
-];
+import CompanyLogo from "@/components/ui/company-logo";
 
 const FeaturedCompanies = () => {
   const { data: companies, isLoading } = useQuery({
@@ -50,27 +43,18 @@ const FeaturedCompanies = () => {
               </div>
             ))
           ) : companies && companies.length > 0 ? (
-            companies.map((company, index) => (
+            companies.map((company) => (
               <Link
                 key={company.id}
                 to={`/company/${company.slug}`}
                 className="group bg-card rounded-xl p-6 border border-border hover:border-primary/20 hover:shadow-lg transition-all duration-300 cursor-pointer"
               >
-                {company.logo_url ? (
-                  <img 
-                    src={company.logo_url} 
-                    alt={company.name}
-                    className="w-12 h-12 rounded-lg object-cover mb-4 group-hover:scale-110 transition-transform"
-                    onError={(e) => {
-                      // Fallback to initial if logo fails to load
-                      e.currentTarget.style.display = 'none';
-                      e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                    }}
-                  />
-                ) : null}
-                <div className={`w-12 h-12 ${company.logo_url ? 'hidden' : ''} ${companyColors[index % companyColors.length]} rounded-lg flex items-center justify-center text-white font-bold text-xl mb-4 group-hover:scale-110 transition-transform`}>
-                  {company.name.charAt(0).toUpperCase()}
-                </div>
+                <CompanyLogo 
+                  logoUrl={company.logo_url}
+                  companyName={company.name}
+                  size="md"
+                  className="mb-4"
+                />
                 <h3 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">
                   {company.name}
                 </h3>
