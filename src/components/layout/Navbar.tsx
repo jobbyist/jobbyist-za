@@ -15,6 +15,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "Jobs", href: "/jobs" },
+    { name: "Pro", href: "/pro" },
     { name: "Upskilling Programs", href: "#upskilling" },
     { name: "Resume Builder", href: "#resume" },
   ];
