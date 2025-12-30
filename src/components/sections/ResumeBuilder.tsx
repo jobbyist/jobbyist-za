@@ -1,12 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { FileText, CheckCircle2, ArrowRight, Sparkles } from "lucide-react";
+import { Target, CheckCircle2, ArrowRight, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const benefits = [
-  "ATS compatibility check",
-  "Keyword optimization suggestions",
-  "Format and design recommendations",
-  "Industry-specific feedback",
+  "Automatic job scanning across multiple sites",
+  "AI-powered resume matching algorithm",
+  "Real-time notifications for new matches",
+  "Automated application submissions",
 ];
 
 const ResumeBuilder = () => {
@@ -18,14 +19,14 @@ const ResumeBuilder = () => {
             {/* Content */}
             <div>
               <Badge variant="secondary" className="mb-4">
-                100% Free Tool
+                Jobbyist Pro Exclusive
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Get Your Resume Professionally Audited
+                AI-Powered Job Matcher
               </h2>
               <p className="text-muted-foreground mb-8">
-                Our AI-powered ResumeAudit tool analyzes your resume and provides 
-                actionable feedback to help you land more interviews.
+                Our intelligent job matching tool automatically analyzes the latest job postings 
+                and matches them against your resume with real-time notifications and automated applications.
               </p>
 
               <ul className="space-y-3 mb-8">
@@ -37,10 +38,12 @@ const ResumeBuilder = () => {
                 ))}
               </ul>
 
-              <Button variant="brand" size="lg" className="group">
-                Claim My Free Resume Audit
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
+              <Link to="/job-matcher">
+                <Button variant="brand" size="lg" className="group">
+                  Get Started with Job Matcher
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
             </div>
 
             {/* Card */}
@@ -49,27 +52,29 @@ const ResumeBuilder = () => {
               <div className="relative bg-card rounded-2xl p-8 border border-border shadow-xl">
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-14 h-14 gradient-brand rounded-xl flex items-center justify-center">
-                    <FileText className="h-7 w-7 text-primary-foreground" />
+                    <Target className="h-7 w-7 text-primary-foreground" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg">Resume Builder</h3>
-                    <p className="text-sm text-muted-foreground">AI-Powered</p>
+                    <h3 className="font-semibold text-lg">Job Matcher</h3>
+                    <p className="text-sm text-muted-foreground">AI-Powered Matching</p>
                   </div>
                 </div>
 
                 <p className="text-muted-foreground mb-6">
-                  Create a professional, ATS-friendly resume in minutes with our 
-                  free AI-powered resume builder.
+                  Let our AI automatically find and match the best job opportunities 
+                  based on your resume and career goals.
                 </p>
 
-                <Button variant="outline" className="w-full group">
-                  <Sparkles className="h-4 w-4 mr-2 text-primary" />
-                  How It Works
-                  <ArrowRight className="h-4 w-4 ml-auto group-hover:translate-x-1 transition-transform" />
-                </Button>
+                <Link to="/job-matcher">
+                  <Button variant="outline" className="w-full group">
+                    <Sparkles className="h-4 w-4 mr-2 text-primary" />
+                    How It Works
+                    <ArrowRight className="h-4 w-4 ml-auto group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
 
                 <p className="text-xs text-center text-muted-foreground mt-4">
-                  100% Free • No Credit Card Required
+                  Jobbyist Pro Members Only
                 </p>
               </div>
             </div>

@@ -30,7 +30,7 @@ const Navbar = () => {
   ];
 
   const moreMenuItems = [
-    { name: "Resume Audit", href: "#resume-audit" },
+    { name: "Job Matcher", href: "/job-matcher" },
     { name: "Resume Builder", href: "#resume" },
     { name: "Upskilling Programs", href: "#upskilling" },
     { name: "The Job Post Podcast", href: "#podcast" },
