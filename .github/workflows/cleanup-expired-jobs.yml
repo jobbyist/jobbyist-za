@@ -1,0 +1,33 @@
+name: Cleanup Expired Jobs
+
+on:
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:  # Allow manual trigger from GitHub UI
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Cleanup expired jobs
+        run: |
+          response=$(curl -s -w "\n%{http_code}" -X POST \
+            '${{ secrets.SUPABASE_URL }}/functions/v1/cleanup-expired-jobs' \
+            -H 'Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}' \
+            -H 'Content-Type: application/json')
+          
+          http_code=$(echo "$response" | tail -n1)
+          body=$(echo "$response" | sed '$d')
+          
+          echo "Response: $body"
+          echo "HTTP Status: $http_code"
+          
+          if [ "$http_code" != "200" ]; then
+            echo "Error: Cleanup job failed with status $http_code"
+            exit 1
+          fi
+          
+          echo "Cleanup job completed successfully"

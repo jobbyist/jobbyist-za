@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Link, useParams, useSearchParams, Navigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,7 +9,7 @@ import { Slider } from '@/components/ui/slider';
 import { useJobs } from '@/hooks/useJobs';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import { SEOHead, generateJobSearchSchema } from '@/components/SEOHead';
+import { SEOHead, generateJobSearchSchema, generateJobListSchema } from '@/components/SEOHead';
 import { Search, MapPin, Wifi, Briefcase, Clock, ArrowRight, Building2, DollarSign, ChevronRight } from 'lucide-react';
 import { countries, formatSalary, type CountryCode } from '@/lib/countries';
 
@@ -69,6 +69,29 @@ const CountryJobs = () => {
     'African jobs',
     'Jobbyist Africa',
   ];
+
+  // Add structured data for job listings
+  useEffect(() => {
+    if (jobs.length > 0) {
+      const existingScript = document.querySelector('script[type="application/ld+json"][data-country-jobs="true"]');
+      if (existingScript) {
+        existingScript.remove();
+      }
+
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.setAttribute('data-country-jobs', 'true');
+      script.textContent = JSON.stringify(generateJobListSchema(jobs));
+      document.head.appendChild(script);
+
+      return () => {
+        const scriptToRemove = document.querySelector('script[type="application/ld+json"][data-country-jobs="true"]');
+        if (scriptToRemove) {
+          scriptToRemove.remove();
+        }
+      };
+    }
+  }, [jobs]);
 
   return (
     <div className="min-h-screen bg-background">

@@ -202,6 +202,46 @@ export const generateJobPostingSchema = (job: {
   return schema;
 };
 
+// Generate ItemList structured data for job listings
+export const generateJobListSchema = (jobs: Array<{
+  id: string;
+  title: string;
+  description: string;
+  company: { name: string; logo_url?: string | null } | null;
+  location: string;
+  country: string;
+  salary_min?: number | null;
+  salary_max?: number | null;
+  salary_currency?: string | null;
+  job_type: string;
+  posted_at: string;
+  application_deadline?: string | null;
+  is_remote: boolean;
+}>) => {
+  const employmentTypeMap: Record<string, string> = {
+    'Full-time': 'FULL_TIME',
+    'Part-time': 'PART_TIME',
+    'Contract': 'CONTRACTOR',
+    'Internship': 'INTERN',
+    'Temporary': 'TEMPORARY',
+  };
+
+  return {
+    '@context': 'https://schema.org/',
+    '@type': 'ItemList',
+    itemListElement: jobs
+      .filter(job => job.company) // Only include jobs with valid company information
+      .map((job, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        item: generateJobPostingSchema({
+          ...job,
+          company: job.company!,
+        })
+      })),
+  };
+};
+
 // Generate JobSearch structured data for country pages
 export const generateJobSearchSchema = (country: { name: string; code: string }, jobCount: number) => ({
   '@context': 'https://schema.org/',
