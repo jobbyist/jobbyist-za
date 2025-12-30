@@ -1,5 +1,6 @@
 -- Migration: Add job expiry system to automatically delete jobs 30 days after posting
 -- This ensures all job listings are removed from the site/database 30 days after being published
+-- Note: The expires_at column already exists in the jobs table from the initial migration
 
 -- Function to delete expired jobs (30 days after posted_at)
 CREATE OR REPLACE FUNCTION public.delete_expired_jobs()

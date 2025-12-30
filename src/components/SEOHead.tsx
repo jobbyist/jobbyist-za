@@ -218,27 +218,27 @@ export const generateJobListSchema = (jobs: Array<{
   application_deadline?: string | null;
   is_remote: boolean;
 }>) => {
+  const employmentTypeMap: Record<string, string> = {
+    'Full-time': 'FULL_TIME',
+    'Part-time': 'PART_TIME',
+    'Contract': 'CONTRACTOR',
+    'Internship': 'INTERN',
+    'Temporary': 'TEMPORARY',
+  };
+
   return {
     '@context': 'https://schema.org/',
     '@type': 'ItemList',
-    itemListElement: jobs.map((job, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      item: job.company ? generateJobPostingSchema({
-        ...job,
-        company: job.company,
-      }) : {
-        '@type': 'JobPosting',
-        title: job.title,
-        description: job.description,
-        identifier: {
-          '@type': 'PropertyValue',
-          name: 'Unknown Company',
-          value: job.id,
-        },
-        datePosted: job.posted_at,
-      }
-    })),
+    itemListElement: jobs
+      .filter(job => job.company) // Only include jobs with valid company information
+      .map((job, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        item: generateJobPostingSchema({
+          ...job,
+          company: job.company!,
+        })
+      })),
   };
 };
 
