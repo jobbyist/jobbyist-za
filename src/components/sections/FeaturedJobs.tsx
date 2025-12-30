@@ -3,10 +3,35 @@ import { Badge } from "@/components/ui/badge";
 import { MapPin, ArrowRight, Wifi, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useJobs } from "@/hooks/useJobs";
+import { generateJobListSchema } from "@/components/SEOHead";
+import { useEffect } from "react";
 
 const FeaturedJobs = () => {
   const navigate = useNavigate();
   const { jobs, loading } = useJobs({ country: 'ZA', limit: 6 });
+
+  // Add structured data for featured jobs
+  useEffect(() => {
+    if (jobs.length > 0) {
+      const existingScript = document.querySelector('script[type="application/ld+json"][data-featured-jobs="true"]');
+      if (existingScript) {
+        existingScript.remove();
+      }
+
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.setAttribute('data-featured-jobs', 'true');
+      script.textContent = JSON.stringify(generateJobListSchema(jobs));
+      document.head.appendChild(script);
+
+      return () => {
+        const scriptToRemove = document.querySelector('script[type="application/ld+json"][data-featured-jobs="true"]');
+        if (scriptToRemove) {
+          scriptToRemove.remove();
+        }
+      };
+    }
+  }, [jobs]);
 
   const getCompanyColor = (name: string) => {
     const colors = [
