@@ -9,6 +9,8 @@ on:
 jobs:
   cleanup:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Cleanup expired jobs
         run: |
