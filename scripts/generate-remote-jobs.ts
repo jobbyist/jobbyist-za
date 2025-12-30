@@ -332,7 +332,8 @@ function generateJobs(count: number = 250): JobListing[] {
     const description = getRandomElement(JOB_DESCRIPTIONS[category]);
     const datePosted = getRandomDate(45);
     
-    const sourceUrl = `https://careers.${company.domain}/jobs/${jobTitle.toLowerCase().replace(/\s+/g, '-')}-remote-south-africa-${Date.now()}-${i}`;
+    const timestamp = Date.now() + i; // Add index to ensure uniqueness
+    const sourceUrl = `https://careers.${company.domain}/jobs/${jobTitle.toLowerCase().replace(/\s+/g, '-')}-remote-south-africa-${timestamp}`;
     
     const employmentTypes = ['Full Time', 'Full-time', 'Contract', 'Part Time'];
     const locations = [

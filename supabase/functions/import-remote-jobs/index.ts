@@ -20,14 +20,23 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabaseUrl = Deno.env.get('SUPABASE_URL');
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+    
+    if (!supabaseUrl || !supabaseKey) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'Supabase credentials not configured' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
     
     const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Load the remote jobs JSON file
-    const response = await fetch('https://raw.githubusercontent.com/jobbyist/jobbyist-za/main/public/data/remote-jobs-international.json');
+    // Load the remote jobs JSON file (configurable via environment)
+    const dataUrl = Deno.env.get('REMOTE_JOBS_DATA_URL') || 
+      'https://raw.githubusercontent.com/jobbyist/jobbyist-za/main/public/data/remote-jobs-international.json';
+    const response = await fetch(dataUrl);
     const { job_listings } = await response.json();
     
     if (!job_listings || !Array.isArray(job_listings)) {
