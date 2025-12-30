@@ -71,10 +71,3 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
-
-## Additional Documentation
-
-- **[How to Import Remote Jobs](HOW_TO_IMPORT_JOBS.md)** - Guide to importing 250+ remote job listings from international employers
-- **[Remote Jobs Import Details](REMOTE_JOBS_IMPORT.md)** - Comprehensive documentation about the remote jobs feature
-- **[Firecrawl Setup](FIRECRAWL_SETUP.md)** - Company scraping with Firecrawl
-- **[Implementation Summary](IMPLEMENTATION_SUMMARY.md)** - South African company listings implementation
