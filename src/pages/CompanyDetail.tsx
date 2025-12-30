@@ -1,26 +1,17 @@
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/hooks/useAuth';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Textarea } from '@/components/ui/textarea';
 import { Skeleton } from '@/components/ui/skeleton';
 import CompanyLogo from '@/components/ui/company-logo';
-import { toast } from 'sonner';
 import { Building2, MapPin, Users, Globe, CheckCircle, AlertCircle, Briefcase } from 'lucide-react';
-import { useState } from 'react';
 
 const CompanyDetail = () => {
   const { slug } = useParams<{ slug: string }>();
-  const { user } = useAuth();
-  const [showClaimDialog, setShowClaimDialog] = useState(false);
-  const [claimNotes, setClaimNotes] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { data: company, isLoading } = useQuery({
     queryKey: ['company', slug],
@@ -54,42 +45,6 @@ const CompanyDetail = () => {
     },
     enabled: !!company?.id,
   });
-
-  const handleClaimCompany = async () => {
-    if (!user) {
-      toast.error('Please sign in to claim this company');
-      return;
-    }
-
-    if (!claimNotes.trim()) {
-      toast.error('Please provide information about your claim');
-      return;
-    }
-
-    setIsSubmitting(true);
-    try {
-      const { error } = await supabase
-        .from('companies')
-        .update({
-          claimed_by: user.id,
-          claimed_at: new Date().toISOString(),
-          claim_status: 'pending',
-          claim_notes: claimNotes,
-        })
-        .eq('id', company?.id);
-
-      if (error) throw error;
-
-      toast.success('Claim submitted successfully! We will review your request.');
-      setShowClaimDialog(false);
-      setClaimNotes('');
-    } catch (error) {
-      console.error('Error claiming company:', error);
-      toast.error('Failed to submit claim. Please try again.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   if (isLoading) {
     return (
@@ -174,12 +129,6 @@ const CompanyDetail = () => {
                       Verified
                     </Badge>
                   )}
-                  {company.claim_status === 'approved' && (
-                    <Badge variant="outline">
-                      <CheckCircle className="h-3 w-3 mr-1" />
-                      Claimed
-                    </Badge>
-                  )}
                 </div>
               </div>
 
@@ -197,52 +146,6 @@ const CompanyDetail = () => {
                       Visit Website
                     </Button>
                   </a>
-                )}
-                
-                {(!company.claim_status || company.claim_status === 'unclaimed') && (
-                  <Dialog open={showClaimDialog} onOpenChange={setShowClaimDialog}>
-                    <DialogTrigger asChild>
-                      <Button variant="outline">
-                        <Building2 className="h-4 w-4 mr-2" />
-                        Claim This Page
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>Claim Company Page</DialogTitle>
-                        <DialogDescription>
-                          Verify your association with {company.name} to manage this company page.
-                        </DialogDescription>
-                      </DialogHeader>
-                      <div className="space-y-4">
-                        <div>
-                          <label className="text-sm font-medium mb-2 block">
-                            Why should you be able to manage this page?
-                          </label>
-                          <Textarea
-                            placeholder="Please provide details about your role at the company and why you should be able to manage this page..."
-                            value={claimNotes}
-                            onChange={(e) => setClaimNotes(e.target.value)}
-                            rows={4}
-                          />
-                        </div>
-                        <Button
-                          onClick={handleClaimCompany}
-                          disabled={isSubmitting}
-                          className="w-full"
-                        >
-                          {isSubmitting ? 'Submitting...' : 'Submit Claim Request'}
-                        </Button>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
-                )}
-
-                {company.claim_status === 'pending' && (
-                  <Badge variant="outline" className="px-4 py-2">
-                    <AlertCircle className="h-4 w-4 mr-2" />
-                    Claim Pending Review
-                  </Badge>
                 )}
               </div>
             </div>

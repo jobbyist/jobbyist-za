@@ -8,6 +8,20 @@ import { MapPin, Briefcase, DollarSign, Clock, Building2, ExternalLink, Bookmark
 import { useNavigate } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 
+interface JobData {
+  id: string;
+  title: string;
+  location: string;
+  is_remote: boolean;
+  job_type: string;
+  salary_min?: number | null;
+  salary_max?: number | null;
+  created_at: string;
+  skills?: string[] | null;
+  external_url?: string | null;
+  companies?: { name: string } | null;
+}
+
 interface MatchedJobCardProps {
   match: JobMatch;
   onStatusChange: (matchId: string, status: JobMatch['status']) => void;
@@ -16,7 +30,7 @@ interface MatchedJobCardProps {
 
 export function MatchedJobCard({ match, onStatusChange, onApply }: MatchedJobCardProps) {
   const navigate = useNavigate();
-  const job = match.job;
+  const job = match.job as unknown as JobData | undefined;
 
   if (!job) return null;
 
@@ -35,6 +49,8 @@ export function MatchedJobCard({ match, onStatusChange, onApply }: MatchedJobCar
     }
     onStatusChange(match.id, 'applied');
   };
+
+  const skills = job.skills || [];
 
   return (
     <Card className="hover:shadow-lg transition-shadow">
@@ -65,7 +81,7 @@ export function MatchedJobCard({ match, onStatusChange, onApply }: MatchedJobCar
           {(job.salary_min || job.salary_max) && (
             <div className="flex items-center gap-2 text-muted-foreground">
               <DollarSign className="w-4 h-4" />
-              <span>{formatSalaryRange(job.salary_min, job.salary_max)}</span>
+              <span>{formatSalaryRange(job.salary_min || 0, job.salary_max || 0)}</span>
             </div>
           )}
           <div className="flex items-center gap-2 text-muted-foreground">
@@ -100,11 +116,11 @@ export function MatchedJobCard({ match, onStatusChange, onApply }: MatchedJobCar
         </div>
 
         {/* Skills */}
-        {job.skills && job.skills.length > 0 && (
+        {skills.length > 0 && (
           <div className="space-y-2">
             <h4 className="font-semibold text-sm">Required Skills:</h4>
             <div className="flex flex-wrap gap-2">
-              {job.skills.slice(0, 8).map((skill: string) => (
+              {skills.slice(0, 8).map((skill: string) => (
                 <Badge
                   key={skill}
                   variant={match.match_reasons.skills_matched?.includes(skill) ? 'default' : 'outline'}
@@ -112,8 +128,8 @@ export function MatchedJobCard({ match, onStatusChange, onApply }: MatchedJobCar
                   {skill}
                 </Badge>
               ))}
-              {job.skills.length > 8 && (
-                <Badge variant="secondary">+{job.skills.length - 8} more</Badge>
+              {skills.length > 8 && (
+                <Badge variant="secondary">+{skills.length - 8} more</Badge>
               )}
             </div>
           </div>

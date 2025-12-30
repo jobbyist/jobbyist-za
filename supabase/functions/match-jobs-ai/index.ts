@@ -84,10 +84,11 @@ serve(async (req) => {
       default:
         throw new Error('Invalid action');
     }
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return new Response(
-      JSON.stringify({ success: false, error: error.message }),
+      JSON.stringify({ success: false, error: errorMessage }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
@@ -229,7 +230,7 @@ Job Preferences:
 ${JSON.stringify(jobPreferences, null, 2)}
 
 Jobs to evaluate:
-${JSON.stringify(batch.map(j => ({
+${JSON.stringify(batch.map((j: { id: string; title: string; description: string; qualifications: string | null; skills: string[] | null; experience_level: string | null; location: string; is_remote: boolean; salary_min: number | null; salary_max: number | null; companies?: { name: string } }) => ({
   id: j.id,
   title: j.title,
   description: j.description,
@@ -274,7 +275,7 @@ For each job, return ONLY valid JSON with no additional text:
       
       // Map scores to jobs
       for (const match of result.matches) {
-        const job = batch.find(j => j.id === match.job_id);
+        const job = batch.find((j: { id: string }) => j.id === match.job_id);
         if (job) {
           matches.push({
             job,

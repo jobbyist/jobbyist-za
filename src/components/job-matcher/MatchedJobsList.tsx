@@ -8,6 +8,12 @@ import { MatchedJobCard } from './MatchedJobCard';
 import { JobMatch } from '@/hooks/useJobMatcher';
 import { Search, SlidersHorizontal } from 'lucide-react';
 
+interface JobData {
+  title?: string;
+  location?: string;
+  companies?: { name?: string };
+}
+
 interface MatchedJobsListProps {
   matches: JobMatch[];
   onStatusChange: (matchId: string, status: JobMatch['status']) => void;
@@ -25,11 +31,15 @@ export function MatchedJobsList({ matches, onStatusChange, onApply }: MatchedJob
 
     // Filter by search query
     if (searchQuery) {
-      filtered = filtered.filter(match =>
-        match.job?.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        match.job?.companies?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        match.job?.location.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+      filtered = filtered.filter(match => {
+        const job = match.job as JobData | undefined;
+        if (!job) return false;
+        const title = job.title?.toLowerCase() || '';
+        const companyName = job.companies?.name?.toLowerCase() || '';
+        const location = job.location?.toLowerCase() || '';
+        const query = searchQuery.toLowerCase();
+        return title.includes(query) || companyName.includes(query) || location.includes(query);
+      });
     }
 
     // Filter by status
@@ -139,7 +149,7 @@ export function MatchedJobsList({ matches, onStatusChange, onApply }: MatchedJob
             {/* Sort */}
             <div className="space-y-2">
               <Label>Sort By</Label>
-              <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+              <Select value={sortBy} onValueChange={(value: 'score' | 'date') => setSortBy(value)}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
