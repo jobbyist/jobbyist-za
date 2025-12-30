@@ -24,6 +24,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "Browse Jobs", href: "/jobs" },
+    { name: "AI Job Matcher", href: "/job-matcher" },
     { name: "Company Directory", href: "#companies" },
     { name: "Knowledge Center", href: "#knowledge" },
   ];
