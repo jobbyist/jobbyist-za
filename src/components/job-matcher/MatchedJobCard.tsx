@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { MatchScoreBadge } from './MatchScoreBadge';
 import { JobMatch } from '@/hooks/useJobMatcher';
+import { formatSalaryRange } from '@/lib/utils';
 import { MapPin, Briefcase, DollarSign, Clock, Building2, ExternalLink, Bookmark, Eye } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
@@ -64,13 +65,7 @@ export function MatchedJobCard({ match, onStatusChange, onApply }: MatchedJobCar
           {(job.salary_min || job.salary_max) && (
             <div className="flex items-center gap-2 text-muted-foreground">
               <DollarSign className="w-4 h-4" />
-              <span>
-                {job.salary_min && job.salary_max
-                  ? `R${job.salary_min.toLocaleString()} - R${job.salary_max.toLocaleString()}`
-                  : job.salary_min
-                  ? `From R${job.salary_min.toLocaleString()}`
-                  : `Up to R${job.salary_max?.toLocaleString()}`}
-              </span>
+              <span>{formatSalaryRange(job.salary_min, job.salary_max)}</span>
             </div>
           )}
           <div className="flex items-center gap-2 text-muted-foreground">

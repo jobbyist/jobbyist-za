@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Input } from '@/components/ui/input';
+import { Slider } from '@/components/ui/slider';
 import { Badge } from '@/components/ui/badge';
 import { Loader2, Zap, AlertCircle } from 'lucide-react';
 import { JobMatcherProfile } from '@/hooks/useJobMatcher';
@@ -99,13 +100,12 @@ Best regards,
                 Only apply to jobs with a match score of {minScore}% or higher
               </p>
               <div className="flex items-center gap-4">
-                <Input
-                  type="range"
-                  min="50"
-                  max="100"
-                  step="5"
-                  value={minScore}
-                  onChange={(e) => setMinScore(parseInt(e.target.value))}
+                <Slider
+                  min={50}
+                  max={100}
+                  step={5}
+                  value={[minScore]}
+                  onValueChange={(value) => setMinScore(value[0])}
                   className="flex-1"
                 />
                 <Input

@@ -75,8 +75,8 @@ serve(async (req) => {
         }
 
         // Send notification email
-        // Note: This is a placeholder. In production, integrate with an email service
-        // like SendGrid, Resend, or use Supabase's built-in email if configured
+        // TODO: Integrate with email service provider (SendGrid, Resend, or Supabase Auth)
+        // For production, replace this with actual email service integration
         console.log(`Would send email to ${userData.user.email} with ${matches.length} new matches`);
         
         // Here you would call your email service API

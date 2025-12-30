@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
+import { Slider } from '@/components/ui/slider';
 import { Label } from '@/components/ui/label';
 import { MatchedJobCard } from './MatchedJobCard';
 import { JobMatch } from '@/hooks/useJobMatcher';
@@ -170,13 +171,12 @@ export function MatchedJobsList({ matches, onStatusChange, onApply }: MatchedJob
             {/* Min Score */}
             <div className="space-y-2">
               <Label>Min Score: {minScore}%</Label>
-              <Input
-                type="range"
-                min="0"
-                max="100"
-                step="10"
-                value={minScore}
-                onChange={(e) => setMinScore(parseInt(e.target.value))}
+              <Slider
+                min={0}
+                max={100}
+                step={10}
+                value={[minScore]}
+                onValueChange={(value) => setMinScore(value[0])}
                 className="w-full"
               />
             </div>

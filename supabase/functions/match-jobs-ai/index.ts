@@ -6,6 +6,10 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Configuration constants
+const CLAUDE_MODEL = 'claude-3-sonnet-20240229';
+const JOBS_BATCH_SIZE = 5;
+
 interface MatchJobsRequest {
   resumeText?: string;
   parsedResume?: any;
@@ -98,7 +102,7 @@ async function parseResume(resumeText: string, anthropicKey: string) {
       'anthropic-version': '2023-06-01',
     },
     body: JSON.stringify({
-      model: 'claude-3-sonnet-20240229',
+      model: CLAUDE_MODEL,
       max_tokens: 4096,
       messages: [{
         role: 'user',
@@ -198,7 +202,7 @@ async function matchJobs(
   }
 
   // Score jobs using Claude AI (in batches to avoid token limits)
-  const batchSize = 5;
+  const batchSize = JOBS_BATCH_SIZE;
   const matches: JobMatch[] = [];
 
   for (let i = 0; i < jobs.length; i += batchSize) {
@@ -212,7 +216,7 @@ async function matchJobs(
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-3-sonnet-20240229',
+        model: CLAUDE_MODEL,
         max_tokens: 4096,
         messages: [{
           role: 'user',
@@ -340,7 +344,7 @@ async function generateCoverLetter(
       'anthropic-version': '2023-06-01',
     },
     body: JSON.stringify({
-      model: 'claude-3-sonnet-20240229',
+      model: CLAUDE_MODEL,
       max_tokens: 2048,
       messages: [{
         role: 'user',
