@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
@@ -15,8 +14,6 @@ import {
   Lock,
   Sparkles
 } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
-
 const features = [
   {
     icon: Target,
@@ -49,13 +46,9 @@ const benefits = [
 ];
 
 const JobMatcher = () => {
-  const navigate = useNavigate();
-  const { user } = useAuth();
-
-  // For now, we'll show the feature page to all users
-  // In a real implementation, you would check for Pro membership status
-  // and redirect non-Pro users to the Pro page
-
+  // Note: This page is accessible to all users to learn about the feature
+  // Pro membership check would be implemented at the feature activation level
+  
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
