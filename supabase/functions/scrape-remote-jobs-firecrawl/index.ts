@@ -45,6 +45,12 @@ const REMOTE_JOB_SOURCES = [
   },
 ];
 
+// Constants for company creation
+const DEFAULT_COMPANY_SIZE = '50-200';
+const DEFAULT_COMPANY_COUNTRY = 'ZA'; // South Africa
+const DEFAULT_COMPANY_INDUSTRY = 'Technology';
+const DEFAULT_COMPANY_LOCATION = 'Remote';
+
 interface JobListing {
   title: string;
   company: string;
@@ -248,10 +254,10 @@ async function createOrGetCompany(
       description: `${companyName} is an international company offering remote opportunities for talented professionals worldwide.`,
       logo_url: `https://logo.clearbit.com/${domain}`,
       website: website || `https://${domain}`,
-      industry: 'Technology',
-      size: '50-200',
-      country: 'ZA',
-      location: 'Remote',
+      industry: DEFAULT_COMPANY_INDUSTRY,
+      size: DEFAULT_COMPANY_SIZE,
+      country: DEFAULT_COMPANY_COUNTRY,
+      location: DEFAULT_COMPANY_LOCATION,
       is_active: true,
       is_verified: false,
     })
@@ -302,11 +308,16 @@ async function createJobListing(
         salaryCurrency = 'GBP';
       }
       
-      // Extract numbers
-      const numbers = salaryStr.match(/(\d+)k?\s*-?\s*(\d+)k?/i);
-      if (numbers) {
-        salaryMin = parseInt(numbers[1]) * (salaryStr.includes('k') ? 1000 : 1);
-        salaryMax = parseInt(numbers[2]) * (salaryStr.includes('k') ? 1000 : 1);
+      // Extract numbers - handle 'k' suffix per number
+      const rangeMatch = salaryStr.match(/(\d+)(k)?\s*-\s*(\d+)(k)?/i);
+      if (rangeMatch) {
+        const min = parseInt(rangeMatch[1]);
+        const minHasK = rangeMatch[2] !== undefined;
+        const max = parseInt(rangeMatch[3]);
+        const maxHasK = rangeMatch[4] !== undefined;
+        
+        salaryMin = min * (minHasK ? 1000 : 1);
+        salaryMax = max * (maxHasK ? 1000 : 1);
       }
     }
 
@@ -434,7 +445,16 @@ Deno.serve(async (req) => {
         const companyId = await createOrGetCompany(
           supabase,
           job.company,
-          job.url ? new URL(job.url).origin : undefined
+          (() => {
+            // Safely extract origin from URL
+            if (!job.url) return undefined;
+            try {
+              return new URL(job.url).origin;
+            } catch (e) {
+              console.warn(`Invalid URL for job: ${job.url}`);
+              return undefined;
+            }
+          })()
         );
 
         if (!companyId) {
