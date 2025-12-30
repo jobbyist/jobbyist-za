@@ -42,7 +42,6 @@ const RecruitmentSuiteModal = ({
     const firstName = form.firstName.trim();
     const lastName = form.lastName.trim();
     const userType = form.userType;
-    const companyName = form.companyName.trim();
 
     // Validate email format
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/i;
@@ -67,11 +66,6 @@ const RecruitmentSuiteModal = ({
       return;
     }
 
-    if (companyName.length > 100) {
-      toast.error("Company name is too long (max 100 characters)");
-      return;
-    }
-
     // Validate user type
     if (!["employer", "recruiter"].includes(userType)) {
       toast.error("Invalid user type selected");
@@ -80,44 +74,18 @@ const RecruitmentSuiteModal = ({
 
     setIsSubmitting(true);
     try {
-      const { error } = await supabase.from("recruitment_suite_waitlist").insert({
+      // Use the waiting_list table which exists
+      const { error } = await supabase.from("waiting_list").insert({
         email: email,
         first_name: firstName || null,
         last_name: lastName || null,
-        user_type: userType,
-        company_name: companyName || null,
+        user_type: userType === "recruiter" ? "employer" : userType,
+        country: "ZA" as const,
       });
 
       if (error) {
         if (error.code === "23505") {
           toast.error("This email is already on the waiting list!");
-        } else if (error.code === "42P01") {
-          // Table doesn't exist - fallback to waiting_list
-          const { error: fallbackError } = await supabase.from("waiting_list").insert({
-            email: email,
-            first_name: firstName || null,
-            last_name: lastName || null,
-            user_type: userType === "recruiter" ? "employer" : userType,
-            country: "ZA",
-          });
-
-          if (fallbackError) {
-            if (fallbackError.code === "23505") {
-              toast.error("This email is already on the waiting list!");
-            } else {
-              throw fallbackError;
-            }
-          } else {
-            toast.success("You've been added to the Early Access Program!");
-            setForm({
-              email: "",
-              firstName: "",
-              lastName: "",
-              userType: "employer",
-              companyName: "",
-            });
-            setTimeout(() => onOpenChange(false), MODAL_CLOSE_DELAY);
-          }
         } else {
           throw error;
         }

@@ -132,8 +132,12 @@ const JobDetail = () => {
 
   const country = getCountryByCode(job.country as CountryCode);
 
-  // Generate structured data for Google Jobs
-  const jobSchema = generateJobPostingSchema(job);
+  // Generate structured data for Google Jobs only if company exists
+  const jobSchema = job.company ? generateJobPostingSchema({
+    ...job,
+    company: job.company,
+    posted_at: job.posted_at || new Date().toISOString(),
+  }) : undefined;
 
   return (
     <div className="min-h-screen bg-background">
