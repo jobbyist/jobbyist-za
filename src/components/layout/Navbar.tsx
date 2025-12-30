@@ -33,7 +33,6 @@ const Navbar = () => {
     { name: "Resume Builder", href: "#resume" },
     { name: "Upskilling Programs", href: "#upskilling" },
     { name: "The Job Post Podcast", href: "#podcast" },
-    { name: "Community Forum", href: "#community" },
   ];
 
   const handleSignOut = async () => {

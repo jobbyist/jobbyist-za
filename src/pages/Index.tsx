@@ -7,7 +7,6 @@ import UpskillingPrograms from "@/components/sections/UpskillingPrograms";
 import RecruitmentSuite from "@/components/sections/RecruitmentSuite";
 import ResumeBuilder from "@/components/sections/ResumeBuilder";
 import Podcast from "@/components/sections/Podcast";
-import BlogSection from "@/components/sections/BlogSection";
 import PromoStrip from "@/components/sections/PromoStrip";
 
 const Index = () => {
@@ -23,7 +22,6 @@ const Index = () => {
         <ResumeBuilder />
         <RecruitmentSuite />
         <Podcast />
-        <BlogSection />
       </main>
       <Footer />
     </div>
