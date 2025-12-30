@@ -24,6 +24,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "Browse Jobs", href: "/jobs" },
+    { name: "AI Job Matcher", href: "/job-matcher" },
     { name: "Company Directory", href: "#companies" },
     { name: "Knowledge Center", href: "#knowledge" },
   ];
@@ -33,7 +34,6 @@ const Navbar = () => {
     { name: "Resume Builder", href: "#resume" },
     { name: "Upskilling Programs", href: "#upskilling" },
     { name: "The Job Post Podcast", href: "#podcast" },
-    { name: "Community Forum", href: "#community" },
   ];
 
   const handleSignOut = async () => {
