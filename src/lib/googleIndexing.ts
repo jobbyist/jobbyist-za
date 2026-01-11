@@ -10,7 +10,7 @@
  * 
  * Usage:
  * import { submitUrlForIndexing } from '@/lib/googleIndexing';
- * await submitUrlForIndexing('https://jobbyist.co.za/job/123');
+ * await submitUrlForIndexing('https://za.jobbyist.africa/job/123');
  */
 
 interface IndexingRequest {
@@ -70,12 +70,12 @@ export async function submitBatchUrlsForIndexing(
  * Helper function to generate job URLs for indexing
  */
 export function getJobUrl(jobId: string): string {
-  return `https://jobbyist.co.za/job/${jobId}`;
+  return `https://za.jobbyist.africa/job/${jobId}`;
 }
 
 /**
  * Helper function to generate company URLs for indexing
  */
 export function getCompanyUrl(companySlug: string): string {
-  return `https://jobbyist.co.za/company/${companySlug}`;
+  return `https://za.jobbyist.africa/company/${companySlug}`;
 }

@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import { SEOHead } from '@/components/SEOHead';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -43,6 +44,13 @@ const Companies = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Top Companies Hiring in South Africa | Browse 100+ Leading Employers | Jobbyist"
+        description="Discover 100+ leading companies in South Africa actively hiring. Browse verified employers across technology, finance, healthcare, retail and more industries. Find your ideal workplace today."
+        canonicalUrl="https://za.jobbyist.africa/companies"
+        keywords={['companies in South Africa', 'SA employers', 'top companies hiring', 'best companies to work for SA', 'South African businesses', 'company directory SA']}
+        ogType="website"
+      />
       <Navbar />
 
       <div className="container mx-auto px-4 py-12">
