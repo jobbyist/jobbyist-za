@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { SEOHead } from "@/components/SEOHead";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -51,6 +52,13 @@ const JobMatcher = () => {
   
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="AI-Powered Job Matcher | Automated Job Search & Applications | Jobbyist Pro"
+        description="Let AI find your perfect job match. Our intelligent Job Matcher automatically scans LinkedIn, Indeed, Careers24 and more, providing real-time notifications and automated applications. Exclusive to Jobbyist Pro members."
+        canonicalUrl="https://za.jobbyist.africa/job-matcher"
+        keywords={['AI job matcher', 'automated job search', 'job matching algorithm', 'smart job hunting', 'automated applications', 'job search automation SA']}
+        ogType="website"
+      />
       <Navbar />
       <main className="pt-16">
         {/* Hero Section */}
@@ -76,12 +84,12 @@ const JobMatcher = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/pro">
-                  <Button size="lg" className="bg-background text-foreground hover:bg-background/90 group">
+                  <Button size="lg" className="bg-white text-black hover:bg-white/90 group">
                     Upgrade to Pro
                     <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform ml-2" />
                   </Button>
                 </Link>
-                <Button size="lg" variant="outline" className="border-primary-foreground/20 text-primary-foreground hover:bg-background/10">
+                <Button size="lg" variant="outline" className="border-white/20 text-white bg-transparent hover:bg-white/10">
                   Watch Demo
                 </Button>
               </div>
@@ -193,12 +201,12 @@ const JobMatcher = () => {
               </CardHeader>
               <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/pro">
-                  <Button size="lg" className="bg-background text-foreground hover:bg-background/90">
+                  <Button size="lg" className="bg-white text-black hover:bg-white/90">
                     Start Your Free Trial
                   </Button>
                 </Link>
                 <Link to="/">
-                  <Button size="lg" variant="outline" className="border-primary-foreground/20 text-primary-foreground hover:bg-background/10">
+                  <Button size="lg" variant="outline" className="border-white/20 text-white bg-transparent hover:bg-white/10">
                     Back to Home
                   </Button>
                 </Link>

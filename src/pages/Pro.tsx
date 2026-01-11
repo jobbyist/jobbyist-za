@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { SEOHead } from "@/components/SEOHead";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -96,6 +97,13 @@ const Pro = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Jobbyist Pro - Premium Career Services | Unlimited AI Assistant & Exclusive Jobs"
+        description="Accelerate your career with Jobbyist Pro. Get unlimited AI-powered career guidance, priority access to exclusive jobs, advanced resume builder, and personalized job recommendations. Start your 7-day free trial today!"
+        canonicalUrl="https://za.jobbyist.africa/pro"
+        keywords={['Jobbyist Pro', 'premium job search', 'AI career assistant', 'exclusive jobs South Africa', 'resume builder', 'job matching', 'career advancement SA']}
+        ogType="website"
+      />
       <Navbar />
       <main className="pt-16">
         {/* Hero Section */}
@@ -119,11 +127,11 @@ const Pro = () => {
                 and advanced career tools designed to help you land your dream job faster.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" className="bg-background text-foreground hover:bg-background/90 group">
+                <Button size="lg" className="bg-white text-black hover:bg-white/90 group">
                   Start Your Free Trial
                   <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform ml-2" />
                 </Button>
-                <Button size="lg" variant="outline" className="border-primary-foreground/20 text-primary-foreground hover:bg-background/10">
+                <Button size="lg" variant="outline" className="border-white/20 text-white bg-transparent hover:bg-white/10">
                   Compare Plans
                 </Button>
               </div>
@@ -237,10 +245,10 @@ const Pro = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" className="bg-background text-foreground hover:bg-background/90">
+                <Button size="lg" className="bg-white text-black hover:bg-white/90">
                   Start Your Free Trial
                 </Button>
-                <Button size="lg" variant="outline" className="border-primary-foreground/20 text-primary-foreground hover:bg-background/10">
+                <Button size="lg" variant="outline" className="border-white/20 text-white bg-transparent hover:bg-white/10">
                   <Link to="/" className="flex items-center gap-2">
                     Back to Home
                   </Link>

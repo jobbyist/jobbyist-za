@@ -58,7 +58,7 @@ const CountryJobs = () => {
   // SEO metadata
   const pageTitle = `${country.name} Jobs - Find ${jobs.length}+ Opportunities | Jobbyist Africa`;
   const pageDescription = `Discover ${jobs.length}+ job vacancies in ${country.name}. Browse full-time, part-time, remote and contract positions from top ${country.name} employers. Apply today!`;
-  const canonicalUrl = `https://jobbyist.co.za/jobs/${country.code.toLowerCase()}`;
+  const canonicalUrl = `https://za.jobbyist.africa/jobs/${country.code.toLowerCase()}`;
   const keywords = [
     `jobs in ${country.name}`,
     `${country.name} vacancies`,
