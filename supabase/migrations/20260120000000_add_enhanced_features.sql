@@ -288,6 +288,20 @@ CREATE INDEX idx_conversations_participants ON public.conversations(participant1
 CREATE INDEX idx_messages_conversation ON public.messages(conversation_id);
 CREATE INDEX idx_messages_created ON public.messages(created_at DESC);
 
+-- Function to increment jobseeker profile views
+CREATE OR REPLACE FUNCTION public.increment_jobseeker_views(jobseeker_id UUID)
+RETURNS void
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+BEGIN
+    UPDATE public.jobseeker_profiles
+    SET views_count = views_count + 1
+    WHERE id = jobseeker_id;
+END;
+$$;
+
 -- Insert default upskilling programs
 INSERT INTO public.upskilling_programs (name, slug, description, category, level, duration_weeks, skills) VALUES
 ('Frontend Development Bootcamp', 'frontend-bootcamp', 'Master modern frontend technologies including React, Vue, and responsive design', 'Frontend', 'Beginner', 12, ARRAY['React', 'JavaScript', 'HTML', 'CSS', 'TypeScript']),

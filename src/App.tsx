@@ -27,6 +27,7 @@ import AdminScraper from "./pages/admin/AdminScraper";
 import Builder from "./pages/Builder";
 import JobMatcher from "./pages/JobMatcher";
 import Jobseekers from "./pages/Jobseekers";
+import JobseekerDetail from "./pages/JobseekerDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -69,6 +70,7 @@ const App = () => {
               <Route path="/builder" element={<Builder />} />
               <Route path="/job-matcher" element={<JobMatcher />} />
               <Route path="/jobseekers" element={<Jobseekers />} />
+              <Route path="/jobseekers/:id" element={<JobseekerDetail />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminLayout />}>
