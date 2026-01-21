@@ -71,7 +71,7 @@ const pricingPlans = [
     features: [
       "All Pro features included",
       "Cancel anytime",
-      "7-day free trial",
+      "7-day money-back guarantee",
       "No commitment required",
     ],
     highlighted: false,
@@ -127,11 +127,11 @@ const Pro = () => {
                 and advanced career tools designed to help you land your dream job faster.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" className="bg-white text-black hover:bg-white/90 group">
-                  Start Your Free Trial
+                <Button size="lg" className="bg-white text-primary hover:bg-white/90 group">
+                  Get Started - 7-Day Money-Back Guarantee
                   <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform ml-2" />
                 </Button>
-                <Button size="lg" variant="outline" className="border-white/20 text-white bg-transparent hover:bg-white/10">
+                <Button size="lg" variant="outline" className="border-primary-foreground/20 text-primary-foreground bg-transparent hover:bg-primary-foreground/10">
                   Compare Plans
                 </Button>
               </div>
@@ -173,7 +173,7 @@ const Pro = () => {
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Choose Your Plan</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-                Start with a 7-day free trial. No credit card required. Cancel anytime.
+                If you're not happy with our service after the first 7 days, you can request a full refund. No credit card required to get started.
               </p>
             </div>
 
@@ -217,7 +217,7 @@ const Pro = () => {
                       variant={plan.highlighted ? "default" : "outline"}
                       size="lg"
                     >
-                      Start Free Trial
+                      Get Started
                     </Button>
                   </CardContent>
                 </Card>
@@ -226,7 +226,7 @@ const Pro = () => {
 
             <div className="text-center mt-12">
               <p className="text-sm text-muted-foreground">
-                All plans include a 7-day free trial • No credit card required • Cancel anytime
+                All plans include a 7-day money-back guarantee • Cancel anytime
               </p>
             </div>
           </div>
@@ -245,10 +245,10 @@ const Pro = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" className="bg-white text-black hover:bg-white/90">
-                  Start Your Free Trial
+                <Button size="lg" className="bg-white text-primary hover:bg-white/90">
+                  Get Started - 7-Day Money-Back Guarantee
                 </Button>
-                <Button size="lg" variant="outline" className="border-white/20 text-white bg-transparent hover:bg-white/10">
+                <Button size="lg" variant="outline" className="border-primary-foreground/20 text-primary-foreground bg-transparent hover:bg-primary-foreground/10">
                   <Link to="/" className="flex items-center gap-2">
                     Back to Home
                   </Link>

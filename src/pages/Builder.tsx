@@ -43,12 +43,12 @@ const Builder = () => {
                     ))}
                   </ul>
 
-                  <Link to="/job-matcher">
+                  <a href="https://profiles.jobbyist.africa" target="_blank" rel="noopener noreferrer">
                     <Button variant="brand" size="lg" className="group">
                       Get Started with Job Matcher
                       <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
-                  </Link>
+                  </a>
                 </div>
 
                 {/* Card */}
@@ -70,13 +70,13 @@ const Builder = () => {
                       based on your resume and career goals.
                     </p>
 
-                    <Link to="/job-matcher">
+                    <a href="https://profiles.jobbyist.africa" target="_blank" rel="noopener noreferrer">
                       <Button variant="outline" className="w-full group">
                         <Sparkles className="h-4 w-4 mr-2 text-primary" />
                         How It Works
                         <ArrowRight className="h-4 w-4 ml-auto group-hover:translate-x-1 transition-transform" />
                       </Button>
-                    </Link>
+                    </a>
 
                     <p className="text-xs text-center text-muted-foreground mt-4">
                       Jobbyist Pro Members Only
