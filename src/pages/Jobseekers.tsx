@@ -213,8 +213,8 @@ const Jobseekers = () => {
                       <div className="flex items-center gap-2 mb-1">
                         <CardTitle className="text-lg truncate">
                           {canViewFullProfile() 
-                            ? `${jobseeker.profile.first_name} ${jobseeker.profile.last_name}`
-                            : `${jobseeker.profile.first_name} ${jobseeker.profile.last_name?.[0]}.`
+                            ? `${jobseeker.profile.first_name || ''} ${jobseeker.profile.last_name || ''}`
+                            : `${jobseeker.profile.first_name || ''} ${jobseeker.profile.last_name?.[0] || ''}.`
                           }
                         </CardTitle>
                         {jobseeker.profile.verification_status === 'approved' && (
@@ -276,9 +276,12 @@ const Jobseekers = () => {
                     </div>
                   )}
 
-                  {!canViewFullProfile() && jobseeker.profile.bio && (
+                  {!canViewFullProfile() && jobseeker.profile.bio && jobseeker.profile.bio.length > 0 && (
                     <p className="text-sm text-muted-foreground line-clamp-2">
-                      {jobseeker.profile.bio.substring(0, 100)}...
+                      {jobseeker.profile.bio.length > 100 
+                        ? `${jobseeker.profile.bio.substring(0, 100)}...`
+                        : jobseeker.profile.bio
+                      }
                     </p>
                   )}
                 </CardContent>

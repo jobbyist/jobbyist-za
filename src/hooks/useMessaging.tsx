@@ -38,7 +38,8 @@ export function useMessaging() {
   useEffect(() => {
     if (user) {
       fetchConversations();
-      subscribeToMessages();
+      const cleanup = subscribeToMessages();
+      return cleanup;
     } else {
       setConversations([]);
       setMessages([]);
@@ -60,7 +61,7 @@ export function useMessaging() {
         .from('conversations')
         .select(`
           *,
-          messages(
+          messages!inner(
             id,
             content,
             sender_id,
@@ -69,7 +70,9 @@ export function useMessaging() {
           )
         `)
         .or(`participant1_id.eq.${user.id},participant2_id.eq.${user.id}`)
-        .order('last_message_at', { ascending: false });
+        .order('last_message_at', { ascending: false })
+        .order('created_at', { foreignTable: 'messages', ascending: false })
+        .limit(1, { foreignTable: 'messages' });
 
       if (error) throw error;
 

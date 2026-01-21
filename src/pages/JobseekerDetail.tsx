@@ -306,7 +306,9 @@ const JobseekerDetail = () => {
                     <p className="text-muted-foreground whitespace-pre-wrap">
                       {canViewFullProfile() 
                         ? jobseeker.profile.bio 
-                        : `${jobseeker.profile.bio.substring(0, 200)}... (Upgrade to view full profile)`
+                        : jobseeker.profile.bio.length > 200 
+                          ? `${jobseeker.profile.bio.substring(0, 200)}... (Upgrade to view full profile)`
+                          : jobseeker.profile.bio
                       }
                     </p>
                   ) : (

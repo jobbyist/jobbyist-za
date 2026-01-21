@@ -221,7 +221,9 @@ ON public.conversations FOR INSERT
 TO authenticated
 WITH CHECK (
     (participant1_id = auth.uid() OR participant2_id = auth.uid()) AND
-    public.users_follow_each_other(participant1_id, participant2_id)
+    public.users_follow_each_other(participant1_id, participant2_id) AND
+    (public.has_active_subscription(auth.uid(), 'jobseeker_pro') OR 
+     public.has_active_subscription(auth.uid(), 'recruitment_suite'))
 );
 
 -- RLS Policies for messages
