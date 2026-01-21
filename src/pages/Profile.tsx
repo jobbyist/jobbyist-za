@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -10,6 +11,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
+import { useUpskilling } from '@/hooks/useUpskilling';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { toast } from 'sonner';
@@ -25,7 +27,10 @@ import {
   CheckCircle2,
   Clock,
   XCircle,
-  Shield
+  Shield,
+  AlertCircle,
+  TrendingUp,
+  GraduationCap
 } from 'lucide-react';
 import { activeCountries } from '@/lib/countries';
 
@@ -33,6 +38,7 @@ const Profile = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
   const { profile, loading: profileLoading, updateProfile, uploadResume, uploadAvatar } = useProfile();
+  const { enrollments, loading: upskillingLoading } = useUpskilling();
   
   const [formData, setFormData] = useState({
     first_name: '',
@@ -121,6 +127,24 @@ const Profile = () => {
     });
   };
 
+  const handleVerifyEmail = async () => {
+    if (!user?.email) return;
+    
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        await supabase.auth.resend({
+          type: 'signup',
+          email: user.email
+        });
+        toast.success('Verification email sent! Please check your inbox.');
+      }
+    } catch (error: any) {
+      console.error('Error sending verification email:', error);
+      toast.error('Failed to send verification email');
+    }
+  };
+
   const getVerificationBadge = () => {
     switch (profile?.verification_status) {
       case 'approved':
@@ -154,20 +178,52 @@ const Profile = () => {
             </p>
           </div>
 
+          {/* Email Verification Alert */}
+          {!profile?.is_email_verified && (
+            <Card className="mb-8 border-orange-500/50 bg-orange-50 dark:bg-orange-950/20">
+              <CardContent className="pt-6">
+                <div className="flex items-start gap-4">
+                  <AlertCircle className="h-5 w-5 text-orange-500 mt-0.5" />
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-orange-900 dark:text-orange-100 mb-1">
+                      Email Verification Required
+                    </h3>
+                    <p className="text-sm text-orange-800 dark:text-orange-200 mb-3">
+                      Please verify your email address to unlock full access to all features including job applications.
+                    </p>
+                    <Button onClick={handleVerifyEmail} variant="default" size="sm">
+                      <Mail className="h-4 w-4 mr-2" />
+                      Resend Verification Email
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
           {/* Profile Completion Card */}
           <Card className="mb-8">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle className="flex items-center gap-2">
-                    Profile Completion
+                    <TrendingUp className="h-5 w-5" />
+                    Profile Strength
                     {getVerificationBadge()}
                   </CardTitle>
                   <CardDescription>
                     Complete all fields to reach 100% and become eligible for verification
                   </CardDescription>
                 </div>
-                <span className="text-2xl font-bold">{profile?.profile_completion || 0}%</span>
+                <div className="text-right">
+                  <span className="text-3xl font-bold">{profile?.profile_completion || 0}%</span>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {profile?.profile_completion === 100 ? 'Complete' : 
+                     profile?.profile_completion && profile?.profile_completion >= 75 ? 'Strong' :
+                     profile?.profile_completion && profile?.profile_completion >= 50 ? 'Good' :
+                     profile?.profile_completion && profile?.profile_completion >= 25 ? 'Fair' : 'Weak'}
+                  </p>
+                </div>
               </div>
             </CardHeader>
             <CardContent>
@@ -430,6 +486,55 @@ const Profile = () => {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Upskilling Progress */}
+            {enrollments && enrollments.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <GraduationCap className="h-5 w-5" />
+                    Upskilling Progress
+                  </CardTitle>
+                  <CardDescription>
+                    Track your progress in enrolled programs
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {enrollments.map((enrollment) => (
+                    <div key={enrollment.id} className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-medium">{enrollment.program?.name}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {enrollment.program?.category} • {enrollment.program?.level}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          {enrollment.completed ? (
+                            <Badge className="bg-green-500">
+                              <CheckCircle2 className="h-3 w-3 mr-1" />
+                              Completed
+                            </Badge>
+                          ) : (
+                            <span className="text-sm font-medium">{enrollment.progress}%</span>
+                          )}
+                        </div>
+                      </div>
+                      <Progress value={enrollment.progress} className="h-2" />
+                      {enrollment.program?.skills && enrollment.program.skills.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-2">
+                          {enrollment.program.skills.map((skill) => (
+                            <Badge key={skill} variant="outline" className="text-xs">
+                              {skill}
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            )}
 
             <div className="flex justify-end">
               <Button onClick={handleSave} disabled={isSaving} size="lg">
