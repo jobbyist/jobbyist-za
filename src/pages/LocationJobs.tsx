@@ -49,18 +49,13 @@ const LocationJobs = () => {
   const { location } = useParams<{ location: string }>();
   const [searchParams, setSearchParams] = useSearchParams();
   
-  // Validate location
-  const locationData = location && location in locations ? locations[location as LocationKey] : null;
-
-  // If invalid location, redirect to main jobs page
-  if (!locationData) {
-    return <Navigate to="/jobs" replace />;
-  }
-
   const [search, setSearch] = useState(searchParams.get('search') || '');
   const [jobType, setJobType] = useState<string | undefined>(searchParams.get('type') || undefined);
   const [experienceLevel, setExperienceLevel] = useState<string | undefined>(searchParams.get('level') || undefined);
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
+
+  // Validate location
+  const locationData = location && location in locations ? locations[location as LocationKey] : null;
 
   // For remote jobs, set isRemote filter, otherwise filter by location
   const isRemoteLocation = location === 'remote';
@@ -68,7 +63,7 @@ const LocationJobs = () => {
   const { jobs, loading, totalCount } = useJobs({
     country: 'ZA',
     search,
-    location: isRemoteLocation ? undefined : locationData.name,
+    location: isRemoteLocation ? undefined : locationData?.name,
     jobType: jobType === 'all' ? undefined : jobType,
     experienceLevel: experienceLevel === 'all' ? undefined : experienceLevel,
     isRemote: isRemoteLocation ? true : undefined,
@@ -107,6 +102,11 @@ const LocationJobs = () => {
       };
     }
   }, [jobs]);
+
+  // If invalid location, redirect to main jobs page
+  if (!locationData) {
+    return <Navigate to="/jobs" replace />;
+  }
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
