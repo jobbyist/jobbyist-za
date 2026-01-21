@@ -26,14 +26,22 @@ const Navbar = () => {
     { name: "Browse Jobs", href: "/jobs" },
     { name: "AI Job Matcher", href: "/job-matcher" },
     { name: "Company Directory", href: "#companies" },
-    { name: "Knowledge Center", href: "#knowledge" },
+    { name: "Knowledge Center", href: "/knowledge-hub" },
   ];
 
   const moreMenuItems = [
     { name: "Job Matcher", href: "/job-matcher" },
-    { name: "Resume Builder", href: "#resume" },
-    { name: "Upskilling Programs", href: "#upskilling" },
+    { name: "Resume Builder", href: "/resume-builder" },
+    { name: "Upskilling Programs", href: "/upskilling" },
     { name: "The Job Post Podcast", href: "#podcast" },
+  ];
+
+  const locationMenuItems = [
+    { name: "Johannesburg", href: "/jobs/johannesburg" },
+    { name: "Pretoria", href: "/jobs/pretoria" },
+    { name: "Cape Town", href: "/jobs/cape-town" },
+    { name: "Durban", href: "/jobs/durban" },
+    { name: "Remote", href: "/jobs/remote" },
   ];
 
   const handleSignOut = async () => {
@@ -51,7 +59,49 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-6">
           <NavigationMenu>
             <NavigationMenuList>
-              {navLinks.map((link) => (
+              {navLinks.slice(0, 1).map((link) => (
+                <NavigationMenuItem key={link.name}>
+                  <NavigationMenuTrigger>Browse Jobs</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-3 p-4">
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/jobs"
+                            className={cn(
+                              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                            )}
+                          >
+                            <div className="text-sm font-medium leading-none">
+                              All South African Jobs
+                            </div>
+                            <p className="text-sm text-muted-foreground">
+                              Browse all available positions
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      {locationMenuItems.map((item) => (
+                        <li key={item.name}>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              to={item.href}
+                              className={cn(
+                                "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                              )}
+                            >
+                              <div className="text-sm font-medium leading-none">
+                                {item.name}
+                              </div>
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              ))}
+              {navLinks.slice(1).map((link) => (
                 <NavigationMenuItem key={link.name}>
                   <Link to={link.href}>
                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>
@@ -67,8 +117,8 @@ const Navbar = () => {
                     {moreMenuItems.map((item) => (
                       <li key={item.name}>
                         <NavigationMenuLink asChild>
-                          <a
-                            href={item.href}
+                          <Link
+                            to={item.href}
                             className={cn(
                               "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                             )}
@@ -76,7 +126,7 @@ const Navbar = () => {
                             <div className="text-sm font-medium leading-none">
                               {item.name}
                             </div>
-                          </a>
+                          </Link>
                         </NavigationMenuLink>
                       </li>
                     ))}
@@ -142,7 +192,27 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden bg-background border-b border-border animate-slide-up">
           <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
-            {navLinks.map((link) => (
+            <Link
+              to="/jobs"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2"
+              onClick={() => setIsOpen(false)}
+            >
+              Browse Jobs
+            </Link>
+            <div className="text-sm font-semibold text-foreground pl-4 border-t border-border pt-2">
+              By Location
+            </div>
+            {locationMenuItems.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2 pl-8"
+                onClick={() => setIsOpen(false)}
+              >
+                {item.name}
+              </Link>
+            ))}
+            {navLinks.slice(1).map((link) => (
               <Link
                 key={link.name}
                 to={link.href}
@@ -156,14 +226,14 @@ const Navbar = () => {
               More
             </div>
             {moreMenuItems.map((item) => (
-              <a
+              <Link
                 key={item.name}
-                href={item.href}
+                to={item.href}
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2 pl-4"
                 onClick={() => setIsOpen(false)}
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
             <div className="flex flex-col gap-2 pt-4 border-t border-border">
               {user ? (

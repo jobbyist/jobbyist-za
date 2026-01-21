@@ -84,12 +84,12 @@ const JobMatcher = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/pro">
-                  <Button size="lg" className="bg-white text-black hover:bg-white/90 group">
+                  <Button size="lg" className="bg-white text-primary hover:bg-white/90 group">
                     Upgrade to Pro
                     <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform ml-2" />
                   </Button>
                 </Link>
-                <Button size="lg" variant="outline" className="border-white/20 text-white bg-transparent hover:bg-white/10">
+                <Button size="lg" variant="outline" className="border-primary-foreground/20 text-primary-foreground bg-transparent hover:bg-primary-foreground/10">
                   Watch Demo
                 </Button>
               </div>
@@ -201,12 +201,12 @@ const JobMatcher = () => {
               </CardHeader>
               <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/pro">
-                  <Button size="lg" className="bg-white text-black hover:bg-white/90">
-                    Start Your Free Trial
+                  <Button size="lg" className="bg-white text-primary hover:bg-white/90">
+                    Start 7-Day Money-Back Guarantee
                   </Button>
                 </Link>
                 <Link to="/">
-                  <Button size="lg" variant="outline" className="border-white/20 text-white bg-transparent hover:bg-white/10">
+                  <Button size="lg" variant="outline" className="border-primary-foreground/20 text-primary-foreground bg-transparent hover:bg-primary-foreground/10">
                     Back to Home
                   </Button>
                 </Link>

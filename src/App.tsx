@@ -7,6 +7,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import { useState, useEffect } from "react";
 import Preloader from "@/components/Preloader";
 import PWAInstallPrompt from "@/components/PWAInstallPrompt";
+import ScrollToTop from "@/components/ScrollToTop";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
@@ -28,6 +29,11 @@ import Builder from "./pages/Builder";
 import JobMatcher from "./pages/JobMatcher";
 import Jobseekers from "./pages/Jobseekers";
 import JobseekerDetail from "./pages/JobseekerDetail";
+import KnowledgeHub from "./pages/KnowledgeHub";
+import ResumeBuilder from "./pages/ResumeBuilder";
+import UpskillingProgram from "./pages/UpskillingProgram";
+import Cookies from "./pages/Cookies";
+import LocationJobs from "./pages/LocationJobs";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -55,6 +61,7 @@ const App = () => {
           <Sonner />
           <PWAInstallPrompt />
           <BrowserRouter>
+            <ScrollToTop />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
@@ -71,6 +78,11 @@ const App = () => {
               <Route path="/job-matcher" element={<JobMatcher />} />
               <Route path="/jobseekers" element={<Jobseekers />} />
               <Route path="/jobseekers/:id" element={<JobseekerDetail />} />
+              <Route path="/knowledge-hub" element={<KnowledgeHub />} />
+              <Route path="/resume-builder" element={<ResumeBuilder />} />
+              <Route path="/upskilling" element={<UpskillingProgram />} />
+              <Route path="/cookies" element={<Cookies />} />
+              <Route path="/jobs/:location" element={<LocationJobs />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminLayout />}>
