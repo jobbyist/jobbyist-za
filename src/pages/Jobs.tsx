@@ -91,11 +91,6 @@ const Jobs = () => {
     return `https://za.jobbyist.africa/jobs${getPageUrl(page)}`;
   };
 
-  const goToPage = (page: number) => {
-    const params = new URLSearchParams(searchParams);
-    params.set('page', page.toString());
-    setSearchParams(params);
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -342,7 +337,12 @@ const Jobs = () => {
 
           {/* Pagination Controls */}
           {!loading && jobs.length > 0 && (
-            <div className="mt-12 flex flex-col items-center gap-6">
+            <div className="mt-12 flex flex-col items-center gap-4">
+              {/* Showing results count */}
+              <p className="text-sm text-muted-foreground">
+                Showing {(currentPage - 1) * JOBS_PER_PAGE + 1} - {Math.min(currentPage * JOBS_PER_PAGE, totalCount)} of {totalCount} jobs
+              </p>
+              
               {/* Page Navigation */}
               <div className="flex items-center gap-2">
                 {hasPrevPage && (
@@ -405,23 +405,6 @@ const Jobs = () => {
                   </>
                 )}
               </div>
-
-              {/* Load More Button (Alternative approach for infinite scroll) */}
-              {hasNextPage && (
-                <div className="text-center">
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Showing {(currentPage - 1) * JOBS_PER_PAGE + 1} - {Math.min(currentPage * JOBS_PER_PAGE, totalCount)} of {totalCount} jobs
-                  </p>
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    onClick={() => goToPage(currentPage + 1)}
-                    className="min-w-[200px]"
-                  >
-                    Load More Jobs
-                  </Button>
-                </div>
-              )}
             </div>
           )}
         </div>
