@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 // Extend the Window interface to include adsbygoogle
 declare global {
@@ -22,22 +22,17 @@ const GoogleAdsense = ({
   responsive = true,
   className = '',
 }: GoogleAdsenseProps) => {
-  const isInitialized = useRef(false);
-
   useEffect(() => {
-    // Prevent duplicate initialization
-    if (isInitialized.current) return;
-    
     try {
       // Initialize adsbygoogle array if it doesn't exist
       window.adsbygoogle = window.adsbygoogle || [];
       // Push the ad to the adsbygoogle array
+      // AdSense handles duplicate initialization internally
       window.adsbygoogle.push({});
-      isInitialized.current = true;
     } catch (err) {
       console.error('Error loading AdSense:', err);
     }
-  }, [slot, client]);
+  }, []);
 
   return (
     <div className={className}>
