@@ -122,12 +122,29 @@ const Jobs = () => {
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-3xl md:text-4xl font-bold mb-4">
-              Jobs in <span className="gradient-brand-text">South Africa</span>
+              {locationFilter ? (
+                <>Jobs in <span className="gradient-brand-text">{locationFilter}</span></>
+              ) : (
+                <>Jobs in <span className="gradient-brand-text">South Africa</span></>
+              )}
             </h1>
             <p className="text-muted-foreground">
-              Explore {totalCount}+ curated job opportunities across South Africa
+              Explore {totalCount}+ curated job opportunities {locationFilter ? `in ${locationFilter}` : 'across South Africa'}
               {currentPage > 1 && ` - Page ${currentPage} of ${totalPages}`}
             </p>
+            {locationFilter && (
+              <div className="mt-3 flex items-center gap-2">
+                <Badge variant="secondary" className="gap-1">
+                  <MapPin className="h-3 w-3" /> {locationFilter}
+                  <button
+                    type="button"
+                    onClick={clearLocation}
+                    className="ml-2 rounded-full hover:bg-background/50 px-1"
+                    aria-label="Clear location filter"
+                  >×</button>
+                </Badge>
+              </div>
+            )}
           </div>
 
           {/* Search & Filters */}
