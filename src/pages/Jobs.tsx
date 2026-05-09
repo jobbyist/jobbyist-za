@@ -13,6 +13,8 @@ import { SEOHead, generateJobListSchema } from '@/components/SEOHead';
 import { Search, MapPin, Wifi, Briefcase, Clock, ArrowRight, Building2, DollarSign, ChevronLeft, ChevronRight } from 'lucide-react';
 import { formatSalary } from '@/lib/countries';
 import GoogleAdsense from '@/components/GoogleAdsense';
+import ExpiredBadge from '@/components/ExpiredBadge';
+import { isJobExpired } from '@/lib/jobUtils';
 
 const JOBS_PER_PAGE = 12;
 
