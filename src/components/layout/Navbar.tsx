@@ -37,11 +37,11 @@ const Navbar = () => {
   ];
 
   const locationMenuItems = [
-    { name: "Johannesburg", href: "/jobs/johannesburg" },
-    { name: "Pretoria", href: "/jobs/pretoria" },
-    { name: "Cape Town", href: "/jobs/cape-town" },
-    { name: "Durban", href: "/jobs/durban" },
-    { name: "Remote", href: "/jobs/remote" },
+    { name: "Johannesburg", href: "/jobs?location=Johannesburg" },
+    { name: "Pretoria", href: "/jobs?location=Pretoria" },
+    { name: "Cape Town", href: "/jobs?location=Cape+Town" },
+    { name: "Durban", href: "/jobs?location=Durban" },
+    { name: "Remote", href: "/jobs?remote=true" },
   ];
 
   const handleSignOut = async () => {
