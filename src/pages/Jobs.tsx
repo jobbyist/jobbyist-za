@@ -76,10 +76,18 @@ const Jobs = () => {
     e.preventDefault();
     const params = new URLSearchParams();
     if (search) params.set('search', search);
+    if (locationFilter) params.set('location', locationFilter);
     if (jobType && jobType !== 'all') params.set('type', jobType);
     if (experienceLevel && experienceLevel !== 'all') params.set('level', experienceLevel);
     if (isRemote) params.set('remote', 'true');
     params.set('page', '1'); // Reset to page 1 on new search
+    setSearchParams(params);
+  };
+
+  const clearLocation = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete('location');
+    params.set('page', '1');
     setSearchParams(params);
   };
 
