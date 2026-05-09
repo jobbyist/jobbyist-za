@@ -8,10 +8,13 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { useJob } from '@/hooks/useJobs';
 import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
+import { useSubscription } from '@/hooks/useSubscription';
 import { supabase } from '@/integrations/supabase/client';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { SEOHead, generateJobPostingSchema } from '@/components/SEOHead';
+import ExpiredBadge from '@/components/ExpiredBadge';
+import { isJobExpired } from '@/lib/jobUtils';
 import { toast } from 'sonner';
 import { 
   ArrowLeft, 
@@ -25,7 +28,9 @@ import {
   ExternalLink,
   Share2,
   Bookmark,
-  Users
+  Users,
+  Lock,
+  Crown
 } from 'lucide-react';
 import { formatSalary, getCountryByCode, type CountryCode } from '@/lib/countries';
 
@@ -34,7 +39,10 @@ const JobDetail = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { profile, canApplyToJobs } = useProfile();
+  const { hasActiveSubscription, loading: subLoading } = useSubscription();
   const { job, loading } = useJob(jobId);
+  const isPro = hasActiveSubscription();
+  const expired = isJobExpired(job?.posted_at);
   
   const [coverLetter, setCoverLetter] = useState('');
   const [isApplying, setIsApplying] = useState(false);
