@@ -23,12 +23,14 @@ const Jobs = () => {
   const [experienceLevel, setExperienceLevel] = useState<string | undefined>(searchParams.get('level') || undefined);
   const [isRemote, setIsRemote] = useState(searchParams.get('remote') === 'true');
   const [salaryRange, setSalaryRange] = useState<[number, number]>([0, 200000]);
+  const locationFilter = searchParams.get('location') || '';
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
 
   // Fetch SA jobs + remote jobs that South Africans can apply for
   const { jobs, loading, totalCount } = useJobs({
     country: 'ZA',
     search,
+    location: locationFilter || undefined,
     jobType: jobType === 'all' ? undefined : jobType,
     experienceLevel: experienceLevel === 'all' ? undefined : experienceLevel,
     isRemote: isRemote ? true : undefined,
