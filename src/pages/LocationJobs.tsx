@@ -91,7 +91,7 @@ const LocationJobs = () => {
       const script = document.createElement('script');
       script.type = 'application/ld+json';
       script.setAttribute('data-jobs-list', 'true');
-      script.textContent = JSON.stringify(generateJobListSchema(jobs));
+      script.textContent = JSON.stringify(generateJobListSchema(jobs as any));
       document.head.appendChild(script);
 
       return () => {
@@ -275,7 +275,7 @@ const LocationJobs = () => {
                           {job.salary_min && job.salary_max && (
                             <div className="flex items-center gap-2 text-sm text-muted-foreground">
                               <DollarSign className="h-4 w-4" />
-                              <span>{formatSalary(job.salary_min, job.salary_max, 'ZAR')}</span>
+                              <span>R {job.salary_min.toLocaleString()} - R {job.salary_max.toLocaleString()}</span>
                             </div>
                           )}
                           <div className="flex items-center gap-2 text-sm text-muted-foreground">

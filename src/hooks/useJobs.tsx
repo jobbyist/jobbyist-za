@@ -42,6 +42,7 @@ export interface Job {
 interface UseJobsOptions {
   country?: CountryCode;
   search?: string;
+  location?: string;
   jobType?: string;
   experienceLevel?: string;
   isRemote?: boolean;
@@ -59,7 +60,7 @@ export function useJobs(options: UseJobsOptions = {}) {
 
   useEffect(() => {
     fetchJobs();
-  }, [options.country, options.search, options.jobType, options.experienceLevel, options.isRemote, options.salaryMin, options.salaryMax, options.limit, options.offset]);
+  }, [options.country, options.search, options.location, options.jobType, options.experienceLevel, options.isRemote, options.salaryMin, options.salaryMax, options.limit, options.offset]);
 
   const fetchJobs = async () => {
     try {
@@ -75,6 +76,10 @@ export function useJobs(options: UseJobsOptions = {}) {
 
       if (options.country) {
         query = query.eq('country', options.country);
+      }
+
+      if (options.location) {
+        query = query.ilike('location', `%${options.location}%`);
       }
 
       if (options.search) {

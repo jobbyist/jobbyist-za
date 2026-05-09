@@ -8,10 +8,13 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { useJob } from '@/hooks/useJobs';
 import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
+import { useSubscription } from '@/hooks/useSubscription';
 import { supabase } from '@/integrations/supabase/client';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { SEOHead, generateJobPostingSchema } from '@/components/SEOHead';
+import ExpiredBadge from '@/components/ExpiredBadge';
+import { isJobExpired } from '@/lib/jobUtils';
 import { toast } from 'sonner';
 import { 
   ArrowLeft, 
@@ -25,7 +28,9 @@ import {
   ExternalLink,
   Share2,
   Bookmark,
-  Users
+  Users,
+  Lock,
+  Crown
 } from 'lucide-react';
 import { formatSalary, getCountryByCode, type CountryCode } from '@/lib/countries';
 
@@ -34,7 +39,10 @@ const JobDetail = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { profile, canApplyToJobs } = useProfile();
+  const { hasActiveSubscription, loading: subLoading } = useSubscription();
   const { job, loading } = useJob(jobId);
+  const isPro = hasActiveSubscription();
+  const expired = isJobExpired(job?.posted_at);
   
   const [coverLetter, setCoverLetter] = useState('');
   const [isApplying, setIsApplying] = useState(false);
@@ -214,6 +222,7 @@ const JobDetail = () => {
                     {formatSalary(job.salary_min, job.country as CountryCode)} - {formatSalary(job.salary_max, job.country as CountryCode)}/{job.salary_period}
                   </Badge>
                 )}
+                {expired && <ExpiredBadge />}
               </div>
 
               {/* Description */}
@@ -290,59 +299,86 @@ const JobDetail = () => {
             <div className="space-y-4">
               <Card className="sticky top-24">
                 <CardContent className="pt-6 space-y-4">
-                  {hasApplied ? (
+                  {expired ? (
+                    <div className="text-center py-4">
+                      <ExpiredBadge className="mx-auto" />
+                      <p className="font-semibold mt-3">This offer has expired</p>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Posted more than 30 days ago. Browse fresh listings instead.
+                      </p>
+                      <Link to="/jobs">
+                        <Button className="w-full">Browse Active Jobs</Button>
+                      </Link>
+                    </div>
+                  ) : hasApplied ? (
                     <div className="text-center py-4">
                       <CheckCircle2 className="h-12 w-12 text-green-500 mx-auto mb-2" />
                       <p className="font-semibold">Application Submitted!</p>
                       <p className="text-sm text-muted-foreground">We'll notify you of any updates</p>
                     </div>
-                  ) : user ? (
-                    canApplyToJobs ? (
-                      <Dialog open={showApplyDialog} onOpenChange={setShowApplyDialog}>
-                        <DialogTrigger asChild>
-                          <Button className="w-full" size="lg">
-                            Apply Now
-                          </Button>
-                        </DialogTrigger>
-                        <DialogContent>
-                          <DialogHeader>
-                            <DialogTitle>Apply for {job.title}</DialogTitle>
-                            <DialogDescription>
-                              Your profile and resume will be shared with {job.company?.name}
-                            </DialogDescription>
-                          </DialogHeader>
-                          <div className="space-y-4">
-                            <div>
-                              <label className="text-sm font-medium">Cover Letter (Optional)</label>
-                              <Textarea
-                                value={coverLetter}
-                                onChange={(e) => setCoverLetter(e.target.value)}
-                                placeholder="Tell the employer why you're a great fit for this role..."
-                                rows={5}
-                              />
-                            </div>
-                            <Button onClick={handleApply} disabled={isApplying} className="w-full">
-                              {isApplying ? 'Submitting...' : 'Submit Application'}
-                            </Button>
-                          </div>
-                        </DialogContent>
-                      </Dialog>
-                    ) : (
-                      <div className="text-center">
-                        <p className="text-sm text-muted-foreground mb-2">
-                          Complete your profile and get verified to apply
-                        </p>
-                        <Link to="/profile">
-                          <Button className="w-full">Complete Profile</Button>
-                        </Link>
-                      </div>
-                    )
-                  ) : (
+                  ) : !user ? (
                     <Link to="/auth">
                       <Button className="w-full" size="lg">
                         Sign in to Apply
                       </Button>
                     </Link>
+                  ) : !isPro && !subLoading ? (
+                    <div className="text-center space-y-3">
+                      <div className="mx-auto w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                        <Lock className="h-6 w-6 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-semibold">Pro membership required</p>
+                        <p className="text-sm text-muted-foreground">
+                          Upgrade to Jobbyist Pro to apply directly to verified employers — from R99/month.
+                        </p>
+                      </div>
+                      <Link to="/pro">
+                        <Button className="w-full gradient-brand" size="lg">
+                          <Crown className="h-4 w-4 mr-2" />
+                          Upgrade to Pro to Apply
+                        </Button>
+                      </Link>
+                    </div>
+                  ) : canApplyToJobs ? (
+                    <Dialog open={showApplyDialog} onOpenChange={setShowApplyDialog}>
+                      <DialogTrigger asChild>
+                        <Button className="w-full" size="lg">
+                          Apply Now
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Apply for {job.title}</DialogTitle>
+                          <DialogDescription>
+                            Your profile and resume will be shared with {job.company?.name}
+                          </DialogDescription>
+                        </DialogHeader>
+                        <div className="space-y-4">
+                          <div>
+                            <label className="text-sm font-medium">Cover Letter (Optional)</label>
+                            <Textarea
+                              value={coverLetter}
+                              onChange={(e) => setCoverLetter(e.target.value)}
+                              placeholder="Tell the employer why you're a great fit for this role..."
+                              rows={5}
+                            />
+                          </div>
+                          <Button onClick={handleApply} disabled={isApplying} className="w-full">
+                            {isApplying ? 'Submitting...' : 'Submit Application'}
+                          </Button>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  ) : (
+                    <div className="text-center">
+                      <p className="text-sm text-muted-foreground mb-2">
+                        Complete your profile and get verified to apply
+                      </p>
+                      <Link to="/profile">
+                        <Button className="w-full">Complete Profile</Button>
+                      </Link>
+                    </div>
                   )}
 
                   {job.external_url && (

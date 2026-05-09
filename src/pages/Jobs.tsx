@@ -13,6 +13,8 @@ import { SEOHead, generateJobListSchema } from '@/components/SEOHead';
 import { Search, MapPin, Wifi, Briefcase, Clock, ArrowRight, Building2, DollarSign, ChevronLeft, ChevronRight } from 'lucide-react';
 import { formatSalary } from '@/lib/countries';
 import GoogleAdsense from '@/components/GoogleAdsense';
+import ExpiredBadge from '@/components/ExpiredBadge';
+import { isJobExpired } from '@/lib/jobUtils';
 
 const JOBS_PER_PAGE = 12;
 
@@ -23,12 +25,14 @@ const Jobs = () => {
   const [experienceLevel, setExperienceLevel] = useState<string | undefined>(searchParams.get('level') || undefined);
   const [isRemote, setIsRemote] = useState(searchParams.get('remote') === 'true');
   const [salaryRange, setSalaryRange] = useState<[number, number]>([0, 200000]);
+  const locationFilter = searchParams.get('location') || '';
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
 
   // Fetch SA jobs + remote jobs that South Africans can apply for
   const { jobs, loading, totalCount } = useJobs({
     country: 'ZA',
     search,
+    location: locationFilter || undefined,
     jobType: jobType === 'all' ? undefined : jobType,
     experienceLevel: experienceLevel === 'all' ? undefined : experienceLevel,
     isRemote: isRemote ? true : undefined,
@@ -58,7 +62,7 @@ const Jobs = () => {
       const script = document.createElement('script');
       script.type = 'application/ld+json';
       script.setAttribute('data-jobs-list', 'true');
-      script.textContent = JSON.stringify(generateJobListSchema(jobs));
+      script.textContent = JSON.stringify(generateJobListSchema(jobs as any));
       document.head.appendChild(script);
 
       return () => {
@@ -74,10 +78,18 @@ const Jobs = () => {
     e.preventDefault();
     const params = new URLSearchParams();
     if (search) params.set('search', search);
+    if (locationFilter) params.set('location', locationFilter);
     if (jobType && jobType !== 'all') params.set('type', jobType);
     if (experienceLevel && experienceLevel !== 'all') params.set('level', experienceLevel);
     if (isRemote) params.set('remote', 'true');
     params.set('page', '1'); // Reset to page 1 on new search
+    setSearchParams(params);
+  };
+
+  const clearLocation = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete('location');
+    params.set('page', '1');
     setSearchParams(params);
   };
 
@@ -112,12 +124,29 @@ const Jobs = () => {
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-3xl md:text-4xl font-bold mb-4">
-              Jobs in <span className="gradient-brand-text">South Africa</span>
+              {locationFilter ? (
+                <>Jobs in <span className="gradient-brand-text">{locationFilter}</span></>
+              ) : (
+                <>Jobs in <span className="gradient-brand-text">South Africa</span></>
+              )}
             </h1>
             <p className="text-muted-foreground">
-              Explore {totalCount}+ curated job opportunities across South Africa
+              Explore {totalCount}+ curated job opportunities {locationFilter ? `in ${locationFilter}` : 'across South Africa'}
               {currentPage > 1 && ` - Page ${currentPage} of ${totalPages}`}
             </p>
+            {locationFilter && (
+              <div className="mt-3 flex items-center gap-2">
+                <Badge variant="secondary" className="gap-1">
+                  <MapPin className="h-3 w-3" /> {locationFilter}
+                  <button
+                    type="button"
+                    onClick={clearLocation}
+                    className="ml-2 rounded-full hover:bg-background/50 px-1"
+                    aria-label="Clear location filter"
+                  >×</button>
+                </Badge>
+              </div>
+            )}
           </div>
 
           {/* Search & Filters */}
@@ -277,6 +306,7 @@ const Jobs = () => {
                       {job.experience_level && (
                         <Badge variant="outline" className="text-xs">{job.experience_level}</Badge>
                       )}
+                      {isJobExpired(job.posted_at) && <ExpiredBadge className="text-xs" />}
                     </div>
 
                     {/* Salary */}
