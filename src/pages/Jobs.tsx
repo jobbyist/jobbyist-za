@@ -58,7 +58,7 @@ const Jobs = () => {
       const script = document.createElement('script');
       script.type = 'application/ld+json';
       script.setAttribute('data-jobs-list', 'true');
-      script.textContent = JSON.stringify(generateJobListSchema(jobs));
+      script.textContent = JSON.stringify(generateJobListSchema(jobs as any));
       document.head.appendChild(script);
 
       return () => {
