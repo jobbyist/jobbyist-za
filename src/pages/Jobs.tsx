@@ -304,6 +304,7 @@ const Jobs = () => {
                       {job.experience_level && (
                         <Badge variant="outline" className="text-xs">{job.experience_level}</Badge>
                       )}
+                      {isJobExpired(job.posted_at) && <ExpiredBadge className="text-xs" />}
                     </div>
 
                     {/* Salary */}
