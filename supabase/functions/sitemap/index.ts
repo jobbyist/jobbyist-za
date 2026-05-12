@@ -34,9 +34,11 @@ Deno.serve(async (req) => {
     // Programmatic location landing pages
     LOCATIONS.forEach((l) => push(`${BASE}/jobs?location=${encodeURIComponent(l)}`, "0.8", "daily"));
     LOCATIONS.forEach((l) => push(`${BASE}/jobs/${l.toLowerCase().replace(/\s+/g, "-")}`, "0.8", "daily"));
-    // Category cross-pages
+    // Programmatic category landing pages
+    CATEGORIES.forEach((c) => push(`${BASE}/jobs/category/${c}`, "0.8", "daily"));
+    // Category × location combinations
     CATEGORIES.forEach((c) =>
-      LOCATIONS.forEach((l) => push(`${BASE}/jobs?location=${encodeURIComponent(l)}&search=${encodeURIComponent(c)}`, "0.6", "weekly")),
+      LOCATIONS.forEach((l) => push(`${BASE}/jobs/category/${c}/${l.toLowerCase().replace(/\s+/g, "-")}`, "0.7", "weekly")),
     );
 
     // Active jobs

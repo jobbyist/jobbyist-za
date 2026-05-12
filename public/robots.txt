@@ -1,16 +1,11 @@
+User-agent: *
+Allow: /
+
 User-agent: Googlebot
 Allow: /
 
 User-agent: Bingbot
 Allow: /
 
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
-User-agent: *
-Allow: /
-
-Sitemap: https://jobbyist.co.za/sitemap.xml
+Sitemap: https://za.jobbyist.africa/sitemap.xml
+Sitemap: https://vkwnhhwacizjiwusbmcm.supabase.co/functions/v1/sitemap

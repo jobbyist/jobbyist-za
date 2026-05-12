@@ -15,6 +15,7 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { useAdmin } from "@/hooks/useAdmin";
 import { cn } from "@/lib/utils";
+import { categories, locationSlugs } from "@/lib/categories";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,24 +26,25 @@ const Navbar = () => {
   const navLinks = [
     { name: "Browse Jobs", href: "/jobs" },
     { name: "AI Job Matcher", href: "/job-matcher" },
-    { name: "Company Directory", href: "#companies" },
     { name: "Knowledge Center", href: "/knowledge-hub" },
   ];
 
   const moreMenuItems = [
-    { name: "Job Matcher", href: "/job-matcher" },
     { name: "Resume Builder", href: "/resume-builder" },
     { name: "Upskilling Programs", href: "/upskilling" },
+    { name: "Companies", href: "/companies" },
     { name: "The Job Post Podcast", href: "#podcast" },
   ];
 
-  const locationMenuItems = [
-    { name: "Johannesburg", href: "/jobs?location=Johannesburg" },
-    { name: "Pretoria", href: "/jobs?location=Pretoria" },
-    { name: "Cape Town", href: "/jobs?location=Cape+Town" },
-    { name: "Durban", href: "/jobs?location=Durban" },
-    { name: "Remote", href: "/jobs?remote=true" },
-  ];
+  const locationMenuItems = locationSlugs.map(l => ({
+    name: l.name,
+    href: l.slug === "remote" ? "/jobs?remote=true" : `/jobs/${l.slug}`,
+  }));
+
+  const categoryMenuItems = categories.map(c => ({
+    name: c.name,
+    href: `/jobs/category/${c.slug}`,
+  }));
 
   const handleSignOut = async () => {
     await signOut();
@@ -101,6 +103,20 @@ const Navbar = () => {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
               ))}
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>By Category</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[420px] gap-2 p-4 md:grid-cols-2">
+                    {categoryMenuItems.map((item) => (
+                      <li key={item.name}>
+                        <NavigationMenuLink asChild>
+                          <Link to={item.href} className="block rounded-md p-2 text-sm hover:bg-accent">{item.name}</Link>
+                        </NavigationMenuLink>
+                      </li>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
               {navLinks.slice(1).map((link) => (
                 <NavigationMenuItem key={link.name}>
                   <Link to={link.href}>

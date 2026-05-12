@@ -17,20 +17,8 @@ import ExpiredBadge from '@/components/ExpiredBadge';
 import { isJobExpired } from '@/lib/jobUtils';
 import { toast } from 'sonner';
 import { 
-  ArrowLeft, 
-  MapPin, 
-  Wifi, 
-  Building2, 
-  Clock, 
-  DollarSign,
-  Briefcase,
-  CheckCircle2,
-  ExternalLink,
-  Share2,
-  Bookmark,
-  Users,
-  Lock,
-  Crown
+  ArrowLeft, MapPin, Wifi, Building2, Clock, DollarSign,
+  Briefcase, CheckCircle2, ExternalLink, Share2, Bookmark, Lock, Crown
 } from 'lucide-react';
 import { formatSalary, getCountryByCode, type CountryCode } from '@/lib/countries';
 
@@ -205,10 +193,6 @@ const JobDetail = () => {
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Clock className="h-4 w-4" />
                   <span>Posted {new Date(job.posted_at).toLocaleDateString()}</span>
-                </div>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <Users className="h-4 w-4" />
-                  <span>{job.applications_count} applicants</span>
                 </div>
               </div>
 
