@@ -207,6 +207,7 @@ export type Database = {
           salary_min: number | null
           salary_period: string | null
           skills: string[] | null
+          source: string | null
           source_name: string | null
           source_url: string | null
           status: Database["public"]["Enums"]["job_status"]
@@ -239,6 +240,7 @@ export type Database = {
           salary_min?: number | null
           salary_period?: string | null
           skills?: string[] | null
+          source?: string | null
           source_name?: string | null
           source_url?: string | null
           status?: Database["public"]["Enums"]["job_status"]
@@ -271,6 +273,7 @@ export type Database = {
           salary_min?: number | null
           salary_period?: string | null
           skills?: string[] | null
+          source?: string | null
           source_name?: string | null
           source_url?: string | null
           status?: Database["public"]["Enums"]["job_status"]
@@ -290,6 +293,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          address: string | null
           avatar_url: string | null
           bio: string | null
           country: Database["public"]["Enums"]["country_code"] | null
@@ -299,23 +303,29 @@ export type Database = {
           first_name: string | null
           headline: string | null
           id: string
+          interview_completed_at: string | null
+          interview_summary: Json | null
           is_email_verified: boolean
           last_name: string | null
           linkedin_url: string | null
           location: string | null
+          onboarding_completed_at: string | null
           phone: string | null
           portfolio_url: string | null
+          pro_interest: boolean
           profile_completion: number
           resume_url: string | null
           skills: string[] | null
           updated_at: string
           user_id: string
+          username: string | null
           verification_notes: string | null
           verification_status: Database["public"]["Enums"]["verification_status"]
           work_experience: Json | null
           years_of_experience: number | null
         }
         Insert: {
+          address?: string | null
           avatar_url?: string | null
           bio?: string | null
           country?: Database["public"]["Enums"]["country_code"] | null
@@ -325,23 +335,29 @@ export type Database = {
           first_name?: string | null
           headline?: string | null
           id?: string
+          interview_completed_at?: string | null
+          interview_summary?: Json | null
           is_email_verified?: boolean
           last_name?: string | null
           linkedin_url?: string | null
           location?: string | null
+          onboarding_completed_at?: string | null
           phone?: string | null
           portfolio_url?: string | null
+          pro_interest?: boolean
           profile_completion?: number
           resume_url?: string | null
           skills?: string[] | null
           updated_at?: string
           user_id: string
+          username?: string | null
           verification_notes?: string | null
           verification_status?: Database["public"]["Enums"]["verification_status"]
           work_experience?: Json | null
           years_of_experience?: number | null
         }
         Update: {
+          address?: string | null
           avatar_url?: string | null
           bio?: string | null
           country?: Database["public"]["Enums"]["country_code"] | null
@@ -351,17 +367,22 @@ export type Database = {
           first_name?: string | null
           headline?: string | null
           id?: string
+          interview_completed_at?: string | null
+          interview_summary?: Json | null
           is_email_verified?: boolean
           last_name?: string | null
           linkedin_url?: string | null
           location?: string | null
+          onboarding_completed_at?: string | null
           phone?: string | null
           portfolio_url?: string | null
+          pro_interest?: boolean
           profile_completion?: number
           resume_url?: string | null
           skills?: string[] | null
           updated_at?: string
           user_id?: string
+          username?: string | null
           verification_notes?: string | null
           verification_status?: Database["public"]["Enums"]["verification_status"]
           work_experience?: Json | null
