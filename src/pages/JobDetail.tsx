@@ -17,20 +17,8 @@ import ExpiredBadge from '@/components/ExpiredBadge';
 import { isJobExpired } from '@/lib/jobUtils';
 import { toast } from 'sonner';
 import { 
-  ArrowLeft, 
-  MapPin, 
-  Wifi, 
-  Building2, 
-  Clock, 
-  DollarSign,
-  Briefcase,
-  CheckCircle2,
-  ExternalLink,
-  Share2,
-  Bookmark,
-  Users,
-  Lock,
-  Crown
+  ArrowLeft, MapPin, Wifi, Building2, Clock, DollarSign,
+  Briefcase, CheckCircle2, ExternalLink, Share2, Bookmark, Lock, Crown
 } from 'lucide-react';
 import { formatSalary, getCountryByCode, type CountryCode } from '@/lib/countries';
 
