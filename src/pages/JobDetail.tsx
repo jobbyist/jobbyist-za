@@ -206,10 +206,6 @@ const JobDetail = () => {
                   <Clock className="h-4 w-4" />
                   <span>Posted {new Date(job.posted_at).toLocaleDateString()}</span>
                 </div>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <Users className="h-4 w-4" />
-                  <span>{job.applications_count} applicants</span>
-                </div>
               </div>
 
               {/* Badges */}
