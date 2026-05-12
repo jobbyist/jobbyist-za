@@ -34,6 +34,8 @@ import ResumeBuilder from "./pages/ResumeBuilder";
 import UpskillingProgram from "./pages/UpskillingProgram";
 import Cookies from "./pages/Cookies";
 import LocationJobs from "./pages/LocationJobs";
+import CategoryJobs from "./pages/CategoryJobs";
+import SitemapRedirect from "./pages/SitemapRedirect";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -69,8 +71,12 @@ const App = () => {
               <Route path="/pro" element={<Pro />} />
               <Route path="/about" element={<About />} />
               <Route path="/jobs" element={<Jobs />} />
-              <Route path="/jobs/:countryCode" element={<CountryJobs />} />
+              <Route path="/jobs/category/:category" element={<CategoryJobs />} />
+              <Route path="/jobs/category/:category/:location" element={<CategoryJobs />} />
+              <Route path="/jobs/country/:countryCode" element={<CountryJobs />} />
+              <Route path="/jobs/:location" element={<LocationJobs />} />
               <Route path="/job/:jobId" element={<JobDetail />} />
+              <Route path="/sitemap.xml" element={<SitemapRedirect />} />
               <Route path="/companies" element={<Companies />} />
               <Route path="/company/:slug" element={<CompanyDetail />} />
               <Route path="/waiting-list/:countryCode" element={<WaitingList />} />
@@ -82,7 +88,6 @@ const App = () => {
               <Route path="/resume-builder" element={<ResumeBuilder />} />
               <Route path="/upskilling" element={<UpskillingProgram />} />
               <Route path="/cookies" element={<Cookies />} />
-              <Route path="/jobs/:location" element={<LocationJobs />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminLayout />}>
