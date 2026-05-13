@@ -53,6 +53,9 @@ function parseSalary(salary?: string): { min?: number; max?: number; currency?: 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
+  const authFail = await requireAdminOrService(req);
+  if (authFail) return authFail;
+
   try {
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
