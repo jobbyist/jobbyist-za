@@ -181,6 +181,39 @@ export type Database = {
           },
         ]
       }
+      job_reports: {
+        Row: {
+          created_at: string
+          details: string | null
+          id: string
+          job_id: string
+          reason: string
+          reporter_email: string | null
+          status: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          details?: string | null
+          id?: string
+          job_id: string
+          reason: string
+          reporter_email?: string | null
+          status?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          details?: string | null
+          id?: string
+          job_id?: string
+          reason?: string
+          reporter_email?: string | null
+          status?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       jobs: {
         Row: {
           application_deadline: string | null

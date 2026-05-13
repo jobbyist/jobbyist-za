@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useJob } from '@/hooks/useJobs';
 import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
@@ -18,7 +20,7 @@ import { isJobExpired } from '@/lib/jobUtils';
 import { toast } from 'sonner';
 import { 
   ArrowLeft, MapPin, Wifi, Building2, Clock, DollarSign,
-  Briefcase, CheckCircle2, ExternalLink, Share2, Bookmark, Lock, Crown
+  Briefcase, CheckCircle2, ExternalLink, Share2, Bookmark, BookmarkCheck, Lock, Crown, Flag
 } from 'lucide-react';
 import { formatSalary, getCountryByCode, type CountryCode } from '@/lib/countries';
 
@@ -36,6 +38,83 @@ const JobDetail = () => {
   const [isApplying, setIsApplying] = useState(false);
   const [showApplyDialog, setShowApplyDialog] = useState(false);
   const [hasApplied, setHasApplied] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+  const [savingJob, setSavingJob] = useState(false);
+  const [showReportDialog, setShowReportDialog] = useState(false);
+  const [reportReason, setReportReason] = useState('');
+  const [reportDetails, setReportDetails] = useState('');
+  const [reportEmail, setReportEmail] = useState('');
+  const [submittingReport, setSubmittingReport] = useState(false);
+
+  // Load saved state
+  useEffect(() => {
+    if (!user || !job) return;
+    (async () => {
+      const { data } = await supabase
+        .from('saved_jobs')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('job_id', job.id)
+        .maybeSingle();
+      setIsSaved(!!data);
+    })();
+  }, [user, job]);
+
+  const handleToggleSave = async () => {
+    if (!user) {
+      toast.error('Sign in to save jobs');
+      navigate('/auth');
+      return;
+    }
+    if (!job) return;
+    setSavingJob(true);
+    try {
+      if (isSaved) {
+        const { error } = await supabase.from('saved_jobs').delete().eq('user_id', user.id).eq('job_id', job.id);
+        if (error) throw error;
+        setIsSaved(false);
+        toast.success('Removed from saved jobs');
+      } else {
+        const { error } = await supabase.from('saved_jobs').insert({ user_id: user.id, job_id: job.id });
+        if (error && error.code !== '23505') throw error;
+        setIsSaved(true);
+        toast.success('Saved to your dashboard');
+      }
+    } catch (e: any) {
+      console.error(e);
+      toast.error('Could not update saved jobs');
+    } finally {
+      setSavingJob(false);
+    }
+  };
+
+  const handleSubmitReport = async () => {
+    if (!job || !reportReason) {
+      toast.error('Please select a reason');
+      return;
+    }
+    setSubmittingReport(true);
+    try {
+      const { error } = await (supabase.from as any)('job_reports').insert({
+        job_id: job.id,
+        user_id: user?.id ?? null,
+        reason: reportReason,
+        details: reportDetails || null,
+        reporter_email: reportEmail || user?.email || null,
+      });
+      if (error) throw error;
+      toast.success('Report submitted. Thanks for helping keep Jobbyist clean.');
+      setShowReportDialog(false);
+      setReportReason('');
+      setReportDetails('');
+      setReportEmail('');
+    } catch (e: any) {
+      console.error(e);
+      toast.error('Could not submit report');
+    } finally {
+      setSubmittingReport(false);
+    }
+  };
 
   const handleApply = async () => {
     if (!user || !job) return;
@@ -379,11 +458,63 @@ const JobDetail = () => {
                       <Share2 className="h-4 w-4 mr-2" />
                       Share
                     </Button>
-                    <Button variant="outline" className="flex-1">
-                      <Bookmark className="h-4 w-4 mr-2" />
-                      Save
+                    <Button variant="outline" className="flex-1" onClick={handleToggleSave} disabled={savingJob}>
+                      {isSaved ? <BookmarkCheck className="h-4 w-4 mr-2" /> : <Bookmark className="h-4 w-4 mr-2" />}
+                      {isSaved ? 'Saved' : 'Save'}
                     </Button>
                   </div>
+
+                  <Dialog open={showReportDialog} onOpenChange={setShowReportDialog}>
+                    <DialogTrigger asChild>
+                      <Button variant="ghost" size="sm" className="w-full text-muted-foreground">
+                        <Flag className="h-4 w-4 mr-2" />
+                        Report this listing
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Report this job</DialogTitle>
+                        <DialogDescription>
+                          Flag inappropriate, inaccurate, fraudulent or misleading listings.
+                          Reports go to our trust &amp; safety team at feedback@jobbyist.africa.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="space-y-3">
+                        <Select value={reportReason} onValueChange={setReportReason}>
+                          <SelectTrigger><SelectValue placeholder="Select a reason" /></SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="fraudulent">Fraudulent or scam</SelectItem>
+                            <SelectItem value="misleading">Misleading information</SelectItem>
+                            <SelectItem value="inaccurate">Inaccurate details</SelectItem>
+                            <SelectItem value="expired">Already filled / expired</SelectItem>
+                            <SelectItem value="inappropriate">Inappropriate content</SelectItem>
+                            <SelectItem value="duplicate">Duplicate listing</SelectItem>
+                            <SelectItem value="other">Other</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <Textarea
+                          placeholder="Add any details that will help us investigate (optional)"
+                          value={reportDetails}
+                          onChange={(e) => setReportDetails(e.target.value)}
+                          rows={3}
+                        />
+                        {!user && (
+                          <Input
+                            type="email"
+                            placeholder="Your email (optional)"
+                            value={reportEmail}
+                            onChange={(e) => setReportEmail(e.target.value)}
+                          />
+                        )}
+                      </div>
+                      <DialogFooter>
+                        <Button variant="ghost" onClick={() => setShowReportDialog(false)}>Cancel</Button>
+                        <Button onClick={handleSubmitReport} disabled={submittingReport || !reportReason}>
+                          {submittingReport ? 'Submitting...' : 'Submit report'}
+                        </Button>
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
                 </CardContent>
               </Card>
 

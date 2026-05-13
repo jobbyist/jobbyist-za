@@ -36,6 +36,8 @@ import Cookies from "./pages/Cookies";
 import LocationJobs from "./pages/LocationJobs";
 import CategoryJobs from "./pages/CategoryJobs";
 import SitemapRedirect from "./pages/SitemapRedirect";
+import Ads from "./pages/Ads";
+import RemoteSprintModal from "./components/RemoteSprintModal";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -64,9 +66,11 @@ const App = () => {
           <PWAInstallPrompt />
           <BrowserRouter>
             <ScrollToTop />
+            <RemoteSprintModal />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/ads" element={<Ads />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/pro" element={<Pro />} />
               <Route path="/about" element={<About />} />

@@ -42,14 +42,8 @@ export const categories: Category[] = [
 export const locationSlugs = [
   { slug: "johannesburg", name: "Johannesburg" },
   { slug: "pretoria", name: "Pretoria" },
-  { slug: "cape-town", name: "Cape Town" },
   { slug: "durban", name: "Durban" },
-  { slug: "sandton", name: "Sandton" },
-  { slug: "centurion", name: "Centurion" },
-  { slug: "port-elizabeth", name: "Port Elizabeth" },
-  { slug: "bloemfontein", name: "Bloemfontein" },
-  { slug: "east-london", name: "East London" },
-  { slug: "stellenbosch", name: "Stellenbosch" },
+  { slug: "cape-town", name: "Cape Town" },
   { slug: "remote", name: "Remote" },
 ];
 
