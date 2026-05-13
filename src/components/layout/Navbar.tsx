@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, User, LogOut, Shield } from "lucide-react";
+import { Menu, X, User, LogOut, Shield, ChevronDown, ChevronUp } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import {
   NavigationMenu,
@@ -19,6 +19,8 @@ import { categories, locationSlugs } from "@/lib/categories";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [mobileByLocationOpen, setMobileByLocationOpen] = useState(false);
+  const [mobileByCategoryOpen, setMobileByCategoryOpen] = useState(false);
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
   const { isAdmin } = useAdmin();
@@ -32,7 +34,7 @@ const Navbar = () => {
   const moreMenuItems = [
     { name: "Resume Builder", href: "/resume-builder" },
     { name: "Upskilling Programs", href: "/upskilling" },
-    { name: "Companies", href: "/companies" },
+    { name: "Company Directory", href: "/companies" },
     { name: "The Job Post Podcast", href: "#podcast" },
   ];
 
@@ -41,10 +43,20 @@ const Navbar = () => {
     href: l.slug === "remote" ? "/jobs?remote=true" : `/jobs/${l.slug}`,
   }));
 
+  // Updated: Route category links to /jobs with category name pre-filled in search for better UX and to avoid thin content pages
   const categoryMenuItems = categories.map(c => ({
     name: c.name,
-    href: `/jobs/category/${c.slug}`,
+    href: `/jobs?search=${encodeURIComponent(c.name)}`,
   }));
+
+  // Specific 5 for mobile By Category as requested + Browse All
+  const mobileCategoryLinks = [
+    { name: "Marketing", href: "/jobs?search=Marketing" },
+    { name: "Customer Support", href: "/jobs?search=Customer Support" },
+    { name: "Sales", href: "/jobs?search=Sales" },
+    { name: "Operations", href: "/jobs?search=Operations" },
+    { name: "Browse All Sectors", href: "/jobs" },
+  ];
 
   const handleSignOut = async () => {
     await signOut();
@@ -205,52 +217,87 @@ const Navbar = () => {
         </button>
       </nav>
 
+      {/* Mobile Menu - Updated with collapsible By Location and new By Category */}
       {isOpen && (
         <div className="md:hidden bg-background border-b border-border animate-slide-up">
-          <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
+          <div className="container mx-auto px-4 py-4 flex flex-col gap-1">
             <Link
               to="/jobs"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2.5"
               onClick={() => setIsOpen(false)}
             >
               Browse Jobs
             </Link>
-            <div className="text-sm font-semibold text-foreground pl-4 border-t border-border pt-2">
+
+            {/* Collapsible By Location */}
+            <button
+              onClick={() => setMobileByLocationOpen(!mobileByLocationOpen)}
+              className="flex items-center justify-between w-full text-sm font-semibold text-foreground py-2.5 border-t border-border text-left"
+            >
               By Location
-            </div>
-            {locationMenuItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2 pl-8"
-                onClick={() => setIsOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
+              {mobileByLocationOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            </button>
+            {mobileByLocationOpen && (
+              <div className="pl-4 flex flex-col gap-1 pb-2">
+                {locationMenuItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-1.5"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            )}
+
+            {/* New Collapsible By Category for mobile with specified 5 sub-links */}
+            <button
+              onClick={() => setMobileByCategoryOpen(!mobileByCategoryOpen)}
+              className="flex items-center justify-between w-full text-sm font-semibold text-foreground py-2.5 border-t border-border text-left"
+            >
+              By Category
+              {mobileByCategoryOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            </button>
+            {mobileByCategoryOpen && (
+              <div className="pl-4 flex flex-col gap-1 pb-2">
+                {mobileCategoryLinks.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-1.5"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            )}
+
             {navLinks.slice(1).map((link) => (
               <Link
                 key={link.name}
                 to={link.href}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2.5"
                 onClick={() => setIsOpen(false)}
               >
                 {link.name}
               </Link>
             ))}
-            <div className="text-sm font-semibold text-foreground pt-2 border-t border-border">
-              More
-            </div>
+
+            <div className="text-sm font-semibold text-foreground pt-2.5 border-t border-border">More</div>
             {moreMenuItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2 pl-4"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2 pl-1"
                 onClick={() => setIsOpen(false)}
               >
                 {item.name}
               </Link>
             ))}
+
             <div className="flex flex-col gap-2 pt-4 border-t border-border">
               {user ? (
                 <>
