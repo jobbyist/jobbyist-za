@@ -30,6 +30,9 @@ interface AdzunaJob {
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
+  const authFail = await requireAdminOrService(req);
+  if (authFail) return authFail;
+
   try {
     const appId = Deno.env.get("ADZUNA_APP_ID");
     const appKey = Deno.env.get("ADZUNA_APP_KEY");
