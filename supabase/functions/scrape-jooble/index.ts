@@ -32,6 +32,9 @@ const KEYWORDS = [
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
+  const authFail = await requireAdminOrService(req);
+  if (authFail) return authFail;
+
   try {
     const apiKey = Deno.env.get("JOOBLE_API_KEY");
     if (!apiKey) throw new Error("JOOBLE_API_KEY missing");
