@@ -1,6 +1,7 @@
 // Adzuna scraper — pulls SA jobs from the Adzuna API and inserts them.
 // Requires ADZUNA_APP_ID + ADZUNA_APP_KEY (free tier).
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { requireAdminOrService } from "../_shared/auth.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
