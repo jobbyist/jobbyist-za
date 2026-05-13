@@ -1,6 +1,7 @@
 // Remotive scraper — pulls active remote jobs from Remotive's free API and
 // inserts them into the jobs table. Targets roles open to South African talent.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { requireAdminOrService } from "../_shared/auth.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -51,6 +52,9 @@ function parseSalary(salary?: string): { min?: number; max?: number; currency?: 
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+
+  const authFail = await requireAdminOrService(req);
+  if (authFail) return authFail;
 
   try {
     const supabase = createClient(

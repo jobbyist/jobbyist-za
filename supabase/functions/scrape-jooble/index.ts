@@ -1,6 +1,7 @@
 // Jooble scraper — POSTs queries to Jooble for SA jobs.
 // Requires JOOBLE_API_KEY (free).
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { requireAdminOrService } from "../_shared/auth.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -30,6 +31,9 @@ const KEYWORDS = [
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+
+  const authFail = await requireAdminOrService(req);
+  if (authFail) return authFail;
 
   try {
     const apiKey = Deno.env.get("JOOBLE_API_KEY");
