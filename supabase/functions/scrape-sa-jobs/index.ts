@@ -381,6 +381,9 @@ Deno.serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const authFail = await requireAdminOrService(req);
+  if (authFail) return authFail;
+
   try {
     const { count = 100 } = await req.json();
     
