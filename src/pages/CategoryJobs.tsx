@@ -40,11 +40,7 @@ const CategoryJobs = () => {
 
   useEffect(() => {
     if (!jobs.length) return;
-    const tag = document.createElement("script");
-    tag.type = "application/ld+json";
-    tag.setAttribute("data-jobs-list", "true");
-    tag.textContent = JSON.stringify(generateJobListSchema(jobs as any));
-    document.head.appendChild(tag);
+    // FAQ-only schema; JobPosting schema lives only on /job/:id detail pages (Google Jobs guideline).
     const faq = document.createElement("script");
     faq.type = "application/ld+json";
     faq.setAttribute("data-faq", "true");
@@ -61,7 +57,7 @@ const CategoryJobs = () => {
       ],
     });
     document.head.appendChild(faq);
-    return () => { tag.remove(); faq.remove(); };
+    return () => { faq.remove(); };
   }, [jobs, totalCount, cat, loc]);
 
   return (
