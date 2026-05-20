@@ -1,0 +1,29 @@
+# Jobbyist South Africa
+
+> South Africa's job discovery and career management platform — find verified vacancies, career resources, and tools for job seekers and employers.
+
+## Pages
+
+- [Home](/): Search jobs across South Africa and remote roles for SA talent.
+- [Browse jobs](/jobs): Filter vacancies by location, type, level, salary, and remote-friendly status.
+- [Companies](/companies): Profiles of South African employers actively hiring.
+- [Jobseekers](/jobseekers): Public talent directory for recruiters.
+- [Knowledge Hub](/knowledge-hub): Interview packs, ATS-friendly CV templates, salary guides, career roadmaps.
+- [Resume builder](/resume-builder): Free South African CV builder with ATS-ready templates.
+- [Upskilling programs](/upskilling): Curated learning paths for in-demand SA careers.
+- [Job matcher](/job-matcher): AI-powered matching of your CV to live SA jobs.
+- [Jobbyist Pro](/pro): Premium subscription with auto-apply, priority placement, and analytics.
+- [About](/about): Mission, team, and how Jobbyist tackles SA unemployment.
+- [Premium advertising](/ads): Sponsored placement options for brands targeting SA professionals.
+
+## Locations
+
+- [Johannesburg jobs](/jobs/johannesburg)
+- [Pretoria jobs](/jobs/pretoria)
+- [Cape Town jobs](/jobs/cape-town)
+- [Durban jobs](/jobs/durban)
+- [Remote jobs for South Africans](/jobs/remote)
+
+## Optional
+
+- [Cookies](/cookies): Cookie policy.

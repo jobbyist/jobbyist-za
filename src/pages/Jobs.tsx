@@ -9,7 +9,7 @@ import { Slider } from '@/components/ui/slider';
 import { useJobs } from '@/hooks/useJobs';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import { SEOHead, generateJobListSchema } from '@/components/SEOHead';
+import { SEOHead } from '@/components/SEOHead';
 import { Search, MapPin, Wifi, Briefcase, Clock, ArrowRight, Building2, DollarSign, ChevronLeft, ChevronRight } from 'lucide-react';
 import { formatSalary } from '@/lib/countries';
 import GoogleAdsense from '@/components/GoogleAdsense';
@@ -52,27 +52,8 @@ const Jobs = () => {
   }, [currentPage]);
 
   // Add structured data for job listings
-  useEffect(() => {
-    if (jobs.length > 0) {
-      const existingScript = document.querySelector('script[type="application/ld+json"][data-jobs-list="true"]');
-      if (existingScript) {
-        existingScript.remove();
-      }
-
-      const script = document.createElement('script');
-      script.type = 'application/ld+json';
-      script.setAttribute('data-jobs-list', 'true');
-      script.textContent = JSON.stringify(generateJobListSchema(jobs as any));
-      document.head.appendChild(script);
-
-      return () => {
-        const scriptToRemove = document.querySelector('script[type="application/ld+json"][data-jobs-list="true"]');
-        if (scriptToRemove) {
-          scriptToRemove.remove();
-        }
-      };
-    }
-  }, [jobs]);
+  // JobPosting structured data is intentionally NOT emitted on listing pages
+  // (per Google Jobs guidelines); it only lives on individual /job/:id detail pages.
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

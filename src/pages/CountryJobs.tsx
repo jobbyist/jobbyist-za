@@ -9,7 +9,7 @@ import { Slider } from '@/components/ui/slider';
 import { useJobs } from '@/hooks/useJobs';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import { SEOHead, generateJobSearchSchema, generateJobListSchema } from '@/components/SEOHead';
+import { SEOHead, generateJobSearchSchema } from '@/components/SEOHead';
 import { Search, MapPin, Wifi, Briefcase, Clock, ArrowRight, Building2, DollarSign, ChevronRight } from 'lucide-react';
 import { countries, formatSalary, type CountryCode } from '@/lib/countries';
 
@@ -70,28 +70,8 @@ const CountryJobs = () => {
     'Jobbyist Africa',
   ];
 
-  // Add structured data for job listings
-  useEffect(() => {
-    if (jobs.length > 0) {
-      const existingScript = document.querySelector('script[type="application/ld+json"][data-country-jobs="true"]');
-      if (existingScript) {
-        existingScript.remove();
-      }
-
-      const script = document.createElement('script');
-      script.type = 'application/ld+json';
-      script.setAttribute('data-country-jobs', 'true');
-      script.textContent = JSON.stringify(generateJobListSchema(jobs as any));
-      document.head.appendChild(script);
-
-      return () => {
-        const scriptToRemove = document.querySelector('script[type="application/ld+json"][data-country-jobs="true"]');
-        if (scriptToRemove) {
-          scriptToRemove.remove();
-        }
-      };
-    }
-  }, [jobs]);
+  // JobPosting structured data lives only on individual /job/:id detail pages
+  // (per Google Jobs guidelines); country listing pages must not emit it.
 
   return (
     <div className="min-h-screen bg-background">
