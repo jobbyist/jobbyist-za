@@ -80,28 +80,8 @@ const LocationJobs = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentPage]);
 
-  // Add structured data for job listings
-  useEffect(() => {
-    if (jobs.length > 0) {
-      const existingScript = document.querySelector('script[type="application/ld+json"][data-jobs-list="true"]');
-      if (existingScript) {
-        existingScript.remove();
-      }
-
-      const script = document.createElement('script');
-      script.type = 'application/ld+json';
-      script.setAttribute('data-jobs-list', 'true');
-      script.textContent = JSON.stringify(generateJobListSchema(jobs as any));
-      document.head.appendChild(script);
-
-      return () => {
-        const scriptToRemove = document.querySelector('script[type="application/ld+json"][data-jobs-list="true"]');
-        if (scriptToRemove) {
-          scriptToRemove.remove();
-        }
-      };
-    }
-  }, [jobs]);
+  // JobPosting structured data lives only on individual /job/:id detail pages
+  // (per Google Jobs guidelines); listing pages must not emit JobPosting schema.
 
   // If invalid location, redirect to main jobs page
   if (!locationData) {
