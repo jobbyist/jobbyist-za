@@ -169,6 +169,7 @@ export const generateJobPostingSchema = (job: {
       },
     },
     employmentType: employmentTypeMap[job.job_type] || 'FULL_TIME',
+    directApply: true,
   };
 
   // Add remote work info
