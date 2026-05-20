@@ -15,7 +15,7 @@ export const SEOHead = ({
   title,
   description,
   canonicalUrl,
-  ogImage = 'https://lovable.dev/opengraph-image-p98pqg.png',
+  ogImage = 'https://storage.googleapis.com/gpt-engineer-file-uploads/iy019M6SqjMXyibDc8dgs2v9PSx1/social-images/social-1767047331245-jobbyistpwa.png',
   ogType = 'website',
   keywords = [],
   structuredData,
