@@ -9,7 +9,7 @@ import { Slider } from '@/components/ui/slider';
 import { useJobs } from '@/hooks/useJobs';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import { SEOHead, generateJobSearchSchema, generateJobListSchema } from '@/components/SEOHead';
+import { SEOHead, generateJobSearchSchema } from '@/components/SEOHead';
 import { Search, MapPin, Wifi, Briefcase, Clock, ArrowRight, Building2, DollarSign, ChevronRight } from 'lucide-react';
 import { countries, formatSalary, type CountryCode } from '@/lib/countries';
 
