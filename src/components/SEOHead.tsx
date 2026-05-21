@@ -7,8 +7,14 @@ interface SEOHeadProps {
   ogImage?: string;
   ogType?: string;
   keywords?: string[];
-  structuredData?: object;
+  structuredData?: object | object[];
   noindex?: boolean;
+  /** URL for rel="prev" pagination link. */
+  prevUrl?: string;
+  /** URL for rel="next" pagination link. */
+  nextUrl?: string;
+  /** hreflang entries. Defaults to en-ZA when canonicalUrl is set. */
+  hreflang?: Array<{ lang: string; href: string }>;
 }
 
 export const SEOHead = ({
@@ -20,6 +26,9 @@ export const SEOHead = ({
   keywords = [],
   structuredData,
   noindex = false,
+  prevUrl,
+  nextUrl,
+  hreflang,
 }: SEOHeadProps) => {
   useEffect(() => {
     // Set document title
@@ -80,31 +89,74 @@ export const SEOHead = ({
       canonical.remove();
     }
 
-    // Structured data (JSON-LD)
-    const existingScript = document.querySelector('script[type="application/ld+json"][data-seo="true"]');
-    if (existingScript) {
-      existingScript.remove();
-    }
-    
+    // rel=prev / rel=next pagination
+    const upsertLink = (rel: string, href?: string) => {
+      let link = document.querySelector(`link[rel="${rel}"][data-seo="true"]`) as HTMLLinkElement | null;
+      if (href) {
+        if (!link) {
+          link = document.createElement('link');
+          link.rel = rel;
+          link.setAttribute('data-seo', 'true');
+          document.head.appendChild(link);
+        }
+        link.href = href;
+      } else if (link) {
+        link.remove();
+      }
+    };
+    upsertLink('prev', prevUrl);
+    upsertLink('next', nextUrl);
+
+    // hreflang
+    document.querySelectorAll('link[rel="alternate"][data-seo-hreflang="true"]').forEach((n) => n.remove());
+    const hrefs = hreflang ?? (canonicalUrl ? [{ lang: 'en-ZA', href: canonicalUrl }, { lang: 'x-default', href: canonicalUrl }] : []);
+    hrefs.forEach(({ lang, href }) => {
+      const link = document.createElement('link');
+      link.rel = 'alternate';
+      link.hreflang = lang;
+      link.href = href;
+      link.setAttribute('data-seo-hreflang', 'true');
+      document.head.appendChild(link);
+    });
+
+    // Structured data (JSON-LD) — supports single object or array
+    document.querySelectorAll('script[type="application/ld+json"][data-seo="true"]').forEach((n) => n.remove());
     if (structuredData) {
-      const script = document.createElement('script');
-      script.type = 'application/ld+json';
-      script.setAttribute('data-seo', 'true');
-      script.textContent = JSON.stringify(structuredData);
-      document.head.appendChild(script);
+      const items = Array.isArray(structuredData) ? structuredData : [structuredData];
+      items.forEach((item) => {
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.setAttribute('data-seo', 'true');
+        script.textContent = JSON.stringify(item);
+        document.head.appendChild(script);
+      });
     }
 
     return () => {
-      // Cleanup structured data on unmount
-      const script = document.querySelector('script[type="application/ld+json"][data-seo="true"]');
-      if (script) {
-        script.remove();
-      }
+      document.querySelectorAll('script[type="application/ld+json"][data-seo="true"]').forEach((n) => n.remove());
+      document.querySelectorAll('link[rel="alternate"][data-seo-hreflang="true"]').forEach((n) => n.remove());
+      document.querySelectorAll('link[rel="prev"][data-seo="true"], link[rel="next"][data-seo="true"]').forEach((n) => n.remove());
     };
-  }, [title, description, canonicalUrl, ogImage, ogType, keywords, structuredData, noindex]);
+  }, [title, description, canonicalUrl, ogImage, ogType, keywords, structuredData, noindex, prevUrl, nextUrl, hreflang]);
 
   return null;
 };
+
+/** Build a BreadcrumbList JSON-LD schema from an ordered list of crumbs. */
+export const generateBreadcrumbSchema = (
+  crumbs: Array<{ name: string; url: string }>
+) => ({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: crumbs.map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: c.name,
+    item: c.url,
+  })),
+});
+
+
 
 // Generate JobPosting structured data for Google Jobs
 export const generateJobPostingSchema = (job: {
