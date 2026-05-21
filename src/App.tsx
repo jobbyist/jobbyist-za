@@ -35,6 +35,7 @@ import UpskillingProgram from "./pages/UpskillingProgram";
 import Cookies from "./pages/Cookies";
 import LocationJobs from "./pages/LocationJobs";
 import CategoryJobs from "./pages/CategoryJobs";
+import FacetJobs from "./pages/FacetJobs";
 import SitemapRedirect from "./pages/SitemapRedirect";
 import Ads from "./pages/Ads";
 import RemoteSprintModal from "./components/RemoteSprintModal";
@@ -86,6 +87,11 @@ const App = () => {
               <Route path="/jobs" element={<Jobs />} />
               <Route path="/jobs/category/:category" element={<CategoryJobs />} />
               <Route path="/jobs/category/:category/:location" element={<CategoryJobs />} />
+              <Route path="/jobs/provinces/:province" element={<FacetJobs mode="province" />} />
+              <Route path="/jobs/cities/:city" element={<FacetJobs mode="city" />} />
+              <Route path="/jobs/types/:type" element={<FacetJobs mode="type" />} />
+              <Route path="/jobs/categories/:category" element={<FacetJobs mode="category" />} />
+              <Route path="/jobs/combo/:location/:jobType/:category" element={<FacetJobs mode="combo" />} />
               <Route path="/jobs/country/:countryCode" element={<CountryJobs />} />
               <Route path="/jobs/:location" element={<LocationJobs />} />
               <Route path="/job/:jobId" element={<JobDetail />} />
