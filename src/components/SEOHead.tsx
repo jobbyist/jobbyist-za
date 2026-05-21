@@ -7,8 +7,14 @@ interface SEOHeadProps {
   ogImage?: string;
   ogType?: string;
   keywords?: string[];
-  structuredData?: object;
+  structuredData?: object | object[];
   noindex?: boolean;
+  /** URL for rel="prev" pagination link. */
+  prevUrl?: string;
+  /** URL for rel="next" pagination link. */
+  nextUrl?: string;
+  /** hreflang entries. Defaults to en-ZA when canonicalUrl is set. */
+  hreflang?: Array<{ lang: string; href: string }>;
 }
 
 export const SEOHead = ({
