@@ -44,15 +44,22 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const App = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() => {
+    try {
+      return sessionStorage.getItem('jobbyist:preloader-shown') !== '1';
+    } catch {
+      return true;
+    }
+  });
 
   useEffect(() => {
+    if (!isLoading) return;
     const timer = setTimeout(() => {
       setIsLoading(false);
+      try { sessionStorage.setItem('jobbyist:preloader-shown', '1'); } catch {}
     }, 5000);
-
     return () => clearTimeout(timer);
-  }, []);
+  }, [isLoading]);
 
   if (isLoading) {
     return <Preloader />;
