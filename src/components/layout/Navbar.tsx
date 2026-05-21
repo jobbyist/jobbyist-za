@@ -49,13 +49,13 @@ const Navbar = () => {
     href: `/jobs?search=${encodeURIComponent(c.name)}`,
   }));
 
-  // Specific 5 for mobile By Category as requested + Browse All
+  // Specific 5 for mobile By Category as requested
   const mobileCategoryLinks = [
-    { name: "Marketing", href: "/jobs?search=Marketing" },
-    { name: "Customer Support", href: "/jobs?search=Customer Support" },
-    { name: "Sales", href: "/jobs?search=Sales" },
-    { name: "Operations", href: "/jobs?search=Operations" },
-    { name: "Browse All Sectors", href: "/jobs" },
+    { name: "Marketing", href: "/jobs/categories/marketing" },
+    { name: "Customer Support", href: "/jobs/categories/customer-support" },
+    { name: "Design & UX", href: "/jobs/categories/design-and-ux" },
+    { name: "Sales", href: "/jobs/categories/sales" },
+    { name: "Operations", href: "/jobs/categories/operations" },
   ];
 
   const handleSignOut = async () => {
