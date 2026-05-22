@@ -14,6 +14,7 @@ import { useProfile } from '@/hooks/useProfile';
 import { useUpskilling } from '@/hooks/useUpskilling';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import SavedJobsCard from '@/components/SavedJobsCard';
 import { toast } from 'sonner';
 import { 
   User, 
