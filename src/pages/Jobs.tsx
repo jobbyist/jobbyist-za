@@ -120,6 +120,9 @@ const Jobs = () => {
               Explore {totalCount}+ verified roles {locationFilter ? `in ${locationFilter}` : 'across South Africa'} with salary signals in ZAR and province-level filtering
               {currentPage > 1 && ` - Page ${currentPage} of ${totalPages}`}
             </p>
+            <p className="text-sm text-muted-foreground mt-2">
+              Stay alert while applying — review our <Link to="/trust-safety" className="underline">Trust &amp; Safety guidance</Link> for verification steps, fraud indicators, and reporting timelines.
+            </p>
             {locationFilter && (
               <div className="mt-3 flex items-center gap-2">
                 <Badge variant="secondary" className="gap-1">

@@ -407,6 +407,7 @@ const JobDetail = () => {
                       </Link>
                     </div>
                   ) : canApplyToJobs ? (
+                    <>
                     <Dialog open={showApplyDialog} onOpenChange={setShowApplyDialog}>
                       <DialogTrigger asChild>
                         <Button className="w-full" size="lg">
@@ -440,6 +441,11 @@ const JobDetail = () => {
                         </div>
                       </DialogContent>
                     </Dialog>
+                    <p className="text-xs text-muted-foreground">
+                      We verify listings continuously, but always review employer details before sharing sensitive information.
+                      <Link to="/trust-safety" className="underline ml-1">Trust &amp; Safety</Link>.
+                    </p>
+                    </>
                   ) : (
                     <div className="text-center">
                       <p className="text-sm text-muted-foreground mb-2">
@@ -478,6 +484,9 @@ const JobDetail = () => {
                         Report this listing
                       </Button>
                     </DialogTrigger>
+                    <p className="text-xs text-muted-foreground">
+                      Reports are reviewed by our team, with urgent fraud reports prioritized within 24 hours.
+                    </p>
                     <DialogContent>
                       <DialogHeader>
                         <DialogTitle>Report this job</DialogTitle>
