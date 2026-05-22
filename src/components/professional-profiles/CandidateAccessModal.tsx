@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Crown, Building2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useDialogFocusRestore } from "@/hooks/useDialogFocusRestore";
 
 interface CandidateAccessModalProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ interface CandidateAccessModalProps {
 
 export const CandidateAccessModal = ({ isOpen, onClose, profileId }: CandidateAccessModalProps) => {
   const navigate = useNavigate();
+  useDialogFocusRestore(isOpen);
 
   const handleJobseekerUpgrade = () => {
     navigate("/pro");

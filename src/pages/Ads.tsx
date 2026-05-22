@@ -25,7 +25,7 @@ const Ads = () => {
         keywords={["advertise on jobbyist", "South Africa recruitment advertising", "employer branding SA", "sponsored jobs"]}
       />
       <Navbar />
-      <main className="pt-24 pb-16">
+      <main id="main-content" className="pt-24 pb-16">
         <section className="container mx-auto px-4 max-w-5xl">
           <Badge className="mb-4 gap-1"><Sparkles className="h-3 w-3" /> Premium ad solutions</Badge>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">

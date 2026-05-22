@@ -103,7 +103,7 @@ const Jobs = () => {
         nextUrl={hasNextPage ? getFullPageUrl(currentPage + 1) : undefined}
       />
       <Navbar />
-      <main className="pt-24 pb-16">
+      <main id="main-content" className="pt-24 pb-16">
         <div className="container mx-auto px-4">
           {/* Header */}
           <div className="mb-8">

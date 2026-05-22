@@ -170,7 +170,7 @@ const JobDetail = () => {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />
-        <main className="pt-24 pb-16">
+        <main id="main-content" className="pt-24 pb-16">
           <div className="container mx-auto px-4 max-w-4xl">
             <div className="animate-pulse">
               <div className="h-8 bg-muted rounded w-1/4 mb-4" />
@@ -188,7 +188,7 @@ const JobDetail = () => {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />
-        <main className="pt-24 pb-16">
+        <main id="main-content" className="pt-24 pb-16">
           <div className="container mx-auto px-4 text-center">
             <Briefcase className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
             <h1 className="text-2xl font-bold mb-2">Job Not Found</h1>
@@ -231,7 +231,7 @@ const JobDetail = () => {
         ]}
       />
       <Navbar />
-      <main className="pt-24 pb-16">
+      <main id="main-content" className="pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-4xl">
           <Link to="/jobs" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6">
             <ArrowLeft className="h-4 w-4" />

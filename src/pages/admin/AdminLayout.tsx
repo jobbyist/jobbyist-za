@@ -123,7 +123,7 @@ const AdminLayout = () => {
               )?.title || 'Admin'}
             </h1>
           </header>
-          <main className="p-6">
+          <main id="main-content" className="p-6">
             <Outlet />
           </main>
         </div>

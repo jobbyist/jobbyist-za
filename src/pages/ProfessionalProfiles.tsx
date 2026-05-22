@@ -136,7 +136,7 @@ const ProfessionalProfiles = () => {
 
       <Navbar />
 
-      <main className="pt-24 pb-16">
+      <main id="main-content" className="pt-24 pb-16">
         {/* Hero Section */}
         <section className="container mx-auto px-4 max-w-7xl mb-12">
           <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 items-center">

@@ -253,7 +253,7 @@ const KnowledgeHub = () => {
         ogType="website"
       />
       <Navbar />
-      <main className="pt-16">
+      <main id="main-content" className="pt-16">
         {/* Hero Section */}
         <section className="py-20 gradient-brand relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
