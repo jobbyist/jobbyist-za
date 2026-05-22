@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Briefcase, Building2, TrendingUp, ArrowRight } from "lucide-react";
+import { Briefcase, Building2, TrendingUp, ArrowRight, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import RecruitmentSuiteModal from "@/components/RecruitmentSuiteModal";
 
@@ -37,20 +37,32 @@ const Hero = () => {
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-slide-up" style={{ animationDelay: "0.2s" }}>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8 animate-slide-up" style={{ animationDelay: "0.2s" }}>
             <Link to="/jobs">
               <Button variant="hero" size="xl" className="group">
-                Find Jobs in South Africa
+                Job Seeker: Find Jobs
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
-            <Button 
-              variant="hero-outline" 
-              size="xl"
-              onClick={() => setIsRecruitmentModalOpen(true)}
-            >
-              For Employers & Recruiters
-            </Button>
+            <Button variant="hero-outline" size="xl" onClick={() => setIsRecruitmentModalOpen(true)}>Employer / Recruiter: Hire Talent</Button>
+            <Link to="/professional-profiles">
+              <Button variant="hero-outline" size="xl" className="group">
+                Candidate Profile Buyer: Browse Profiles
+                <Users className="h-5 w-5" />
+              </Button>
+            </Link>
+          </div>
+
+          <div className="grid gap-3 md:grid-cols-3 mb-12 text-left animate-slide-up" style={{ animationDelay: "0.25s" }}>
+            <Link to="/jobs" className="rounded-lg border border-border bg-background p-4 hover:border-primary/40">
+              <p className="font-semibold">Job Seeker Journey</p><p className="text-sm text-muted-foreground">Search, match, and apply faster with AI-assisted tools.</p>
+            </Link>
+            <Link to="/pro" className="rounded-lg border border-border bg-background p-4 hover:border-primary/40">
+              <p className="font-semibold">Employer / Recruiter Journey</p><p className="text-sm text-muted-foreground">Discover company tools and join the employer waitlist.</p>
+            </Link>
+            <Link to="/professional-profiles" className="rounded-lg border border-border bg-background p-4 hover:border-primary/40">
+              <p className="font-semibold">Candidate Profile Buyer Journey</p><p className="text-sm text-muted-foreground">Access curated candidate profiles and request buyer access.</p>
+            </Link>
           </div>
 
           {/* Trust badges */}
