@@ -488,6 +488,9 @@ const Profile = () => {
               </CardContent>
             </Card>
 
+            {/* Saved Jobs */}
+            <SavedJobsCard />
+
             {/* Upskilling Progress */}
             {enrollments && enrollments.length > 0 && (
               <Card>
