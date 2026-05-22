@@ -209,7 +209,7 @@ const Navbar = () => {
         </div>
 
         <button
-          className="md:hidden p-2"
+          className="md:hidden p-2 rounded-md focus-ring"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
@@ -223,7 +223,7 @@ const Navbar = () => {
           <div className="container mx-auto px-4 py-4 flex flex-col gap-1">
             <Link
               to="/jobs"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2.5"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2.5 rounded-sm focus-ring"
               onClick={() => setIsOpen(false)}
             >
               Browse Jobs
@@ -232,7 +232,7 @@ const Navbar = () => {
             {/* Collapsible By Location */}
             <button
               onClick={() => setMobileByLocationOpen(!mobileByLocationOpen)}
-              className="flex items-center justify-between w-full text-sm font-semibold text-foreground py-2.5 border-t border-border text-left"
+              className="flex items-center justify-between w-full text-sm font-semibold text-foreground py-2.5 border-t border-border text-left rounded-sm focus-ring"
             >
               By Location
               {mobileByLocationOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
@@ -243,7 +243,7 @@ const Navbar = () => {
                   <Link
                     key={item.name}
                     to={item.href}
-                    className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-1.5"
+                    className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-1.5 rounded-sm focus-ring"
                     onClick={() => setIsOpen(false)}
                   >
                     {item.name}
@@ -255,7 +255,7 @@ const Navbar = () => {
             {/* New Collapsible By Category for mobile with specified 5 sub-links */}
             <button
               onClick={() => setMobileByCategoryOpen(!mobileByCategoryOpen)}
-              className="flex items-center justify-between w-full text-sm font-semibold text-foreground py-2.5 border-t border-border text-left"
+              className="flex items-center justify-between w-full text-sm font-semibold text-foreground py-2.5 border-t border-border text-left rounded-sm focus-ring"
             >
               By Category
               {mobileByCategoryOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
@@ -266,7 +266,7 @@ const Navbar = () => {
                   <Link
                     key={item.name}
                     to={item.href}
-                    className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-1.5"
+                    className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-1.5 rounded-sm focus-ring"
                     onClick={() => setIsOpen(false)}
                   >
                     {item.name}
@@ -279,7 +279,7 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 to={link.href}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2.5"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2.5 rounded-sm focus-ring"
                 onClick={() => setIsOpen(false)}
               >
                 {link.name}
@@ -291,7 +291,7 @@ const Navbar = () => {
               <Link
                 key={item.name}
                 to={item.href}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2 pl-1"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2 pl-1 rounded-sm focus-ring"
                 onClick={() => setIsOpen(false)}
               >
                 {item.name}
