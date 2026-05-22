@@ -127,6 +127,7 @@ const JobDetail = () => {
 
     setIsApplying(true);
     try {
+      // Save application to database
       const { error } = await supabase.from('job_applications').insert({
         job_id: job.id,
         user_id: user.id,
@@ -140,11 +141,37 @@ const JobDetail = () => {
         } else {
           throw error;
         }
-      } else {
-        toast.success('Application submitted successfully!');
-        setHasApplied(true);
-        setShowApplyDialog(false);
+        return;
       }
+
+      // Send application email via edge function
+      try {
+        const { error: emailError } = await supabase.functions.invoke('send-job-application', {
+          body: {
+            jobId: job.id,
+            jobTitle: job.title,
+            companyName: job.company?.name || 'Unknown Company',
+            applicantName: `${profile?.first_name || ''} ${profile?.last_name || ''}`.trim() || 'Applicant',
+            applicantEmail: user.email || '',
+            coverLetter: coverLetter || undefined,
+            resumeUrl: profile?.resume_url || undefined,
+          },
+        });
+
+        if (emailError) {
+          console.warn('Email notification failed:', emailError);
+          // Don't fail the application if email fails
+          toast.success('Application submitted! (Email notification pending)');
+        } else {
+          toast.success('Application submitted successfully!');
+        }
+      } catch (emailError: any) {
+        console.warn('Email notification error:', emailError);
+        toast.success('Application submitted! (Email notification pending)');
+      }
+
+      setHasApplied(true);
+      setShowApplyDialog(false);
     } catch (error: any) {
       console.error('Error applying to job:', error);
       toast.error('Failed to submit application');
