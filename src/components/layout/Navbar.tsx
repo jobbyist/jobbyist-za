@@ -34,6 +34,7 @@ const Navbar = () => {
   const moreMenuItems = [
     { name: "Resume Builder", href: "/resume-builder" },
     { name: "Upskilling Programs", href: "/upskilling" },
+    { name: "30-Day Job Sprint", href: "/30-day-job-sprint" },
     { name: "Company Directory", href: "/companies" },
     { name: "The Job Post Podcast", href: "#podcast" },
   ];

@@ -44,6 +44,7 @@ import SitemapRedirect from "./pages/SitemapRedirect";
 import Ads from "./pages/Ads";
 import ProfessionalProfiles from "./pages/ProfessionalProfiles";
 import RecruitmentSuitePage from "./pages/RecruitmentSuite";
+import ThirtyDayJobSprint from "./pages/ThirtyDayJobSprint";
 import RemoteSprintModal from "./components/RemoteSprintModal";
 import ConciergeChat from "./components/ConciergeChat";
 import NotFound from "./pages/NotFound";
@@ -122,6 +123,7 @@ const App = () => {
               <Route path="/professional-profiles" element={<ProfessionalProfiles />} />
               <Route path="/professional-profiles/page/:pageNum" element={<ProfessionalProfiles />} />
               <Route path="/recruitment-suite" element={<RecruitmentSuitePage />} />
+              <Route path="/30-day-job-sprint" element={<ThirtyDayJobSprint />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminLayout />}>
