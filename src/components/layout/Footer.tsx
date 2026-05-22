@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { CookieSettingsLink } from '@/components/CookieConsent';
 
 const Footer = () => {
   const footerLinks = {
@@ -82,6 +83,7 @@ const Footer = () => {
             <p className="text-sm text-white/50">
               © {new Date().getFullYear()} Jobbyist. All rights reserved.
             </p>
+            <CookieSettingsLink className="mt-3 inline-block text-sm text-white/70 hover:text-white underline" />
           </div>
 
           {/* Links */}
