@@ -14,11 +14,10 @@ const CategoryJobs = () => {
   const { category, location } = useParams<{ category: string; location?: string }>();
   const cat = getCategory(category);
   const loc = location ? getLocation(location) : undefined;
+  const isInvalidCategory = !cat;
+  const isInvalidLocation = !!location && !loc;
 
-  if (!cat) return <Navigate to="/jobs" replace />;
-  if (location && !loc) return <Navigate to={`/jobs/category/${category}`} replace />;
-
-  const search = useMemo(() => cat.keywords.join(" "), [cat]);
+  const search = useMemo(() => (cat ? cat.keywords.join(" ") : ""), [cat]);
 
   const { jobs, totalCount, loading } = useJobs({
     country: "ZA",
@@ -28,15 +27,19 @@ const CategoryJobs = () => {
     limit: 30,
   });
 
+
+  if (isInvalidCategory) return <Navigate to="/jobs" replace />;
+  if (isInvalidLocation) return <Navigate to={`/jobs/category/${category}`} replace />;
+
   const title = loc
-    ? `${cat.name} Jobs in ${loc.name} | Jobbyist`
-    : `${cat.name} Jobs in South Africa | Jobbyist`;
+    ? `${cat!.name} Jobs in ${loc.name} | Jobbyist`
+    : `${cat!.name} Jobs in South Africa | Jobbyist`;
   const description = loc
-    ? `Browse ${totalCount}+ ${cat.name.toLowerCase()} jobs in ${loc.name}. ${cat.description}`
-    : `Find ${totalCount}+ ${cat.name.toLowerCase()} jobs across South Africa. ${cat.description}`;
+    ? `Browse ${totalCount}+ ${cat!.name.toLowerCase()} jobs in ${loc.name}. ${cat!.description}`
+    : `Find ${totalCount}+ ${cat!.name.toLowerCase()} jobs across South Africa. ${cat!.description}`;
   const canonical = loc
-    ? `https://za.jobbyist.africa/jobs/category/${cat.slug}/${loc.slug}`
-    : `https://za.jobbyist.africa/jobs/category/${cat.slug}`;
+    ? `https://za.jobbyist.africa/jobs/category/${cat!.slug}/${loc.slug}`
+    : `https://za.jobbyist.africa/jobs/category/${cat!.slug}`;
 
   useEffect(() => {
     if (!jobs.length) return;
@@ -48,11 +51,11 @@ const CategoryJobs = () => {
       "@context": "https://schema.org",
       "@type": "FAQPage",
       mainEntity: [
-        { "@type": "Question", name: `How many ${cat.name} jobs are available${loc ? ` in ${loc.name}` : " in South Africa"}?`,
-          acceptedAnswer: { "@type": "Answer", text: `Jobbyist lists ${totalCount}+ ${cat.name} positions${loc ? ` in ${loc.name}` : " across SA"}, updated daily.` } },
-        { "@type": "Question", name: `What is the average ${cat.name} salary${loc ? ` in ${loc.name}` : " in South Africa"}?`,
-          acceptedAnswer: { "@type": "Answer", text: `Salaries vary by experience; mid-level ${cat.name} roles in SA typically range R30,000–R80,000 per month.` } },
-        { "@type": "Question", name: `How do I apply for a ${cat.name} job${loc ? ` in ${loc.name}` : ""}?`,
+        { "@type": "Question", name: `How many ${cat!.name} jobs are available${loc ? ` in ${loc.name}` : " in South Africa"}?`,
+          acceptedAnswer: { "@type": "Answer", text: `Jobbyist lists ${totalCount}+ ${cat!.name} positions${loc ? ` in ${loc.name}` : " across SA"}, updated daily.` } },
+        { "@type": "Question", name: `What is the average ${cat!.name} salary${loc ? ` in ${loc.name}` : " in South Africa"}?`,
+          acceptedAnswer: { "@type": "Answer", text: `Salaries vary by experience; mid-level ${cat!.name} roles in SA typically range R30,000–R80,000 per month.` } },
+        { "@type": "Question", name: `How do I apply for a ${cat!.name} job${loc ? ` in ${loc.name}` : ""}?`,
           acceptedAnswer: { "@type": "Answer", text: "Create a free Jobbyist profile, upload your CV, and apply directly from any listing." } },
       ],
     });
@@ -63,23 +66,23 @@ const CategoryJobs = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead title={title} description={description} canonicalUrl={canonical}
-        keywords={[cat.name, ...cat.keywords, "South Africa", loc?.name || "SA jobs"]} />
+        keywords={[cat!.name, ...cat!.keywords, "South Africa", loc?.name || "SA jobs"]} />
       <Navbar />
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-6xl">
           <nav className="text-sm text-muted-foreground mb-4">
             <Link to="/" className="hover:text-foreground">Home</Link> /{" "}
             <Link to="/jobs" className="hover:text-foreground">Jobs</Link> /{" "}
-            <span className="text-foreground">{cat.name}{loc && ` in ${loc.name}`}</span>
+            <span className="text-foreground">{cat!.name}{loc && ` in ${loc.name}`}</span>
           </nav>
 
           <header className="mb-8">
             <Badge className="mb-3">{loc ? loc.name : "South Africa"}</Badge>
             <h1 className="text-3xl md:text-5xl font-bold mb-3">
-              {cat.name} Jobs {loc ? `in ${loc.name}` : "in South Africa"}
+              {cat!.name} Jobs {loc ? `in ${loc.name}` : "in South Africa"}
             </h1>
             <p className="text-lg text-muted-foreground max-w-3xl">
-              {cat.description} {loc ? `Updated daily for ${loc.name}-based and remote-friendly opportunities.` : "Updated daily across all major SA cities and remote roles."}
+              {cat!.description} {loc ? `Updated daily for ${loc.name}-based and remote-friendly opportunities.` : "Updated daily across all major SA cities and remote roles."}
             </p>
           </header>
 
@@ -90,7 +93,7 @@ const CategoryJobs = () => {
           ) : jobs.length === 0 ? (
             <Card className="p-10 text-center">
               <Briefcase className="h-12 w-12 mx-auto text-muted-foreground mb-3" />
-              <h2 className="text-xl font-semibold mb-2">No {cat.name} jobs right now</h2>
+              <h2 className="text-xl font-semibold mb-2">No {cat!.name} jobs right now</h2>
               <p className="text-muted-foreground mb-4">New listings are posted daily — check back soon.</p>
               <Link to="/jobs"><Button>Browse all jobs</Button></Link>
             </Card>
@@ -126,12 +129,12 @@ const CategoryJobs = () => {
 
           {/* Cross-links for SEO */}
           <section className="mt-14">
-            <h2 className="text-xl font-semibold mb-4">Explore {cat.name} jobs by city</h2>
+            <h2 className="text-xl font-semibold mb-4">Explore {cat!.name} jobs by city</h2>
             <div className="flex flex-wrap gap-2">
               {locationSlugs.map(l => (
-                <Link key={l.slug} to={`/jobs/category/${cat.slug}/${l.slug}`}>
+                <Link key={l.slug} to={`/jobs/category/${cat!.slug}/${l.slug}`}>
                   <Badge variant={l.slug === loc?.slug ? "default" : "outline"} className="cursor-pointer">
-                    {cat.name} in {l.name}
+                    {cat!.name} in {l.name}
                   </Badge>
                 </Link>
               ))}
@@ -141,7 +144,7 @@ const CategoryJobs = () => {
           <section className="mt-10">
             <h2 className="text-xl font-semibold mb-4">Browse other categories</h2>
             <div className="flex flex-wrap gap-2">
-              {categories.filter(c => c.slug !== cat.slug).map(c => (
+              {categories.filter(c => c.slug !== cat!.slug).map(c => (
                 <Link key={c.slug} to={`/jobs/category/${c.slug}${loc ? "/" + loc.slug : ""}`}>
                   <Badge variant="secondary" className="cursor-pointer">{c.name}</Badge>
                 </Link>

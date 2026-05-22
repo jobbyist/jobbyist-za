@@ -23,11 +23,7 @@ const CountryJobs = () => {
     const code = countryCode.toUpperCase() as CountryCode;
     return countries.find(c => c.code === code);
   }, [countryCode]);
-
-  // If invalid country, redirect to main jobs page
-  if (!country) {
-    return <Navigate to="/jobs" replace />;
-  }
+  const isInvalidCountry = !country;
 
   const [search, setSearch] = useState(searchParams.get('search') || '');
   const [jobType, setJobType] = useState<string | undefined>(searchParams.get('type') || undefined);
@@ -36,7 +32,7 @@ const CountryJobs = () => {
   const [salaryRange, setSalaryRange] = useState<[number, number]>([0, 200000]);
 
   const { jobs, loading } = useJobs({
-    country: country.code,
+    country: country?.code || 'ZA',
     search,
     jobType: jobType === 'all' ? undefined : jobType,
     experienceLevel: experienceLevel === 'all' ? undefined : experienceLevel,
@@ -44,6 +40,11 @@ const CountryJobs = () => {
     salaryMin: salaryRange[0] > 0 ? salaryRange[0] : undefined,
     salaryMax: salaryRange[1] < 200000 ? salaryRange[1] : undefined,
   });
+
+  // If invalid country, redirect to main jobs page
+  if (isInvalidCountry) {
+    return <Navigate to="/jobs" replace />;
+  }
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,16 +57,16 @@ const CountryJobs = () => {
   };
 
   // SEO metadata
-  const pageTitle = `${country.name} Jobs - Find ${jobs.length}+ Opportunities | Jobbyist Africa`;
-  const pageDescription = `Discover ${jobs.length}+ job vacancies in ${country.name}. Browse full-time, part-time, remote and contract positions from top ${country.name} employers. Apply today!`;
-  const canonicalUrl = `https://za.jobbyist.africa/jobs/${country.code.toLowerCase()}`;
+  const pageTitle = `${country!.name} Jobs - Find ${jobs.length}+ Opportunities | Jobbyist Africa`;
+  const pageDescription = `Discover ${jobs.length}+ job vacancies in ${country!.name}. Browse full-time, part-time, remote and contract positions from top ${country!.name} employers. Apply today!`;
+  const canonicalUrl = `https://za.jobbyist.africa/jobs/${country!.code.toLowerCase()}`;
   const keywords = [
-    `jobs in ${country.name}`,
-    `${country.name} vacancies`,
-    `${country.name} careers`,
-    `employment ${country.name}`,
-    `work in ${country.name}`,
-    `${country.name} job listings`,
+    `jobs in ${country!.name}`,
+    `${country!.name} vacancies`,
+    `${country!.name} careers`,
+    `employment ${country!.name}`,
+    `work in ${country!.name}`,
+    `${country!.name} job listings`,
     'African jobs',
     'Jobbyist Africa',
   ];
@@ -80,7 +81,7 @@ const CountryJobs = () => {
         description={pageDescription}
         canonicalUrl={canonicalUrl}
         keywords={keywords}
-        structuredData={generateJobSearchSchema(country, jobs.length)}
+        structuredData={generateJobSearchSchema(country!, jobs.length)}
       />
       
       <Navbar />
@@ -98,7 +99,7 @@ const CountryJobs = () => {
               </li>
               <ChevronRight className="h-4 w-4" />
               <li aria-current="page" className="text-foreground font-medium">
-                {country.flag} {country.name}
+                {country!.flag} {country!.name}
               </li>
             </ol>
           </nav>
@@ -106,10 +107,10 @@ const CountryJobs = () => {
           {/* Header */}
           <header className="mb-8">
             <h1 className="text-3xl md:text-4xl font-bold mb-4">
-              Jobs in <span className="gradient-brand-text">{country.flag} {country.name}</span>
+              Jobs in <span className="gradient-brand-text">{country!.flag} {country!.name}</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Explore {jobs.length}+ curated job opportunities in {country.name}
+              Explore {jobs.length}+ curated job opportunities in {country!.name}
             </p>
           </header>
 
@@ -170,8 +171,8 @@ const CountryJobs = () => {
                       aria-label="Filter by salary range"
                     />
                     <div className="flex justify-between text-xs text-muted-foreground mt-1">
-                      <span>{salaryRange[0] > 0 ? `${country.currencySymbol}${salaryRange[0].toLocaleString()}` : 'Any'}</span>
-                      <span>{salaryRange[1] < 200000 ? `${country.currencySymbol}${salaryRange[1].toLocaleString()}` : 'Any'}</span>
+                      <span>{salaryRange[0] > 0 ? `${country!.currencySymbol}${salaryRange[0].toLocaleString()}` : 'Any'}</span>
+                      <span>{salaryRange[1] < 200000 ? `${country!.currencySymbol}${salaryRange[1].toLocaleString()}` : 'Any'}</span>
                     </div>
                   </div>
                 </div>
@@ -212,7 +213,7 @@ const CountryJobs = () => {
             ) : jobs.length === 0 ? (
               <div className="text-center py-16">
                 <Briefcase className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
-                <h2 className="text-xl font-semibold mb-2">No jobs found in {country.name}</h2>
+                <h2 className="text-xl font-semibold mb-2">No jobs found in {country!.name}</h2>
                 <p className="text-muted-foreground mb-6">
                   Try adjusting your search filters or check back later for new opportunities.
                 </p>
@@ -327,7 +328,7 @@ const CountryJobs = () => {
             <h2 className="text-2xl font-bold mb-6">Explore Jobs in Other Countries</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {countries
-                .filter(c => c.isActive && c.code !== country.code)
+                .filter(c => c.isActive && c.code !== country!.code)
                 .map((c) => (
                   <Link
                     key={c.code}
