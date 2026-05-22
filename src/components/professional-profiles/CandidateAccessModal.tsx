@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Crown, Building2, X } from "lucide-react";
+import { Crown, Building2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 interface CandidateAccessModalProps {
