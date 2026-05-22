@@ -227,7 +227,7 @@ const UpskillingProgram = () => {
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Your Path to Success</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Start upskilling today with our simple four-step process
+                Upskill for South African demand roles with a practical four-step plan
               </p>
             </div>
 
@@ -275,6 +275,7 @@ const UpskillingProgram = () => {
             </Card>
           </div>
         </section>
+        <TrustCopyModules />
       </main>
       <Footer />
     </div>

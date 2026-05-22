@@ -9,6 +9,7 @@ import { Slider } from '@/components/ui/slider';
 import { useJobs } from '@/hooks/useJobs';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import TrustCopyModules from '@/components/TrustCopyModules';
 import { SEOHead } from '@/components/SEOHead';
 import { Search, MapPin, Wifi, Briefcase, Clock, ArrowRight, Building2, DollarSign, ChevronLeft, ChevronRight } from 'lucide-react';
 import { formatSalary } from '@/lib/countries';
@@ -116,7 +117,7 @@ const Jobs = () => {
               )}
             </h1>
             <p className="text-muted-foreground">
-              Explore {totalCount}+ curated job opportunities {locationFilter ? `in ${locationFilter}` : 'across South Africa'}
+              Explore {totalCount}+ verified roles {locationFilter ? `in ${locationFilter}` : 'across South Africa'} with salary signals in ZAR and province-level filtering
               {currentPage > 1 && ` - Page ${currentPage} of ${totalPages}`}
             </p>
             {locationFilter && (
@@ -144,7 +145,7 @@ const Jobs = () => {
                   <Input
                     id="jobs-search"
                     className="pl-10"
-                    placeholder="Job title, skills, or company"
+                    placeholder="Job title, skill, company, city or province"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     aria-describedby="jobs-search-hint"
@@ -435,6 +436,7 @@ const Jobs = () => {
             </div>
           )}
         </div>
+        <TrustCopyModules />
       </main>
       <Footer />
     </div>
