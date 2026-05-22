@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDialogFocusRestore } from "@/hooks/useDialogFocusRestore";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,6 +23,7 @@ const ResumeAuditModal = ({ open, onOpenChange }: ResumeAuditModalProps) => {
   const [notes, setNotes] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  useDialogFocusRestore(open);
 
   const reset = () => {
     setTimeout(() => {

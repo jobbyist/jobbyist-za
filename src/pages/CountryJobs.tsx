@@ -85,7 +85,7 @@ const CountryJobs = () => {
       />
       
       <Navbar />
-      <main className="pt-24 pb-16">
+      <main id="main-content" className="pt-24 pb-16">
         <div className="container mx-auto px-4">
           {/* Breadcrumb */}
           <nav aria-label="Breadcrumb" className="mb-6">

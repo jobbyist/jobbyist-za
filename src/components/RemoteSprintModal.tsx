@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useDialogFocusRestore } from "@/hooks/useDialogFocusRestore";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -13,6 +14,7 @@ const RemoteSprintModal = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  useDialogFocusRestore(open);
 
   useEffect(() => {
     if (!user) return;

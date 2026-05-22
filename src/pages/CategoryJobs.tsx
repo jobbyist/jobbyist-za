@@ -68,7 +68,7 @@ const CategoryJobs = () => {
       <SEOHead title={title} description={description} canonicalUrl={canonical}
         keywords={[cat!.name, ...cat!.keywords, "South Africa", loc?.name || "SA jobs"]} />
       <Navbar />
-      <main className="pt-24 pb-16">
+      <main id="main-content" className="pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-6xl">
           <nav className="text-sm text-muted-foreground mb-4">
             <Link to="/" className="hover:text-foreground">Home</Link> /{" "}

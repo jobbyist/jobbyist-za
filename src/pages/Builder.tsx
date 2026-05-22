@@ -18,8 +18,9 @@ const Builder = () => {
     <div className="min-h-screen bg-background">
       <SEOHead title="AI Job Matcher Builder | Jobbyist Pro" description="Learn about the Jobbyist Pro AI matcher workflow for personalized job discovery and applications." canonicalUrl="https://za.jobbyist.africa/builder" noindex={true} />
       <Navbar />
-      <main className="pt-16">
+      <main id="main-content" className="pt-16">
         <section className="py-20 bg-muted/30">
+          <h1 className="sr-only">AI Job Matcher Builder</h1>
           <div className="container mx-auto px-4">
             <div className="max-w-5xl mx-auto">
               <div className="grid lg:grid-cols-2 gap-12 items-center">

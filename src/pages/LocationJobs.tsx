@@ -126,7 +126,7 @@ const LocationJobs = () => {
         nextUrl={hasNextPage ? getFullPageUrl(currentPage + 1) : undefined}
       />
       <Navbar />
-      <main className="pt-16">
+      <main id="main-content" className="pt-16">
         {/* Hero Section */}
         <section className="py-12 gradient-brand text-primary-foreground">
           <div className="container mx-auto px-4">
