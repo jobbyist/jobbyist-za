@@ -70,7 +70,7 @@ export const SEOHead = ({
 
     // Robots
     if (noindex) {
-      updateMeta('robots', 'noindex, nofollow');
+      updateMeta('robots', 'noindex,follow');
     } else {
       const robotsMeta = document.querySelector('meta[name="robots"]');
       if (robotsMeta) {

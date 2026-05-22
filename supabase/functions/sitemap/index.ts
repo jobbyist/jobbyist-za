@@ -2,8 +2,9 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const BASE = Deno.env.get("SITEMAP_BASE_URL") || "https://za.jobbyist.africa";
 const CANONICAL_FACETS = {
-  locations: ["johannesburg", "cape-town", "durban", "pretoria", "remote"],
-  categories: ["software-engineering", "finance", "marketing", "sales", "data-science"],
+  provinces: ["gauteng", "western-cape", "kwazulu-natal", "eastern-cape"],
+  cities: ["johannesburg", "cape-town", "durban", "pretoria", "sandton", "gqeberha"],
+  categories: ["software-development", "finance", "marketing", "sales", "data-and-analytics", "engineering"],
 };
 
 const toDate = (value?: string | null) => {
@@ -34,8 +35,9 @@ Deno.serve(async (req) => {
     push(`${BASE}/pro`, "0.7", "monthly");
     push(`${BASE}/about`, "0.5", "monthly");
 
-    CANONICAL_FACETS.locations.forEach((location) => push(`${BASE}/jobs/${location}`, "0.8", "daily"));
-    CANONICAL_FACETS.categories.forEach((category) => push(`${BASE}/jobs/category/${category}`, "0.8", "daily"));
+    CANONICAL_FACETS.provinces.forEach((province) => push(`${BASE}/jobs/provinces/${province}`, "0.8", "daily"));
+    CANONICAL_FACETS.cities.forEach((city) => push(`${BASE}/jobs/cities/${city}`, "0.8", "daily"));
+    CANONICAL_FACETS.categories.forEach((category) => push(`${BASE}/jobs/categories/${category}`, "0.8", "daily"));
 
     const { data: jobs } = await supabase
       .from("jobs")

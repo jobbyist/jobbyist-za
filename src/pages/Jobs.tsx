@@ -91,7 +91,9 @@ const Jobs = () => {
     return value && value.trim() !== '';
   });
 
-  const canonicalUrl = `https://za.jobbyist.africa/jobs${currentPage > 1 ? `?page=${currentPage}` : ''}`;
+  const hasPagination = currentPage > 1;
+  const shouldNoindex = hasActiveFilters || hasPagination;
+  const canonicalUrl = 'https://za.jobbyist.africa/jobs';
 
   return (
     <div className="min-h-screen bg-background">
@@ -99,7 +101,7 @@ const Jobs = () => {
         title={`Jobs in South Africa${currentPage > 1 ? ` - Page ${currentPage}` : ''} | Find SA Job Opportunities | Jobbyist`}
         description={`Browse ${totalCount}+ verified job opportunities in South Africa. Find full-time, part-time, remote & contract jobs in Johannesburg, Cape Town, Durban & more.`}
         canonicalUrl={canonicalUrl}
-        noindex={hasActiveFilters}
+        noindex={shouldNoindex}
         keywords={['jobs South Africa', 'SA jobs', 'Johannesburg jobs', 'Cape Town jobs', 'Durban jobs', 'remote jobs SA', 'IT jobs South Africa', 'finance jobs SA']}
         prevUrl={hasPrevPage ? getFullPageUrl(currentPage - 1) : undefined}
         nextUrl={hasNextPage ? getFullPageUrl(currentPage + 1) : undefined}
