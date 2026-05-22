@@ -92,13 +92,9 @@ const Jobs = () => {
         description={`Browse ${totalCount}+ verified job opportunities in South Africa. Find full-time, part-time, remote & contract jobs in Johannesburg, Cape Town, Durban & more.`}
         canonicalUrl={`https://za.jobbyist.africa/jobs${currentPage > 1 ? `?page=${currentPage}` : ''}`}
         keywords={['jobs South Africa', 'SA jobs', 'Johannesburg jobs', 'Cape Town jobs', 'Durban jobs', 'remote jobs SA', 'IT jobs South Africa', 'finance jobs SA']}
+        prevUrl={hasPrevPage ? getFullPageUrl(currentPage - 1) : undefined}
+        nextUrl={hasNextPage ? getFullPageUrl(currentPage + 1) : undefined}
       />
-      {hasPrevPage && (
-        <link rel="prev" href={getFullPageUrl(currentPage - 1)} />
-      )}
-      {hasNextPage && (
-        <link rel="next" href={getFullPageUrl(currentPage + 1)} />
-      )}
       <Navbar />
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4">

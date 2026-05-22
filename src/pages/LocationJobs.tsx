@@ -110,14 +110,18 @@ const LocationJobs = () => {
     setSearchParams(params);
   };
 
+  const getFullPageUrl = (page: number) => `https://za.jobbyist.africa/jobs/${location}${getPageUrl(page)}`;
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
         title={`${locationData.name} Jobs | Find Employment in ${locationData.name} | Jobbyist ZA`}
         description={locationData.description}
-        canonicalUrl={`https://za.jobbyist.africa/jobs/${location}`}
+        canonicalUrl={`https://za.jobbyist.africa/jobs/${location}${currentPage > 1 ? getPageUrl(currentPage) : ''}`}
         keywords={[locationData.keywords]}
         ogType="website"
+        prevUrl={hasPrevPage ? getFullPageUrl(currentPage - 1) : undefined}
+        nextUrl={hasNextPage ? getFullPageUrl(currentPage + 1) : undefined}
       />
       <Navbar />
       <main className="pt-16">
