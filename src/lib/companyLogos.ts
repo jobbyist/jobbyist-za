@@ -9,7 +9,7 @@ import shopriteLogo from '../../companylogos/shoprite.svg';
 import standardLogo from '../../companylogos/standard.svg';
 import vodacomLogo from '../../companylogos/vodacom.svg';
 
-const companyLogoMatchers: Array<{ pattern: RegExp; logoUrl: string }> = [
+const companyLogoPatterns: Array<{ pattern: RegExp; logoUrl: string }> = [
   { pattern: /\bdiscovery\b/, logoUrl: discoveryLogo },
   { pattern: /\babsa\b/, logoUrl: absaLogo },
   { pattern: /\bstandard bank\b/, logoUrl: standardLogo },
@@ -30,6 +30,6 @@ export const getCompanyLogoUrl = (companyName: string) => {
   const normalizedCompanyName = normalizeCompanyName(companyName);
 
   return (
-    companyLogoMatchers.find(({ pattern }) => pattern.test(normalizedCompanyName))?.logoUrl ?? null
+    companyLogoPatterns.find(({ pattern }) => pattern.test(normalizedCompanyName))?.logoUrl ?? null
   );
 };
