@@ -14,7 +14,7 @@ const companyLogoMatchers: Array<{ match: string; logoUrl: string }> = [
   { match: 'absa', logoUrl: absaLogo },
   { match: 'standard bank', logoUrl: standardLogo },
   { match: 'first national bank', logoUrl: fnbLogo },
-  { match: ' fnb ', logoUrl: fnbLogo },
+  { match: 'fnb', logoUrl: fnbLogo },
   { match: 'nedbank', logoUrl: nedbankLogo },
   { match: 'sanlam', logoUrl: sanlamLogo },
   { match: 'shoprite', logoUrl: shopriteLogo },
