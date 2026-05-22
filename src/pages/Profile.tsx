@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import VoiceVideoInterview from '@/components/onboarding/VoiceVideoInterview';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -288,6 +288,21 @@ const Profile = () => {
               <CardContent className="space-y-3">
                 <Progress value={profile?.profile_completion || 0} className="h-3" />
                 <p className="text-sm text-muted-foreground">Current readiness: <span className="font-semibold text-foreground">{profile?.profile_completion || 0}%</span></p>
+              </CardContent>
+            </Card>
+
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Shield className="h-5 w-5 text-primary" /> Privacy & Data Controls
+                </CardTitle>
+                <CardDescription>Manage privacy notices, cookies, and your POPIA data rights requests.</CardDescription>
+              </CardHeader>
+              <CardContent className="flex flex-wrap gap-3">
+                <Button asChild variant="outline"><Link to="/privacy">Privacy Notice</Link></Button>
+                <Button asChild variant="outline"><Link to="/cookies">Cookie Policy</Link></Button>
+                <Button asChild><Link to="/data-rights">Data Rights Request</Link></Button>
               </CardContent>
             </Card>
 
