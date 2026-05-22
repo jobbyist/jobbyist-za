@@ -88,8 +88,9 @@ const RecruitmentSuiteWaitlistModal = ({
     setIsSubmitting(true);
     try {
       // Submit to the existing waiting_list table.
-      // Extended fields (phone, companySize, hiringVolume, primaryInterest, message, selectedPlan)
-      // should be persisted via a dedicated endpoint or edge function when the backend is extended.
+      // TODO: Extend the backend (edge function or API route) to persist the additional
+      // waitlist fields: phone, companySize, hiringVolume, primaryInterest, message, selectedPlan.
+      // These values are captured in the form state and should be forwarded once the schema is ready.
       const { error } = await supabase.from("waiting_list").insert({
         email,
         first_name: firstName || null,
@@ -148,8 +149,6 @@ const RecruitmentSuiteWaitlistModal = ({
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-2">
-          {/* Hidden plan field */}
-          <input type="hidden" name="selectedPlan" value={selectedPlan} />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
