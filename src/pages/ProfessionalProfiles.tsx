@@ -155,7 +155,7 @@ const ProfessionalProfiles = () => {
               </p>
 
               <p className="text-base text-slate-600 mb-6">
-                Professional Profiles helps job seekers increase their visibility while giving employers and recruiters a trusted way to explore candidate previews before requesting full access.
+                Professional Profiles helps job seekers increase their visibility while giving employers and recruiters a trusted way to explore candidate previews before requesting full access. Candidate visibility can be controlled through account/profile settings, and recruiter/employer access to full records is restricted to approved paid plans with privacy compliance checks.
               </p>
 
               <div className="flex flex-wrap gap-3 mb-6">
@@ -241,7 +241,7 @@ const ProfessionalProfiles = () => {
           </div>
 
           <p className="text-sm text-slate-600 mb-6">
-            Showing profiles {startProfileNum}-{endProfileNum} of {candidateCount}. Public pages show searchable previews only. Contact details, full CVs, references and screening notes are available only to active Jobbyist Pro members and paid Recruitment Suite subscribers.
+            Showing profiles {startProfileNum}-{endProfileNum} of {candidateCount}. Public pages show searchable previews only. Contact details, full CVs, references and screening notes are available only to active Jobbyist Pro members and paid Recruitment Suite subscribers. Profile visibility and recruiter access are governed by operational controls, consent checks, and gated entitlement verification.
           </p>
 
           {/* Search Bar */}

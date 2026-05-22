@@ -119,7 +119,7 @@ export const CandidateAccessModal = ({ isOpen, onClose, profileId }: CandidateAc
         </div>
 
         <p className="text-xs text-slate-500 mt-4 text-center">
-          Full candidate access is subject to privacy compliance, consent verification and active subscription status.
+          Full candidate access is subject to privacy compliance, consent verification, role-based recruiter/employer entitlements, and active subscription status.
         </p>
       </DialogContent>
     </Dialog>

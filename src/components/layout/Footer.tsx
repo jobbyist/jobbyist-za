@@ -21,6 +21,7 @@ const Footer = () => {
       { name: "Terms", href: "/terms" },
       { name: "Privacy", href: "/privacy" },
       { name: "Cookies", href: "/cookies" },
+      { name: "Data Rights", href: "/data-rights" },
       { name: "Contact", href: "/contact" },
     ],
   };
