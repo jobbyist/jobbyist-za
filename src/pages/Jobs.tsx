@@ -15,6 +15,7 @@ import { formatSalary } from '@/lib/countries';
 import GoogleAdsense from '@/components/GoogleAdsense';
 import ExpiredBadge from '@/components/ExpiredBadge';
 import { isJobExpired } from '@/lib/jobUtils';
+import { Label } from '@/components/ui/label';
 
 const JOBS_PER_PAGE = 12;
 
@@ -138,20 +139,26 @@ const Jobs = () => {
             <form onSubmit={handleSearch} className="space-y-4">
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1 relative">
+                  <Label htmlFor="jobs-search" className="sr-only">Search jobs</Label>
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                   <Input
+                    id="jobs-search"
                     className="pl-10"
                     placeholder="Job title, skills, or company"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
+                    aria-describedby="jobs-search-hint"
                   />
+                  <p id="jobs-search-hint" className="sr-only">Search by title, skill, or company name.</p>
                 </div>
                 <Button type="submit">Search Jobs</Button>
               </div>
 
               <div className="flex flex-wrap gap-4 items-center">
-                <Select value={jobType || 'all'} onValueChange={(v) => setJobType(v === 'all' ? undefined : v)}>
-                  <SelectTrigger className="w-40">
+                <div className="space-y-1">
+                  <Label htmlFor="job-type-filter" className="text-xs">Job type</Label>
+                  <Select value={jobType || 'all'} onValueChange={(v) => setJobType(v === 'all' ? undefined : v)}>
+                  <SelectTrigger id="job-type-filter" className="w-40" aria-describedby="job-type-hint">
                     <SelectValue placeholder="Job Type" />
                   </SelectTrigger>
                   <SelectContent>
@@ -162,9 +169,13 @@ const Jobs = () => {
                     <SelectItem value="Internship">Internship</SelectItem>
                   </SelectContent>
                 </Select>
+                <p id="job-type-hint" className="sr-only">Filter jobs by employment type.</p>
+                </div>
 
-                <Select value={experienceLevel || 'all'} onValueChange={(v) => setExperienceLevel(v === 'all' ? undefined : v)}>
-                  <SelectTrigger className="w-40">
+                <div className="space-y-1">
+                  <Label htmlFor="experience-filter" className="text-xs">Experience</Label>
+                  <Select value={experienceLevel || 'all'} onValueChange={(v) => setExperienceLevel(v === 'all' ? undefined : v)}>
+                  <SelectTrigger id="experience-filter" className="w-40" aria-describedby="experience-hint">
                     <SelectValue placeholder="Experience" />
                   </SelectTrigger>
                   <SelectContent>
@@ -175,6 +186,8 @@ const Jobs = () => {
                     <SelectItem value="Lead">Lead</SelectItem>
                   </SelectContent>
                 </Select>
+                <p id="experience-hint" className="sr-only">Filter jobs by experience level.</p>
+                </div>
 
                 <div className="flex items-center gap-2 flex-1 min-w-[200px]">
                   <DollarSign className="h-4 w-4 text-muted-foreground" />
