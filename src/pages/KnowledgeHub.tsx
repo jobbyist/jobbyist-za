@@ -121,8 +121,15 @@ const KnowledgeHub = () => {
               ctaText={modalConfig.ctaText}
               showForm={modalConfig.showForm}
             />
+            <ResumeAuditModal open={auditOpen} onOpenChange={setAuditOpen} />
           </div>
         </section>
+
+        <Footer />
+      </main>
+    </div>
+  );
+};
 
         <Footer />
       </main>
