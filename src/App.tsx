@@ -44,6 +44,7 @@ import SitemapRedirect from "./pages/SitemapRedirect";
 import Ads from "./pages/Ads";
 import ProfessionalProfiles from "./pages/ProfessionalProfiles";
 import ListingPolicy from "./pages/ListingPolicy";
+import TrustSafety from "./pages/TrustSafety";
 import RemoteSprintModal from "./components/RemoteSprintModal";
 import ConciergeChat from "./components/ConciergeChat";
 import { CookieConsentProvider } from "./components/CookieConsent";
@@ -128,6 +129,7 @@ const App = () => {
               <Route path="/data-rights" element={<DataRights />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/listing-policy" element={<ListingPolicy />} />
+              <Route path="/trust-safety" element={<TrustSafety />} />
               <Route path="/professional-profiles" element={<ProfessionalProfiles />} />
               <Route path="/professional-profiles/page/:pageNum" element={<ProfessionalProfiles />} />
               
