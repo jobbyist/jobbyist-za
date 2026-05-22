@@ -33,6 +33,9 @@ import KnowledgeHub from "./pages/KnowledgeHub";
 import ResumeBuilder from "./pages/ResumeBuilder";
 import UpskillingProgram from "./pages/UpskillingProgram";
 import Cookies from "./pages/Cookies";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
+import Contact from "./pages/Contact";
 import LocationJobs from "./pages/LocationJobs";
 import CategoryJobs from "./pages/CategoryJobs";
 import FacetJobs from "./pages/FacetJobs";
@@ -110,6 +113,9 @@ const App = () => {
               <Route path="/resume-builder" element={<ResumeBuilder />} />
               <Route path="/upskilling" element={<UpskillingProgram />} />
               <Route path="/cookies" element={<Cookies />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/contact" element={<Contact />} />
               <Route path="/professional-profiles" element={<ProfessionalProfiles />} />
               <Route path="/professional-profiles/page/:pageNum" element={<ProfessionalProfiles />} />
               
