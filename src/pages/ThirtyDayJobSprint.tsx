@@ -348,18 +348,22 @@ const glassCardStyle: React.CSSProperties = {
 
 const buildWhatsAppLink = (message: string) => {
   if (!BUSINESS_CONFIG.whatsappNumber) {
-    return "#";
+    return null;
   }
 
   return `https://wa.me/${BUSINESS_CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
 };
 
-const toStructuredPrice = (price: string) => price.replace(/[^\d.]/g, "");
+const toStructuredPrice = (price: string) => {
+  const normalized = price.replace(/,/g, "").replace(/[^\d.]/g, "");
+  const parsed = Number.parseFloat(normalized);
+  return Number.isFinite(parsed) ? parsed.toString() : "";
+};
 
 const ThirtyDayJobSprint = () => {
   const [selectedPackage, setSelectedPackage] = useState<PricingPackage>(pricingPackages[1]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [openFaqIndex, setOpenFaqIndex] = useState<number>(-1);
+  const [openFaqIndex, setOpenFaqIndex] = useState<number>(0);
 
   const bundledBenefitColumns = useMemo(() => {
     const midpoint = Math.ceil(bundledBenefits.length / 2);
@@ -837,12 +841,19 @@ const ThirtyDayJobSprint = () => {
               >
                 Choose your package
               </Button>
-              <Button asChild size="lg" variant="outline">
-                <a href={defaultWhatsAppLink} target="_blank" rel="noreferrer" aria-label="Ask about packages on WhatsApp">
+              {defaultWhatsAppLink ? (
+                <Button asChild size="lg" variant="outline">
+                  <a href={defaultWhatsAppLink} target="_blank" rel="noreferrer" aria-label="Ask about packages on WhatsApp">
+                    <MessageCircle className="h-4 w-4" />
+                    Ask on WhatsApp
+                  </a>
+                </Button>
+              ) : (
+                <Button size="lg" variant="outline" disabled aria-label="WhatsApp contact currently unavailable">
                   <MessageCircle className="h-4 w-4" />
                   Ask on WhatsApp
-                </a>
-              </Button>
+                </Button>
+              )}
             </div>
           </div>
         </section>
@@ -921,16 +932,22 @@ const ThirtyDayJobSprint = () => {
                 Continue to checkout
               </a>
             </Button>
-            <Button asChild variant="outline" className="w-full font-bold">
-              <a
-                href={packageWhatsAppLink}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`Enquire on WhatsApp about ${selectedPackage.name}`}
-              >
+            {packageWhatsAppLink ? (
+              <Button asChild variant="outline" className="w-full font-bold">
+                <a
+                  href={packageWhatsAppLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`Enquire on WhatsApp about ${selectedPackage.name}`}
+                >
+                  Ask a question on WhatsApp
+                </a>
+              </Button>
+            ) : (
+              <Button variant="outline" className="w-full font-bold" disabled aria-label="WhatsApp contact currently unavailable">
                 Ask a question on WhatsApp
-              </a>
-            </Button>
+              </Button>
+            )}
           </DialogFooter>
         </DialogContent>
       </Dialog>
