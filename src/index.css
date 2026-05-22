@@ -208,3 +208,16 @@
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+
+.chatbot-gradient-border {
+  background:
+    linear-gradient(white, white) padding-box,
+    linear-gradient(120deg, #ec4899, #8b5cf6, #06b6d4, #ec4899) border-box;
+  background-size: 100% 100%, 300% 300%;
+  animation: chatbot-border-flow 5s linear infinite;
+}
+
+@keyframes chatbot-border-flow {
+  0% { background-position: 0 0, 0% 50%; }
+  100% { background-position: 0 0, 300% 50%; }
+}

@@ -1,6 +1,6 @@
 // New Huzzle-inspired multi-step onboarding flow.
-// Steps: Basics → Profile picture → Resume → Pro plan → Account → AI Interview → Welcome
-import { useState, useEffect, useRef } from "react";
+// Steps: Basics → Profile picture → Resume → Pro plan → Account → Welcome
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,11 +15,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { ArrowLeft, ArrowRight, Upload, FileText, Crown, Sparkles, User, Mail, Lock, MapPin, Phone, Loader2, Check } from "lucide-react";
 import welcomeHero from "@/assets/welcome-hero.png";
-import VoiceVideoInterview from "@/components/onboarding/VoiceVideoInterview";
-
-type Msg = { role: "assistant" | "user"; content: string };
-
-const TOTAL = 6;
+const TOTAL = 5;
 
 const MultiStepSignup = () => {
   const navigate = useNavigate();
@@ -49,21 +45,7 @@ const MultiStepSignup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // Step 6 — AI interview
-  const [chat, setChat] = useState<Msg[]>([]);
-  const [reply, setReply] = useState("");
-  const [interviewLoading, setInterviewLoading] = useState(false);
   const [interviewDone, setInterviewDone] = useState(false);
-  const [interviewQs, setInterviewQs] = useState(0);
-  const chatEndRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: "smooth" }); }, [chat]);
-
-  // After successful signup we auto-trigger the first AI question
-  useEffect(() => {
-    if (step === 6 && user && chat.length === 0) startInterview();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [step, user]);
 
   const handleAvatar = (f: File) => {
     if (f.size > 3 * 1024 * 1024) { toast.error("Image must be under 3MB"); return; }
@@ -95,7 +77,7 @@ const MultiStepSignup = () => {
   const next = async () => {
     if (!validateStep(step)) return;
     if (step === 5) {
-      // create account, persist profile, jump to interview
+      // create account and complete onboarding
       await createAccountAndPersist();
       return;
     }
@@ -158,59 +140,16 @@ const MultiStepSignup = () => {
         });
       }
 
-      toast.success("Account created — let's do a quick interview.");
-      setStep(6);
+      await supabase.from("profiles").update({
+        onboarding_completed_at: new Date().toISOString(),
+      }).eq("user_id", u.id);
+      toast.success("Account created successfully.");
+      setInterviewDone(true);
     } catch (e: any) {
       toast.error(e.message || "Signup failed");
     } finally {
       setSubmitting(false);
     }
-  }
-
-  async function startInterview() {
-    setInterviewLoading(true);
-    try {
-      const { data, error } = await supabase.functions.invoke("ai-interview", {
-        body: { messages: [{ role: "user", content: `Hi! I'm ${firstName}. Please start the interview.` }] },
-      });
-      if (error) throw error;
-      setChat([{ role: "assistant", content: data.message }]);
-    } catch (e: any) {
-      toast.error("Couldn't start interview — you can skip.");
-    } finally {
-      setInterviewLoading(false);
-    }
-  }
-
-  async function sendReply() {
-    if (!reply.trim() || interviewLoading) return;
-    const newChat: Msg[] = [...chat, { role: "user", content: reply }];
-    setChat(newChat); setReply(""); setInterviewLoading(true);
-    setInterviewQs((n) => n + 1);
-    try {
-      const finalize = interviewQs + 1 >= 5;
-      const { data, error } = await supabase.functions.invoke("ai-interview", {
-        body: { messages: newChat, finalize, userId: user?.id },
-      });
-      if (error) throw error;
-      if (finalize) {
-        setInterviewDone(true);
-        await supabase.from("profiles").update({
-          onboarding_completed_at: new Date().toISOString(),
-        }).eq("user_id", user!.id);
-      } else {
-        setChat([...newChat, { role: "assistant", content: data.message }]);
-      }
-    } catch (e: any) {
-      toast.error("Interview error");
-    } finally {
-      setInterviewLoading(false);
-    }
-  }
-
-  function skipInterview() {
-    setInterviewDone(true);
-    if (user) supabase.from("profiles").update({ onboarding_completed_at: new Date().toISOString() }).eq("user_id", user.id);
   }
 
   // ===== Welcome screen (final) =====
@@ -242,7 +181,6 @@ const MultiStepSignup = () => {
             {step === 3 && "Your CV"}
             {step === 4 && "Jobbyist Pro"}
             {step === 5 && "Login details"}
-            {step === 6 && "Quick AI interview"}
           </h2>
           <span className="text-sm text-muted-foreground">Step {step} of {TOTAL}</span>
         </div>
@@ -257,7 +195,6 @@ const MultiStepSignup = () => {
             {step === 3 && "Upload your CV"}
             {step === 4 && "Become a Pro (optional)"}
             {step === 5 && "Create your account"}
-            {step === 6 && "Tell us about you"}
           </CardTitle>
           <CardDescription>
             {step === 1 && "Help SA employers find you"}
@@ -265,7 +202,6 @@ const MultiStepSignup = () => {
             {step === 3 && "We'll auto-fill your skills and experience from this"}
             {step === 4 && "Unlock Pro tools — you can subscribe later"}
             {step === 5 && "Pick a username and a strong password"}
-            {step === 6 && "Five short questions so employers know your value"}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -345,25 +281,15 @@ const MultiStepSignup = () => {
             </div>
           )}
 
-          {step === 6 && (
-            <VoiceVideoInterview
-              firstName={firstName}
-              onComplete={() => setInterviewDone(true)}
-              onSkip={skipInterview}
-            />
-          )}
-
-          {step !== 6 && (
-            <div className="flex justify-between pt-4">
-              <Button variant="outline" onClick={back} disabled={step === 1}>
-                <ArrowLeft className="h-4 w-4 mr-1" /> Back
-              </Button>
-              <Button onClick={next} disabled={submitting}>
-                {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> :
-                  <>{step === 5 ? "Create account" : "Next"} <ArrowRight className="h-4 w-4 ml-1" /></>}
-              </Button>
-            </div>
-          )}
+          <div className="flex justify-between pt-4">
+            <Button variant="outline" onClick={back} disabled={step === 1}>
+              <ArrowLeft className="h-4 w-4 mr-1" /> Back
+            </Button>
+            <Button onClick={next} disabled={submitting}>
+              {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> :
+                <>{step === 5 ? "Create account" : "Next"} <ArrowRight className="h-4 w-4 ml-1" /></>}
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>

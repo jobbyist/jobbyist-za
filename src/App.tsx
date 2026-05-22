@@ -75,7 +75,7 @@ const App = () => {
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <PWAInstallPrompt />
+          
           <BrowserRouter>
             <ScrollToTop />
             <RemoteSprintModal />
