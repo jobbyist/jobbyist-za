@@ -28,21 +28,8 @@ const CategoryJobs = () => {
   });
 
 
-  if (isInvalidCategory) return <Navigate to="/jobs" replace />;
-  if (isInvalidLocation) return <Navigate to={`/jobs/category/${category}`} replace />;
-
-  const title = loc
-    ? `${cat!.name} Jobs in ${loc.name} | Jobbyist`
-    : `${cat!.name} Jobs in South Africa | Jobbyist`;
-  const description = loc
-    ? `Browse ${totalCount}+ ${cat!.name.toLowerCase()} jobs in ${loc.name}. ${cat!.description}`
-    : `Find ${totalCount}+ ${cat!.name.toLowerCase()} jobs across South Africa. ${cat!.description}`;
-  const canonical = loc
-    ? `https://za.jobbyist.africa/jobs/category/${cat!.slug}/${loc.slug}`
-    : `https://za.jobbyist.africa/jobs/category/${cat!.slug}`;
-
   useEffect(() => {
-    if (!jobs.length) return;
+    if (!cat || !jobs.length) return;
     // FAQ-only schema; JobPosting schema lives only on /job/:id detail pages (Google Jobs guideline).
     const faq = document.createElement("script");
     faq.type = "application/ld+json";
@@ -62,6 +49,19 @@ const CategoryJobs = () => {
     document.head.appendChild(faq);
     return () => { faq.remove(); };
   }, [jobs, totalCount, cat, loc]);
+
+  if (isInvalidCategory) return <Navigate to="/jobs" replace />;
+  if (isInvalidLocation) return <Navigate to={`/jobs/category/${category}`} replace />;
+
+  const title = loc
+    ? `${cat!.name} Jobs in ${loc.name} | Jobbyist`
+    : `${cat!.name} Jobs in South Africa | Jobbyist`;
+  const description = loc
+    ? `Browse ${totalCount}+ ${cat!.name.toLowerCase()} jobs in ${loc.name}. ${cat!.description}`
+    : `Find ${totalCount}+ ${cat!.name.toLowerCase()} jobs across South Africa. ${cat!.description}`;
+  const canonical = loc
+    ? `https://za.jobbyist.africa/jobs/category/${cat!.slug}/${loc.slug}`
+    : `https://za.jobbyist.africa/jobs/category/${cat!.slug}`;
 
   return (
     <div className="min-h-screen bg-background">
