@@ -104,23 +104,27 @@ const ConciergeChat = () => {
 
   return (
     <>
-      {/* Floating Concierge Button */}
+      {/* Floating Concierge Pill */}
       <button
         onClick={toggleChat}
         className={cn(
-          "fixed bottom-6 right-6 z-[60] flex h-14 w-14 items-center justify-center rounded-full bg-background border border-border shadow-lg transition-all duration-300 hover:scale-105 active:scale-95",
-          "shadow-[0_0_15px_rgba(236,72,153,0.3)] hover:shadow-[0_0_25px_rgba(236,72,153,0.5)] animate-pulse",
-          isOpen && "shadow-[0_0_20px_rgba(236,72,153,0.4)]"
+          "fixed bottom-6 right-6 z-[60] flex items-center gap-2 h-12 px-5 rounded-full text-white font-medium text-sm shadow-lg transition-all duration-300 hover:scale-105 active:scale-95",
+          "bg-gradient-to-r from-brand-pink via-fuchsia-500 to-violet-600",
+          "shadow-[0_8px_24px_-6px_rgba(236,72,153,0.55)] hover:shadow-[0_12px_32px_-6px_rgba(236,72,153,0.7)]",
+          isOpen && "ring-2 ring-white/40"
         )}
         aria-label="Open Concierge AI Chat"
       >
         {isOpen ? (
-          <X className="h-6 w-6 text-foreground" />
+          <>
+            <X className="h-4 w-4" />
+            <span>Close</span>
+          </>
         ) : (
-          <div className="flex flex-col items-center justify-center">
-            <MessageCircle className="h-6 w-6 text-brand-pink" />
-            <span className="text-[10px] font-medium text-foreground mt-0.5">Concierge</span>
-          </div>
+          <>
+            <MessageCircle className="h-4 w-4" />
+            <span>Concierge</span>
+          </>
         )}
       </button>
 
