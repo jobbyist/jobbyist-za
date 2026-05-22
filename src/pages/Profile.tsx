@@ -37,6 +37,7 @@ import {
   Mic
 } from 'lucide-react';
 import { activeCountries } from '@/lib/countries';
+import { SEOHead } from '@/components/SEOHead';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -195,6 +196,7 @@ const Profile = () => {
   if (authLoading || profileLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
+      <SEOHead title="Candidate Profile Dashboard | Jobbyist" description="Manage your profile, CV, and application settings inside your personal Jobbyist dashboard." canonicalUrl="https://za.jobbyist.africa/profile" noindex={true} />
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
       </div>
     );

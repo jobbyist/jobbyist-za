@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Target, CheckCircle2, ArrowRight, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+import { SEOHead } from '@/components/SEOHead';
 
 const benefits = [
   "Automatic job scanning across multiple sites",
@@ -15,6 +16,7 @@ const benefits = [
 const Builder = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title="AI Job Matcher Builder | Jobbyist Pro" description="Learn about the Jobbyist Pro AI matcher workflow for personalized job discovery and applications." canonicalUrl="https://za.jobbyist.africa/builder" noindex={true} />
       <Navbar />
       <main className="pt-16">
         <section className="py-20 bg-muted/30">

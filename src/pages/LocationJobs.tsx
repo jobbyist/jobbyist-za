@@ -98,11 +98,7 @@ const LocationJobs = () => {
     setSearchParams(params);
   };
 
-  const getPageUrl = (page: number) => {
-    const params = new URLSearchParams(searchParams);
-    params.set('page', page.toString());
-    return `?${params.toString()}`;
-  };
+  const getPageUrl = (page: number) => `?page=${page}`;
 
   const goToPage = (page: number) => {
     const params = new URLSearchParams(searchParams);
@@ -111,13 +107,19 @@ const LocationJobs = () => {
   };
 
   const getFullPageUrl = (page: number) => `https://za.jobbyist.africa/jobs/${location}${getPageUrl(page)}`;
+  const hasActiveFilters = ['search', 'type', 'level'].some((key) => {
+    const value = searchParams.get(key);
+    return value && value.trim() !== '';
+  });
+  const canonicalUrl = `https://za.jobbyist.africa/jobs/${location}${currentPage > 1 ? `?page=${currentPage}` : ''}`;
 
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
         title={`${locationData.name} Jobs | Find Employment in ${locationData.name} | Jobbyist ZA`}
         description={locationData.description}
-        canonicalUrl={`https://za.jobbyist.africa/jobs/${location}${currentPage > 1 ? getPageUrl(currentPage) : ''}`}
+        canonicalUrl={canonicalUrl}
+        noindex={hasActiveFilters}
         keywords={[locationData.keywords]}
         ogType="website"
         prevUrl={hasPrevPage ? getFullPageUrl(currentPage - 1) : undefined}
