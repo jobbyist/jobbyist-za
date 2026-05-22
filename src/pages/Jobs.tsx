@@ -17,6 +17,8 @@ import ExpiredBadge from '@/components/ExpiredBadge';
 import { isJobExpired } from '@/lib/jobUtils';
 
 const JOBS_PER_PAGE = 12;
+/** Number of job cards to show before inserting the mid-listing sponsored banner */
+const JOBS_BEFORE_BANNER = 6;
 
 const Jobs = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -243,8 +245,8 @@ const Jobs = () => {
             </div>
           ) : (() => {
             // Split into two chunks; insert sponsored banner between them
-            const firstChunk = jobs.slice(0, 6);
-            const secondChunk = jobs.slice(6);
+            const firstChunk = jobs.slice(0, JOBS_BEFORE_BANNER);
+            const secondChunk = jobs.slice(JOBS_BEFORE_BANNER);
 
             const renderJobCard = (job: typeof jobs[number]) => (
               <Link

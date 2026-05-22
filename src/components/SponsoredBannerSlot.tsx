@@ -21,62 +21,45 @@ const ADSENSE_CLIENT = 'ca-pub-1237323355260727';
 const ADSENSE_SLOT = '9775464302';
 
 /* ─── Shopify Affiliate Banner ─────────────────────────────────────── */
-const ShopifyAffiliateBanner = () => {
-  const [imgError, setImgError] = useState(true); // src is empty → always use fallback
-
-  return (
-    <div className="w-full flex flex-col items-center py-2 overflow-hidden">
-      <a
-        href="https://shopify.pxf.io/c/5713213/3797168/13624"
-        target="_blank"
-        rel="noopener noreferrer sponsored"
-        className="block w-full max-w-3xl mx-auto"
-        aria-label="Start your business with Shopify (sponsored)"
+const ShopifyAffiliateBanner = () => (
+  <div className="w-full flex flex-col items-center py-2 overflow-hidden">
+    <a
+      href="https://shopify.pxf.io/c/5713213/3797168/13624"
+      target="_blank"
+      rel="noopener noreferrer sponsored"
+      className="block w-full max-w-3xl mx-auto"
+      aria-label="Start your business with Shopify (sponsored)"
+    >
+      {/* Placeholder shown until a real creative image src is supplied */}
+      <div
+        className="w-full rounded-lg flex items-center justify-center gap-3 px-4 py-6 sm:py-8
+                    bg-gradient-to-r from-emerald-600 to-emerald-500 select-none"
       >
-        {/* Primary banner image — shown when a real creative src is supplied */}
-        {!imgError && (
-          <img
-            src=""
-            alt=""
-            className="w-full block mx-auto rounded-lg"
-            style={{ height: 'auto', maxHeight: 120 }}
-            onError={() => setImgError(true)}
-          />
-        )}
+        <span className="text-2xl" aria-hidden="true">🛒</span>
+        <div className="text-white text-center">
+          <p className="font-semibold text-sm sm:text-base leading-tight">
+            Start your online business with Shopify
+          </p>
+          <p className="text-xs text-emerald-100 mt-0.5 hidden sm:block">
+            Free trial available — no credit card required
+          </p>
+        </div>
+      </div>
+    </a>
 
-        {/* Fallback placeholder shown until real creative is provided */}
-        {imgError && (
-          <div
-            className="w-full rounded-lg flex items-center justify-center gap-3 px-4 py-6 sm:py-8
-                        bg-gradient-to-r from-emerald-600 to-emerald-500 select-none"
-          >
-            <span className="text-2xl">🛒</span>
-            <div className="text-white text-center">
-              <p className="font-semibold text-sm sm:text-base leading-tight">
-                Start your online business with Shopify
-              </p>
-              <p className="text-xs text-emerald-100 mt-0.5 hidden sm:block">
-                Free trial available — no credit card required
-              </p>
-            </div>
-          </div>
-        )}
-      </a>
+    {/* Impact / Shopify tracking pixel — zero-dimension, invisible */}
+    <img
+      src="https://imp.pxf.io/i/5713213/3797168/13624"
+      width={0}
+      height={0}
+      alt=""
+      aria-hidden="true"
+      className="absolute opacity-0 pointer-events-none"
+    />
 
-      {/* Impact / Shopify tracking pixel — zero-dimension, invisible */}
-      <img
-        src="https://imp.pxf.io/i/5713213/3797168/13624"
-        width={0}
-        height={0}
-        alt=""
-        aria-hidden="true"
-        className="absolute opacity-0 pointer-events-none"
-      />
-
-      <p className="text-[10px] leading-none text-muted-foreground mt-1.5">Sponsored</p>
-    </div>
-  );
-};
+    <p className="text-[10px] leading-none text-muted-foreground mt-1.5">Sponsored</p>
+  </div>
+);
 
 /* ─── "Place Your Ad Here" Placeholder ─────────────────────────────── */
 const PlaceYourAdHerePlaceholder = () => {
