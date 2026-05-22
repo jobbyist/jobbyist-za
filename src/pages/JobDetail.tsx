@@ -483,7 +483,8 @@ const JobDetail = () => {
                         <DialogTitle>Report this job</DialogTitle>
                         <DialogDescription>
                           Flag inappropriate, inaccurate, fraudulent or misleading listings.
-                          Reports go to our trust &amp; safety team at feedback@jobbyist.africa.
+                          Reports go to our trust &amp; safety team at feedback@jobbyist.africa. See our
+                          <Link to="/listing-policy" className="underline ml-1">listing policy and review timelines</Link>.
                         </DialogDescription>
                       </DialogHeader>
                       <div className="space-y-3">

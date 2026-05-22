@@ -15,6 +15,7 @@ const Footer = () => {
       { name: "Recruitment Suite", href: "/pro" },
       { name: "Employer Waitlist", href: "/waiting-list/za" },
       { name: "Claim Your Company", href: "/contact" },
+      { name: "Listing Policy", href: "/listing-policy" },
       { name: "Hiring Whitepaper (Coming soon)", href: "" },
     ],
     "Candidate Profile Buyer Journey": [
