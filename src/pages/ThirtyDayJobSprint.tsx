@@ -58,13 +58,13 @@ interface FaqItem {
 const PAGE_URL = "https://za.jobbyist.africa/30-day-job-sprint";
 
 const BUSINESS_CONFIG = {
-  whatsappNumber: import.meta.env.VITE_BUSINESS_WHATSAPP_NUMBER || "27XXXXXXXXX",
+  whatsappNumber: (import.meta.env.VITE_BUSINESS_WHATSAPP_NUMBER || "").replace(/\D/g, ""),
 };
 
 const CHECKOUT_LINKS: Record<CheckoutKey, string> = {
-  lite: "https://example.com/checkout/sprint-lite",
-  guided: "https://example.com/checkout/guided-sprint",
-  premium: "https://example.com/checkout/premium-sprint",
+  lite: import.meta.env.VITE_JOB_SPRINT_CHECKOUT_LITE || "#",
+  guided: import.meta.env.VITE_JOB_SPRINT_CHECKOUT_GUIDED || "#",
+  premium: import.meta.env.VITE_JOB_SPRINT_CHECKOUT_PREMIUM || "#",
 };
 
 const pricingPackages: PricingPackage[] = [
@@ -324,6 +324,20 @@ const executionMetrics = [
   { value: "30 days", label: "campaign window with reviewable outputs" },
 ];
 
+const trustPills = [
+  "🇿🇦 Rand pricing",
+  "💬 WhatsApp-friendly support",
+  "🧠 Ethical AI-assisted workflows",
+  "🛡️ No false credentials",
+];
+
+const heroCardStats = [
+  { label: "Timeline", value: "30 days" },
+  { label: "Target", value: "Remote roles" },
+  { label: "Support", value: "Guided" },
+  { label: "Market", value: "South Africa" },
+];
+
 const glassCardStyle: React.CSSProperties = {
   background: "rgba(255,255,255,0.82)",
   border: "1px solid rgba(15,18,54,0.08)",
@@ -332,13 +346,20 @@ const glassCardStyle: React.CSSProperties = {
   WebkitBackdropFilter: "blur(18px)",
 };
 
-const buildWhatsAppLink = (message: string) =>
-  `https://wa.me/${BUSINESS_CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
+const buildWhatsAppLink = (message: string) => {
+  if (!BUSINESS_CONFIG.whatsappNumber) {
+    return "#";
+  }
+
+  return `https://wa.me/${BUSINESS_CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
+};
+
+const toStructuredPrice = (price: string) => price.replace(/[^\d.]/g, "");
 
 const ThirtyDayJobSprint = () => {
   const [selectedPackage, setSelectedPackage] = useState<PricingPackage>(pricingPackages[1]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [openFaqIndex, setOpenFaqIndex] = useState<number>(0);
+  const [openFaqIndex, setOpenFaqIndex] = useState<number>(-1);
 
   const bundledBenefitColumns = useMemo(() => {
     const midpoint = Math.ceil(bundledBenefits.length / 2);
@@ -368,7 +389,7 @@ const ThirtyDayJobSprint = () => {
     offers: pricingPackages.map((item) => ({
       "@type": "Offer",
       name: item.name,
-      price: item.launchPrice.replace(/[R,+]/g, ""),
+      price: toStructuredPrice(item.launchPrice),
       priceCurrency: "ZAR",
       eligibleRegion: { "@type": "Country", name: "South Africa" },
     })),
@@ -480,21 +501,19 @@ const ThirtyDayJobSprint = () => {
               </div>
 
               <div className="flex flex-wrap gap-2" aria-label="Key trust points">
-                {["🇿🇦 Rand pricing", "💬 WhatsApp-friendly support", "🧠 Ethical AI-assisted workflows", "🛡️ No false credentials"].map(
-                  (pill) => (
-                    <span
-                      key={pill}
-                      className="inline-flex items-center rounded-full px-3 py-1.5 text-sm font-bold border"
-                      style={{
-                        background: "rgba(255,255,255,0.66)",
-                        borderColor: "rgba(15,18,54,0.08)",
-                        color: "rgba(7,10,47,0.72)",
-                      }}
-                    >
-                      {pill}
-                    </span>
-                  ),
-                )}
+                {trustPills.map((pill) => (
+                  <span
+                    key={pill}
+                    className="inline-flex items-center rounded-full px-3 py-1.5 text-sm font-bold border"
+                    style={{
+                      background: "rgba(255,255,255,0.66)",
+                      borderColor: "rgba(15,18,54,0.08)",
+                      color: "rgba(7,10,47,0.72)",
+                    }}
+                  >
+                    {pill}
+                  </span>
+                ))}
               </div>
             </div>
 
@@ -521,12 +540,7 @@ const ThirtyDayJobSprint = () => {
               </p>
 
               <div className="mt-5 grid grid-cols-2 gap-3">
-                {[
-                  { label: "Timeline", value: "30 days" },
-                  { label: "Target", value: "Remote roles" },
-                  { label: "Support", value: "Guided" },
-                  { label: "Market", value: "South Africa" },
-                ].map((item) => (
+                {heroCardStats.map((item) => (
                   <div
                     key={item.label}
                     className="rounded-2xl p-4 border"
