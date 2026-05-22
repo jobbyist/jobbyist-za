@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { X, Download, Smartphone, Monitor } from 'lucide-react';
+import { useDialogFocusRestore } from '@/hooks/useDialogFocusRestore';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -12,6 +13,8 @@ const PWAInstallPrompt = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [showPrompt, setShowPrompt] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
+
+  useDialogFocusRestore(showPrompt);
   const [isStandalone, setIsStandalone] = useState(false);
 
   useEffect(() => {
