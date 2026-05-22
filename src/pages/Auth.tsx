@@ -11,6 +11,7 @@ import { Mail, Lock, ArrowLeft } from 'lucide-react';
 import MultiStepSignup from '@/components/onboarding/MultiStepSignup';
 
 import { z } from 'zod';
+import { SEOHead } from '@/components/SEOHead';
 
 const emailSchema = z.string().email('Invalid email address');
 const passwordSchema = z.string().min(8, 'Password must be at least 8 characters');
@@ -68,6 +69,7 @@ const Auth = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
+      <SEOHead title="Log In or Sign Up | Jobbyist Account Access" description="Access your Jobbyist account to sign in, create a profile, and manage your job applications." canonicalUrl="https://za.jobbyist.africa/auth" noindex={true} />
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
       </div>
     );

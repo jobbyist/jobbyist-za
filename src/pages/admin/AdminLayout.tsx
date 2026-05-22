@@ -25,6 +25,7 @@ import {
   Shield
 } from 'lucide-react';
 import logoImage from '@/assets/jobbyist-logo.jpeg';
+import { SEOHead } from '@/components/SEOHead';
 
 const adminNavItems = [
   { title: 'Dashboard', url: '/admin', icon: LayoutDashboard },
@@ -51,7 +52,7 @@ const AdminLayout = () => {
   if (authLoading || adminLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
       </div>
     );
   }
@@ -62,6 +63,7 @@ const AdminLayout = () => {
 
   return (
     <SidebarProvider>
+      <SEOHead title="Admin Dashboard | Jobbyist" description="Internal administration dashboard for managing jobs, users, and companies." canonicalUrl="https://za.jobbyist.africa/admin" noindex={true} />
       <div className="min-h-screen flex w-full">
         <Sidebar className="border-r">
           <div className="p-4 border-b">

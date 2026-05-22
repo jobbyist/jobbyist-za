@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 import { ArrowLeft, Bell, MapPin, Users, Briefcase } from 'lucide-react';
 import { getCountryByCode, waitingListCountries, type CountryCode } from '@/lib/countries';
 import logoImage from '@/assets/jobbyist-logo.jpeg';
+import { SEOHead } from '@/components/SEOHead';
 
 const WaitingList = () => {
   const { countryCode } = useParams<{ countryCode: string }>();
@@ -96,6 +97,7 @@ const WaitingList = () => {
   if (!country) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
+      <SEOHead title="Country Launch Waiting List | Jobbyist" description="Join the waiting list to be notified when Jobbyist launches in your country." canonicalUrl="https://za.jobbyist.africa/waiting-list" noindex={true} />
         <Card className="max-w-md w-full">
           <CardHeader className="text-center">
             <CardTitle>Country Not Found</CardTitle>
