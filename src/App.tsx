@@ -38,6 +38,7 @@ import CategoryJobs from "./pages/CategoryJobs";
 import FacetJobs from "./pages/FacetJobs";
 import SitemapRedirect from "./pages/SitemapRedirect";
 import Ads from "./pages/Ads";
+import ProfessionalProfiles from "./pages/ProfessionalProfiles";
 import RemoteSprintModal from "./components/RemoteSprintModal";
 import ConciergeChat from "./components/ConciergeChat";
 import NotFound from "./pages/NotFound";
@@ -107,6 +108,8 @@ const App = () => {
               <Route path="/resume-builder" element={<ResumeBuilder />} />
               <Route path="/upskilling" element={<UpskillingProgram />} />
               <Route path="/cookies" element={<Cookies />} />
+              <Route path="/professional-profiles" element={<ProfessionalProfiles />} />
+              <Route path="/professional-profiles/page/:pageNum" element={<ProfessionalProfiles />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminLayout />}>
