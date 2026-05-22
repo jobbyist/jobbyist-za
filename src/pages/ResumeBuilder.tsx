@@ -107,7 +107,7 @@ const ResumeBuilder = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="https://profiles.jobbyist.africa" target="_blank" rel="noopener noreferrer">
                   <Button size="lg" className="bg-white text-primary hover:bg-white/90 group">
-                    Start Building Your Resume
+                    Build My South African CV
                     <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform ml-2" />
                   </Button>
                 </a>
@@ -259,7 +259,7 @@ const ResumeBuilder = () => {
               <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="https://profiles.jobbyist.africa" target="_blank" rel="noopener noreferrer">
                   <Button size="lg" className="bg-white text-primary hover:bg-white/90">
-                    Get Started for Free
+                    Create CV Free
                   </Button>
                 </a>
                 <Button size="lg" variant="outline" className="border-primary-foreground/20 text-primary-foreground bg-transparent hover:bg-primary-foreground/10">
@@ -269,6 +269,7 @@ const ResumeBuilder = () => {
             </Card>
           </div>
         </section>
+        <TrustCopyModules />
       </main>
       <Footer />
     </div>

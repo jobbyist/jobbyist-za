@@ -25,26 +25,24 @@ const Hero = () => {
         <div className="max-w-4xl mx-auto text-center">
           {/* Main headline */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 animate-slide-up text-foreground">
-            South Africa's Premier{" "}
-            <span className="gradient-brand-text">Job Discovery</span> Platform
+            South Africa's Trusted{" "}
+            <span className="gradient-brand-text">Career Marketplace</span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-slide-up" style={{ animationDelay: "0.1s" }}>
-            Discover expertly curated job opportunities from verified South African 
-            companies. From Johannesburg to Cape Town, Durban to Pretoria — your next 
-            career breakthrough awaits.
+            Find verified opportunities across Gauteng, Western Cape, KwaZulu-Natal and every province. Compare roles with realistic ZAR salary ranges and apply with confidence.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8 animate-slide-up" style={{ animationDelay: "0.2s" }}>
             <Link to="/jobs">
               <Button variant="hero" size="xl" className="group">
-                Job Seeker: Find Jobs
+                Find Jobs in SA
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
-            <Button variant="hero-outline" size="xl" onClick={() => setIsRecruitmentModalOpen(true)}>Employer / Recruiter: Hire Talent</Button>
+            <Button variant="hero-outline" size="xl" onClick={() => setIsRecruitmentModalOpen(true)}>Hire Verified SA Talent</Button>
             <Link to="/professional-profiles">
               <Button variant="hero-outline" size="xl" className="group">
                 Candidate Profile Buyer: Browse Profiles

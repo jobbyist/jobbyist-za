@@ -246,7 +246,7 @@ const KnowledgeHub = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Knowledge Hub | Interview Guides, CV Templates & Career Resources | Jobbyist ZA"
+        title="South Africa Career Knowledge Hub | Interview Guides, CV Templates & Career Resources | Jobbyist ZA"
         description="Access comprehensive interview packs, ATS-optimized CV templates, career roadmaps, salary guides, and industry trends for the South African job market. Free resources for job seekers and employers."
         canonicalUrl="https://za.jobbyist.africa/knowledge-hub"
         keywords={['interview questions', 'CV templates South Africa', 'career roadmap', 'salary guide SA', 'job market trends', 'employer resources', 'career certification']}
@@ -712,6 +712,7 @@ const KnowledgeHub = () => {
             </Card>
           </div>
         </section>
+        <TrustCopyModules />
       </main>
       <Footer />
     </div>

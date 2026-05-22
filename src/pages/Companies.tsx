@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import TrustCopyModules from '@/components/TrustCopyModules';
 import { SEOHead } from '@/components/SEOHead';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -45,7 +46,7 @@ const Companies = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Top Companies Hiring in South Africa | Browse 100+ Leading Employers | Jobbyist"
+        title="Verified Companies Hiring in South Africa | Browse 100+ Leading Employers | Jobbyist"
         description="Discover 100+ leading companies in South Africa actively hiring. Browse verified employers across technology, finance, healthcare, retail and more industries. Find your ideal workplace today."
         canonicalUrl="https://za.jobbyist.africa/companies"
         keywords={['companies in South Africa', 'SA employers', 'top companies hiring', 'best companies to work for SA', 'South African businesses', 'company directory SA']}
@@ -60,7 +61,7 @@ const Companies = () => {
               South African Companies
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Browse 100+ leading employers in South Africa. Find your next opportunity with top companies across various industries.
+              Compare verified employers hiring in Johannesburg, Cape Town, Durban, Pretoria and more. See company signals that matter to South African jobseekers: salary transparency, response time, and hiring quality.
             </p>
           </div>
 
