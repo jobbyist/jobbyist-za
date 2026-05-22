@@ -36,6 +36,7 @@ const Navbar = () => {
     { name: "Company Directory", href: "/companies" },
     { name: "Recruitment Suite", href: "/pro" },
     { name: "Employer Waitlist", href: "/waiting-list/za" },
+    { name: "Listing Policy", href: "/listing-policy" },
   ];
 
   const candidateBuyerLinks = [

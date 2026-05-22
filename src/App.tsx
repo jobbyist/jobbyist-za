@@ -43,6 +43,7 @@ import FacetJobs from "./pages/FacetJobs";
 import SitemapRedirect from "./pages/SitemapRedirect";
 import Ads from "./pages/Ads";
 import ProfessionalProfiles from "./pages/ProfessionalProfiles";
+import ListingPolicy from "./pages/ListingPolicy";
 import RemoteSprintModal from "./components/RemoteSprintModal";
 import ConciergeChat from "./components/ConciergeChat";
 import { CookieConsentProvider } from "./components/CookieConsent";
@@ -126,6 +127,7 @@ const App = () => {
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/data-rights" element={<DataRights />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/listing-policy" element={<ListingPolicy />} />
               <Route path="/professional-profiles" element={<ProfessionalProfiles />} />
               <Route path="/professional-profiles/page/:pageNum" element={<ProfessionalProfiles />} />
               
