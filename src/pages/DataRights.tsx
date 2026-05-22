@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { CookieSettingsLink } from "@/components/CookieConsent";
 
 const DataRights = () => {
   return (
@@ -23,6 +24,7 @@ const DataRights = () => {
             <p className="text-muted-foreground mb-10">
               Use this form to request access, correction, deletion, restriction, portability, or to object to processing under POPIA.
             </p>
+            <CookieSettingsLink className="mb-6 inline-block text-sm text-primary underline hover:no-underline" />
 
             <Card>
               <CardHeader>

@@ -45,6 +45,7 @@ import Ads from "./pages/Ads";
 import ProfessionalProfiles from "./pages/ProfessionalProfiles";
 import RemoteSprintModal from "./components/RemoteSprintModal";
 import ConciergeChat from "./components/ConciergeChat";
+import { CookieConsentProvider } from "./components/CookieConsent";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -76,6 +77,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
+        <CookieConsentProvider>
         <TooltipProvider>
           <Toaster />
           <Sonner />
@@ -135,6 +137,7 @@ const App = () => {
             </Routes>
           </BrowserRouter>
         </TooltipProvider>
+        </CookieConsentProvider>
       </AuthProvider>
     </QueryClientProvider>
   );

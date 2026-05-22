@@ -2,6 +2,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { SEOHead } from "@/components/SEOHead";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CookieSettingsLink } from "@/components/CookieConsent";
 
 const Privacy = () => {
   return (
@@ -18,6 +19,7 @@ const Privacy = () => {
           <div className="container mx-auto px-4 max-w-4xl">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Privacy Notice</h1>
             <p className="text-muted-foreground mb-10">Effective date: 22 May 2026</p>
+            <CookieSettingsLink className="mb-6 inline-block text-sm text-primary underline hover:no-underline" />
 
             <div className="space-y-8">
               <Card>

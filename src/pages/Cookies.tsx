@@ -1,7 +1,8 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { SEOHead } from "@/components/SEOHead";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CookieSettingsLink } from "@/components/CookieConsent";
 
 const Cookies = () => {
   return (
@@ -16,108 +17,41 @@ const Cookies = () => {
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4 max-w-4xl">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Cookie Policy</h1>
-            <p className="text-muted-foreground mb-8">Last updated: January 2026</p>
+            <p className="text-muted-foreground mb-4">Last updated: 22 May 2026</p>
+            <CookieSettingsLink className="mb-8 inline-block text-sm text-primary underline hover:no-underline" />
 
             <div className="space-y-8">
               <Card>
-                <CardHeader>
-                  <CardTitle>What Are Cookies?</CardTitle>
-                </CardHeader>
+                <CardHeader><CardTitle>Cookie categories we use</CardTitle></CardHeader>
                 <CardContent className="prose prose-gray dark:prose-invert max-w-none">
-                  <p>
-                    Cookies are small text files that are placed on your device when you visit our website. 
-                    They help us provide you with a better experience by remembering your preferences and 
-                    understanding how you use our services.
-                  </p>
+                  <p><strong>Strictly necessary</strong> cookies are always active and support authentication, session security, load balancing, and consent-state storage.</p>
+                  <p><strong>Analytics</strong> cookies are optional and used to understand product usage patterns and performance trends.</p>
+                  <p><strong>Advertising</strong> cookies are optional and are used to enable ad delivery, frequency capping, fraud detection, and measurement for ads shown on Jobbyist.</p>
                 </CardContent>
               </Card>
 
               <Card>
-                <CardHeader>
-                  <CardTitle>How We Use Cookies</CardTitle>
-                </CardHeader>
+                <CardHeader><CardTitle>Providers and retention</CardTitle></CardHeader>
                 <CardContent className="prose prose-gray dark:prose-invert max-w-none">
-                  <p className="font-semibold">Essential Cookies</p>
-                  <p>
-                    These cookies are necessary for the website to function properly. They enable core 
-                    functionality such as security, network management, and accessibility.
-                  </p>
-                  
-                  <p className="font-semibold mt-4">Analytics Cookies</p>
-                  <p>
-                    We use analytics cookies to understand how visitors interact with our website. This 
-                    information helps us improve our services and user experience.
-                  </p>
-                  
-                  <p className="font-semibold mt-4">Functional Cookies</p>
-                  <p>
-                    These cookies enable enhanced functionality and personalization, such as remembering 
-                    your login details and preferences.
-                  </p>
-                  
-                  <p className="font-semibold mt-4">Advertising Cookies</p>
-                  <p>
-                    We may use advertising cookies to show you relevant advertisements based on your 
-                    interests and browsing behavior.
-                  </p>
+                  <ul>
+                    <li><strong>Jobbyist ZA (first-party, strictly necessary):</strong> session/security and preference cookies. Typical retention: session to 12 months depending on function.</li>
+                    <li><strong>Supabase (service provider, strictly necessary):</strong> authentication/session cookies or local tokens used for secure account access. Typical retention: session to 30 days (rotated by auth policy).</li>
+                    <li><strong>Google AdSense (third-party, advertising):</strong> advertising and measurement cookies when advertising consent is enabled. Typical retention: up to 13 months, subject to Google controls and browser policies.</li>
+                    <li><strong>Analytics provider(s) (third-party, analytics):</strong> usage/performance measurement identifiers when analytics consent is enabled. Typical retention: up to 13 months unless shorter periods apply.</li>
+                  </ul>
+                  <p>Retention may be shortened by browser settings, private browsing, manual deletion, or provider policy changes.</p>
                 </CardContent>
               </Card>
 
               <Card>
-                <CardHeader>
-                  <CardTitle>Managing Cookies</CardTitle>
-                </CardHeader>
+                <CardHeader><CardTitle>How to grant or withdraw consent</CardTitle></CardHeader>
                 <CardContent className="prose prose-gray dark:prose-invert max-w-none">
-                  <p>
-                    You can control and manage cookies in various ways. Please note that removing or 
-                    blocking cookies may impact your user experience and some features may no longer be 
-                    available.
-                  </p>
-                  <p>
-                    Most browsers automatically accept cookies, but you can modify your browser settings 
-                    to decline cookies if you prefer. Please refer to your browser's help section for 
-                    instructions on how to manage cookies.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Third-Party Cookies</CardTitle>
-                </CardHeader>
-                <CardContent className="prose prose-gray dark:prose-invert max-w-none">
-                  <p>
-                    We may use third-party service providers who may also set cookies on your device to 
-                    provide their services. These third parties have their own privacy policies and cookie 
-                    policies.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Updates to This Policy</CardTitle>
-                </CardHeader>
-                <CardContent className="prose prose-gray dark:prose-invert max-w-none">
-                  <p>
-                    We may update this Cookie Policy from time to time to reflect changes in our practices 
-                    or for other operational, legal, or regulatory reasons. Please check this page regularly 
-                    to stay informed about our use of cookies.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Contact Us</CardTitle>
-                </CardHeader>
-                <CardContent className="prose prose-gray dark:prose-invert max-w-none">
-                  <p>
-                    If you have any questions about our use of cookies, please contact us at{" "}
-                    <a href="mailto:privacy@jobbyist.africa" className="text-primary hover:underline">
-                      privacy@jobbyist.africa
-                    </a>
-                  </p>
+                  <ul>
+                    <li>Use the cookie banner shown on first visit to accept all, reject optional, or save granular preferences.</li>
+                    <li>Use the persistent <strong>Cookie Settings</strong> link in the footer or legal pages to update your consent at any time.</li>
+                    <li>Withdrawing consent stops new optional cookies/scripts (including advertising and analytics) from loading going forward.</li>
+                    <li>You can also clear existing cookies through browser settings.</li>
+                  </ul>
                 </CardContent>
               </Card>
             </div>
