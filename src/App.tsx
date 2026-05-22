@@ -29,7 +29,7 @@ import Builder from "./pages/Builder";
 import JobMatcher from "./pages/JobMatcher";
 import Jobseekers from "./pages/Jobseekers";
 import JobseekerDetail from "./pages/JobseekerDetail";
-import KnowledgeHub from "./pages/KnowledgeHub";
+import ResourceCenter from "./pages/KnowledgeHub";
 import ResumeBuilder from "./pages/ResumeBuilder";
 import UpskillingProgram from "./pages/UpskillingProgram";
 import Cookies from "./pages/Cookies";
@@ -45,6 +45,7 @@ import Ads from "./pages/Ads";
 import ProfessionalProfiles from "./pages/ProfessionalProfiles";
 import RecruitmentSuitePage from "./pages/RecruitmentSuite";
 import ThirtyDayJobSprint from "./pages/ThirtyDayJobSprint";
+import Podcast from "./pages/Podcast";
 import RemoteSprintModal from "./components/RemoteSprintModal";
 import ConciergeChat from "./components/ConciergeChat";
 import NotFound from "./pages/NotFound";
@@ -112,8 +113,10 @@ const App = () => {
               <Route path="/job-matcher" element={<JobMatcher />} />
               <Route path="/jobseekers" element={<Jobseekers />} />
               <Route path="/jobseekers/:id" element={<JobseekerDetail />} />
-              <Route path="/knowledge-hub" element={<KnowledgeHub />} />
+              <Route path="/knowledge-hub" element={<ResourceCenter />} />
+              <Route path="/resource-center" element={<ResourceCenter />} />
               <Route path="/resume-builder" element={<ResumeBuilder />} />
+              <Route path="/resume-cv-assistance" element={<ResumeBuilder />} />
               <Route path="/upskilling" element={<UpskillingProgram />} />
               <Route path="/cookies" element={<Cookies />} />
               <Route path="/terms" element={<Terms />} />
@@ -124,6 +127,7 @@ const App = () => {
               <Route path="/professional-profiles/page/:pageNum" element={<ProfessionalProfiles />} />
               <Route path="/recruitment-suite" element={<RecruitmentSuitePage />} />
               <Route path="/30-day-job-sprint" element={<ThirtyDayJobSprint />} />
+              <Route path="/podcast" element={<Podcast />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminLayout />}>

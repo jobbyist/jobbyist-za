@@ -111,7 +111,7 @@ const LocationJobs = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="suite-page-shell">
       <SEOHead
         title={`${locationData.name} Jobs | Find Employment in ${locationData.name} | Jobbyist ZA`}
         description={locationData.description}

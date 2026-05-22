@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/hooks/useAuth";
 import { cn } from "@/lib/utils";
+import { useLocation } from "react-router-dom";
 
 interface Message {
   id: number;
@@ -18,6 +19,7 @@ const PREWRITTEN_QUERIES = [
 ];
 
 const ConciergeChat = () => {
+  const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -29,6 +31,10 @@ const ConciergeChat = () => {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const { user } = useAuth();
+  const hiddenPathPrefixes = ["/recruitment-suite", "/30-day-job-sprint", "/professional-profiles"];
+  const isHidden = hiddenPathPrefixes.some((prefix) => pathname.startsWith(prefix));
+
+  if (isHidden) return null;
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -47,7 +53,7 @@ const ConciergeChat = () => {
     const lowerMsg = userMessage.toLowerCase();
 
     if (lowerMsg.includes("cv") || lowerMsg.includes("resume")) {
-      return "Great question! You can update your CV using our Resume Builder tool at /resume-builder. It helps optimize for ATS and highlights your strengths. Pro members get AI-powered suggestions too! Would you like tips on tailoring it for a specific role?";
+      return "Great question! You can update your CV using our Resume/CV Assistance tool at /resume-cv-assistance. It helps optimize for ATS and highlights your strengths. Pro members get AI-powered suggestions too! Would you like tips on tailoring it for a specific role?";
     }
     if (lowerMsg.includes("how soon") || lowerMsg.includes("get a job") || lowerMsg.includes("timeline")) {
       return "It depends on your industry, experience, and how actively you're applying. Many job seekers on Jobbyist land interviews within 2-4 weeks with consistent applications (10-15/week). Use our AI Job Matcher and set up alerts! Stay persistent and tailor applications.";

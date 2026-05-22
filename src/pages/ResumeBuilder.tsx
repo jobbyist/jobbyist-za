@@ -74,11 +74,11 @@ const templateCategories = [
 
 const ResumeBuilder = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="suite-page-shell">
       <SEOHead
-        title="Professional Resume Builder | ATS-Optimized CV Templates | Jobbyist ZA"
+        title="Resume/CV Assistance | ATS-Optimized CV Templates | Jobbyist ZA"
         description="Create a professional, ATS-optimized resume in minutes with our AI-powered resume builder. Choose from industry-specific templates designed for the South African job market. Start building your winning CV today!"
-        canonicalUrl="https://za.jobbyist.africa/resume-builder"
+        canonicalUrl="https://za.jobbyist.africa/resume-cv-assistance"
         keywords={['resume builder', 'CV builder South Africa', 'ATS resume', 'professional CV templates', 'job application CV', 'resume templates SA']}
         ogType="website"
       />
@@ -95,7 +95,7 @@ const ResumeBuilder = () => {
           <div className="container mx-auto px-4 relative">
             <div className="max-w-4xl mx-auto text-center text-primary-foreground">
               <Badge className="mb-4 bg-background/20 text-primary-foreground border-primary-foreground/20">
-                Professional Resume Builder
+                Resume/CV Assistance
               </Badge>
               <h1 className="text-4xl md:text-6xl font-bold mb-6">
                 Build Your Perfect Resume in Minutes

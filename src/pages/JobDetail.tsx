@@ -195,7 +195,7 @@ const JobDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="suite-page-shell">
         <Navbar />
         <main className="pt-24 pb-16">
           <div className="container mx-auto px-4 max-w-4xl">
@@ -213,7 +213,7 @@ const JobDetail = () => {
 
   if (!job) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="suite-page-shell">
         <Navbar />
         <main className="pt-24 pb-16">
           <div className="container mx-auto px-4 text-center">
@@ -242,7 +242,7 @@ const JobDetail = () => {
   }) : undefined;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="suite-page-shell">
       <SEOHead
         title={`${job.title} at ${job.company?.name} | Jobbyist`}
         description={job.description?.substring(0, 160) + '...' || 'Job opportunity in South Africa'}

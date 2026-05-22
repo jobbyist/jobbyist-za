@@ -65,7 +65,7 @@ const CategoryJobs = () => {
     : `https://za.jobbyist.africa/jobs/category/${cat!.slug}`;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="suite-page-shell">
       <SEOHead title={title} description={description} canonicalUrl={canonical}
         keywords={[cat!.name, ...cat!.keywords, "South Africa", loc?.name || "SA jobs"]} />
       <Navbar />

@@ -134,7 +134,7 @@ const FacetJobs = ({ mode }: Props) => {
   useEffect(() => { window.scrollTo(0, 0); }, [path]);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="suite-page-shell">
       <SEOHead
         title={title}
         description={description}

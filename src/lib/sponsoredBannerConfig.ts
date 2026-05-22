@@ -22,6 +22,7 @@ export const BANNER_BLOCKLIST: RegExp[] = [
   /^\/builder/,
   /^\/job-matcher/,
   /^\/resume-builder/,
+  /^\/resume-cv-assistance/,
   /^\/professional-profiles/,
   /^\/recruitment-suite/,
   /^\/30-day-job-sprint/,

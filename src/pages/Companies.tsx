@@ -44,7 +44,7 @@ const Companies = () => {
   });
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="suite-page-shell">
       <SEOHead
         title="Top Companies Hiring in South Africa | Browse 100+ Leading Employers | Jobbyist"
         description="Discover 100+ leading companies in South Africa actively hiring. Browse verified employers across technology, finance, healthcare, retail and more industries. Find your ideal workplace today."

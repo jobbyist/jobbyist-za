@@ -124,7 +124,7 @@ const UpskillingProgram = () => {
                 Advance your career and increase your earning potential in the South African job market.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/knowledge-hub">
+                <Link to="/resource-center">
                   <Button size="lg" className="bg-white text-primary hover:bg-white/90 group">
                     Explore Programs
                     <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform ml-2" />
@@ -263,7 +263,7 @@ const UpskillingProgram = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/knowledge-hub">
+                <Link to="/resource-center">
                   <Button size="lg" className="bg-white text-primary hover:bg-white/90">
                     Browse All Programs
                   </Button>

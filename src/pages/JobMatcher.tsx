@@ -51,7 +51,7 @@ const JobMatcher = () => {
   // Pro membership check would be implemented at the feature activation level
   
   return (
-    <div className="min-h-screen bg-background">
+    <div className="suite-page-shell">
       <SEOHead
         title="AI-Powered Job Matcher | Automated Job Search & Applications | Jobbyist Pro"
         description="Let AI find your perfect job match. Our intelligent Job Matcher automatically scans LinkedIn, Indeed, Careers24 and more, providing real-time notifications and automated applications. Exclusive to Jobbyist Pro members."

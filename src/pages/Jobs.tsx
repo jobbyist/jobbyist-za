@@ -88,7 +88,7 @@ const Jobs = () => {
 
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="suite-page-shell">
       <SEOHead
         title={`Jobs in South Africa${currentPage > 1 ? ` - Page ${currentPage}` : ''} | Find SA Job Opportunities | Jobbyist`}
         description={`Browse ${totalCount}+ verified job opportunities in South Africa. Find full-time, part-time, remote & contract jobs in Johannesburg, Cape Town, Durban & more.`}

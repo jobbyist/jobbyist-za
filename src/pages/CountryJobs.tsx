@@ -75,7 +75,7 @@ const CountryJobs = () => {
   // (per Google Jobs guidelines); country listing pages must not emit it.
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="suite-page-shell">
       <SEOHead
         title={pageTitle}
         description={pageDescription}
