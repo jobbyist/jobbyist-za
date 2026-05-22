@@ -58,7 +58,9 @@ const App = () => {
     if (!isLoading) return;
     const timer = setTimeout(() => {
       setIsLoading(false);
-      try { sessionStorage.setItem('jobbyist:preloader-shown', '1'); } catch {}
+      try { sessionStorage.setItem('jobbyist:preloader-shown', '1'); } catch {
+        // Ignore sessionStorage write failures in restricted environments.
+      }
     }, 5000);
     return () => clearTimeout(timer);
   }, [isLoading]);
