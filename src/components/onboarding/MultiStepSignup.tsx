@@ -345,36 +345,11 @@ const MultiStepSignup = () => {
           )}
 
           {step === 6 && (
-            <div className="space-y-3">
-              <div className="border rounded-lg p-4 bg-muted/30 max-h-80 overflow-y-auto space-y-3">
-                {chat.length === 0 && interviewLoading && (
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Loader2 className="h-4 w-4 animate-spin" /> Starting interview...
-                  </div>
-                )}
-                {chat.map((m, i) => (
-                  <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
-                    <div className={`px-3 py-2 rounded-lg max-w-[80%] text-sm ${m.role === "user" ? "bg-primary text-primary-foreground" : "bg-background border"}`}>
-                      {m.role === "assistant" && <Sparkles className="h-3 w-3 inline mr-1" />}
-                      {m.content}
-                    </div>
-                  </div>
-                ))}
-                {interviewLoading && chat.length > 0 && (
-                  <div className="text-sm text-muted-foreground"><Loader2 className="h-3 w-3 inline animate-spin" /> Thinking...</div>
-                )}
-                <div ref={chatEndRef} />
-              </div>
-              <Textarea value={reply} onChange={e => setReply(e.target.value)} placeholder="Type your answer..." rows={2}
-                onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendReply(); } }} />
-              <div className="flex justify-between">
-                <Button variant="ghost" onClick={skipInterview}>Skip interview</Button>
-                <Button onClick={sendReply} disabled={!reply.trim() || interviewLoading}>
-                  Send <ArrowRight className="ml-1 h-4 w-4" />
-                </Button>
-              </div>
-              <p className="text-xs text-muted-foreground text-center">{interviewQs}/5 answers — finishes automatically</p>
-            </div>
+            <VoiceVideoInterview
+              firstName={firstName}
+              onComplete={() => setInterviewDone(true)}
+              onSkip={skipInterview}
+            />
           )}
 
           {step !== 6 && (
