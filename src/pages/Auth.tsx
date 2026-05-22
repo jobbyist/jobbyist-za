@@ -70,15 +70,16 @@ const Auth = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-      <SEOHead title="Log In or Sign Up | Jobbyist Account Access" description="Access your Jobbyist account to sign in, create a profile, and manage your job applications." canonicalUrl="https://za.jobbyist.africa/auth" noindex={true} />
+      <main id="main-content" className="min-h-screen flex items-center justify-center">
+        <SEOHead title="Log In or Sign Up | Jobbyist Account Access" description="Access your Jobbyist account to sign in, create a profile, and manage your job applications." canonicalUrl="https://za.jobbyist.africa/auth" noindex={true} />
+        <h1 className="sr-only">Account Access</h1>
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-      </div>
+      </main>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted flex items-center justify-center p-4">
+    <main id="main-content" className="min-h-screen bg-gradient-to-br from-background via-background to-muted flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <a href="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-4">
@@ -86,6 +87,7 @@ const Auth = () => {
             Back to Home
           </a>
           <img src="/jobbyistza.svg" alt="Jobbyist" className="h-12 mx-auto mb-4" />
+          <h1 className="text-xl font-bold mb-2">Log in or create your account</h1>
           <p className="text-muted-foreground">South Africa's Premier Career Management & Job Discovery Platform</p>
         </div>
 
@@ -155,7 +157,7 @@ const Auth = () => {
           </Tabs>
         </Card>
       </div>
-    </div>
+    </main>
   );
 };
 
