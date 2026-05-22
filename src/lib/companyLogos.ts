@@ -9,28 +9,27 @@ import shopriteLogo from '../../companylogos/shoprite.svg';
 import standardLogo from '../../companylogos/standard.svg';
 import vodacomLogo from '../../companylogos/vodacom.svg';
 
-const companyLogoMatchers: Array<{ match: string; logoUrl: string }> = [
-  { match: 'discovery', logoUrl: discoveryLogo },
-  { match: 'absa', logoUrl: absaLogo },
-  { match: 'standard bank', logoUrl: standardLogo },
-  { match: 'first national bank', logoUrl: fnbLogo },
-  { match: 'fnb', logoUrl: fnbLogo },
-  { match: 'nedbank', logoUrl: nedbankLogo },
-  { match: 'sanlam', logoUrl: sanlamLogo },
-  { match: 'shoprite', logoUrl: shopriteLogo },
-  { match: 'vodacom', logoUrl: vodacomLogo },
-  { match: 'mtn', logoUrl: mtnLogo },
-  { match: 'econo', logoUrl: econoLogo },
+const companyLogoMatchers: Array<{ pattern: RegExp; logoUrl: string }> = [
+  { pattern: /\bdiscovery\b/, logoUrl: discoveryLogo },
+  { pattern: /\babsa\b/, logoUrl: absaLogo },
+  { pattern: /\bstandard bank\b/, logoUrl: standardLogo },
+  { pattern: /\bfirst national bank\b/, logoUrl: fnbLogo },
+  { pattern: /\bfnb\b/, logoUrl: fnbLogo },
+  { pattern: /\bnedbank\b/, logoUrl: nedbankLogo },
+  { pattern: /\bsanlam\b/, logoUrl: sanlamLogo },
+  { pattern: /\bshoprite\b/, logoUrl: shopriteLogo },
+  { pattern: /\bvodacom\b/, logoUrl: vodacomLogo },
+  { pattern: /\bmtn\b/, logoUrl: mtnLogo },
+  { pattern: /\becono\b/, logoUrl: econoLogo },
 ];
 
 const normalizeCompanyName = (companyName: string) =>
-  ` ${companyName.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()} `;
+  companyName.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 
 export const getCompanyLogoUrl = (companyName: string) => {
   const normalizedCompanyName = normalizeCompanyName(companyName);
 
   return (
-    companyLogoMatchers.find(({ match }) => normalizedCompanyName.includes(` ${match} `))?.logoUrl ??
-    null
+    companyLogoMatchers.find(({ pattern }) => pattern.test(normalizedCompanyName))?.logoUrl ?? null
   );
 };
