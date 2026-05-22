@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Contact = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="suite-page-shell">
       <SEOHead
         title="Contact Jobbyist ZA | Support and Business Enquiries"
         description="Get in touch with Jobbyist ZA for support, business partnerships, legal requests, and privacy queries."

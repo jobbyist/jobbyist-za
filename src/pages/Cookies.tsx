@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 
 const Cookies = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="suite-page-shell">
       <SEOHead
         title="Cookie Policy | Jobbyist ZA"
         description="Learn about how Jobbyist uses cookies and similar technologies to provide, improve, and protect our services."

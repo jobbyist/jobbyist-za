@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 
 const DataRights = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="suite-page-shell">
       <SEOHead
         title="Data Rights Request | Jobbyist ZA"
         description="Submit a POPIA data rights request for access, correction, deletion, portability, or objections on Jobbyist ZA."

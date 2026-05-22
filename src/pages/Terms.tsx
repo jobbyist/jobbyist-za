@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Terms = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="suite-page-shell">
       <SEOHead
         title="Terms of Service | Jobbyist ZA"
         description="Read Jobbyist ZA's terms of service, including platform usage rules, user responsibilities, and legal conditions."

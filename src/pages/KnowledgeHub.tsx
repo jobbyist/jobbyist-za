@@ -241,15 +241,15 @@ const industryTrends = [
   },
 ];
 
-const KnowledgeHub = () => {
+const ResourceCenter = () => {
   const [selectedTab, setSelectedTab] = useState("interview-packs");
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="suite-page-shell">
       <SEOHead
-        title="Knowledge Hub | Interview Guides, CV Templates & Career Resources | Jobbyist ZA"
+        title="Resource Center | Interview Guides, CV Templates & Career Resources | Jobbyist ZA"
         description="Access comprehensive interview packs, ATS-optimized CV templates, career roadmaps, salary guides, and industry trends for the South African job market. Free resources for job seekers and employers."
-        canonicalUrl="https://za.jobbyist.africa/knowledge-hub"
+        canonicalUrl="https://za.jobbyist.africa/resource-center"
         keywords={['interview questions', 'CV templates South Africa', 'career roadmap', 'salary guide SA', 'job market trends', 'employer resources', 'career certification']}
         ogType="website"
       />
@@ -267,7 +267,7 @@ const KnowledgeHub = () => {
             <div className="max-w-4xl mx-auto text-center text-primary-foreground">
               <Badge className="mb-4 bg-background/20 text-primary-foreground border-primary-foreground/20">
                 <BookOpen className="h-3 w-3 mr-1" />
-                Career Resources Hub
+                Resource Center
               </Badge>
               <h1 className="text-4xl md:text-6xl font-bold mb-6">
                 Your Complete Career Success Toolkit
@@ -405,7 +405,7 @@ const KnowledgeHub = () => {
                 </div>
 
                 <div className="text-center mt-12">
-                  <Link to="/resume-builder">
+                  <Link to="/resume-cv-assistance">
                     <Button size="lg" variant="outline">
                       Build Your Custom CV
                       <ArrowRight className="h-4 w-4 ml-2" />
@@ -723,4 +723,4 @@ const KnowledgeHub = () => {
   );
 };
 
-export default KnowledgeHub;
+export default ResourceCenter;

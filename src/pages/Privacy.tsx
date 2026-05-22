@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Privacy = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="suite-page-shell">
       <SEOHead
         title="Privacy Notice | Jobbyist ZA"
         description="Read the Jobbyist ZA privacy notice, including POPIA rights, legal grounds, security safeguards, retention, and regulator complaint routes."
