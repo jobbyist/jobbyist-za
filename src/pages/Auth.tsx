@@ -9,6 +9,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
 import { Mail, Lock, ArrowLeft } from 'lucide-react';
 import MultiStepSignup from '@/components/onboarding/MultiStepSignup';
+import FormErrorSummary from '@/components/FormErrorSummary';
 
 import { z } from 'zod';
 import { SEOHead } from '@/components/SEOHead';
@@ -23,6 +24,7 @@ const Auth = () => {
   
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const formErrorList = Object.values(errors);
 
   useEffect(() => {
     if (user) {
@@ -98,7 +100,8 @@ const Auth = () => {
             
             <CardContent className="pt-6">
               <TabsContent value="login" className="mt-0">
-                <form onSubmit={handleLogin} className="space-y-4">
+                <form onSubmit={handleLogin} className="space-y-4" noValidate>
+                  <FormErrorSummary errors={formErrorList} />
                   <div className="space-y-2">
                     <Label htmlFor="login-email">Email</Label>
                     <div className="relative">
@@ -110,10 +113,13 @@ const Auth = () => {
                         className="pl-10"
                         value={loginForm.email}
                         onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })}
+                        aria-invalid={!!errors.email}
+                        aria-describedby={errors.email ? 'login-email-error' : 'login-email-hint'}
                         required
                       />
                     </div>
-                    {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
+                    <p id="login-email-hint" className="text-xs text-muted-foreground">Use the email address linked to your account.</p>
+                    {errors.email && <p id="login-email-error" role="alert" className="text-sm text-destructive">{errors.email}</p>}
                   </div>
                   
                   <div className="space-y-2">
@@ -127,10 +133,13 @@ const Auth = () => {
                         className="pl-10"
                         value={loginForm.password}
                         onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
+                        aria-invalid={!!errors.password}
+                        aria-describedby={errors.password ? 'login-password-error' : 'login-password-hint'}
                         required
                       />
                     </div>
-                    {errors.password && <p className="text-sm text-destructive">{errors.password}</p>}
+                    <p id="login-password-hint" className="text-xs text-muted-foreground">Minimum 8 characters.</p>
+                    {errors.password && <p id="login-password-error" role="alert" className="text-sm text-destructive">{errors.password}</p>}
                   </div>
 
                   <Button type="submit" className="w-full" disabled={isSubmitting}>

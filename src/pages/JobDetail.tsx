@@ -7,6 +7,8 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
+import FormErrorSummary from '@/components/FormErrorSummary';
 import { useJob } from '@/hooks/useJobs';
 import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
@@ -45,6 +47,7 @@ const JobDetail = () => {
   const [reportDetails, setReportDetails] = useState('');
   const [reportEmail, setReportEmail] = useState('');
   const [submittingReport, setSubmittingReport] = useState(false);
+  const reportErrors = !reportReason ? ['Select a report reason before submitting.'] : [];
 
   // Load saved state
   useEffect(() => {
@@ -419,13 +422,17 @@ const JobDetail = () => {
                         </DialogHeader>
                         <div className="space-y-4">
                           <div>
-                            <label className="text-sm font-medium">Cover Letter (Optional)</label>
+                            <Label htmlFor="cover-letter" className="text-sm font-medium">Cover Letter (Optional)</Label>
                             <Textarea
+                              id="cover-letter"
                               value={coverLetter}
                               onChange={(e) => setCoverLetter(e.target.value)}
                               placeholder="Tell the employer why you're a great fit for this role..."
                               rows={5}
+                              aria-invalid={false}
+                              aria-describedby="cover-letter-hint"
                             />
+                            <p id="cover-letter-hint" className="text-xs text-muted-foreground mt-1">Keep it concise and role-specific.</p>
                           </div>
                           <Button onClick={handleApply} disabled={isApplying} className="w-full">
                             {isApplying ? 'Submitting...' : 'Submit Application'}
@@ -480,8 +487,11 @@ const JobDetail = () => {
                         </DialogDescription>
                       </DialogHeader>
                       <div className="space-y-3">
-                        <Select value={reportReason} onValueChange={setReportReason}>
-                          <SelectTrigger><SelectValue placeholder="Select a reason" /></SelectTrigger>
+                        <FormErrorSummary errors={reportErrors} />
+                        <div className="space-y-2">
+                          <Label htmlFor="report-reason">Reason for report</Label>
+                          <Select value={reportReason} onValueChange={setReportReason}>
+                          <SelectTrigger id="report-reason" aria-invalid={!reportReason} aria-describedby={!reportReason ? 'report-reason-error' : 'report-reason-hint'}><SelectValue placeholder="Select a reason" /></SelectTrigger>
                           <SelectContent>
                             <SelectItem value="fraudulent">Fraudulent or scam</SelectItem>
                             <SelectItem value="misleading">Misleading information</SelectItem>
@@ -492,19 +502,36 @@ const JobDetail = () => {
                             <SelectItem value="other">Other</SelectItem>
                           </SelectContent>
                         </Select>
+                        <p id="report-reason-hint" className="text-xs text-muted-foreground">Choose the closest matching reason.</p>
+                        {!reportReason && <p id="report-reason-error" role="alert" className="text-xs text-destructive">Reason is required.</p>}
+                        </div>
+                        <div className="space-y-2">
+                        <Label htmlFor="report-details">Additional details (optional)</Label>
                         <Textarea
+                          id="report-details"
                           placeholder="Add any details that will help us investigate (optional)"
                           value={reportDetails}
                           onChange={(e) => setReportDetails(e.target.value)}
                           rows={3}
+                          aria-invalid={false}
+                          aria-describedby="report-details-hint"
                         />
+                        <p id="report-details-hint" className="text-xs text-muted-foreground">Include links, dates, or suspicious behavior.</p>
+                        </div>
                         {!user && (
-                          <Input
+                          <div className="space-y-2">
+                            <Label htmlFor="report-email">Your email (optional)</Label>
+                            <Input
+                            id="report-email"
                             type="email"
                             placeholder="Your email (optional)"
                             value={reportEmail}
                             onChange={(e) => setReportEmail(e.target.value)}
+                            aria-invalid={false}
+                            aria-describedby="report-email-hint"
                           />
+                          <p id="report-email-hint" className="text-xs text-muted-foreground">Used only if we need follow-up.</p>
+                          </div>
                         )}
                       </div>
                       <DialogFooter>
