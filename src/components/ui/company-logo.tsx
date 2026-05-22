@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { getCompanyLogoUrl } from '@/lib/companyLogos';
 
 interface CompanyLogoProps {
   logoUrl?: string | null;
@@ -33,8 +34,9 @@ const CompanyLogo = ({ logoUrl, companyName, size = 'md', className = '' }: Comp
   const sizeClass = sizeClasses[size];
   const colorIndex = companyName.charCodeAt(0) % colorClasses.length;
   const bgColor = colorClasses[colorIndex];
+  const resolvedLogoUrl = getCompanyLogoUrl(companyName) ?? logoUrl;
 
-  if (!logoUrl || imageError) {
+  if (!resolvedLogoUrl || imageError) {
     return (
       <div 
         className={`${sizeClass} ${bgColor} rounded-lg flex items-center justify-center text-white font-bold group-hover:scale-110 transition-transform ${className}`}
@@ -46,7 +48,7 @@ const CompanyLogo = ({ logoUrl, companyName, size = 'md', className = '' }: Comp
 
   return (
     <img
-      src={logoUrl}
+      src={resolvedLogoUrl}
       alt={companyName}
       className={`${sizeClass} rounded-lg object-cover bg-white border group-hover:scale-110 transition-transform ${className}`}
       onError={() => setImageError(true)}
