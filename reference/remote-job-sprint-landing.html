@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>30-Day Remote Job Search Sprint - Powered by Jobbyist</title>
+  <meta name="description" content="A 30-day remote job-search execution system for South African job seekers. CV positioning, job-fit scoring, application tracking, outreach scripts, interview prep, consultations and recruiter-led guidance." />
+  <meta name="keywords" content="remote jobs South Africa, CV review South Africa, job search coaching, virtual assistant jobs, customer support jobs, legal assistant jobs, Jobbyist" />
+  <meta name="author" content="Jobbyist" />
+  <meta name="theme-color" content="#4562ee" />
+
+  <meta property="og:title" content="30-Day Remote Job Search Sprint - Powered by Jobbyist" />
+  <meta property="og:description" content="Stop applying blindly. Build a 30-day remote job-search campaign with sharper assets, better targeting, structured follow-ups and recruiter-style guidance." />
+  <meta property="og:type" content="website" />
+
+  <style>
+    :root {
+      --ink: #070a2f;
+      --muted: #77788f;
+      --line: rgba(15, 18, 54, 0.10);
+      --panel: rgba(255, 255, 255, 0.78);
+      --panel-strong: rgba(255, 255, 255, 0.94);
+      --blue: #4562ee;
+      --blue-2: #3250e7;
+      --purple: #7f5cff;
+      --cyan: #5be0ff;
+      --lime: #cdfb73;
+      --orange: #ffb561;
+      --pink: #ff71c6;
+      --success: #16a34a;
+      --danger: #e11d48;
+      --shadow: 0 28px 90px rgba(26, 35, 109, 0.18);
+      --radius-xl: 42px;
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 18% 24%, rgba(91, 224, 255, 0.24), transparent 30%),
+        radial-gradient(circle at 76% 16%, rgba(255, 181, 97, 0.22), transparent 27%),
+        radial-gradient(circle at 52% 58%, rgba(205, 251, 115, 0.14), transparent 28%),
+        #fbfcff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.42;
+      background-image:
+        linear-gradient(rgba(10, 15, 45, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(10, 15, 45, 0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: linear-gradient(to bottom, #000, transparent 92%);
+      z-index: -3;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(135deg, transparent 6%, rgba(35, 45, 95, 0.05) 6.1%, transparent 6.3%) 0 0 / 380px 240px,
+        linear-gradient(315deg, transparent 9%, rgba(35, 45, 95, 0.05) 9.1%, transparent 9.3%) 0 0 / 420px 260px;
+      z-index: -2;
+    }
+
+    a { color: inherit; }
+
+    .page-shell {
+      width: min(var(--max), calc(100% - 34px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 24px 0 14px;
+    }
+
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 950;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      box-shadow: 0 16px 30px rgba(69, 98, 238, 0.28);
+    }
+
+    .brand-name {
+      font-size: 21px;
+      font-weight: 1000;
+      letter-spacing: -0.05em;
+      transform: skew(-10deg);
+      line-height: 1;
+    }
+
+    .brand-name small {
+      display: block;
+      margin-top: 3px;
+      transform: skew(10deg);
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-link {
+      color: rgba(7, 10, 47, 0.70);
+      font-size: 14px;
+      font-weight: 850;
+      text-decoration: none;
+      padding: 12px 13px;
+      border-radius: 999px;
+      transition: 0.2s ease;
+    }
+
+    .nav-link:hover {
+      background: rgba(69, 98, 238, 0.08);
+      color: var(--ink);
+    }
+
+    .button {
+      border: 0;
+      cursor: pointer;
+      font: inherit;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 22px;
+      padding: 16px 22px;
+      font-weight: 950;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .button:hover { transform: translateY(-2px); }
+
+    .button-primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--blue), var(--blue-2));
+      box-shadow: 0 18px 38px rgba(69, 98, 238, 0.28);
+    }
+
+    .button-dark {
+      color: #fff;
+      background: linear-gradient(135deg, #070a2f, #1c2468);
+      box-shadow: 0 18px 38px rgba(7, 10, 47, 0.20);
+    }
+
+    .button-soft {
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.74);
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 40px rgba(7, 10, 47, 0.06);
+    }
+
+    .hero {
+      position: relative;
+      padding: 58px 0 50px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(15, 18, 54, 0.08);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .hero::before {
+      width: 58%;
+      height: 68%;
+      right: 2%;
+      top: 4%;
+      border-radius: 24px 24px 100px 24px;
+      transform: skewX(-12deg);
+    }
+
+    .hero::after {
+      width: 32%;
+      height: 26%;
+      left: -4%;
+      bottom: 4%;
+      border-radius: 24px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border: 1px solid rgba(69, 98, 238, 0.17);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      color: rgba(7, 10, 47, 0.76);
+      font-size: 13px;
+      font-weight: 900;
+      box-shadow: 0 12px 40px rgba(7, 10, 47, 0.05);
+    }
+
+    .pulse-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--success);
+      box-shadow: 0 0 0 8px rgba(22, 163, 74, 0.12);
+    }
+
+    h1 {
+      margin: 22px 0 16px;
+      font-size: clamp(48px, 7.6vw, 96px);
+      line-height: 0.86;
+      letter-spacing: -0.08em;
+      font-weight: 1000;
+      transform: skew(-8deg);
+    }
+
+    .hero-copy {
+      max-width: 710px;
+      margin: 0 0 22px;
+      color: rgba(7, 10, 47, 0.72);
+      font-size: clamp(18px, 2.35vw, 24px);
+      line-height: 1.45;
+      font-weight: 720;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-copy strong { color: var(--ink); }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 13px;
+      margin-top: 24px;
+    }
+
+    .trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border: 1px solid rgba(15, 18, 54, 0.08);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.66);
+      color: rgba(7, 10, 47, 0.72);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .hero-card {
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      background: rgba(255, 255, 255, 0.84);
+      border: 1px solid rgba(15, 18, 54, 0.08);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(20px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      border-radius: 999px;
+      right: -120px;
+      top: -120px;
+      background: radial-gradient(circle, rgba(69,98,238,.20), transparent 62%);
+    }
+
+    .deal-label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 950;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .price-main {
+      margin: 8px 0 2px;
+      font-size: clamp(52px, 7vw, 84px);
+      line-height: 0.9;
+      letter-spacing: -0.08em;
+      font-weight: 1000;
+    }
+
+    .price-main small {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--muted);
+    }
+
+    .was {
+      display: inline-block;
+      color: rgba(7,10,47,0.42);
+      text-decoration: line-through;
+      font-weight: 900;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    .hero-card p {
+      color: rgba(7, 10, 47, 0.68);
+      line-height: 1.6;
+      font-weight: 680;
+    }
+
+    .mini-stats {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .mini-stat {
+      border-radius: 22px;
+      padding: 16px;
+      border: 1px solid rgba(15, 18, 54, 0.08);
+      background: rgba(247, 247, 255, 0.78);
+    }
+
+    .mini-stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .mini-stat strong {
+      display: block;
+      margin-top: 5px;
+      font-size: 24px;
+      letter-spacing: -0.04em;
+    }
+
+    .section { padding: 54px 0; }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .section-kicker {
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 950;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin: 0;
+      max-width: 780px;
+      font-size: clamp(34px, 5vw, 62px);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+    }
+
+    .section-copy {
+      max-width: 510px;
+      color: rgba(7, 10, 47, 0.66);
+      font-size: 17px;
+      line-height: 1.6;
+      font-weight: 680;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(15, 18, 54, 0.08);
+      box-shadow: 0 18px 60px rgba(7, 10, 47, 0.07);
+      backdrop-filter: blur(18px);
+    }
+
+    .card-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: rgba(69, 98, 238, 0.09);
+      font-size: 25px;
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      letter-spacing: -0.03em;
+    }
+
+    .card p {
+      margin: 0;
+      color: rgba(7, 10, 47, 0.64);
+      font-size: 15.5px;
+      line-height: 1.55;
+      font-weight: 630;
+    }
+
+    .benefit-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .benefit-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 17px 18px;
+      border-radius: 22px;
+      background: rgba(247, 247, 255, 0.78);
+      border: 1px solid rgba(15, 18, 54, 0.08);
+      font-weight: 820;
+      line-height: 1.36;
+    }
+
+    .benefit-row span:first-child {
+      flex: 0 0 auto;
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 10px 22px rgba(7, 10, 47, 0.07);
+    }
+
+    .role-card strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .role-card span {
+      color: rgba(7, 10, 47, 0.62);
+      line-height: 1.5;
+      font-weight: 650;
+      font-size: 14px;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .pricing {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .pricing.featured {
+      color: #fff;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.22), transparent 22%),
+        linear-gradient(135deg, #0a0d37, #263be3 58%, #7f5cff);
+      transform: translateY(-8px);
+    }
+
+    .pricing.featured p,
+    .pricing.featured li,
+    .pricing.featured .price-note { color: rgba(255,255,255,0.78); }
+
+    .pricing .badge {
+      align-self: flex-start;
+      display: inline-flex;
+      padding: 9px 11px;
+      border-radius: 999px;
+      background: rgba(205, 251, 115, 0.22);
+      color: var(--ink);
+      font-weight: 950;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .pricing.featured .badge { background: var(--lime); }
+
+    .package-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .package-title h3 {
+      margin: 0;
+      font-size: 26px;
+      letter-spacing: -0.04em;
+    }
+
+    .price {
+      font-size: 46px;
+      line-height: .9;
+      letter-spacing: -.07em;
+      font-weight: 1000;
+      margin: 0;
+    }
+
+    .price small {
+      font-size: 14px;
+      letter-spacing: 0;
+      font-weight: 800;
+    }
+
+    .price-note {
+      margin-top: -10px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .pricing ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .pricing li {
+      color: rgba(7,10,47,.68);
+      font-weight: 690;
+      line-height: 1.45;
+      padding-left: 28px;
+      position: relative;
+    }
+
+    .pricing li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--success);
+      font-weight: 1000;
+    }
+
+    .pricing.featured li::before { color: var(--lime); }
+
+    .pricing .button {
+      margin-top: auto;
+      width: 100%;
+    }
+
+    .process {
+      display: grid;
+      gap: 16px;
+      counter-reset: step;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .timeline-item::before {
+      counter-increment: step;
+      content: counter(step);
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 1000;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      box-shadow: 0 16px 28px rgba(69, 98, 238, 0.20);
+    }
+
+    .timeline-item h3 {
+      margin: 0 0 6px;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .timeline-item p {
+      margin: 0;
+      color: rgba(7, 10, 47, 0.64);
+      line-height: 1.55;
+      font-weight: 620;
+    }
+
+    .proof-panel {
+      background:
+        radial-gradient(circle at 22% 22%, rgba(91, 224, 255, 0.20), transparent 30%),
+        rgba(255,255,255,0.84);
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .metric {
+      border-radius: 24px;
+      padding: 18px;
+      background: rgba(247,247,255,0.82);
+      border: 1px solid rgba(15,18,54,.08);
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 30px;
+      letter-spacing: -.05em;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-weight: 850;
+      font-size: 13px;
+      line-height: 1.35;
+      margin-top: 4px;
+    }
+
+    .faq {
+      display: grid;
+      gap: 12px;
+    }
+
+    .faq-item {
+      border-radius: 24px;
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(15,18,54,.08);
+      overflow: hidden;
+    }
+
+    .faq-button {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      text-align: left;
+      padding: 20px 22px;
+      font: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      color: var(--ink);
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .faq-content {
+      display: none;
+      padding: 0 22px 22px;
+      color: rgba(7,10,47,.66);
+      line-height: 1.6;
+      font-weight: 640;
+    }
+
+    .faq-item.is-open .faq-content { display: block; }
+
+    .warning {
+      border-radius: 24px;
+      padding: 20px;
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(225, 29, 72, 0.15);
+      color: rgba(7,10,47,.70);
+      line-height: 1.6;
+      font-weight: 650;
+    }
+
+    .warning strong { color: var(--danger); }
+
+    .cta-band {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      padding: clamp(28px, 6vw, 56px);
+      color: #fff;
+      background:
+        radial-gradient(circle at 18% 22%, rgba(255,255,255,.24), transparent 26%),
+        linear-gradient(135deg, #070a2f, #263be3 56%, #7f5cff);
+      box-shadow: var(--shadow);
+    }
+
+    .cta-band h2 { color: #fff; }
+
+    .cta-band p {
+      color: rgba(255,255,255,.76);
+      max-width: 700px;
+      font-size: 18px;
+      line-height: 1.6;
+      font-weight: 650;
+    }
+
+    .footer {
+      padding: 38px 0 110px;
+      color: rgba(7,10,47,.56);
+      font-weight: 650;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .sticky-cta {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 20;
+      padding: 14px 0 18px;
+      background: linear-gradient(to top, rgba(251, 252, 255, 0.98), rgba(251, 252, 255, 0));
+      pointer-events: none;
+    }
+
+    .sticky-cta-inner {
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .glow-button {
+      --angle: 0deg;
+      position: relative;
+      isolation: isolate;
+      min-width: min(620px, calc(100vw - 38px));
+      border: 0;
+      border-radius: 24px;
+      padding: 19px 28px;
+      cursor: pointer;
+      color: #fff;
+      font: inherit;
+      font-size: 18px;
+      font-weight: 1000;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #4764f1, #3651e7);
+      box-shadow: 0 24px 56px rgba(69, 98, 238, 0.34);
+      pointer-events: auto;
+      transition: transform 0.2s ease;
+    }
+
+    .glow-button:hover { transform: translateY(-2px) scale(1.01); }
+
+    .glow-button::before,
+    .glow-button::after {
+      content: "";
+      position: absolute;
+      inset: -3px;
+      z-index: -1;
+      border-radius: 27px;
+      background: conic-gradient(from var(--angle), var(--cyan), var(--purple), var(--pink), var(--orange), var(--lime), var(--cyan));
+      animation: spin 3.2s linear infinite;
+    }
+
+    .glow-button::after {
+      filter: blur(20px);
+      opacity: 0.65;
+    }
+
+    @property --angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    @keyframes spin { to { --angle: 360deg; } }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(33, 37, 77, 0.72);
+      backdrop-filter: blur(16px);
+    }
+
+    .modal-overlay.is-open { display: flex; }
+
+    .modal-card {
+      position: relative;
+      width: min(720px, 100%);
+      max-height: min(88vh, 920px);
+      overflow: auto;
+      border-radius: 42px;
+      padding: clamp(30px, 6vw, 52px);
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 38px 120px rgba(4, 7, 32, 0.32);
+      animation: modalIn 0.28s ease both;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(18px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 22px;
+      right: 22px;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 0;
+      background: transparent;
+      color: #8a8ba0;
+      font-size: 34px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .modal-card h2 {
+      margin: 0 0 16px;
+      font-size: clamp(32px, 5vw, 48px);
+      letter-spacing: -0.05em;
+      line-height: 1;
+    }
+
+    .modal-card p {
+      color: rgba(7,10,47,.66);
+      line-height: 1.6;
+      font-weight: 650;
+    }
+
+    .checkout-summary {
+      display: grid;
+      gap: 12px;
+      margin: 22px 0;
+    }
+
+    .checkout-row {
+      border: 1px solid rgba(15,18,54,.08);
+      background: #f7f7ff;
+      border-radius: 20px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-weight: 850;
+    }
+
+    .checkout-row span:last-child {
+      color: var(--blue);
+      font-weight: 1000;
+    }
+
+    .modal-actions {
+      display: grid;
+      gap: 12px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .grid-2,
+      .pricing-grid { grid-template-columns: 1fr; }
+
+      .grid-3,
+      .grid-4,
+      .metric-grid { grid-template-columns: 1fr 1fr; }
+
+      .pricing.featured { transform: none; }
+
+      .section-head {
+        align-items: start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .page-shell { width: min(100% - 28px, var(--max)); }
+      .topbar { align-items: flex-start; }
+      .nav-actions .nav-link { display: none; }
+      .button { width: 100%; }
+      .hero { padding-top: 34px; }
+      h1 { font-size: 54px; }
+      .hero-card { padding: 22px; border-radius: 30px; }
+      .mini-stats,
+      .grid-3,
+      .grid-4,
+      .metric-grid { grid-template-columns: 1fr; }
+      .card { padding: 20px; }
+      .modal-overlay { padding: 14px; }
+      .modal-card { border-radius: 34px; padding: 34px 22px; }
+      .sticky-cta { padding-bottom: 12px; }
+      .glow-button { font-size: 15px; padding: 17px 20px; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "30-Day Remote Job Search Sprint - Powered by Jobbyist",
+    "provider": {
+      "@type": "Organization",
+      "name": "Jobbyist"
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "South Africa"
+    },
+    "description": "A 30-day job-search execution system for South African job seekers targeting remote roles in admin, virtual assistance, legal support, marketing, customer success, data operations, recruitment support and executive support.",
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Sprint Lite",
+        "price": "1250",
+        "priceCurrency": "ZAR"
+      },
+      {
+        "@type": "Offer",
+        "name": "Guided Sprint",
+        "price": "2950",
+        "priceCurrency": "ZAR"
+      },
+      {
+        "@type": "Offer",
+        "name": "Premium Done-With-You Sprint",
+        "price": "6500",
+        "priceCurrency": "ZAR"
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <header class="page-shell topbar" aria-label="Top navigation">
+    <a class="brand-lockup" href="#top" aria-label="Jobbyist home">
+      <span class="brand-mark">J</span>
+      <span class="brand-name">JOBBYIST <small>South Africa</small></span>
+    </a>
+
+    <nav class="nav-actions" aria-label="Page links">
+      <a class="nav-link" href="#benefits">Benefits</a>
+      <a class="nav-link" href="#pricing">Pricing</a>
+      <a class="nav-link" href="#process">Process</a>
+      <a class="button button-primary" href="#pricing">Choose package</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="page-shell hero" aria-labelledby="hero-title">
+      <div>
+        <div class="eyebrow"><span class="pulse-dot"></span> Built for South African remote job seekers</div>
+        <h1 id="hero-title">30-Day Remote Job Search Sprint</h1>
+        <p class="hero-copy">
+          Stop applying blindly. Build a <strong>30-day remote job-search campaign</strong> with sharper CV positioning, better-fit applications, recruiter-style follow-ups, interview preparation and expert support.
+        </p>
+        <p class="hero-copy">
+          Powered by <strong>Jobbyist</strong> for candidates targeting admin, VA, customer support, legal support, marketing, recruitment support and data operations roles.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button button-primary" href="#pricing">Start from R1,250 →</a>
+          <a class="button button-soft" href="#whats-included">See what is included</a>
+        </div>
+
+        <div class="trust-row" aria-label="Key trust points">
+          <span class="trust-pill">🇿🇦 Rand pricing</span>
+          <span class="trust-pill">💬 WhatsApp-friendly support</span>
+          <span class="trust-pill">🧠 Ethical AI-assisted workflows</span>
+          <span class="trust-pill">🛡️ No false credentials</span>
+        </div>
+      </div>
+
+      <aside class="hero-card" aria-label="Recommended package">
+        <div class="deal-label">Recommended launch offer</div>
+        <span class="was">Standard: R3,500</span>
+        <div class="price-main">R2,950<small> once-off</small></div>
+        <p>
+          The flagship Guided Sprint gives serious job seekers the best balance of affordability, structure and hands-on support.
+        </p>
+        <div class="mini-stats">
+          <div class="mini-stat"><span>Timeline</span><strong>30 days</strong></div>
+          <div class="mini-stat"><span>Target</span><strong>remote roles</strong></div>
+          <div class="mini-stat"><span>Support</span><strong>guided</strong></div>
+          <div class="mini-stat"><span>Market</span><strong>South Africa</strong></div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="benefits" class="page-shell section" aria-labelledby="benefits-title">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Why this works</div>
+          <h2 id="benefits-title">Most people do not need more motivation. They need a better job-search system.</h2>
+        </div>
+        <p class="section-copy">
+          This service turns scattered applications into a focused campaign with clear role lanes, stronger assets, tracked applications, better follow-ups and interview readiness.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <article class="card">
+          <div class="card-icon">🎯</div>
+          <h3>Role targeting</h3>
+          <p>We help you focus on realistic remote roles where your experience can be positioned credibly, instead of wasting energy on poor-fit listings.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon">📄</div>
+          <h3>CV positioning</h3>
+          <p>Your CV, cover letter language and application answers are adjusted toward the roles you are actually applying for.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon">📊</div>
+          <h3>Application tracking</h3>
+          <p>You get a structured tracker, daily targets, follow-up dates and visibility over what is working.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon">💬</div>
+          <h3>Recruiter-style outreach</h3>
+          <p>Use professional follow-up scripts, recruiter messages and short voice-note frameworks that do not sound desperate or generic.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon">🎥</div>
+          <h3>Interview and Loom prep</h3>
+          <p>Prepare for video introductions, voice notes, practical tasks, customer scenarios and interview questions.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon">🤝</div>
+          <h3>Expert consultations</h3>
+          <p>Join online sessions with recruitment experts, employer-side professionals and career operators where available.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="whats-included" class="page-shell section" aria-labelledby="included-title">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Bundle contents</div>
+          <h2 id="included-title">Everything you need to run a disciplined 30-day campaign.</h2>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="benefit-list">
+            <div class="benefit-row"><span>✅</span><span>CV/Resume review and upgrade focused on remote-role credibility.</span></div>
+            <div class="benefit-row"><span>✅</span><span>Job-fit scoring so you prioritise roles you can actually defend in interview.</span></div>
+            <div class="benefit-row"><span>✅</span><span>Application tracker with targets, status, follow-up dates, sources and next actions.</span></div>
+            <div class="benefit-row"><span>✅</span><span>Cover letter templates and application question answer support.</span></div>
+            <div class="benefit-row"><span>✅</span><span>Recruiter outreach scripts, follow-up messages and voice note templates.</span></div>
+            <div class="benefit-row"><span>✅</span><span>Interview preparation, story bank and practical task workflow.</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="benefit-list">
+            <div class="benefit-row"><span>🌐</span><span>Remote job board setup guidance for LinkedIn, Indeed, We Work Remotely, FlexJobs and Upwork.</span></div>
+            <div class="benefit-row"><span>🎁</span><span>FlexJobs 14-day access budget included with Guided and Premium packages.</span></div>
+            <div class="benefit-row"><span>🧑🏾‍💻</span><span>Personal resume website setup or template, depending on selected package.</span></div>
+            <div class="benefit-row"><span>📧</span><span>Custom email setup guidance or first-year setup support on Premium.</span></div>
+            <div class="benefit-row"><span>🧠</span><span>AI-assisted workflows for research and drafting, with truthful human review.</span></div>
+            <div class="benefit-row"><span>🛡️</span><span>Clear legal and ethical boundaries. No fake experience. No job guarantees.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-shell section" aria-labelledby="roles-title">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Best-fit role lanes</div>
+          <h2 id="roles-title">Built for practical remote jobs that South Africans can realistically target.</h2>
+        </div>
+      </div>
+
+      <div class="grid-4">
+        <article class="card role-card"><strong>Virtual Assistance</strong><span>Inbox, calendar, scheduling, research, admin, task follow-up and operations support.</span></article>
+        <article class="card role-card"><strong>Customer Support</strong><span>Email, chat, CRM updates, customer success, support tickets and client communication.</span></article>
+        <article class="card role-card"><strong>Legal / Executive Support</strong><span>Document handling, confidentiality, client communication, legal admin and assistant workflows.</span></article>
+        <article class="card role-card"><strong>Marketing Support</strong><span>Content planning, social media, Canva, website updates, campaign support and reporting.</span></article>
+        <article class="card role-card"><strong>Recruitment Support</strong><span>Job-board workflows, CV screening, candidate messages, interview scheduling and ATS-style tracking.</span></article>
+        <article class="card role-card"><strong>Data Operations</strong><span>Spreadsheets, CRM updates, data entry, audit checks, cleaning and structured reporting.</span></article>
+        <article class="card role-card"><strong>Real Estate Admin</strong><span>Listing support, documents, seller/client communication and remote transaction coordination.</span></article>
+        <article class="card role-card"><strong>Remote Freelance Support</strong><span>Upwork proposals, client communication, task proof and portfolio-ready samples.</span></article>
+      </div>
+    </section>
+
+    <section id="pricing" class="page-shell section" aria-labelledby="pricing-title">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">South Africa-friendly pricing</div>
+          <h2 id="pricing-title">Choose the level of support that matches your urgency and budget.</h2>
+        </div>
+        <p class="section-copy">
+          The best entry point is Sprint Lite. The best overall value is the Guided Sprint at R2,950 launch pricing.
+        </p>
+      </div>
+
+      <div class="pricing-grid">
+        <article class="card pricing">
+          <div class="package-title">
+            <h3>Sprint Lite</h3>
+          </div>
+          <p class="price">R1,250</p>
+          <div class="price-note">Launch price. Standard: R1,750.</div>
+          <p>For budget-conscious candidates who need a stronger CV and a clear application system.</p>
+          <ul>
+            <li>CV review and upgrade</li>
+            <li>Role targeting worksheet</li>
+            <li>Application tracker setup</li>
+            <li>5 cover letter templates</li>
+            <li>1 online check-in</li>
+            <li>Remote job-board setup guide</li>
+          </ul>
+          <button class="button button-soft" type="button" data-package="Sprint Lite" data-price="R1,250" data-checkout="lite">Choose Sprint Lite</button>
+        </article>
+
+        <article class="card pricing featured">
+          <span class="badge">Best value</span>
+          <div class="package-title">
+            <h3>Guided Sprint</h3>
+          </div>
+          <p class="price">R2,950</p>
+          <div class="price-note">Launch price. Standard: R3,500.</div>
+          <p>For serious job seekers who need accountability, better positioning and guided execution.</p>
+          <ul>
+            <li>Everything in Sprint Lite</li>
+            <li>30-day campaign plan</li>
+            <li>CV/resume positioning</li>
+            <li>Job-fit scoring support</li>
+            <li>Application answer support</li>
+            <li>Recruiter outreach scripts</li>
+            <li>Voice note and Loom prep</li>
+            <li>FlexJobs 14-day access budget</li>
+            <li>One-page resume website template/setup</li>
+          </ul>
+          <button class="button button-primary" type="button" data-package="Guided Sprint" data-price="R2,950" data-checkout="guided">Start Guided Sprint</button>
+        </article>
+
+        <article class="card pricing">
+          <div class="package-title">
+            <h3>Premium Sprint</h3>
+          </div>
+          <p class="price">R6,500</p>
+          <div class="price-note">Launch price. Standard: R7,500+.</div>
+          <p>For candidates who want high-touch support, portfolio proof and deeper interview preparation.</p>
+          <ul>
+            <li>Everything in Guided Sprint</li>
+            <li>Weekly online consultations</li>
+            <li>Portfolio/writing sample support</li>
+            <li>Mock interview preparation</li>
+            <li>Practical task support</li>
+            <li>Full interview story bank</li>
+            <li>Personal website with custom domain guidance</li>
+            <li>Custom email setup guidance</li>
+          </ul>
+          <button class="button button-dark" type="button" data-package="Premium Sprint" data-price="R6,500" data-checkout="premium">Choose Premium</button>
+        </article>
+      </div>
+    </section>
+
+    <section id="process" class="page-shell section" aria-labelledby="process-title">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">30-day operating rhythm</div>
+          <h2 id="process-title">Simple enough to follow. Structured enough to measure.</h2>
+        </div>
+      </div>
+
+      <div class="card process">
+        <div class="timeline-item">
+          <div>
+            <h3>Days 1-3: Setup and positioning</h3>
+            <p>Confirm target roles, review CV, prepare tracker, set platform accounts and define your application rules.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div>
+            <h3>Days 4-10: Application Sprint 1</h3>
+            <p>Build quality application volume, start tracking responses and refine role-fit scoring.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div>
+            <h3>Days 8-18: Outreach layer</h3>
+            <p>Send targeted follow-ups, recruiter messages and networking outreach without sounding generic.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div>
+            <h3>Days 11-22: Application Sprint 2</h3>
+            <p>Improve targeting based on responses, add better-fit roles and prepare for tests or voice notes.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div>
+            <h3>Days 15-30: Interview conversion</h3>
+            <p>Prepare story answers, salary positioning, practical task submissions and next-step follow-ups.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-shell section" aria-labelledby="proof-title">
+      <div class="card proof-panel">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Execution targets</div>
+            <h2 id="proof-title">This is not a passive course. It is a sprint.</h2>
+          </div>
+        </div>
+
+        <div class="metric-grid">
+          <div class="metric"><strong>8/day</strong><span>weekday application target for active candidates</span></div>
+          <div class="metric"><strong>4/day</strong><span>weekend application target where practical</span></div>
+          <div class="metric"><strong>5/day</strong><span>targeted weekday follow-ups</span></div>
+          <div class="metric"><strong>30 days</strong><span>campaign window with reviewable outputs</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-shell section" aria-labelledby="faq-title">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Questions people ask before buying</div>
+          <h2 id="faq-title">Straight answers before anyone pays.</h2>
+        </div>
+      </div>
+
+      <div class="faq">
+        <div class="faq-item is-open">
+          <button class="faq-button" type="button">Do you guarantee a job or interview? <span>+</span></button>
+          <div class="faq-content">No. This is an employability and job-search execution service. We improve strategy, application quality, follow-up discipline and interview readiness, but hiring decisions remain with employers.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-button" type="button">Is this only CV writing? <span>+</span></button>
+          <div class="faq-content">No. CV positioning is included, but the real value is the 30-day campaign system: role targeting, job-fit scoring, application tracking, cover letters, outreach, interview prep and expert sessions.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-button" type="button">Do you apply on my behalf? <span>+</span></button>
+          <div class="faq-content">By default, no. We help prepare materials and systems, but candidates must review, approve and submit their own applications unless a platform allows the workflow and a separate agreement is in place.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-button" type="button">What does “FlexJobs access budget” mean? <span>+</span></button>
+          <div class="faq-content">Guided and Premium packages include a small budget/reimbursement for short FlexJobs access. Ongoing paid subscriptions, LinkedIn Premium, hosting and custom domains are excluded unless stated in writing.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-button" type="button">Can I pay in instalments? <span>+</span></button>
+          <div class="faq-content">Yes, you can offer instalments manually: for example, R995 deposit plus weekly payments for Guided Sprint. Work should only begin after the deposit clears.</div>
+        </div>
+      </div>
+
+      <div class="warning" style="margin-top: 18px;">
+        <strong>Important:</strong> AI may support research, drafting, editing and organisation, but it must not be used to fabricate qualifications, work authorisation, degrees, software experience, references or employment results.
+      </div>
+    </section>
+
+    <section class="page-shell section" aria-label="Final call to action">
+      <div class="cta-band">
+        <h2>Ready to stop applying randomly?</h2>
+        <p>
+          Join the 30-Day Remote Job Search Sprint and build a structured campaign with recruiter-style positioning, stronger application assets and clearer daily execution.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#pricing">Choose your package</a>
+          <a class="button button-soft" id="whatsappLink" href="#">Ask on WhatsApp</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="page-shell footer">
+    <strong>30-Day Remote Job Search Sprint - Powered by Jobbyist.</strong><br />
+    This page is a static GitHub Pages landing page. Replace payment links, WhatsApp number, email address, domain, privacy policy and terms links before publishing. This service does not guarantee employment, interviews, income, visas, sponsorship, freelance contracts or permanent remote work.
+  </footer>
+
+  <div class="sticky-cta" aria-label="Sticky call to action">
+    <div class="page-shell sticky-cta-inner">
+      <a class="glow-button" href="#pricing">Compare packages →</a>
+    </div>
+  </div>
+
+  <div class="modal-overlay" data-modal aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="close-modal" type="button" aria-label="Close modal" data-close-modal>×</button>
+      <h2 id="modal-title">Confirm your package</h2>
+      <p>Replace the checkout URLs inside the JavaScript section with your Payfast, Yoco, Paystack, Peach Payments or form link before publishing.</p>
+
+      <div class="checkout-summary">
+        <div class="checkout-row"><span>Package</span><span data-modal-package>Guided Sprint</span></div>
+        <div class="checkout-row"><span>Launch price</span><span data-modal-price>R2,950</span></div>
+        <div class="checkout-row"><span>Delivery window</span><span>30 days</span></div>
+      </div>
+
+      <div class="modal-actions">
+        <a class="button button-primary" data-checkout-link href="#">Continue to checkout</a>
+        <a class="button button-soft" data-whatsapp-modal href="#">Ask a question on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /*
+      QUICK SETUP:
+      1. Replace the WhatsApp number below with your business number in international format.
+         Example: 27680200749
+      2. Replace checkout links with Payfast/Yoco/Paystack/Peach/Form links.
+      3. Replace privacy/terms links in footer if needed.
+    */
+
+    const BUSINESS = {
+      whatsappNumber: "27XXXXXXXXX",
+      email: "hello@jobbyist.africa"
+    };
+
+    const CHECKOUT_LINKS = {
+      lite: "https://example.com/checkout/sprint-lite",
+      guided: "https://example.com/checkout/guided-sprint",
+      premium: "https://example.com/checkout/premium-sprint"
+    };
+
+    const DEFAULT_WHATSAPP_MESSAGE = encodeURIComponent(
+      "Hello Jobbyist, I am interested in the 30-Day Remote Job Search Sprint. Please send me the package details."
+    );
+
+    function buildWhatsAppLink(message = DEFAULT_WHATSAPP_MESSAGE) {
+      return `https://wa.me/${BUSINESS.whatsappNumber}?text=${message}`;
+    }
+
+    const modal = document.querySelector("[data-modal]");
+    const modalPackage = document.querySelector("[data-modal-package]");
+    const modalPrice = document.querySelector("[data-modal-price]");
+    const checkoutLink = document.querySelector("[data-checkout-link]");
+    const whatsappModal = document.querySelector("[data-whatsapp-modal]");
+    const whatsappLink = document.querySelector("#whatsappLink");
+
+    whatsappLink.href = buildWhatsAppLink();
+
+    function openModal(packageName, price, checkoutKey) {
+      modalPackage.textContent = packageName;
+      modalPrice.textContent = price;
+      checkoutLink.href = CHECKOUT_LINKS[checkoutKey] || "#";
+
+      const message = encodeURIComponent(
+        `Hello Jobbyist, I am interested in the ${packageName} package for the 30-Day Remote Job Search Sprint. Please send me the next steps.`
+      );
+      whatsappModal.href = buildWhatsAppLink(message);
+
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    document.addEventListener("click", (event) => {
+      const packageButton = event.target.closest("[data-package]");
+      if (packageButton) {
+        openModal(
+          packageButton.dataset.package,
+          packageButton.dataset.price,
+          packageButton.dataset.checkout
+        );
+      }
+
+      if (event.target.closest("[data-close-modal]")) closeModal();
+      if (event.target === modal) closeModal();
+
+      const faqButton = event.target.closest(".faq-button");
+      if (faqButton) {
+        faqButton.parentElement.classList.toggle("is-open");
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeModal();
+    });
+  </script>
+</body>
+</html>

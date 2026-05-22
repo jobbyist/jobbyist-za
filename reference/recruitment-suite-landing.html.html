@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Professional Profiles | Verified Candidate Database - Jobbyist</title>
+  <meta name="description" content="Browse verified sample South African candidate profile previews across admin, support, marketing, data, HR, legal and operations roles. Full details are gated for active Jobbyist Pro and Recruitment Suite accounts." />
+  <meta name="keywords" content="candidate database South Africa, verified candidates, Jobbyist Pro, Recruitment Suite, South African job seekers, recruiter database, talent directory" />
+  <meta name="author" content="Jobbyist" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#4562ee" />
+  <link rel="canonical" href="https://za.jobbyist.africa/professional-profiles/" />
+  
+  <link rel="next" href="https://za.jobbyist.africa/professional-profiles/page/2/" />
+
+  <meta property="og:title" content="Professional Profiles | Verified Candidate Database - Jobbyist" />
+  <meta property="og:description" content="Browse verified sample South African candidate profile previews across admin, support, marketing, data, HR, legal and operations roles. Full details are gated for active Jobbyist Pro and Recruitment Suite accounts." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://za.jobbyist.africa/professional-profiles/" />
+
+  <style>
+    :root {
+      --ink: #070a2f;
+      --muted: #77788f;
+      --line: rgba(15, 18, 54, 0.10);
+      --panel: rgba(255, 255, 255, 0.78);
+      --panel-strong: rgba(255, 255, 255, 0.94);
+      --blue: #4562ee;
+      --blue-2: #3250e7;
+      --purple: #7f5cff;
+      --cyan: #5be0ff;
+      --lime: #cdfb73;
+      --orange: #ffb561;
+      --pink: #ff71c6;
+      --success: #16a34a;
+      --danger: #e11d48;
+      --shadow: 0 28px 90px rgba(26, 35, 109, 0.18);
+      --radius-xl: 42px;
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 18% 24%, rgba(91, 224, 255, 0.24), transparent 30%),
+        radial-gradient(circle at 76% 16%, rgba(255, 181, 97, 0.22), transparent 27%),
+        radial-gradient(circle at 52% 58%, rgba(205, 251, 115, 0.14), transparent 28%),
+        #fbfcff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.42;
+      background-image:
+        linear-gradient(rgba(10, 15, 45, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(10, 15, 45, 0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: linear-gradient(to bottom, #000, transparent 92%);
+      z-index: -3;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(135deg, transparent 6%, rgba(35, 45, 95, 0.05) 6.1%, transparent 6.3%) 0 0 / 380px 240px,
+        linear-gradient(315deg, transparent 9%, rgba(35, 45, 95, 0.05) 9.1%, transparent 9.3%) 0 0 / 420px 260px;
+      z-index: -2;
+    }
+
+    a { color: inherit; }
+
+    .page-shell {
+      width: min(var(--max), calc(100% - 34px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 24px 0 14px;
+    }
+
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 950;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      box-shadow: 0 16px 30px rgba(69, 98, 238, 0.28);
+    }
+
+    .brand-name {
+      font-size: 21px;
+      font-weight: 1000;
+      letter-spacing: -0.05em;
+      transform: skew(-10deg);
+      line-height: 1;
+    }
+
+    .brand-name small {
+      display: block;
+      margin-top: 3px;
+      transform: skew(10deg);
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-link {
+      color: rgba(7, 10, 47, 0.70);
+      font-size: 14px;
+      font-weight: 850;
+      text-decoration: none;
+      padding: 12px 13px;
+      border-radius: 999px;
+      transition: 0.2s ease;
+    }
+
+    .nav-link:hover {
+      background: rgba(69, 98, 238, 0.08);
+      color: var(--ink);
+    }
+
+    .button {
+      border: 0;
+      cursor: pointer;
+      font: inherit;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 22px;
+      padding: 16px 22px;
+      font-weight: 950;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .button:hover { transform: translateY(-2px); }
+
+    .button-primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--blue), var(--blue-2));
+      box-shadow: 0 18px 38px rgba(69, 98, 238, 0.28);
+    }
+
+    .button-dark {
+      color: #fff;
+      background: linear-gradient(135deg, #070a2f, #1c2468);
+      box-shadow: 0 18px 38px rgba(7, 10, 47, 0.20);
+    }
+
+    .button-soft {
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.74);
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 40px rgba(7, 10, 47, 0.06);
+    }
+
+    .hero {
+      position: relative;
+      padding: 58px 0 44px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(15, 18, 54, 0.08);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .hero::before {
+      width: 58%;
+      height: 68%;
+      right: 2%;
+      top: 4%;
+      border-radius: 24px 24px 100px 24px;
+      transform: skewX(-12deg);
+    }
+
+    .hero::after {
+      width: 32%;
+      height: 26%;
+      left: -4%;
+      bottom: 4%;
+      border-radius: 24px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border: 1px solid rgba(69, 98, 238, 0.17);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      color: rgba(7, 10, 47, 0.76);
+      font-size: 13px;
+      font-weight: 900;
+      box-shadow: 0 12px 40px rgba(7, 10, 47, 0.05);
+    }
+
+    .pulse-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--success);
+      box-shadow: 0 0 0 8px rgba(22, 163, 74, 0.12);
+    }
+
+    h1 {
+      margin: 22px 0 16px;
+      font-size: clamp(48px, 7.6vw, 96px);
+      line-height: 0.86;
+      letter-spacing: -0.08em;
+      font-weight: 1000;
+      transform: skew(-8deg);
+    }
+
+    .hero-copy {
+      max-width: 720px;
+      margin: 0 0 20px;
+      color: rgba(7, 10, 47, 0.72);
+      font-size: clamp(18px, 2.3vw, 24px);
+      line-height: 1.45;
+      font-weight: 720;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-copy strong { color: var(--ink); }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 13px;
+      margin-top: 24px;
+    }
+
+    .trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border: 1px solid rgba(15, 18, 54, 0.08);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.66);
+      color: rgba(7, 10, 47, 0.72);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .hero-card {
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      background: rgba(255, 255, 255, 0.84);
+      border: 1px solid rgba(15, 18, 54, 0.08);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(20px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      border-radius: 999px;
+      right: -120px;
+      top: -120px;
+      background: radial-gradient(circle, rgba(69,98,238,.20), transparent 62%);
+    }
+
+    .deal-label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 950;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .stat-main {
+      margin: 8px 0 2px;
+      font-size: clamp(52px, 7vw, 84px);
+      line-height: 0.9;
+      letter-spacing: -0.08em;
+      font-weight: 1000;
+    }
+
+    .stat-main small {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--muted);
+    }
+
+    .hero-card p {
+      color: rgba(7, 10, 47, 0.68);
+      line-height: 1.6;
+      font-weight: 680;
+    }
+
+    .mini-stats {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .mini-stat {
+      border-radius: 22px;
+      padding: 16px;
+      border: 1px solid rgba(15, 18, 54, 0.08);
+      background: rgba(247, 247, 255, 0.78);
+    }
+
+    .mini-stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .mini-stat strong {
+      display: block;
+      margin-top: 5px;
+      font-size: 24px;
+      letter-spacing: -0.04em;
+    }
+
+    .section { padding: 54px 0; }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .section-kicker {
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 950;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin: 0;
+      max-width: 830px;
+      font-size: clamp(34px, 5vw, 62px);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+    }
+
+    .section-copy {
+      max-width: 540px;
+      color: rgba(7, 10, 47, 0.66);
+      font-size: 17px;
+      line-height: 1.6;
+      font-weight: 680;
+    }
+
+    .notice {
+      border-radius: 24px;
+      padding: 18px 20px;
+      background: rgba(255,255,255,.84);
+      border: 1px solid rgba(15,18,54,.08);
+      color: rgba(7,10,47,.68);
+      line-height: 1.55;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .profile-toolbar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .search-field {
+      width: 100%;
+      border: 1px solid rgba(15, 18, 54, 0.10);
+      border-radius: 22px;
+      padding: 17px 18px;
+      font: inherit;
+      font-weight: 800;
+      color: var(--ink);
+      background: rgba(255,255,255,.88);
+      outline: none;
+      box-shadow: 0 12px 38px rgba(7, 10, 47, 0.05);
+    }
+
+    .search-field:focus {
+      border-color: rgba(69, 98, 238, 0.55);
+      box-shadow: 0 0 0 5px rgba(69, 98, 238, 0.10);
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .profile-card {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.80);
+      border: 1px solid rgba(15, 18, 54, 0.08);
+      box-shadow: 0 18px 60px rgba(7, 10, 47, 0.07);
+      backdrop-filter: blur(18px);
+    }
+
+    .profile-card::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 999px;
+      right: -92px;
+      top: -92px;
+      background: radial-gradient(circle, rgba(69,98,238,.14), transparent 62%);
+      pointer-events: none;
+    }
+
+    .profile-top {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .avatar {
+      width: 58px;
+      height: 58px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 1000;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      box-shadow: 0 16px 30px rgba(69,98,238,.23);
+    }
+
+    .profile-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 11px;
+      border-radius: 999px;
+      background: rgba(205, 251, 115, 0.28);
+      border: 1px solid rgba(15,18,54,.08);
+      font-size: 12px;
+      font-weight: 950;
+      color: rgba(7,10,47,.72);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .verified-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--success);
+      box-shadow: 0 0 0 7px rgba(22,163,74,.10);
+    }
+
+    .candidate-id {
+      margin: 0 0 7px;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 1000;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .profile-card h3 {
+      margin: 0;
+      font-size: 29px;
+      line-height: .98;
+      letter-spacing: -.055em;
+    }
+
+    .role {
+      margin: 8px 0 0;
+      color: rgba(7,10,47,.74);
+      font-size: 17px;
+      font-weight: 900;
+      line-height: 1.3;
+    }
+
+    .summary {
+      margin: 12px 0 0;
+      color: rgba(7,10,47,.62);
+      font-weight: 650;
+      line-height: 1.5;
+    }
+
+    .profile-meta {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 9px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .profile-meta span {
+      border-radius: 16px;
+      padding: 10px 11px;
+      background: rgba(247,247,255,.84);
+      border: 1px solid rgba(15,18,54,.07);
+      font-size: 13px;
+      font-weight: 800;
+      color: rgba(7,10,47,.70);
+    }
+
+    .skill-row, .verification-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .skill-row span {
+      display: inline-flex;
+      padding: 9px 10px;
+      border-radius: 999px;
+      background: rgba(69,98,238,.08);
+      color: rgba(7,10,47,.72);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .verify-pill {
+      display: inline-flex;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(22,163,74,.09);
+      color: #166534;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .locked-panel {
+      margin-top: auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: center;
+      border-radius: 22px;
+      padding: 16px;
+      background:
+        linear-gradient(135deg, rgba(7,10,47,.93), rgba(38,59,227,.88));
+      color: #fff;
+      position: relative;
+      z-index: 1;
+    }
+
+    .locked-panel strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 3px;
+    }
+
+    .locked-panel span {
+      display: block;
+      color: rgba(255,255,255,.70);
+      font-size: 12.5px;
+      line-height: 1.4;
+      font-weight: 650;
+    }
+
+    .lock-button {
+      border: 0;
+      cursor: pointer;
+      border-radius: 16px;
+      padding: 12px 14px;
+      font: inherit;
+      font-weight: 950;
+      color: var(--ink);
+      background: var(--lime);
+      white-space: nowrap;
+    }
+
+    .pagination {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 26px;
+    }
+
+    .page-link {
+      min-width: 48px;
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      padding: 12px 16px;
+      border: 1px solid rgba(15,18,54,.09);
+      background: rgba(255,255,255,.82);
+      text-decoration: none;
+      font-weight: 950;
+      color: rgba(7,10,47,.72);
+      box-shadow: 0 10px 30px rgba(7,10,47,.05);
+    }
+
+    .page-link.is-current {
+      color: #fff;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+    }
+
+    .upsell-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .upsell-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      padding: clamp(24px, 4vw, 38px);
+      color: #fff;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(255,255,255,.22), transparent 26%),
+        linear-gradient(135deg, #070a2f, #263be3 60%, #7f5cff);
+      box-shadow: var(--shadow);
+    }
+
+    .upsell-card.alt {
+      background:
+        radial-gradient(circle at 18% 20%, rgba(255,255,255,.20), transparent 26%),
+        linear-gradient(135deg, #070a2f, #1f7ea6 55%, #4562ee);
+    }
+
+    .upsell-card h3 {
+      margin: 0 0 12px;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: .96;
+      letter-spacing: -.06em;
+    }
+
+    .upsell-card p {
+      color: rgba(255,255,255,.74);
+      line-height: 1.6;
+      font-weight: 650;
+      font-size: 16px;
+    }
+
+    .upsell-card ul {
+      list-style: none;
+      margin: 18px 0;
+      padding: 0;
+      display: grid;
+      gap: 9px;
+    }
+
+    .upsell-card li {
+      position: relative;
+      padding-left: 28px;
+      color: rgba(255,255,255,.78);
+      font-weight: 750;
+      line-height: 1.4;
+    }
+
+    .upsell-card li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--lime);
+      font-weight: 1000;
+    }
+
+    .cta-band {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      padding: clamp(28px, 6vw, 56px);
+      color: #fff;
+      background:
+        radial-gradient(circle at 18% 22%, rgba(255,255,255,.24), transparent 26%),
+        linear-gradient(135deg, #070a2f, #263be3 56%, #7f5cff);
+      box-shadow: var(--shadow);
+    }
+
+    .cta-band h2 { color: #fff; }
+
+    .cta-band p {
+      color: rgba(255,255,255,.76);
+      max-width: 760px;
+      font-size: 18px;
+      line-height: 1.6;
+      font-weight: 650;
+    }
+
+    .footer {
+      padding: 38px 0 110px;
+      color: rgba(7,10,47,.56);
+      font-weight: 650;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .sticky-cta {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 20;
+      padding: 14px 0 18px;
+      background: linear-gradient(to top, rgba(251, 252, 255, 0.98), rgba(251, 252, 255, 0));
+      pointer-events: none;
+    }
+
+    .sticky-cta-inner {
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .glow-button {
+      --angle: 0deg;
+      position: relative;
+      isolation: isolate;
+      min-width: min(620px, calc(100vw - 38px));
+      border: 0;
+      border-radius: 24px;
+      padding: 19px 28px;
+      cursor: pointer;
+      color: #fff;
+      font: inherit;
+      font-size: 18px;
+      font-weight: 1000;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #4764f1, #3651e7);
+      box-shadow: 0 24px 56px rgba(69, 98, 238, 0.34);
+      pointer-events: auto;
+      transition: transform 0.2s ease;
+      text-decoration: none;
+    }
+
+    .glow-button:hover { transform: translateY(-2px) scale(1.01); }
+
+    .glow-button::before,
+    .glow-button::after {
+      content: "";
+      position: absolute;
+      inset: -3px;
+      z-index: -1;
+      border-radius: 27px;
+      background: conic-gradient(from var(--angle), var(--cyan), var(--purple), var(--pink), var(--orange), var(--lime), var(--cyan));
+      animation: spin 3.2s linear infinite;
+    }
+
+    .glow-button::after {
+      filter: blur(20px);
+      opacity: 0.65;
+    }
+
+    @property --angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    @keyframes spin { to { --angle: 360deg; } }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(33, 37, 77, 0.72);
+      backdrop-filter: blur(16px);
+    }
+
+    .modal-overlay.is-open { display: flex; }
+
+    .modal-card {
+      position: relative;
+      width: min(760px, 100%);
+      max-height: min(90vh, 940px);
+      overflow: auto;
+      border-radius: 42px;
+      padding: clamp(30px, 6vw, 52px);
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 38px 120px rgba(4, 7, 32, 0.32);
+      animation: modalIn 0.28s ease both;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(18px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 22px;
+      right: 22px;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 0;
+      background: transparent;
+      color: #8a8ba0;
+      font-size: 34px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .modal-card h2 {
+      margin: 0 0 16px;
+      font-size: clamp(32px, 5vw, 48px);
+      letter-spacing: -0.05em;
+      line-height: 1;
+    }
+
+    .modal-card p {
+      color: rgba(7,10,47,.66);
+      line-height: 1.6;
+      font-weight: 650;
+    }
+
+    .access-options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .access-card {
+      border-radius: 24px;
+      padding: 20px;
+      border: 1px solid rgba(15,18,54,.08);
+      background: rgba(247,247,255,.82);
+    }
+
+    .access-card h3 {
+      margin: 0 0 8px;
+      font-size: 23px;
+      letter-spacing: -.04em;
+    }
+
+    .access-card p {
+      margin: 0 0 16px;
+      font-size: 14px;
+    }
+
+    .small-print {
+      font-size: 12.5px;
+      color: rgba(7,10,47,.54);
+      line-height: 1.55;
+      font-weight: 650;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 980px) {
+      .hero, .upsell-grid { grid-template-columns: 1fr; }
+      .section-head { align-items: start; flex-direction: column; }
+      .profile-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 680px) {
+      .page-shell { width: min(100% - 28px, var(--max)); }
+      .topbar { align-items: flex-start; }
+      .nav-actions .nav-link { display: none; }
+      .button { width: 100%; }
+      .hero { padding-top: 34px; }
+      h1 { font-size: 52px; }
+      .hero-card { padding: 22px; border-radius: 30px; }
+      .mini-stats, .profile-toolbar, .profile-meta, .access-options { grid-template-columns: 1fr; }
+      .profile-card { padding: 20px; }
+      .locked-panel { grid-template-columns: 1fr; }
+      .lock-button { width: 100%; }
+      .modal-overlay { padding: 14px; }
+      .modal-card { border-radius: 34px; padding: 34px 22px; }
+      .sticky-cta { padding-bottom: 12px; }
+      .glow-button { font-size: 15px; padding: 17px 20px; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://za.jobbyist.africa/professional-profiles/",
+      "name": "Professional Profiles - Page 1",
+      "url": "https://za.jobbyist.africa/professional-profiles/",
+      "description": "Verified sample South African candidate profile previews on Jobbyist. Full candidate details are gated for active Jobbyist Pro members and paid Recruitment Suite employers and recruiters.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Jobbyist South Africa",
+        "url": "https://za.jobbyist.africa"
+      },
+      "breadcrumb": {
+        "@id": "https://za.jobbyist.africa/professional-profiles/#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://za.jobbyist.africa/professional-profiles/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Jobbyist South Africa",
+          "item": "https://za.jobbyist.africa"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Professional Profiles",
+          "item": "https://za.jobbyist.africa/professional-profiles/"
+        }
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name": "Professional Profiles Candidate Previews - Page 1",
+      "numberOfItems": 10,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "Person",
+            "identifier": "ZA-PP-0001",
+            "name": "Lerato Mokoena",
+            "jobTitle": "Virtual Assistant & Executive Admin",
+            "address": "Johannesburg, Gauteng",
+            "description": "Organised administrative professional with strong inbox, scheduling and client follow-up experience for busy teams.",
+            "knowsAbout": [
+              "Calendar management",
+              "Google Workspace",
+              "Inbox support",
+              "Travel coordination",
+              "CRM updates"
+            ]
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "Person",
+            "identifier": "ZA-PP-0002",
+            "name": "Thabo Nkosi",
+            "jobTitle": "Customer Success Representative",
+            "address": "Cape Town, Western Cape",
+            "description": "Customer support specialist with strong written communication, ticket handling and client retention experience.",
+            "knowsAbout": [
+              "Zendesk",
+              "HubSpot",
+              "Live chat",
+              "Customer onboarding",
+              "SLA tracking"
+            ]
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "Person",
+            "identifier": "ZA-PP-0003",
+            "name": "Ayesha Khan",
+            "jobTitle": "Junior Data Analyst",
+            "address": "Durban, KwaZulu-Natal",
+            "description": "Analytical junior data professional experienced in spreadsheet cleanup, dashboards and weekly performance reporting.",
+            "knowsAbout": [
+              "Excel",
+              "Power BI",
+              "SQL basics",
+              "Data cleaning",
+              "Reporting"
+            ]
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "item": {
+            "@type": "Person",
+            "identifier": "ZA-PP-0004",
+            "name": "Sipho Dlamini",
+            "jobTitle": "Recruitment Coordinator",
+            "address": "Pretoria, Gauteng",
+            "description": "Recruitment coordinator with strong scheduling, screening and candidate communication experience across high-volume roles.",
+            "knowsAbout": [
+              "ATS updates",
+              "Interview scheduling",
+              "Candidate screening",
+              "LinkedIn sourcing",
+              "Reference checks"
+            ]
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "item": {
+            "@type": "Person",
+            "identifier": "ZA-PP-0005",
+            "name": "Naledi Radebe",
+            "jobTitle": "Social Media & Marketing Assistant",
+            "address": "Bloemfontein, Free State",
+            "description": "Creative marketing assistant with practical content planning, community response and social media production experience.",
+            "knowsAbout": [
+              "Canva",
+              "Meta Business Suite",
+              "Content calendars",
+              "Copywriting",
+              "Community management"
+            ]
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "item": {
+            "@type": "Person",
+            "identifier": "ZA-PP-0006",
+            "name": "Michael van der Merwe",
+            "jobTitle": "IT Support Technician",
+            "address": "Stellenbosch, Western Cape",
+            "description": "IT support technician with strong remote troubleshooting, Microsoft 365 and helpdesk ticket management experience.",
+            "knowsAbout": [
+              "Microsoft 365",
+              "Helpdesk",
+              "Device support",
+              "Ticketing",
+              "Basic networking"
+            ]
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "item": {
+            "@type": "Person",
+            "identifier": "ZA-PP-0007",
+            "name": "Zanele Khumalo",
+            "jobTitle": "Legal Administrative Assistant",
+            "address": "Johannesburg, Gauteng",
+            "description": "Legal admin assistant with confidentiality, document handling and client communication experience.",
+            "knowsAbout": [
+              "Document preparation",
+              "Legal admin",
+              "Client emails",
+              "Filing",
+              "Calendar support"
+            ]
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "item": {
+            "@type": "Person",
+            "identifier": "ZA-PP-0008",
+            "name": "Devon Jacobs",
+            "jobTitle": "Sales Development Representative",
+            "address": "Cape Town, Western Cape",
+            "description": "SDR with experience qualifying leads, managing CRM pipelines and booking meetings for B2B teams.",
+            "knowsAbout": [
+              "Cold outreach",
+              "CRM updates",
+              "Email sequences",
+              "Discovery calls",
+              "Lead qualification"
+            ]
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 9,
+          "item": {
+            "@type": "Person",
+            "identifier": "ZA-PP-0009",
+            "name": "Nomsa Ndlovu",
+            "jobTitle": "Bookkeeper & Payroll Administrator",
+            "address": "Gqeberha, Eastern Cape",
+            "description": "Reliable finance administrator with bookkeeping, payroll data preparation and month-end reconciliation experience.",
+            "knowsAbout": [
+              "Xero",
+              "Sage",
+              "Payroll admin",
+              "Bank reconciliations",
+              "Invoicing"
+            ]
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 10,
+          "item": {
+            "@type": "Person",
+            "identifier": "ZA-PP-0010",
+            "name": "Kabelo Molefe",
+            "jobTitle": "Operations Coordinator",
+            "address": "Midrand, Gauteng",
+            "description": "Operations coordinator with practical experience keeping teams, suppliers and internal workflows on track.",
+            "knowsAbout": [
+              "Operations admin",
+              "Supplier follow-ups",
+              "Reporting",
+              "Process tracking",
+              "Team coordination"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+
+<body>
+  <header class="page-shell topbar" aria-label="Top navigation">
+    <a class="brand-lockup" href="/" aria-label="Jobbyist home">
+      <span class="brand-mark">J</span>
+      <span class="brand-name">JOBBYIST <small>South Africa</small></span>
+    </a>
+
+    <nav class="nav-actions" aria-label="Page links">
+      <a class="nav-link" href="#profiles">Profiles</a>
+      <a class="nav-link" href="#jobseekers">Jobseekers</a>
+      <a class="nav-link" href="#employers">Employers</a>
+      <button class="button button-primary" type="button" data-open-access-modal data-source="top-nav">Unlock access</button>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="page-shell hero" aria-labelledby="hero-title">
+      <div>
+        <div class="eyebrow"><span class="pulse-dot"></span> Verified candidate previews · South Africa</div>
+        <h1 id="hero-title">Professional Profiles</h1>
+        <p class="hero-copy">
+          Browse <strong>verified sample candidate previews</strong> across admin, support, marketing, data, HR, legal, operations and remote-ready roles.
+        </p>
+        <p class="hero-copy">
+          Public previews help employers discover talent. Full candidate details are protected and only available to active <strong>Jobbyist Pro</strong> users and paid <strong>Recruitment Suite</strong> employer/recruiter accounts.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button button-primary" href="#profiles">Browse profiles →</a>
+          <button class="button button-soft" type="button" data-open-access-modal data-source="hero">How full access works</button>
+        </div>
+
+        <div class="trust-row" aria-label="Key trust points">
+          <span class="trust-pill">🇿🇦 South African talent</span>
+          <span class="trust-pill">🛡️ Gated full details</span>
+          <span class="trust-pill">✅ Verification badges</span>
+          <span class="trust-pill">🔎 SEO-friendly pagination</span>
+        </div>
+      </div>
+
+      <aside class="hero-card" aria-label="Candidate database stats">
+        <div class="deal-label">Sample database</div>
+        <div class="stat-main">25<small> profiles</small></div>
+        <p>
+          This reference page includes fictional, realistic sample profiles for product demonstration. Replace these with real verified candidates only after consent and POPIA-compliant onboarding.
+        </p>
+        <div class="mini-stats">
+          <div class="mini-stat"><span>Page</span><strong>1/3</strong></div>
+          <div class="mini-stat"><span>Showing</span><strong>1-10</strong></div>
+          <div class="mini-stat"><span>Access</span><strong>Gated</strong></div>
+          <div class="mini-stat"><span>Market</span><strong>ZA</strong></div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="profiles" class="page-shell section" aria-labelledby="profiles-title">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Candidate database</div>
+          <h2 id="profiles-title">Verified candidate previews for employers, recruiters and opportunity-ready professionals.</h2>
+        </div>
+        <p class="section-copy">
+          Showing profiles 1-10 of 25. Public pages show searchable previews only. Contact details, full CVs, references and screening notes stay locked behind active accounts.
+        </p>
+      </div>
+
+      <div class="notice">
+        <strong>Demo content:</strong> These are fictional sample profiles created for layout, SEO and product demonstration. Do not present them as real candidates until replaced with consent-based verified records.
+      </div>
+
+      <div class="profile-toolbar">
+        <input class="search-field" id="profileSearch" type="search" placeholder="Filter this page by role, city, skill, availability..." aria-label="Filter profiles on this page" />
+        <button class="button button-dark" type="button" data-open-access-modal data-source="toolbar">Unlock full database</button>
+      </div>
+
+      <div class="profile-grid" id="profileGrid">
+        
+        <article class="profile-card" id="ZA-PP-0001" itemscope itemtype="https://schema.org/Person">
+          <div class="profile-top">
+            <div class="avatar" aria-hidden="true">LM</div>
+            <div class="profile-status">
+              <span class="verified-dot"></span>
+              Verified sample
+            </div>
+          </div>
+
+          <div class="profile-main">
+            <p class="candidate-id">ZA-PP-0001</p>
+            <h3 itemprop="name">Lerato Mokoena</h3>
+            <p class="role" itemprop="jobTitle">Virtual Assistant &amp; Executive Admin</p>
+            <p class="summary" itemprop="description">Organised administrative professional with strong inbox, scheduling and client follow-up experience for busy teams.</p>
+          </div>
+
+          <div class="profile-meta">
+            <span>📍 <span itemprop="address">Johannesburg, Gauteng</span></span>
+            <span>💼 5 years</span>
+            <span>🕒 Immediate</span>
+            <span>🌐 Remote / Hybrid</span>
+          </div>
+
+          <div class="skill-row"><span>Calendar management</span><span>Google Workspace</span><span>Inbox support</span><span>Travel coordination</span></div>
+
+          <div class="verification-row">
+            <span class="verify-pill">ID verified</span><span class="verify-pill">CV reviewed</span><span class="verify-pill">Reference checked</span>
+          </div>
+
+          <div class="locked-panel">
+            <div>
+              <strong>Full profile locked</strong>
+              <span>Contact details, full CV, references, portfolio, work history and screening notes require an active account.</span>
+            </div>
+            <button class="lock-button" type="button" data-open-access-modal data-profile="ZA-PP-0001">Unlock details</button>
+          </div>
+        </article>
+    
+
+        <article class="profile-card" id="ZA-PP-0002" itemscope itemtype="https://schema.org/Person">
+          <div class="profile-top">
+            <div class="avatar" aria-hidden="true">TN</div>
+            <div class="profile-status">
+              <span class="verified-dot"></span>
+              Verified sample
+            </div>
+          </div>
+
+          <div class="profile-main">
+            <p class="candidate-id">ZA-PP-0002</p>
+            <h3 itemprop="name">Thabo Nkosi</h3>
+            <p class="role" itemprop="jobTitle">Customer Success Representative</p>
+            <p class="summary" itemprop="description">Customer support specialist with strong written communication, ticket handling and client retention experience.</p>
+          </div>
+
+          <div class="profile-meta">
+            <span>📍 <span itemprop="address">Cape Town, Western Cape</span></span>
+            <span>💼 4 years</span>
+            <span>🕒 2 weeks</span>
+            <span>🌐 Remote</span>
+          </div>
+
+          <div class="skill-row"><span>Zendesk</span><span>HubSpot</span><span>Live chat</span><span>Customer onboarding</span></div>
+
+          <div class="verification-row">
+            <span class="verify-pill">ID verified</span><span class="verify-pill">CV reviewed</span><span class="verify-pill">Skills screened</span>
+          </div>
+
+          <div class="locked-panel">
+            <div>
+              <strong>Full profile locked</strong>
+              <span>Contact details, full CV, references, portfolio, work history and screening notes require an active account.</span>
+            </div>
+            <button class="lock-button" type="button" data-open-access-modal data-profile="ZA-PP-0002">Unlock details</button>
+          </div>
+        </article>
+    
+
+        <article class="profile-card" id="ZA-PP-0003" itemscope itemtype="https://schema.org/Person">
+          <div class="profile-top">
+            <div class="avatar" aria-hidden="true">AK</div>
+            <div class="profile-status">
+              <span class="verified-dot"></span>
+              Verified sample
+            </div>
+          </div>
+
+          <div class="profile-main">
+            <p class="candidate-id">ZA-PP-0003</p>
+            <h3 itemprop="name">Ayesha Khan</h3>
+            <p class="role" itemprop="jobTitle">Junior Data Analyst</p>
+            <p class="summary" itemprop="description">Analytical junior data professional experienced in spreadsheet cleanup, dashboards and weekly performance reporting.</p>
+          </div>
+
+          <div class="profile-meta">
+            <span>📍 <span itemprop="address">Durban, KwaZulu-Natal</span></span>
+            <span>💼 3 years</span>
+            <span>🕒 Immediate</span>
+            <span>🌐 Remote / Hybrid</span>
+          </div>
+
+          <div class="skill-row"><span>Excel</span><span>Power BI</span><span>SQL basics</span><span>Data cleaning</span></div>
+
+          <div class="verification-row">
+            <span class="verify-pill">ID verified</span><span class="verify-pill">CV reviewed</span><span class="verify-pill">Portfolio reviewed</span>
+          </div>
+
+          <div class="locked-panel">
+            <div>
+              <strong>Full profile locked</strong>
+              <span>Contact details, full CV, references, portfolio, work history and screening notes require an active account.</span>
+            </div>
+            <button class="lock-button" type="button" data-open-access-modal data-profile="ZA-PP-0003">Unlock details</button>
+          </div>
+        </article>
+    
+
+        <article class="profile-card" id="ZA-PP-0004" itemscope itemtype="https://schema.org/Person">
+          <div class="profile-top">
+            <div class="avatar" aria-hidden="true">SD</div>
+            <div class="profile-status">
+              <span class="verified-dot"></span>
+              Verified sample
+            </div>
+          </div>
+
+          <div class="profile-main">
+            <p class="candidate-id">ZA-PP-0004</p>
+            <h3 itemprop="name">Sipho Dlamini</h3>
+            <p class="role" itemprop="jobTitle">Recruitment Coordinator</p>
+            <p class="summary" itemprop="description">Recruitment coordinator with strong scheduling, screening and candidate communication experience across high-volume roles.</p>
+          </div>
+
+          <div class="profile-meta">
+            <span>📍 <span itemprop="address">Pretoria, Gauteng</span></span>
+            <span>💼 6 years</span>
+            <span>🕒 30 days</span>
+            <span>🌐 Remote / On-site</span>
+          </div>
+
+          <div class="skill-row"><span>ATS updates</span><span>Interview scheduling</span><span>Candidate screening</span><span>LinkedIn sourcing</span></div>
+
+          <div class="verification-row">
+            <span class="verify-pill">ID verified</span><span class="verify-pill">CV reviewed</span><span class="verify-pill">Reference checked</span>
+          </div>
+
+          <div class="locked-panel">
+            <div>
+              <strong>Full profile locked</strong>
+              <span>Contact details, full CV, references, portfolio, work history and screening notes require an active account.</span>
+            </div>
+            <button class="lock-button" type="button" data-open-access-modal data-profile="ZA-PP-0004">Unlock details</button>
+          </div>
+        </article>
+    
+
+        <article class="profile-card" id="ZA-PP-0005" itemscope itemtype="https://schema.org/Person">
+          <div class="profile-top">
+            <div class="avatar" aria-hidden="true">NR</div>
+            <div class="profile-status">
+              <span class="verified-dot"></span>
+              Verified sample
+            </div>
+          </div>
+
+          <div class="profile-main">
+            <p class="candidate-id">ZA-PP-0005</p>
+            <h3 itemprop="name">Naledi Radebe</h3>
+            <p class="role" itemprop="jobTitle">Social Media &amp; Marketing Assistant</p>
+            <p class="summary" itemprop="description">Creative marketing assistant with practical content planning, community response and social media production experience.</p>
+          </div>
+
+          <div class="profile-meta">
+            <span>📍 <span itemprop="address">Bloemfontein, Free State</span></span>
+            <span>💼 4 years</span>
+            <span>🕒 Immediate</span>
+            <span>🌐 Remote / Hybrid</span>
+          </div>
+
+          <div class="skill-row"><span>Canva</span><span>Meta Business Suite</span><span>Content calendars</span><span>Copywriting</span></div>
+
+          <div class="verification-row">
+            <span class="verify-pill">ID verified</span><span class="verify-pill">CV reviewed</span><span class="verify-pill">Portfolio reviewed</span>
+          </div>
+
+          <div class="locked-panel">
+            <div>
+              <strong>Full profile locked</strong>
+              <span>Contact details, full CV, references, portfolio, work history and screening notes require an active account.</span>
+            </div>
+            <button class="lock-button" type="button" data-open-access-modal data-profile="ZA-PP-0005">Unlock details</button>
+          </div>
+        </article>
+    
+
+        <article class="profile-card" id="ZA-PP-0006" itemscope itemtype="https://schema.org/Person">
+          <div class="profile-top">
+            <div class="avatar" aria-hidden="true">MM</div>
+            <div class="profile-status">
+              <span class="verified-dot"></span>
+              Verified sample
+            </div>
+          </div>
+
+          <div class="profile-main">
+            <p class="candidate-id">ZA-PP-0006</p>
+            <h3 itemprop="name">Michael van der Merwe</h3>
+            <p class="role" itemprop="jobTitle">IT Support Technician</p>
+            <p class="summary" itemprop="description">IT support technician with strong remote troubleshooting, Microsoft 365 and helpdesk ticket management experience.</p>
+          </div>
+
+          <div class="profile-meta">
+            <span>📍 <span itemprop="address">Stellenbosch, Western Cape</span></span>
+            <span>💼 5 years</span>
+            <span>🕒 2 weeks</span>
+            <span>🌐 Remote / Hybrid</span>
+          </div>
+
+          <div class="skill-row"><span>Microsoft 365</span><span>Helpdesk</span><span>Device support</span><span>Ticketing</span></div>
+
+          <div class="verification-row">
+            <span class="verify-pill">ID verified</span><span class="verify-pill">CV reviewed</span><span class="verify-pill">Certification reviewed</span>
+          </div>
+
+          <div class="locked-panel">
+            <div>
+              <strong>Full profile locked</strong>
+              <span>Contact details, full CV, references, portfolio, work history and screening notes require an active account.</span>
+            </div>
+            <button class="lock-button" type="button" data-open-access-modal data-profile="ZA-PP-0006">Unlock details</button>
+          </div>
+        </article>
+    
+
+        <article class="profile-card" id="ZA-PP-0007" itemscope itemtype="https://schema.org/Person">
+          <div class="profile-top">
+            <div class="avatar" aria-hidden="true">ZK</div>
+            <div class="profile-status">
+              <span class="verified-dot"></span>
+              Verified sample
+            </div>
+          </div>
+
+          <div class="profile-main">
+            <p class="candidate-id">ZA-PP-0007</p>
+            <h3 itemprop="name">Zanele Khumalo</h3>
+            <p class="role" itemprop="jobTitle">Legal Administrative Assistant</p>
+            <p class="summary" itemprop="description">Legal admin assistant with confidentiality, document handling and client communication experience.</p>
+          </div>
+
+          <div class="profile-meta">
+            <span>📍 <span itemprop="address">Johannesburg, Gauteng</span></span>
+            <span>💼 4 years</span>
+            <span>🕒 Immediate</span>
+            <span>🌐 Remote / Hybrid</span>
+          </div>
+
+          <div class="skill-row"><span>Document preparation</span><span>Legal admin</span><span>Client emails</span><span>Filing</span></div>
+
+          <div class="verification-row">
+            <span class="verify-pill">ID verified</span><span class="verify-pill">CV reviewed</span><span class="verify-pill">Reference checked</span>
+          </div>
+
+          <div class="locked-panel">
+            <div>
+              <strong>Full profile locked</strong>
+              <span>Contact details, full CV, references, portfolio, work history and screening notes require an active account.</span>
+            </div>
+            <button class="lock-button" type="button" data-open-access-modal data-profile="ZA-PP-0007">Unlock details</button>
+          </div>
+        </article>
+    
+
+        <article class="profile-card" id="ZA-PP-0008" itemscope itemtype="https://schema.org/Person">
+          <div class="profile-top">
+            <div class="avatar" aria-hidden="true">DJ</div>
+            <div class="profile-status">
+              <span class="verified-dot"></span>
+              Verified sample
+            </div>
+          </div>
+
+          <div class="profile-main">
+            <p class="candidate-id">ZA-PP-0008</p>
+            <h3 itemprop="name">Devon Jacobs</h3>
+            <p class="role" itemprop="jobTitle">Sales Development Representative</p>
+            <p class="summary" itemprop="description">SDR with experience qualifying leads, managing CRM pipelines and booking meetings for B2B teams.</p>
+          </div>
+
+          <div class="profile-meta">
+            <span>📍 <span itemprop="address">Cape Town, Western Cape</span></span>
+            <span>💼 3 years</span>
+            <span>🕒 Immediate</span>
+            <span>🌐 Remote</span>
+          </div>
+
+          <div class="skill-row"><span>Cold outreach</span><span>CRM updates</span><span>Email sequences</span><span>Discovery calls</span></div>
+
+          <div class="verification-row">
+            <span class="verify-pill">ID verified</span><span class="verify-pill">CV reviewed</span><span class="verify-pill">Skills screened</span>
+          </div>
+
+          <div class="locked-panel">
+            <div>
+              <strong>Full profile locked</strong>
+              <span>Contact details, full CV, references, portfolio, work history and screening notes require an active account.</span>
+            </div>
+            <button class="lock-button" type="button" data-open-access-modal data-profile="ZA-PP-0008">Unlock details</button>
+          </div>
+        </article>
+    
+
+        <article class="profile-card" id="ZA-PP-0009" itemscope itemtype="https://schema.org/Person">
+          <div class="profile-top">
+            <div class="avatar" aria-hidden="true">NN</div>
+            <div class="profile-status">
+              <span class="verified-dot"></span>
+              Verified sample
+            </div>
+          </div>
+
+          <div class="profile-main">
+            <p class="candidate-id">ZA-PP-0009</p>
+            <h3 itemprop="name">Nomsa Ndlovu</h3>
+            <p class="role" itemprop="jobTitle">Bookkeeper &amp; Payroll Administrator</p>
+            <p class="summary" itemprop="description">Reliable finance administrator with bookkeeping, payroll data preparation and month-end reconciliation experience.</p>
+          </div>
+
+          <div class="profile-meta">
+            <span>📍 <span itemprop="address">Gqeberha, Eastern Cape</span></span>
+            <span>💼 7 years</span>
+            <span>🕒 30 days</span>
+            <span>🌐 Remote / Hybrid</span>
+          </div>
+
+          <div class="skill-row"><span>Xero</span><span>Sage</span><span>Payroll admin</span><span>Bank reconciliations</span></div>
+
+          <div class="verification-row">
+            <span class="verify-pill">ID verified</span><span class="verify-pill">CV reviewed</span><span class="verify-pill">Reference checked</span>
+          </div>
+
+          <div class="locked-panel">
+            <div>
+              <strong>Full profile locked</strong>
+              <span>Contact details, full CV, references, portfolio, work history and screening notes require an active account.</span>
+            </div>
+            <button class="lock-button" type="button" data-open-access-modal data-profile="ZA-PP-0009">Unlock details</button>
+          </div>
+        </article>
+    
+
+        <article class="profile-card" id="ZA-PP-0010" itemscope itemtype="https://schema.org/Person">
+          <div class="profile-top">
+            <div class="avatar" aria-hidden="true">KM</div>
+            <div class="profile-status">
+              <span class="verified-dot"></span>
+              Verified sample
+            </div>
+          </div>
+
+          <div class="profile-main">
+            <p class="candidate-id">ZA-PP-0010</p>
+            <h3 itemprop="name">Kabelo Molefe</h3>
+            <p class="role" itemprop="jobTitle">Operations Coordinator</p>
+            <p class="summary" itemprop="description">Operations coordinator with practical experience keeping teams, suppliers and internal workflows on track.</p>
+          </div>
+
+          <div class="profile-meta">
+            <span>📍 <span itemprop="address">Midrand, Gauteng</span></span>
+            <span>💼 6 years</span>
+            <span>🕒 2 weeks</span>
+            <span>🌐 Hybrid</span>
+          </div>
+
+          <div class="skill-row"><span>Operations admin</span><span>Supplier follow-ups</span><span>Reporting</span><span>Process tracking</span></div>
+
+          <div class="verification-row">
+            <span class="verify-pill">ID verified</span><span class="verify-pill">CV reviewed</span><span class="verify-pill">Reference checked</span>
+          </div>
+
+          <div class="locked-panel">
+            <div>
+              <strong>Full profile locked</strong>
+              <span>Contact details, full CV, references, portfolio, work history and screening notes require an active account.</span>
+            </div>
+            <button class="lock-button" type="button" data-open-access-modal data-profile="ZA-PP-0010">Unlock details</button>
+          </div>
+        </article>
+    
+      </div>
+
+      <nav class="pagination" aria-label="Professional Profiles pagination">
+        <span class="page-link is-current" aria-current="page">1</span>
+<a class="page-link" href="./page/2/">2</a>
+<a class="page-link" href="./page/3/">3</a>
+<a class="page-link" rel="next" href="./page/2/">Next →</a>
+      </nav>
+    </section>
+
+    <section id="jobseekers" class="page-shell section" aria-labelledby="jobseekers-title">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">For job seekers</div>
+          <h2 id="jobseekers-title">Upgrade to Jobbyist Pro for stronger visibility.</h2>
+        </div>
+      </div>
+
+      <div class="upsell-grid">
+        <article class="upsell-card">
+          <h3>Get discovered by better-fit employers.</h3>
+          <p>Jobbyist Pro helps serious candidates improve their public profile, verification status and employer-facing presentation.</p>
+          <ul>
+            <li>Enhanced candidate profile visibility</li>
+            <li>Profile credibility checks and optimisation prompts</li>
+            <li>Priority exposure in relevant role lanes</li>
+            <li>Application and interview readiness resources</li>
+            <li>Access to your own protected full-profile dashboard</li>
+          </ul>
+          <button class="button button-primary" type="button" data-open-access-modal data-source="jobseeker-upsell">Upgrade to Jobbyist Pro</button>
+        </article>
+
+        <article class="upsell-card alt" id="employers">
+          <h3>Hire from a growing verified talent pool.</h3>
+          <p>Recruitment Suite gives employers and recruiters full access to gated candidate details, screening notes and HR-ready hiring workflows on paid plans.</p>
+          <ul>
+            <li>Unlock full candidate profiles</li>
+            <li>View contact routes, CVs, portfolios and screening notes</li>
+            <li>Shortlist verified candidates by role lane</li>
+            <li>Request background checks and pre-screening support</li>
+            <li>Connect candidate discovery with your HR pipeline</li>
+          </ul>
+          <button class="button button-primary" type="button" data-open-access-modal data-source="employer-upsell">Get Recruitment Suite access</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="page-shell section" aria-label="Final call to action">
+      <div class="cta-band">
+        <h2>Full profiles are protected for a reason.</h2>
+        <p>
+          Jobbyist previews help talent get discovered without exposing sensitive candidate data publicly. Upgrade as a job seeker or join Recruitment Suite as an employer to unlock the right level of access.
+        </p>
+        <div class="hero-actions">
+          <button class="button button-primary" type="button" data-open-access-modal data-source="final-jobseeker">Upgrade to Jobbyist Pro</button>
+          <button class="button button-soft" type="button" data-open-access-modal data-source="final-employer">Access Recruitment Suite</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="page-shell footer">
+    <strong>Professional Profiles - Powered by Jobbyist.</strong><br />
+    Full candidate details are gated. Candidate contact details, full CVs, references, portfolio links and screening notes should only be shown to authenticated users with the correct plan and consent permissions. These 25 profiles are fictional sample records for product demonstration and must be replaced with real consent-based candidate data before public commercial use.
+  </footer>
+
+  <div class="sticky-cta" aria-label="Sticky access call to action">
+    <div class="page-shell sticky-cta-inner">
+      <button class="glow-button" type="button" data-open-access-modal data-source="sticky">Unlock full profile access →</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" data-modal aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="close-modal" type="button" aria-label="Close modal" data-close-modal>×</button>
+      <h2 id="modal-title">Full profile access is gated</h2>
+      <p>
+        Full candidate details are available only to active Jobbyist Pro accounts and employers or recruiters on paid Recruitment Suite plans. Public pages intentionally show previews only.
+      </p>
+
+      <div class="access-options">
+        <article class="access-card">
+          <h3>Job seekers</h3>
+          <p>Upgrade to Jobbyist Pro to improve your profile visibility, strengthen your verification status and manage how employers discover you.</p>
+          <a class="button button-primary" href="/pro">Upgrade to Jobbyist Pro</a>
+        </article>
+
+        <article class="access-card">
+          <h3>Employers & recruiters</h3>
+          <p>Join Recruitment Suite to unlock full candidate profiles, screening notes, shortlisting tools and HR-ready hiring workflows.</p>
+          <a class="button button-dark" href="/employers/recruitment-suite">Get Recruitment Suite access</a>
+        </article>
+      </div>
+
+      <div class="small-print">
+        Access should be enforced server-side in production. Do not store private candidate details inside public static HTML. Use authentication, plan checks, consent records and audit logs before displaying full profiles.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.querySelector("[data-modal]");
+    const searchField = document.querySelector("#profileSearch");
+    const profileGrid = document.querySelector("#profileGrid");
+
+    function openModal() {
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    function filterProfiles(query) {
+      const search = query.trim().toLowerCase();
+      const cards = Array.from(document.querySelectorAll(".profile-card"));
+
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(search) ? "" : "none";
+      });
+    }
+
+    searchField.addEventListener("input", event => filterProfiles(event.target.value));
+
+    document.addEventListener("click", event => {
+      if (event.target.closest("[data-open-access-modal]")) openModal();
+      if (event.target.closest("[data-close-modal]")) closeModal();
+      if (event.target === modal) closeModal();
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeModal();
+    });
+  </script>
+</body>
+</html>
