@@ -7,8 +7,6 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Label } from '@/components/ui/label';
-import FormErrorSummary from '@/components/FormErrorSummary';
 import { useJob } from '@/hooks/useJobs';
 import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
@@ -47,7 +45,6 @@ const JobDetail = () => {
   const [reportDetails, setReportDetails] = useState('');
   const [reportEmail, setReportEmail] = useState('');
   const [submittingReport, setSubmittingReport] = useState(false);
-  const reportErrors = !reportReason ? ['Select a report reason before submitting.'] : [];
 
   // Load saved state
   useEffect(() => {
@@ -173,7 +170,7 @@ const JobDetail = () => {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />
-        <main id="main-content" className="pt-24 pb-16">
+        <main className="pt-24 pb-16">
           <div className="container mx-auto px-4 max-w-4xl">
             <div className="animate-pulse">
               <div className="h-8 bg-muted rounded w-1/4 mb-4" />
@@ -191,7 +188,7 @@ const JobDetail = () => {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />
-        <main id="main-content" className="pt-24 pb-16">
+        <main className="pt-24 pb-16">
           <div className="container mx-auto px-4 text-center">
             <Briefcase className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
             <h1 className="text-2xl font-bold mb-2">Job Not Found</h1>
@@ -234,7 +231,7 @@ const JobDetail = () => {
         ]}
       />
       <Navbar />
-      <main id="main-content" className="pt-24 pb-16">
+      <main className="pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-4xl">
           <Link to="/jobs" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6">
             <ArrowLeft className="h-4 w-4" />
@@ -407,7 +404,6 @@ const JobDetail = () => {
                       </Link>
                     </div>
                   ) : canApplyToJobs ? (
-                    <>
                     <Dialog open={showApplyDialog} onOpenChange={setShowApplyDialog}>
                       <DialogTrigger asChild>
                         <Button className="w-full" size="lg">
@@ -423,17 +419,13 @@ const JobDetail = () => {
                         </DialogHeader>
                         <div className="space-y-4">
                           <div>
-                            <Label htmlFor="cover-letter" className="text-sm font-medium">Cover Letter (Optional)</Label>
+                            <label className="text-sm font-medium">Cover Letter (Optional)</label>
                             <Textarea
-                              id="cover-letter"
                               value={coverLetter}
                               onChange={(e) => setCoverLetter(e.target.value)}
                               placeholder="Tell the employer why you're a great fit for this role..."
                               rows={5}
-                              aria-invalid={false}
-                              aria-describedby="cover-letter-hint"
                             />
-                            <p id="cover-letter-hint" className="text-xs text-muted-foreground mt-1">Keep it concise and role-specific.</p>
                           </div>
                           <Button onClick={handleApply} disabled={isApplying} className="w-full">
                             {isApplying ? 'Submitting...' : 'Submit Application'}
@@ -441,11 +433,6 @@ const JobDetail = () => {
                         </div>
                       </DialogContent>
                     </Dialog>
-                    <p className="text-xs text-muted-foreground">
-                      We verify listings continuously, but always review employer details before sharing sensitive information.
-                      <Link to="/trust-safety" className="underline ml-1">Trust &amp; Safety</Link>.
-                    </p>
-                    </>
                   ) : (
                     <div className="text-center">
                       <p className="text-sm text-muted-foreground mb-2">
@@ -484,24 +471,17 @@ const JobDetail = () => {
                         Report this listing
                       </Button>
                     </DialogTrigger>
-                    <p className="text-xs text-muted-foreground">
-                      Reports are reviewed by our team, with urgent fraud reports prioritized within 24 hours.
-                    </p>
                     <DialogContent>
                       <DialogHeader>
                         <DialogTitle>Report this job</DialogTitle>
                         <DialogDescription>
                           Flag inappropriate, inaccurate, fraudulent or misleading listings.
-                          Reports go to our trust &amp; safety team at feedback@jobbyist.africa. See our
-                          <Link to="/listing-policy" className="underline ml-1">listing policy and review timelines</Link>.
+                          Reports go to our trust &amp; safety team at feedback@jobbyist.africa.
                         </DialogDescription>
                       </DialogHeader>
                       <div className="space-y-3">
-                        <FormErrorSummary errors={reportErrors} />
-                        <div className="space-y-2">
-                          <Label htmlFor="report-reason">Reason for report</Label>
-                          <Select value={reportReason} onValueChange={setReportReason}>
-                          <SelectTrigger id="report-reason" aria-invalid={!reportReason} aria-describedby={!reportReason ? 'report-reason-error' : 'report-reason-hint'}><SelectValue placeholder="Select a reason" /></SelectTrigger>
+                        <Select value={reportReason} onValueChange={setReportReason}>
+                          <SelectTrigger><SelectValue placeholder="Select a reason" /></SelectTrigger>
                           <SelectContent>
                             <SelectItem value="fraudulent">Fraudulent or scam</SelectItem>
                             <SelectItem value="misleading">Misleading information</SelectItem>
@@ -512,36 +492,19 @@ const JobDetail = () => {
                             <SelectItem value="other">Other</SelectItem>
                           </SelectContent>
                         </Select>
-                        <p id="report-reason-hint" className="text-xs text-muted-foreground">Choose the closest matching reason.</p>
-                        {!reportReason && <p id="report-reason-error" role="alert" className="text-xs text-destructive">Reason is required.</p>}
-                        </div>
-                        <div className="space-y-2">
-                        <Label htmlFor="report-details">Additional details (optional)</Label>
                         <Textarea
-                          id="report-details"
                           placeholder="Add any details that will help us investigate (optional)"
                           value={reportDetails}
                           onChange={(e) => setReportDetails(e.target.value)}
                           rows={3}
-                          aria-invalid={false}
-                          aria-describedby="report-details-hint"
                         />
-                        <p id="report-details-hint" className="text-xs text-muted-foreground">Include links, dates, or suspicious behavior.</p>
-                        </div>
                         {!user && (
-                          <div className="space-y-2">
-                            <Label htmlFor="report-email">Your email (optional)</Label>
-                            <Input
-                            id="report-email"
+                          <Input
                             type="email"
                             placeholder="Your email (optional)"
                             value={reportEmail}
                             onChange={(e) => setReportEmail(e.target.value)}
-                            aria-invalid={false}
-                            aria-describedby="report-email-hint"
                           />
-                          <p id="report-email-hint" className="text-xs text-muted-foreground">Used only if we need follow-up.</p>
-                          </div>
                         )}
                       </div>
                       <DialogFooter>

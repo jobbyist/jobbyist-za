@@ -5,22 +5,10 @@ import type { Database } from './types';
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
-const FALLBACK_SUPABASE_URL = "https://example.supabase.co";
-const FALLBACK_SUPABASE_PUBLISHABLE_KEY = "public-anon-key-placeholder";
-
-const resolvedSupabaseUrl = SUPABASE_URL || FALLBACK_SUPABASE_URL;
-const resolvedSupabaseKey = SUPABASE_PUBLISHABLE_KEY || FALLBACK_SUPABASE_PUBLISHABLE_KEY;
-
-if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
-  console.warn(
-    "Supabase environment variables are missing. The UI will still load, but Supabase-powered features are disabled until VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY are configured.",
-  );
-}
-
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
 
-export const supabase = createClient<Database>(resolvedSupabaseUrl, resolvedSupabaseKey, {
+export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
   auth: {
     storage: localStorage,
     persistSession: true,

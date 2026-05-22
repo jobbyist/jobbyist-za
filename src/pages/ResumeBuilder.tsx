@@ -83,7 +83,7 @@ const ResumeBuilder = () => {
         ogType="website"
       />
       <Navbar />
-      <main id="main-content" className="pt-16">
+      <main className="pt-16">
         {/* Hero Section */}
         <section className="py-20 gradient-brand relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
@@ -107,7 +107,7 @@ const ResumeBuilder = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="https://profiles.jobbyist.africa" target="_blank" rel="noopener noreferrer">
                   <Button size="lg" className="bg-white text-primary hover:bg-white/90 group">
-                    Build My South African CV
+                    Start Building Your Resume
                     <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform ml-2" />
                   </Button>
                 </a>
@@ -259,7 +259,7 @@ const ResumeBuilder = () => {
               <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="https://profiles.jobbyist.africa" target="_blank" rel="noopener noreferrer">
                   <Button size="lg" className="bg-white text-primary hover:bg-white/90">
-                    Create CV Free
+                    Get Started for Free
                   </Button>
                 </a>
                 <Button size="lg" variant="outline" className="border-primary-foreground/20 text-primary-foreground bg-transparent hover:bg-primary-foreground/10">
@@ -269,7 +269,6 @@ const ResumeBuilder = () => {
             </Card>
           </div>
         </section>
-        <TrustCopyModules />
       </main>
       <Footer />
     </div>

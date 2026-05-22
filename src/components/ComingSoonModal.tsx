@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useDialogFocusRestore } from "@/hooks/useDialogFocusRestore";
 import {
   Dialog,
   DialogContent,
@@ -34,7 +33,6 @@ const ComingSoonModal = ({
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const { toast } = useToast();
-  useDialogFocusRestore(open);
 
   const handleNotify = (e: React.FormEvent) => {
     e.preventDefault();

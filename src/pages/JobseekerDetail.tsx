@@ -171,7 +171,7 @@ const JobseekerDetail = () => {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />
-        <main id="main-content" className="pt-24 pb-16">
+        <main className="pt-24 pb-16">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-center h-64">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -190,7 +190,7 @@ const JobseekerDetail = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <main id="main-content" className="pt-24 pb-16">
+      <main className="pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-5xl">
           {/* Header Card */}
           <Card className="mb-6">

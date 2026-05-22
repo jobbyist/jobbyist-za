@@ -9,14 +9,12 @@ import { Slider } from '@/components/ui/slider';
 import { useJobs } from '@/hooks/useJobs';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import TrustCopyModules from '@/components/TrustCopyModules';
 import { SEOHead } from '@/components/SEOHead';
 import { Search, MapPin, Wifi, Briefcase, Clock, ArrowRight, Building2, DollarSign, ChevronLeft, ChevronRight } from 'lucide-react';
 import { formatSalary } from '@/lib/countries';
 import GoogleAdsense from '@/components/GoogleAdsense';
 import ExpiredBadge from '@/components/ExpiredBadge';
 import { isJobExpired } from '@/lib/jobUtils';
-import { Label } from '@/components/ui/label';
 
 const JOBS_PER_PAGE = 12;
 
@@ -83,31 +81,26 @@ const Jobs = () => {
   };
 
   const getFullPageUrl = (page: number) => {
-    return `https://za.jobbyist.africa/jobs?page=${page}`;
+    return `https://za.jobbyist.africa/jobs${getPageUrl(page)}`;
   };
 
-  const hasActiveFilters = ['search', 'location', 'type', 'level', 'remote'].some((key) => {
-    const value = searchParams.get(key);
-    return value && value.trim() !== '';
-  });
-
-  const hasPagination = currentPage > 1;
-  const shouldNoindex = hasActiveFilters || hasPagination;
-  const canonicalUrl = 'https://za.jobbyist.africa/jobs';
 
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
         title={`Jobs in South Africa${currentPage > 1 ? ` - Page ${currentPage}` : ''} | Find SA Job Opportunities | Jobbyist`}
         description={`Browse ${totalCount}+ verified job opportunities in South Africa. Find full-time, part-time, remote & contract jobs in Johannesburg, Cape Town, Durban & more.`}
-        canonicalUrl={canonicalUrl}
-        noindex={shouldNoindex}
+        canonicalUrl={`https://za.jobbyist.africa/jobs${currentPage > 1 ? `?page=${currentPage}` : ''}`}
         keywords={['jobs South Africa', 'SA jobs', 'Johannesburg jobs', 'Cape Town jobs', 'Durban jobs', 'remote jobs SA', 'IT jobs South Africa', 'finance jobs SA']}
-        prevUrl={hasPrevPage ? getFullPageUrl(currentPage - 1) : undefined}
-        nextUrl={hasNextPage ? getFullPageUrl(currentPage + 1) : undefined}
       />
+      {hasPrevPage && (
+        <link rel="prev" href={getFullPageUrl(currentPage - 1)} />
+      )}
+      {hasNextPage && (
+        <link rel="next" href={getFullPageUrl(currentPage + 1)} />
+      )}
       <Navbar />
-      <main id="main-content" className="pt-24 pb-16">
+      <main className="pt-24 pb-16">
         <div className="container mx-auto px-4">
           {/* Header */}
           <div className="mb-8">
@@ -119,11 +112,8 @@ const Jobs = () => {
               )}
             </h1>
             <p className="text-muted-foreground">
-              Explore {totalCount}+ verified roles {locationFilter ? `in ${locationFilter}` : 'across South Africa'} with salary signals in ZAR and province-level filtering
+              Explore {totalCount}+ curated job opportunities {locationFilter ? `in ${locationFilter}` : 'across South Africa'}
               {currentPage > 1 && ` - Page ${currentPage} of ${totalPages}`}
-            </p>
-            <p className="text-sm text-muted-foreground mt-2">
-              Stay alert while applying — review our <Link to="/trust-safety" className="underline">Trust &amp; Safety guidance</Link> for verification steps, fraud indicators, and reporting timelines.
             </p>
             {locationFilter && (
               <div className="mt-3 flex items-center gap-2">
@@ -145,26 +135,20 @@ const Jobs = () => {
             <form onSubmit={handleSearch} className="space-y-4">
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1 relative">
-                  <Label htmlFor="jobs-search" className="sr-only">Search jobs</Label>
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                   <Input
-                    id="jobs-search"
                     className="pl-10"
-                    placeholder="Job title, skill, company, city or province"
+                    placeholder="Job title, skills, or company"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    aria-describedby="jobs-search-hint"
                   />
-                  <p id="jobs-search-hint" className="sr-only">Search by title, skill, or company name.</p>
                 </div>
                 <Button type="submit">Search Jobs</Button>
               </div>
 
               <div className="flex flex-wrap gap-4 items-center">
-                <div className="space-y-1">
-                  <Label htmlFor="job-type-filter" className="text-xs">Job type</Label>
-                  <Select value={jobType || 'all'} onValueChange={(v) => setJobType(v === 'all' ? undefined : v)}>
-                  <SelectTrigger id="job-type-filter" className="w-40" aria-describedby="job-type-hint">
+                <Select value={jobType || 'all'} onValueChange={(v) => setJobType(v === 'all' ? undefined : v)}>
+                  <SelectTrigger className="w-40">
                     <SelectValue placeholder="Job Type" />
                   </SelectTrigger>
                   <SelectContent>
@@ -175,13 +159,9 @@ const Jobs = () => {
                     <SelectItem value="Internship">Internship</SelectItem>
                   </SelectContent>
                 </Select>
-                <p id="job-type-hint" className="sr-only">Filter jobs by employment type.</p>
-                </div>
 
-                <div className="space-y-1">
-                  <Label htmlFor="experience-filter" className="text-xs">Experience</Label>
-                  <Select value={experienceLevel || 'all'} onValueChange={(v) => setExperienceLevel(v === 'all' ? undefined : v)}>
-                  <SelectTrigger id="experience-filter" className="w-40" aria-describedby="experience-hint">
+                <Select value={experienceLevel || 'all'} onValueChange={(v) => setExperienceLevel(v === 'all' ? undefined : v)}>
+                  <SelectTrigger className="w-40">
                     <SelectValue placeholder="Experience" />
                   </SelectTrigger>
                   <SelectContent>
@@ -192,8 +172,6 @@ const Jobs = () => {
                     <SelectItem value="Lead">Lead</SelectItem>
                   </SelectContent>
                 </Select>
-                <p id="experience-hint" className="sr-only">Filter jobs by experience level.</p>
-                </div>
 
                 <div className="flex items-center gap-2 flex-1 min-w-[200px]">
                   <DollarSign className="h-4 w-4 text-muted-foreground" />
@@ -441,7 +419,6 @@ const Jobs = () => {
             </div>
           )}
         </div>
-        <TrustCopyModules />
       </main>
       <Footer />
     </div>

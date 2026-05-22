@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, User, LogOut, Shield, ChevronDown, ChevronUp, Clock3 } from "lucide-react";
+import { Menu, X, User, LogOut, Shield, ChevronDown, ChevronUp } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import {
   NavigationMenu,
@@ -25,24 +25,17 @@ const Navbar = () => {
   const { user, signOut } = useAuth();
   const { isAdmin } = useAdmin();
 
-  const jobSeekerLinks = [
-    { name: "Job Search", href: "/jobs" },
+  const navLinks = [
+    { name: "Browse Jobs", href: "/jobs" },
     { name: "AI Job Matcher", href: "/job-matcher" },
+    { name: "Knowledge Center", href: "/knowledge-hub" },
+  ];
+
+  const moreMenuItems = [
     { name: "Resume Builder", href: "/resume-builder" },
-    { name: "Career Knowledge Hub", href: "/knowledge-hub" },
-  ];
-
-  const employerLinks = [
+    { name: "Upskilling Programs", href: "/upskilling" },
     { name: "Company Directory", href: "/companies" },
-    { name: "Recruitment Suite", href: "/pro" },
-    { name: "Employer Waitlist", href: "/waiting-list/za" },
-    { name: "Listing Policy", href: "/listing-policy" },
-  ];
-
-  const candidateBuyerLinks = [
-    { name: "Candidate Profiles", href: "/professional-profiles" },
-    { name: "Access Request", href: "/contact" },
-    { name: "Profile Buyer Waitlist", href: "/waiting-list/za" },
+    { name: "The Job Post Podcast", href: "#podcast" },
   ];
 
   const locationMenuItems = locationSlugs.map(l => ({
@@ -50,22 +43,25 @@ const Navbar = () => {
     href: l.slug === "remote" ? "/jobs?remote=true" : `/jobs/${l.slug}`,
   }));
 
+  // Updated: Route category links to /jobs with category name pre-filled in search for better UX and to avoid thin content pages
   const categoryMenuItems = categories.map(c => ({
     name: c.name,
     href: `/jobs?search=${encodeURIComponent(c.name)}`,
   }));
 
+  // Specific 5 for mobile By Category as requested
+  const mobileCategoryLinks = [
+    { name: "Marketing", href: "/jobs/categories/marketing" },
+    { name: "Customer Support", href: "/jobs/categories/customer-support" },
+    { name: "Design & UX", href: "/jobs/categories/design-and-ux" },
+    { name: "Sales", href: "/jobs/categories/sales" },
+    { name: "Operations", href: "/jobs/categories/operations" },
+  ];
+
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
   };
-
-  const ComingSoonItem = ({ label }: { label: string }) => (
-    <span className="flex items-center gap-2 rounded-md p-3 text-sm text-muted-foreground cursor-not-allowed" aria-disabled="true" title="Coming soon">
-      <Clock3 className="h-4 w-4" />
-      {label} (Coming soon)
-    </span>
-  );
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
@@ -77,70 +73,50 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-6">
           <NavigationMenu>
             <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>Job Seeker Journey</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[420px] gap-2 p-4 md:grid-cols-2">
-                    {jobSeekerLinks.map((item) => (
-                      <li key={item.name}>
+              {navLinks.slice(0, 1).map((link) => (
+                <NavigationMenuItem key={link.name}>
+                  <NavigationMenuTrigger>Browse Jobs</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-3 p-4">
+                      <li>
                         <NavigationMenuLink asChild>
-                          <Link to={item.href} className="block rounded-md p-2 text-sm hover:bg-accent">{item.name}</Link>
+                          <Link
+                            to="/jobs"
+                            className={cn(
+                              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                            )}
+                          >
+                            <div className="text-sm font-medium leading-none">
+                              All South African Jobs
+                            </div>
+                            <p className="text-sm text-muted-foreground">
+                              Browse all available positions
+                            </p>
+                          </Link>
                         </NavigationMenuLink>
                       </li>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
+                      {locationMenuItems.map((item) => (
+                        <li key={item.name}>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              to={item.href}
+                              className={cn(
+                                "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                              )}
+                            >
+                              <div className="text-sm font-medium leading-none">
+                                {item.name}
+                              </div>
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              ))}
               <NavigationMenuItem>
-                <NavigationMenuTrigger>Employer / Recruiter Journey</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[420px] gap-2 p-4">
-                    {employerLinks.map((item) => (
-                      <li key={item.name}>
-                        <NavigationMenuLink asChild>
-                          <Link to={item.href} className="block rounded-md p-2 text-sm hover:bg-accent">{item.name}</Link>
-                        </NavigationMenuLink>
-                      </li>
-                    ))}
-                    <li><ComingSoonItem label="Enterprise Hiring API" /></li>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>Candidate Profile Buyer Journey</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[420px] gap-2 p-4">
-                    {candidateBuyerLinks.map((item) => (
-                      <li key={item.name}>
-                        <NavigationMenuLink asChild>
-                          <Link to={item.href} className="block rounded-md p-2 text-sm hover:bg-accent">{item.name}</Link>
-                        </NavigationMenuLink>
-                      </li>
-                    ))}
-                    <li><ComingSoonItem label="Bulk Profile Export" /></li>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>Jobs by Location</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4">
-                    {locationMenuItems.map((item) => (
-                      <li key={item.name}>
-                        <NavigationMenuLink asChild>
-                          <Link to={item.href} className={cn("block rounded-md p-2 text-sm hover:bg-accent")}>{item.name}</Link>
-                        </NavigationMenuLink>
-                      </li>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>Jobs by Category</NavigationMenuTrigger>
+                <NavigationMenuTrigger>By Category</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[420px] gap-2 p-4 md:grid-cols-2">
                     {categoryMenuItems.map((item) => (
@@ -153,13 +129,43 @@ const Navbar = () => {
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
+              {navLinks.slice(1).map((link) => (
+                <NavigationMenuItem key={link.name}>
+                  <Link to={link.href}>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                      {link.name}
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+              ))}
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>More</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                    {moreMenuItems.map((item) => (
+                      <li key={item.name}>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to={item.href}
+                            className={cn(
+                              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                            )}
+                          >
+                            <div className="text-sm font-medium leading-none">
+                              {item.name}
+                            </div>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
         </div>
 
         <div className="hidden md:flex items-center gap-3">
-          <Link to="/jobs"><Button variant="hero" size="sm">Find Jobs</Button></Link>
-          <Link to="/pro"><Button variant="outline" size="sm">For Employers</Button></Link>
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -169,42 +175,149 @@ const Navbar = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem asChild><Link to="/profile" className="cursor-pointer"><User className="h-4 w-4 mr-2" />My Profile</Link></DropdownMenuItem>
-                {isAdmin && <DropdownMenuItem asChild><Link to="/admin" className="cursor-pointer"><Shield className="h-4 w-4 mr-2" />Admin Panel</Link></DropdownMenuItem>}
+                <DropdownMenuItem asChild>
+                  <Link to="/profile" className="cursor-pointer">
+                    <User className="h-4 w-4 mr-2" />
+                    My Profile
+                  </Link>
+                </DropdownMenuItem>
+                {isAdmin && (
+                  <DropdownMenuItem asChild>
+                    <Link to="/admin" className="cursor-pointer">
+                      <Shield className="h-4 w-4 mr-2" />
+                      Admin Panel
+                    </Link>
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer"><LogOut className="h-4 w-4 mr-2" />Sign Out</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Sign Out
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Link to="/auth"><Button variant="ghost" size="sm">Sign In</Button></Link>
+            <>
+              <Link to="/auth">
+                <Button variant="ghost" size="sm">Sign In</Button>
+              </Link>
+              <Link to="/pro">
+                <Button variant="brand" size="sm">Become A Pro</Button>
+              </Link>
+            </>
           )}
         </div>
 
-        <button className="md:hidden p-2 rounded-md focus-ring" onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
+        <button
+          className="md:hidden p-2"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label="Toggle menu"
+        >
           {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </nav>
 
+      {/* Mobile Menu - Updated with collapsible By Location and new By Category */}
       {isOpen && (
         <div className="md:hidden bg-background border-b border-border animate-slide-up">
           <div className="container mx-auto px-4 py-4 flex flex-col gap-1">
-            <div className="text-sm font-semibold text-foreground">Job Seeker Journey</div>
-            {jobSeekerLinks.map((l)=><Link key={l.name} to={l.href} className="text-sm text-muted-foreground py-1.5" onClick={()=>setIsOpen(false)}>{l.name}</Link>)}
-            <div className="text-sm font-semibold text-foreground pt-2 border-t border-border">Employer / Recruiter Journey</div>
-            {employerLinks.map((l)=><Link key={l.name} to={l.href} className="text-sm text-muted-foreground py-1.5" onClick={()=>setIsOpen(false)}>{l.name}</Link>)}
-            <div className="text-sm text-muted-foreground py-1.5">Enterprise Hiring API (Coming soon)</div>
-            <div className="text-sm font-semibold text-foreground pt-2 border-t border-border">Candidate Profile Buyer Journey</div>
-            {candidateBuyerLinks.map((l)=><Link key={l.name} to={l.href} className="text-sm text-muted-foreground py-1.5" onClick={()=>setIsOpen(false)}>{l.name}</Link>)}
+            <Link
+              to="/jobs"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2.5"
+              onClick={() => setIsOpen(false)}
+            >
+              Browse Jobs
+            </Link>
 
-            <button onClick={() => setMobileByLocationOpen(!mobileByLocationOpen)} className="flex items-center justify-between w-full text-sm font-semibold text-foreground py-2.5 border-t border-border text-left rounded-sm focus-ring">Jobs by Location {mobileByLocationOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}</button>
-            {mobileByLocationOpen && <div className="pl-4 flex flex-col gap-1 pb-2">{locationMenuItems.map((item)=><Link key={item.name} to={item.href} className="text-sm text-muted-foreground py-1.5" onClick={()=>setIsOpen(false)}>{item.name}</Link>)}</div>}
+            {/* Collapsible By Location */}
+            <button
+              onClick={() => setMobileByLocationOpen(!mobileByLocationOpen)}
+              className="flex items-center justify-between w-full text-sm font-semibold text-foreground py-2.5 border-t border-border text-left"
+            >
+              By Location
+              {mobileByLocationOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            </button>
+            {mobileByLocationOpen && (
+              <div className="pl-4 flex flex-col gap-1 pb-2">
+                {locationMenuItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-1.5"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            )}
 
-            <button onClick={() => setMobileByCategoryOpen(!mobileByCategoryOpen)} className="flex items-center justify-between w-full text-sm font-semibold text-foreground py-2.5 border-t border-border text-left rounded-sm focus-ring">Jobs by Category {mobileByCategoryOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}</button>
-            {mobileByCategoryOpen && <div className="pl-4 flex flex-col gap-1 pb-2">{categoryMenuItems.slice(0,8).map((item)=><Link key={item.name} to={item.href} className="text-sm text-muted-foreground py-1.5" onClick={()=>setIsOpen(false)}>{item.name}</Link>)}</div>}
+            {/* New Collapsible By Category for mobile with specified 5 sub-links */}
+            <button
+              onClick={() => setMobileByCategoryOpen(!mobileByCategoryOpen)}
+              className="flex items-center justify-between w-full text-sm font-semibold text-foreground py-2.5 border-t border-border text-left"
+            >
+              By Category
+              {mobileByCategoryOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            </button>
+            {mobileByCategoryOpen && (
+              <div className="pl-4 flex flex-col gap-1 pb-2">
+                {mobileCategoryLinks.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-1.5"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            )}
+
+            {navLinks.slice(1).map((link) => (
+              <Link
+                key={link.name}
+                to={link.href}
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2.5"
+                onClick={() => setIsOpen(false)}
+              >
+                {link.name}
+              </Link>
+            ))}
+
+            <div className="text-sm font-semibold text-foreground pt-2.5 border-t border-border">More</div>
+            {moreMenuItems.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2 pl-1"
+                onClick={() => setIsOpen(false)}
+              >
+                {item.name}
+              </Link>
+            ))}
 
             <div className="flex flex-col gap-2 pt-4 border-t border-border">
-              <Link to="/jobs" onClick={() => setIsOpen(false)}><Button variant="hero" className="w-full justify-center">Find Jobs</Button></Link>
-              <Link to="/pro" onClick={() => setIsOpen(false)}><Button variant="outline" className="w-full justify-center">For Employers</Button></Link>
+              {user ? (
+                <>
+                  <Link to="/profile" onClick={() => setIsOpen(false)}>
+                    <Button variant="ghost" className="w-full justify-center">My Profile</Button>
+                  </Link>
+                  <Button variant="outline" className="w-full justify-center" onClick={handleSignOut}>
+                    Sign Out
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link to="/auth" onClick={() => setIsOpen(false)}>
+                    <Button variant="ghost" className="w-full justify-center">Sign In</Button>
+                  </Link>
+                  <Link to="/pro" onClick={() => setIsOpen(false)}>
+                    <Button variant="brand" className="w-full justify-center">Become A Pro</Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

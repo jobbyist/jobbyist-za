@@ -71,7 +71,7 @@ const ProfessionalProfiles = () => {
   const profileListSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: `Professional Profiles for South Africa Candidate Previews - Page ${currentPage}`,
+    name: `Professional Profiles Candidate Previews - Page ${currentPage}`,
     numberOfItems: filteredProfiles.length,
     itemListElement: filteredProfiles.map((profile, index) => ({
       "@type": "ListItem",
@@ -92,7 +92,7 @@ const ProfessionalProfiles = () => {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "@id": canonicalUrl,
-    name: `Professional Profiles for South Africa - Page ${currentPage}`,
+    name: `Professional Profiles - Page ${currentPage}`,
     url: canonicalUrl,
     description: "Verified South African candidate profile previews on Jobbyist. Full candidate details are available to active Jobbyist Pro members and paid Recruitment Suite employers and recruiters.",
     isPartOf: {
@@ -107,7 +107,7 @@ const ProfessionalProfiles = () => {
 
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Jobbyist South Africa", url: "https://za.jobbyist.africa" },
-    { name: "Professional Profiles for South Africa", url: BASE_URL },
+    { name: "Professional Profiles", url: BASE_URL },
     ...(currentPage > 1 ? [{ name: `Page ${currentPage}`, url: canonicalUrl }] : [])
   ]);
 
@@ -117,7 +117,7 @@ const ProfessionalProfiles = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30">
       <SEOHead
-        title={`Professional Profiles for South Africa ${currentPage > 1 ? `- Page ${currentPage}` : ''} | Verified Candidate Database - Jobbyist`}
+        title={`Professional Profiles ${currentPage > 1 ? `- Page ${currentPage}` : ''} | Verified Candidate Database - Jobbyist`}
         description="Discover verified South African professionals across administration, support, marketing, HR, legal, operations, data and remote-ready roles. Full details available to Jobbyist Pro members and Recruitment Suite subscribers."
         canonicalUrl={canonicalUrl}
         prevUrl={prevUrl}
@@ -136,7 +136,7 @@ const ProfessionalProfiles = () => {
 
       <Navbar />
 
-      <main id="main-content" className="pt-24 pb-16">
+      <main className="pt-24 pb-16">
         {/* Hero Section */}
         <section className="container mx-auto px-4 max-w-7xl mb-12">
           <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 items-center">
@@ -147,7 +147,7 @@ const ProfessionalProfiles = () => {
               </Badge>
 
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-none mb-6 bg-gradient-to-r from-slate-900 via-blue-900 to-purple-900 bg-clip-text text-transparent transform -skew-x-6">
-                Professional Profiles for South Africa
+                Professional Profiles
               </h1>
 
               <p className="text-lg text-slate-700 font-semibold mb-4">
@@ -155,7 +155,7 @@ const ProfessionalProfiles = () => {
               </p>
 
               <p className="text-base text-slate-600 mb-6">
-                Professional Profiles for South Africa helps job seekers increase their visibility while giving employers and recruiters a trusted way to explore candidate previews before requesting full access. Candidate visibility can be controlled through account/profile settings, and recruiter/employer access to full records is restricted to approved paid plans with privacy compliance checks.
+                Professional Profiles helps job seekers increase their visibility while giving employers and recruiters a trusted way to explore candidate previews before requesting full access. Candidate visibility can be controlled through account/profile settings, and recruiter/employer access to full records is restricted to approved paid plans with privacy compliance checks.
               </p>
 
               <div className="flex flex-wrap gap-3 mb-6">
@@ -164,7 +164,7 @@ const ProfessionalProfiles = () => {
                   className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90"
                   onClick={() => document.getElementById('profiles')?.scrollIntoView({ behavior: 'smooth' })}
                 >
-                  Browse ZA Profiles
+                  Browse Profiles
                 </Button>
                 <Button
                   size="lg"
@@ -398,7 +398,6 @@ const ProfessionalProfiles = () => {
             </CardContent>
           </Card>
         </section>
-        <TrustCopyModules />
       </main>
 
       <Footer />

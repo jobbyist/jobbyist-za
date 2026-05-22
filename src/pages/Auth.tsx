@@ -9,10 +9,8 @@ import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
 import { Mail, Lock, ArrowLeft } from 'lucide-react';
 import MultiStepSignup from '@/components/onboarding/MultiStepSignup';
-import FormErrorSummary from '@/components/FormErrorSummary';
 
 import { z } from 'zod';
-import { SEOHead } from '@/components/SEOHead';
 
 const emailSchema = z.string().email('Invalid email address');
 const passwordSchema = z.string().min(8, 'Password must be at least 8 characters');
@@ -24,7 +22,6 @@ const Auth = () => {
   
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const formErrorList = Object.values(errors);
 
   useEffect(() => {
     if (user) {
@@ -70,16 +67,14 @@ const Auth = () => {
 
   if (loading) {
     return (
-      <main id="main-content" className="min-h-screen flex items-center justify-center">
-        <SEOHead title="Log In or Sign Up | Jobbyist Account Access" description="Access your Jobbyist account to sign in, create a profile, and manage your job applications." canonicalUrl="https://za.jobbyist.africa/auth" noindex={true} />
-        <h1 className="sr-only">Account Access</h1>
+      <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-      </main>
+      </div>
     );
   }
 
   return (
-    <main id="main-content" className="min-h-screen bg-gradient-to-br from-background via-background to-muted flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <a href="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-4">
@@ -87,7 +82,6 @@ const Auth = () => {
             Back to Home
           </a>
           <img src="/jobbyistza.svg" alt="Jobbyist" className="h-12 mx-auto mb-4" />
-          <h1 className="text-xl font-bold mb-2">Log in or create your account</h1>
           <p className="text-muted-foreground">South Africa's Premier Career Management & Job Discovery Platform</p>
         </div>
 
@@ -102,8 +96,7 @@ const Auth = () => {
             
             <CardContent className="pt-6">
               <TabsContent value="login" className="mt-0">
-                <form onSubmit={handleLogin} className="space-y-4" noValidate>
-                  <FormErrorSummary errors={formErrorList} />
+                <form onSubmit={handleLogin} className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="login-email">Email</Label>
                     <div className="relative">
@@ -115,13 +108,10 @@ const Auth = () => {
                         className="pl-10"
                         value={loginForm.email}
                         onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })}
-                        aria-invalid={!!errors.email}
-                        aria-describedby={errors.email ? 'login-email-error' : 'login-email-hint'}
                         required
                       />
                     </div>
-                    <p id="login-email-hint" className="text-xs text-muted-foreground">Use the email address linked to your account.</p>
-                    {errors.email && <p id="login-email-error" role="alert" className="text-sm text-destructive">{errors.email}</p>}
+                    {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
                   </div>
                   
                   <div className="space-y-2">
@@ -135,13 +125,10 @@ const Auth = () => {
                         className="pl-10"
                         value={loginForm.password}
                         onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
-                        aria-invalid={!!errors.password}
-                        aria-describedby={errors.password ? 'login-password-error' : 'login-password-hint'}
                         required
                       />
                     </div>
-                    <p id="login-password-hint" className="text-xs text-muted-foreground">Minimum 8 characters.</p>
-                    {errors.password && <p id="login-password-error" role="alert" className="text-sm text-destructive">{errors.password}</p>}
+                    {errors.password && <p className="text-sm text-destructive">{errors.password}</p>}
                   </div>
 
                   <Button type="submit" className="w-full" disabled={isSubmitting}>
@@ -157,7 +144,7 @@ const Auth = () => {
           </Tabs>
         </Card>
       </div>
-    </main>
+    </div>
   );
 };
 

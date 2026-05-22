@@ -21,7 +21,7 @@ const Index = () => {
         ogType="website"
       />
       <Navbar />
-      <main id="main-content">
+      <main>
         <Hero />
         <FeaturedCompanies />
         <FeaturedJobs />

@@ -50,10 +50,10 @@ const CompanyDetail = () => {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />
-        <main id="main-content" className="container mx-auto px-4 py-12">
+        <div className="container mx-auto px-4 py-12">
           <Skeleton className="h-48 w-full mb-8" />
           <Skeleton className="h-96 w-full" />
-        </main>
+        </div>
         <Footer />
       </div>
     );
@@ -63,7 +63,7 @@ const CompanyDetail = () => {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />
-        <main id="main-content" className="container mx-auto px-4 py-12 text-center">
+        <div className="container mx-auto px-4 py-12 text-center">
           <AlertCircle className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
           <h1 className="text-2xl font-bold mb-2">Company Not Found</h1>
           <p className="text-muted-foreground mb-6">
@@ -72,7 +72,7 @@ const CompanyDetail = () => {
           <Link to="/jobs">
             <Button>Browse Jobs</Button>
           </Link>
-        </main>
+        </div>
         <Footer />
       </div>
     );
@@ -82,7 +82,6 @@ const CompanyDetail = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       
-      <main id="main-content">
       {/* Company Header */}
       <div className="bg-gradient-to-b from-primary/5 to-background border-b">
         <div className="container mx-auto px-4 py-12">
@@ -220,7 +219,6 @@ const CompanyDetail = () => {
         </Card>
       </div>
 
-      </main>
       <Footer />
     </div>
   );

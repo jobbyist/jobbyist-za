@@ -98,7 +98,11 @@ const LocationJobs = () => {
     setSearchParams(params);
   };
 
-  const getPageUrl = (page: number) => `?page=${page}`;
+  const getPageUrl = (page: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('page', page.toString());
+    return `?${params.toString()}`;
+  };
 
   const goToPage = (page: number) => {
     const params = new URLSearchParams(searchParams);
@@ -106,27 +110,17 @@ const LocationJobs = () => {
     setSearchParams(params);
   };
 
-  const getFullPageUrl = (page: number) => `https://za.jobbyist.africa/jobs/${location}${getPageUrl(page)}`;
-  const hasActiveFilters = ['search', 'type', 'level'].some((key) => {
-    const value = searchParams.get(key);
-    return value && value.trim() !== '';
-  });
-  const canonicalUrl = `https://za.jobbyist.africa/jobs/${location}${currentPage > 1 ? `?page=${currentPage}` : ''}`;
-
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
         title={`${locationData.name} Jobs | Find Employment in ${locationData.name} | Jobbyist ZA`}
         description={locationData.description}
-        canonicalUrl={canonicalUrl}
-        noindex={hasActiveFilters}
+        canonicalUrl={`https://za.jobbyist.africa/jobs/${location}`}
         keywords={[locationData.keywords]}
         ogType="website"
-        prevUrl={hasPrevPage ? getFullPageUrl(currentPage - 1) : undefined}
-        nextUrl={hasNextPage ? getFullPageUrl(currentPage + 1) : undefined}
       />
       <Navbar />
-      <main id="main-content" className="pt-16">
+      <main className="pt-16">
         {/* Hero Section */}
         <section className="py-12 gradient-brand text-primary-foreground">
           <div className="container mx-auto px-4">

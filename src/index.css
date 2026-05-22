@@ -22,7 +22,7 @@
     --secondary-foreground: 0 0% 0%;
 
     --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 35%;
+    --muted-foreground: 0 0% 45%;
 
     --accent: 0 0% 96%;
     --accent-foreground: 0 0% 0%;
@@ -30,8 +30,8 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 82%;
-    --input: 0 0% 82%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
     --ring: 0 0% 0%;
 
     --radius: 0.75rem;
@@ -80,7 +80,7 @@
     --secondary-foreground: 0 0% 98%;
 
     --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 72%;
+    --muted-foreground: 0 0% 65%;
 
     --accent: 0 0% 15%;
     --accent-foreground: 0 0% 98%;
@@ -88,8 +88,8 @@
     --destructive: 0 63% 31%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 28%;
-    --input: 0 0% 28%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
     --ring: 0 0% 100%;
 
     --gradient-hero: linear-gradient(180deg, hsl(0 0% 5%) 0%, hsl(0 0% 8%) 100%);
@@ -149,32 +149,6 @@
 
   .animate-scale-in {
     animation: scaleIn 0.4s ease-out forwards;
-  }
-
-  .text-contrast-muted {
-    @apply text-muted-foreground;
-  }
-
-  .focus-ring {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
-  }
-
-  .focus-ring-inset {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset;
-  }
-
-  .gradient-brand-text-strong {
-    background: linear-gradient(135deg, hsl(0 0% 0%) 0%, hsl(0 0% 32%) 55%, hsl(0 0% 12%) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .dark .gradient-brand-text-strong {
-    background: linear-gradient(135deg, hsl(0 0% 98%) 0%, hsl(0 0% 82%) 55%, hsl(0 0% 100%) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
   }
 }
 

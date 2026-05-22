@@ -209,15 +209,15 @@ const MultiStepSignup = () => {
           {step === 1 && (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
-                <div><Label htmlFor="signup-first-name">First name</Label><Input id="signup-first-name" value={firstName} onChange={e => setFirstName(e.target.value)} placeholder="Thando" aria-invalid={step === 1 && !firstName.trim()} aria-describedby="signup-first-name-hint" /><p id="signup-first-name-hint" className="text-xs text-muted-foreground">Use your legal first name.</p></div>
-                <div><Label htmlFor="signup-last-name">Last name</Label><Input id="signup-last-name" value={lastName} onChange={e => setLastName(e.target.value)} placeholder="Mokoena" aria-invalid={step === 1 && !lastName.trim()} aria-describedby="signup-last-name-hint" /><p id="signup-last-name-hint" className="text-xs text-muted-foreground">Use your legal surname.</p></div>
+                <div><Label>First name</Label><Input value={firstName} onChange={e => setFirstName(e.target.value)} placeholder="Thando" /></div>
+                <div><Label>Last name</Label><Input value={lastName} onChange={e => setLastName(e.target.value)} placeholder="Mokoena" /></div>
               </div>
-              <div><Label htmlFor="signup-phone" className="flex items-center gap-1"><Phone className="h-3 w-3" />Phone</Label>
-                <Input id="signup-phone" value={phone} onChange={e => setPhone(e.target.value)} placeholder="+27 ..." aria-invalid={false} aria-describedby="signup-phone-hint" /><p id="signup-phone-hint" className="text-xs text-muted-foreground">Optional, used for employer callbacks.</p></div>
-              <div><Label htmlFor="signup-city" className="flex items-center gap-1"><MapPin className="h-3 w-3" />City</Label>
-                <Input id="signup-city" value={location} onChange={e => setLocation(e.target.value)} placeholder="Johannesburg" aria-invalid={false} aria-describedby="signup-city-hint" /><p id="signup-city-hint" className="text-xs text-muted-foreground">Your current city.</p></div>
-              <div><Label htmlFor="signup-address">Address (optional)</Label>
-                <Input id="signup-address" value={address} onChange={e => setAddress(e.target.value)} placeholder="Suburb, province" aria-invalid={false} /></div>
+              <div><Label className="flex items-center gap-1"><Phone className="h-3 w-3" />Phone</Label>
+                <Input value={phone} onChange={e => setPhone(e.target.value)} placeholder="+27 ..." /></div>
+              <div><Label className="flex items-center gap-1"><MapPin className="h-3 w-3" />City</Label>
+                <Input value={location} onChange={e => setLocation(e.target.value)} placeholder="Johannesburg" /></div>
+              <div><Label>Address (optional)</Label>
+                <Input value={address} onChange={e => setAddress(e.target.value)} placeholder="Suburb, province" /></div>
             </div>
           )}
 
@@ -272,12 +272,12 @@ const MultiStepSignup = () => {
 
           {step === 5 && (
             <div className="space-y-3">
-              <div><Label htmlFor="signup-username">Username</Label>
-                <Input id="signup-username" value={username} onChange={e => setUsername(e.target.value.replace(/[^a-zA-Z0-9_]/g, ""))} placeholder="thando_m" aria-invalid={step === 5 && !username.trim()} aria-describedby="signup-username-hint" /><p id="signup-username-hint" className="text-xs text-muted-foreground">Letters, numbers, and underscore only.</p></div>
-              <div><Label htmlFor="signup-email" className="flex items-center gap-1"><Mail className="h-3 w-3" />Email</Label>
-                <Input id="signup-email" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" aria-invalid={step === 5 && !email.trim()} aria-describedby="signup-email-hint" /><p id="signup-email-hint" className="text-xs text-muted-foreground">We'll send verification to this email.</p></div>
-              <div><Label htmlFor="signup-password" className="flex items-center gap-1"><Lock className="h-3 w-3" />Password</Label>
-                <Input id="signup-password" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="At least 8 characters" aria-invalid={step === 5 && password.length > 0 && password.length < 8} aria-describedby="signup-password-hint" /><p id="signup-password-hint" className="text-xs text-muted-foreground">Use at least 8 characters.</p></div>
+              <div><Label>Username</Label>
+                <Input value={username} onChange={e => setUsername(e.target.value.replace(/[^a-zA-Z0-9_]/g, ""))} placeholder="thando_m" /></div>
+              <div><Label className="flex items-center gap-1"><Mail className="h-3 w-3" />Email</Label>
+                <Input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" /></div>
+              <div><Label className="flex items-center gap-1"><Lock className="h-3 w-3" />Password</Label>
+                <Input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="At least 8 characters" /></div>
             </div>
           )}
 

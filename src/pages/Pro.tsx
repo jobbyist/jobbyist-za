@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import TrustCopyModules from '@/components/TrustCopyModules';
 import { SEOHead } from '@/components/SEOHead';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -24,7 +23,7 @@ const Pro = () => {
         ogType="website"
       />
       <Navbar />
-      <main id="main-content" className="pt-16">
+      <main className="pt-16">
         {/* Hero Section */}
         <section className="py-20 gradient-brand relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
@@ -47,7 +46,7 @@ const Pro = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" className="bg-white text-primary hover:bg-white/90 group">
-                  Start Hiring Smarter in South Africa
+                  Get Started - 30-Day Money Back Guarantee
                   <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform ml-2" />
                 </Button>
                 <Button 
@@ -99,7 +98,6 @@ const Pro = () => {
         </section>
 
         <Footer />
-        <TrustCopyModules />
       </main>
     </div>
   );

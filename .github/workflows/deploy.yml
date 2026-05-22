@@ -34,14 +34,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Generate sitemap
-        run: npm run sitemap:generate
-        env:
-          SITEMAP_BASE_URL: https://za.jobbyist.africa
-          SITEMAP_OUTPUT_PATH: public/sitemap.xml
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-
       - name: Build
         run: npm run build
 

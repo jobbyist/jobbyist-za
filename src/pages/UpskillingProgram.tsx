@@ -102,7 +102,7 @@ const UpskillingProgram = () => {
         ogType="website"
       />
       <Navbar />
-      <main id="main-content" className="pt-16">
+      <main className="pt-16">
         {/* Hero Section */}
         <section className="py-20 gradient-brand relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
@@ -227,7 +227,7 @@ const UpskillingProgram = () => {
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Your Path to Success</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Upskill for South African demand roles with a practical four-step plan
+                Start upskilling today with our simple four-step process
               </p>
             </div>
 
@@ -275,7 +275,6 @@ const UpskillingProgram = () => {
             </Card>
           </div>
         </section>
-        <TrustCopyModules />
       </main>
       <Footer />
     </div>

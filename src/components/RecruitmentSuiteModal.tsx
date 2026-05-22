@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useDialogFocusRestore } from "@/hooks/useDialogFocusRestore";
 import {
   Dialog,
   DialogContent,
@@ -34,7 +33,6 @@ const RecruitmentSuiteModal = ({
     companyName: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  useDialogFocusRestore(open);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

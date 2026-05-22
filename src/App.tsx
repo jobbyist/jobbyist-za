@@ -43,11 +43,8 @@ import FacetJobs from "./pages/FacetJobs";
 import SitemapRedirect from "./pages/SitemapRedirect";
 import Ads from "./pages/Ads";
 import ProfessionalProfiles from "./pages/ProfessionalProfiles";
-import ListingPolicy from "./pages/ListingPolicy";
-import TrustSafety from "./pages/TrustSafety";
 import RemoteSprintModal from "./components/RemoteSprintModal";
 import ConciergeChat from "./components/ConciergeChat";
-import { CookieConsentProvider } from "./components/CookieConsent";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -79,18 +76,11 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <CookieConsentProvider>
         <TooltipProvider>
           <Toaster />
           <Sonner />
           
           <BrowserRouter>
-            <a
-              href="#main-content"
-              className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-background focus:px-4 focus:py-2 focus:text-foreground focus:shadow-md focus:outline-none focus:ring-2 focus:ring-ring"
-            >
-              Skip to main content
-            </a>
             <ScrollToTop />
             <RemoteSprintModal />
             <ConciergeChat />
@@ -128,8 +118,6 @@ const App = () => {
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/data-rights" element={<DataRights />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/listing-policy" element={<ListingPolicy />} />
-              <Route path="/trust-safety" element={<TrustSafety />} />
               <Route path="/professional-profiles" element={<ProfessionalProfiles />} />
               <Route path="/professional-profiles/page/:pageNum" element={<ProfessionalProfiles />} />
               
@@ -147,7 +135,6 @@ const App = () => {
             </Routes>
           </BrowserRouter>
         </TooltipProvider>
-        </CookieConsentProvider>
       </AuthProvider>
     </QueryClientProvider>
   );

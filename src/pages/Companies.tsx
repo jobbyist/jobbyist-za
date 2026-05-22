@@ -3,7 +3,6 @@ import { supabase } from '@/integrations/supabase/client';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import TrustCopyModules from '@/components/TrustCopyModules';
 import { SEOHead } from '@/components/SEOHead';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -46,7 +45,7 @@ const Companies = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Verified Companies Hiring in South Africa | Browse 100+ Leading Employers | Jobbyist"
+        title="Top Companies Hiring in South Africa | Browse 100+ Leading Employers | Jobbyist"
         description="Discover 100+ leading companies in South Africa actively hiring. Browse verified employers across technology, finance, healthcare, retail and more industries. Find your ideal workplace today."
         canonicalUrl="https://za.jobbyist.africa/companies"
         keywords={['companies in South Africa', 'SA employers', 'top companies hiring', 'best companies to work for SA', 'South African businesses', 'company directory SA']}
@@ -54,14 +53,14 @@ const Companies = () => {
       />
       <Navbar />
 
-      <main id="main-content" className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               South African Companies
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Compare verified employers hiring in Johannesburg, Cape Town, Durban, Pretoria and more. See company signals that matter to South African jobseekers: salary transparency, response time, and hiring quality.
+              Browse 100+ leading employers in South Africa. Find your next opportunity with top companies across various industries.
             </p>
           </div>
 
@@ -186,7 +185,7 @@ const Companies = () => {
             </div>
           )}
         </div>
-      </main>
+      </div>
 
       <Footer />
     </div>

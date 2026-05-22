@@ -10,7 +10,6 @@ import { toast } from 'sonner';
 import { ArrowLeft, Bell, MapPin, Users, Briefcase } from 'lucide-react';
 import { getCountryByCode, waitingListCountries, type CountryCode } from '@/lib/countries';
 import logoImage from '@/assets/jobbyist-logo.jpeg';
-import { SEOHead } from '@/components/SEOHead';
 
 const WaitingList = () => {
   const { countryCode } = useParams<{ countryCode: string }>();
@@ -96,9 +95,7 @@ const WaitingList = () => {
 
   if (!country) {
     return (
-      <main id="main-content" className="min-h-screen flex items-center justify-center p-4">
-        <SEOHead title="Country Launch Waiting List | Jobbyist" description="Join the waiting list to be notified when Jobbyist launches in your country." canonicalUrl="https://za.jobbyist.africa/waiting-list" noindex={true} />
-        <h1 className="sr-only">Country Not Found</h1>
+      <div className="min-h-screen flex items-center justify-center p-4">
         <Card className="max-w-md w-full">
           <CardHeader className="text-center">
             <CardTitle>Country Not Found</CardTitle>
@@ -115,13 +112,13 @@ const WaitingList = () => {
             </Link>
           </CardContent>
         </Card>
-      </main>
+      </div>
     );
   }
 
   if (submitted) {
     return (
-      <main id="main-content" className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-background via-background to-muted">
+      <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-background via-background to-muted">
         <Card className="max-w-md w-full text-center">
           <CardHeader>
             <div className="text-6xl mb-4">{country.flag}</div>
@@ -138,12 +135,12 @@ const WaitingList = () => {
             </Link>
           </CardContent>
         </Card>
-      </main>
+      </div>
     );
   }
 
   return (
-    <main id="main-content" className="min-h-screen bg-gradient-to-br from-background via-background to-muted">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted">
       <div className="container mx-auto px-4 py-8">
         <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8">
           <ArrowLeft className="h-4 w-4" />
@@ -256,7 +253,7 @@ const WaitingList = () => {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 };
 

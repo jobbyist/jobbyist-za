@@ -21,7 +21,7 @@ export const SEOHead = ({
   title,
   description,
   canonicalUrl,
-  ogImage = 'https://za.jobbyist.africa/jobbyistpwa.png',
+  ogImage = 'https://storage.googleapis.com/gpt-engineer-file-uploads/iy019M6SqjMXyibDc8dgs2v9PSx1/social-images/social-1767047331245-jobbyistpwa.png',
   ogType = 'website',
   keywords = [],
   structuredData,
@@ -62,15 +62,13 @@ export const SEOHead = ({
     }
 
     // Twitter
-    updateMeta('twitter:card', 'summary_large_image');
-    updateMeta('twitter:site', '@jobbyistafrica');
     updateMeta('twitter:title', title);
     updateMeta('twitter:description', description);
     updateMeta('twitter:image', ogImage);
 
     // Robots
     if (noindex) {
-      updateMeta('robots', 'noindex,follow');
+      updateMeta('robots', 'noindex, nofollow');
     } else {
       const robotsMeta = document.querySelector('meta[name="robots"]');
       if (robotsMeta) {

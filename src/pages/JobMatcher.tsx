@@ -60,7 +60,7 @@ const JobMatcher = () => {
         ogType="website"
       />
       <Navbar />
-      <main id="main-content" className="pt-16">
+      <main className="pt-16">
         {/* Hero Section */}
         <section className="py-20 gradient-brand relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
@@ -155,7 +155,7 @@ const JobMatcher = () => {
                       <div className="w-16 h-16 gradient-brand rounded-xl flex items-center justify-center mb-4">
                         <Target className="h-8 w-8 text-primary-foreground" />
                       </div>
-                      <CardTitle className="text-2xl">Match Me to SA Jobs</CardTitle>
+                      <CardTitle className="text-2xl">Get Started Today</CardTitle>
                       <CardDescription className="text-base">
                         Upgrade to Jobbyist Pro and unlock the full power of AI-driven job matching.
                       </CardDescription>
@@ -202,7 +202,7 @@ const JobMatcher = () => {
               <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/pro">
                   <Button size="lg" className="bg-white text-primary hover:bg-white/90">
-                    Start Job Matching
+                    Start 7-Day Money-Back Guarantee
                   </Button>
                 </Link>
                 <Link to="/">
@@ -214,7 +214,6 @@ const JobMatcher = () => {
             </Card>
           </div>
         </section>
-        <TrustCopyModules />
       </main>
       <Footer />
     </div>

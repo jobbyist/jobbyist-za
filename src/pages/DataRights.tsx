@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { CookieSettingsLink } from "@/components/CookieConsent";
 
 const DataRights = () => {
   return (
@@ -17,14 +16,13 @@ const DataRights = () => {
         canonicalUrl="https://za.jobbyist.africa/data-rights"
       />
       <Navbar />
-      <main id="main-content" className="pt-16">
+      <main className="pt-16">
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4 max-w-4xl">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Data Rights Request</h1>
             <p className="text-muted-foreground mb-10">
               Use this form to request access, correction, deletion, restriction, portability, or to object to processing under POPIA.
             </p>
-            <CookieSettingsLink className="mb-6 inline-block text-sm text-primary underline hover:no-underline" />
 
             <Card>
               <CardHeader>

@@ -127,7 +127,7 @@ const Jobseekers = () => {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />
-        <main id="main-content" className="pt-24 pb-16">
+        <main className="pt-24 pb-16">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-center h-64">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -142,7 +142,7 @@ const Jobseekers = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30">
       <Navbar />
-      <main id="main-content" className="pt-24 pb-16">
+      <main className="pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-7xl">
           {/* Header */}
           <div className="mb-8 bg-white/80 backdrop-blur-sm border border-slate-200 rounded-2xl p-6 shadow-sm">
