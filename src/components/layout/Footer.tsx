@@ -7,6 +7,7 @@ const Footer = () => {
       { name: "Job Matcher", href: "/job-matcher" },
       { name: "Upskilling", href: "/upskilling" },
       { name: "Resume Builder", href: "/resume-builder" },
+      { name: "30-Day Job Sprint", href: "/30-day-job-sprint" },
       { name: "Knowledge Hub", href: "/knowledge-hub" },
     ],
     "For Employers": [
