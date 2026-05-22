@@ -43,6 +43,7 @@ import FacetJobs from "./pages/FacetJobs";
 import SitemapRedirect from "./pages/SitemapRedirect";
 import Ads from "./pages/Ads";
 import ProfessionalProfiles from "./pages/ProfessionalProfiles";
+import RecruitmentSuitePage from "./pages/RecruitmentSuite";
 import RemoteSprintModal from "./components/RemoteSprintModal";
 import ConciergeChat from "./components/ConciergeChat";
 import NotFound from "./pages/NotFound";
@@ -120,6 +121,7 @@ const App = () => {
               <Route path="/contact" element={<Contact />} />
               <Route path="/professional-profiles" element={<ProfessionalProfiles />} />
               <Route path="/professional-profiles/page/:pageNum" element={<ProfessionalProfiles />} />
+              <Route path="/recruitment-suite" element={<RecruitmentSuitePage />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminLayout />}>

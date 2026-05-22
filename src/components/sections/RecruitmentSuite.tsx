@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Settings, Users, CreditCard, Calendar } from "lucide-react";
-import RecruitmentSuiteModal from "@/components/RecruitmentSuiteModal";
+import { Link } from "react-router-dom";
 
 const features = [
   {
@@ -23,8 +22,6 @@ const features = [
 ];
 
 const RecruitmentSuite = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   return (
     <section className="py-20 relative overflow-hidden bg-black">
       {/* Background with subtle gradient */}
@@ -60,22 +57,21 @@ const RecruitmentSuite = () => {
             ))}
           </div>
 
-          <Button 
-            size="lg" 
-            className="bg-white text-black hover:bg-white/90"
-            onClick={() => setIsModalOpen(true)}
-          >
-            Join Early Access Waiting List
-          </Button>
+          <Link to="/recruitment-suite">
+            <Button 
+              size="lg" 
+              className="bg-white text-black hover:bg-white/90"
+            >
+              Join Early Access Waiting List
+            </Button>
+          </Link>
 
           <p className="text-sm text-white/60 mt-6 flex items-center justify-center gap-2">
             <Calendar className="h-4 w-4" />
-            Launching Q1 2026 • Free to join waiting list • Priority access for early adopters
+            Launching October 2026 • Free to join waiting list • Priority access for early adopters
           </p>
         </div>
       </div>
-
-      <RecruitmentSuiteModal open={isModalOpen} onOpenChange={setIsModalOpen} />
     </section>
   );
 };

@@ -1,12 +1,8 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Briefcase, Building2, TrendingUp, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import RecruitmentSuiteModal from "@/components/RecruitmentSuiteModal";
 
 const Hero = () => {
-  const [isRecruitmentModalOpen, setIsRecruitmentModalOpen] = useState(false);
-  
   const badges = [
     { icon: Briefcase, text: "10,000+ Curated Job Listings" },
     { icon: Building2, text: "Verified SA Companies" },
@@ -44,18 +40,16 @@ const Hero = () => {
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
-            <Button 
-              variant="hero-outline" 
-              size="xl"
-              onClick={() => setIsRecruitmentModalOpen(true)}
-            >
-              For Employers & Recruiters
-            </Button>
+            <Link to="/recruitment-suite">
+              <Button variant="hero-outline" size="xl">
+                For Employers &amp; Recruiters
+              </Button>
+            </Link>
           </div>
 
           {/* Trust badges */}
           <div className="flex flex-wrap justify-center gap-4 md:gap-6 animate-slide-up" style={{ animationDelay: "0.3s" }}>
-            {badges.map((badge, index) => (
+            {badges.map((badge) => (
               <div
                 key={badge.text}
                 className="flex items-center gap-2 px-4 py-2 bg-background rounded-full border border-border shadow-sm"
@@ -67,11 +61,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-      
-      <RecruitmentSuiteModal 
-        open={isRecruitmentModalOpen}
-        onOpenChange={setIsRecruitmentModalOpen}
-      />
     </section>
   );
 };

@@ -14,7 +14,7 @@ const Footer = () => {
       { name: "Browse Candidates", href: "/professional-profiles" },
       { name: "Claim Your Profile", href: "#claim-profile" },
       { name: "Whitepaper 2026/27", href: "#" },
-      { name: "Recruitment Suite", href: "#suite" },
+      { name: "Recruitment Suite", href: "/recruitment-suite" },
     ],
     Company: [
       { name: "About", href: "/about" },
