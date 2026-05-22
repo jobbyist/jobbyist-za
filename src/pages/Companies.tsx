@@ -12,6 +12,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import CompanyLogo from '@/components/ui/company-logo';
 import { Building2, MapPin, Users, Search, CheckCircle } from 'lucide-react';
 import { useState } from 'react';
+import SponsoredBannerSlot from '@/components/SponsoredBannerSlot';
 
 const Companies = () => {
   const [search, setSearch] = useState('');
@@ -184,6 +185,9 @@ const Companies = () => {
               </p>
             </div>
           )}
+
+          {/* Sponsored slot — one "Place Your Ad Here" placeholder */}
+          <SponsoredBannerSlot slotKey="resource_hub_mid" className="mt-8" />
         </div>
       </div>
 

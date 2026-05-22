@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { SEOHead } from "@/components/SEOHead";
+import SponsoredBannerSlot from "@/components/SponsoredBannerSlot";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -282,6 +283,8 @@ const KnowledgeHub = () => {
         {/* Main Content with Tabs */}
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4">
+            {/* Guide top banner — after hero, before tabs */}
+            <SponsoredBannerSlot slotKey="guide_top" className="mb-8" />
             <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
               <TabsList className="grid w-full grid-cols-2 lg:grid-cols-7 mb-6">
                 <TabsTrigger value="interview-packs">Interview Packs</TabsTrigger>
@@ -681,6 +684,8 @@ const KnowledgeHub = () => {
                 </div>
               </TabsContent>
             </Tabs>
+            {/* Guide bottom banner — after tabs, before CTA */}
+            <SponsoredBannerSlot slotKey="guide_bottom" className="mt-8" />
           </div>
         </section>
 

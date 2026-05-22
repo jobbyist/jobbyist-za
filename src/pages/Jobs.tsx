@@ -12,11 +12,13 @@ import Footer from '@/components/layout/Footer';
 import { SEOHead } from '@/components/SEOHead';
 import { Search, MapPin, Wifi, Briefcase, Clock, ArrowRight, Building2, DollarSign, ChevronLeft, ChevronRight } from 'lucide-react';
 import { formatSalary } from '@/lib/countries';
-import GoogleAdsense from '@/components/GoogleAdsense';
+import SponsoredBannerSlot from '@/components/SponsoredBannerSlot';
 import ExpiredBadge from '@/components/ExpiredBadge';
 import { isJobExpired } from '@/lib/jobUtils';
 
 const JOBS_PER_PAGE = 12;
+/** Number of job cards to show before inserting the mid-listing sponsored banner */
+const JOBS_BEFORE_BANNER = 6;
 
 const Jobs = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -241,110 +243,111 @@ const Jobs = () => {
                 Clear Filters
               </Button>
             </div>
-          ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {jobs.flatMap((job, index) => {
-                const elements = [
-                  <Link
-                    key={job.id}
-                    to={`/job/${job.id}`}
-                    className="group bg-card rounded-xl p-6 border hover:border-primary/20 hover:shadow-xl transition-all duration-300"
-                  >
-                    {/* Header */}
-                    <div className="flex items-start gap-4 mb-4">
-                      <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                        {job.company?.logo_url ? (
-                          <img src={job.company.logo_url} alt={job.company.name} className="w-8 h-8 object-contain" />
-                        ) : (
-                          <Building2 className="h-6 w-6 text-primary" />
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors line-clamp-1">
-                          {job.title}
-                        </h3>
-                        <p className="text-sm text-muted-foreground">{job.company?.name}</p>
-                      </div>
-                    </div>
+          ) : (() => {
+            // Split into two chunks; insert sponsored banner between them
+            const firstChunk = jobs.slice(0, JOBS_BEFORE_BANNER);
+            const secondChunk = jobs.slice(JOBS_BEFORE_BANNER);
 
-                    {/* Meta info */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <MapPin className="h-3 w-3" />
-                        <span>{job.location}</span>
-                      </div>
-                      {job.is_remote && (
-                        <div className="flex items-center gap-1 text-xs text-primary">
-                          <Wifi className="h-3 w-3" />
-                          <span>Remote OK</span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Badges */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      <Badge variant="secondary" className="text-xs">{job.job_type}</Badge>
-                      {job.experience_level && (
-                        <Badge variant="outline" className="text-xs">{job.experience_level}</Badge>
-                      )}
-                      {isJobExpired(job.posted_at) && <ExpiredBadge className="text-xs" />}
-                    </div>
-
-                    {/* Salary */}
-                    {job.salary_min && job.salary_max && (
-                      <p className="text-sm font-semibold gradient-brand-text mb-3">
-                        {formatSalary(job.salary_min, job.country)} - {formatSalary(job.salary_max, job.country)}
-                      </p>
+            const renderJobCard = (job: typeof jobs[number]) => (
+              <Link
+                key={job.id}
+                to={`/job/${job.id}`}
+                className="group bg-card rounded-xl p-6 border hover:border-primary/20 hover:shadow-xl transition-all duration-300"
+              >
+                {/* Header */}
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    {job.company?.logo_url ? (
+                      <img src={job.company.logo_url} alt={job.company.name} className="w-8 h-8 object-contain" />
+                    ) : (
+                      <Building2 className="h-6 w-6 text-primary" />
                     )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors line-clamp-1">
+                      {job.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">{job.company?.name}</p>
+                  </div>
+                </div>
 
-                    {/* Description */}
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                      {job.description}
-                    </p>
+                {/* Meta info */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                    <MapPin className="h-3 w-3" />
+                    <span>{job.location}</span>
+                  </div>
+                  {job.is_remote && (
+                    <div className="flex items-center gap-1 text-xs text-primary">
+                      <Wifi className="h-3 w-3" />
+                      <span>Remote OK</span>
+                    </div>
+                  )}
+                </div>
 
-                    {/* Skills */}
-                    {job.skills.length > 0 && (
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {job.skills.slice(0, 3).map((skill) => (
-                          <span key={skill} className="text-xs px-2 py-1 bg-muted rounded-md">
-                            {skill}
-                          </span>
-                        ))}
-                        {job.skills.length > 3 && (
-                          <span className="text-xs text-muted-foreground">+{job.skills.length - 3} more</span>
-                        )}
-                      </div>
+                {/* Badges */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <Badge variant="secondary" className="text-xs">{job.job_type}</Badge>
+                  {job.experience_level && (
+                    <Badge variant="outline" className="text-xs">{job.experience_level}</Badge>
+                  )}
+                  {isJobExpired(job.posted_at) && <ExpiredBadge className="text-xs" />}
+                </div>
+
+                {/* Salary */}
+                {job.salary_min && job.salary_max && (
+                  <p className="text-sm font-semibold gradient-brand-text mb-3">
+                    {formatSalary(job.salary_min, job.country)} - {formatSalary(job.salary_max, job.country)}
+                  </p>
+                )}
+
+                {/* Description */}
+                <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                  {job.description}
+                </p>
+
+                {/* Skills */}
+                {job.skills.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {job.skills.slice(0, 3).map((skill) => (
+                      <span key={skill} className="text-xs px-2 py-1 bg-muted rounded-md">
+                        {skill}
+                      </span>
+                    ))}
+                    {job.skills.length > 3 && (
+                      <span className="text-xs text-muted-foreground">+{job.skills.length - 3} more</span>
                     )}
+                  </div>
+                )}
 
-                    {/* Posted time */}
-                    <div className="flex items-center justify-between text-xs text-muted-foreground">
-                      <div className="flex items-center gap-1">
-                        <Clock className="h-3 w-3" />
-                        <span>Posted {new Date(job.posted_at).toLocaleDateString()}</span>
-                      </div>
-                      <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </Link>
-                ];
-                
-                // Insert ad after every 3rd job (index 2, 5, 8, etc.)
-                if ((index + 1) % 3 === 0 && index < jobs.length - 1) {
-                  elements.push(
-                    <div key={`ad-${index}`} className="bg-card rounded-xl p-6 border flex items-center justify-center min-h-[250px]">
-                      <GoogleAdsense
-                        client="ca-pub-1237323355260727"
-                        slot="9775464302"
-                        format="auto"
-                        responsive={true}
-                      />
-                    </div>
-                  );
-                }
-                
-                return elements;
-              })}
-            </div>
-          )}
+                {/* Posted time */}
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  <div className="flex items-center gap-1">
+                    <Clock className="h-3 w-3" />
+                    <span>Posted {new Date(job.posted_at).toLocaleDateString()}</span>
+                  </div>
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+            );
+
+            return (
+              <>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {firstChunk.map(renderJobCard)}
+                </div>
+
+                {/* Affiliate banner between job chunks — full width, no layout shift */}
+                <SponsoredBannerSlot slotKey="job_list_mid" className="px-1" />
+
+                {secondChunk.length > 0 && (
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                    {secondChunk.map(renderJobCard)}
+                  </div>
+                )}
+              </>
+            );
+          })()}
 
           {/* Pagination Controls */}
           {!loading && jobs.length > 0 && (
