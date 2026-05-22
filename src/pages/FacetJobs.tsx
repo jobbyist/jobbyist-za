@@ -25,6 +25,7 @@ import {
   getFacetIntro,
 } from "@/lib/seoFacets";
 import { generateCanonicalUrl } from "@/lib/utils";
+import SponsoredBannerSlot from "@/components/SponsoredBannerSlot";
 
 type FacetMode = "province" | "city" | "type" | "category" | "combo";
 
@@ -174,6 +175,9 @@ const FacetJobs = ({ mode }: Props) => {
               </p>
             )}
           </header>
+
+          {/* Sponsored banner after header */}
+          <SponsoredBannerSlot slotKey="category_top" />
 
           {loading ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">

@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, Briefcase, MapPin, Wifi, Building2 } from "lucide-react";
 import { categories, getCategory, getLocation, locationSlugs } from "@/lib/categories";
+import SponsoredBannerSlot from "@/components/SponsoredBannerSlot";
 
 const CategoryJobs = () => {
   const { category, location } = useParams<{ category: string; location?: string }>();
@@ -85,6 +86,9 @@ const CategoryJobs = () => {
               {cat!.description} {loc ? `Updated daily for ${loc.name}-based and remote-friendly opportunities.` : "Updated daily across all major SA cities and remote roles."}
             </p>
           </header>
+
+          {/* Sponsored banner — after header, before listings */}
+          <SponsoredBannerSlot slotKey="category_top" />
 
           {loading ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">

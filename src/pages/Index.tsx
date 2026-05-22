@@ -9,6 +9,7 @@ import RecruitmentSuite from "@/components/sections/RecruitmentSuite";
 import ResumeBuilder from "@/components/sections/ResumeBuilder";
 import Podcast from "@/components/sections/Podcast";
 import PromoStrip from "@/components/sections/PromoStrip";
+import SponsoredBannerSlot from "@/components/SponsoredBannerSlot";
 
 const Index = () => {
   return (
@@ -25,6 +26,7 @@ const Index = () => {
         <Hero />
         <FeaturedCompanies />
         <FeaturedJobs />
+        <SponsoredBannerSlot slotKey="homepage_mid" className="container mx-auto px-4" />
         <UpskillingPrograms />
         <PromoStrip />
         <ResumeBuilder />
