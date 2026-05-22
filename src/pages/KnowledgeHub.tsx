@@ -31,6 +31,7 @@ import {
 const KnowledgeHub = () => {
   const [selectedTab, setSelectedTab] = useState("interview-packs");
   const [modalOpen, setModalOpen] = useState(false);
+  const [auditOpen, setAuditOpen] = useState(false);
   const [modalConfig, setModalConfig] = useState<{ title: string; description: string; ctaText?: string; showForm?: boolean }>({
     title: "Coming Soon!",
     description: "We're working hard to bring you this exciting new feature. Stay tuned for updates!",
