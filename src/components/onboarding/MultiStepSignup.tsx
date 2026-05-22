@@ -164,7 +164,7 @@ const MultiStepSignup = () => {
         <p className="text-muted-foreground mb-6 max-w-md">
           Check your email for further details and click the link to verify your email and activate your account.
         </p>
-        <Button size="lg" className="gradient-brand" onClick={() => navigate("/jobs")}>
+        <Button size="lg" className="gradient-brand" onClick={() => navigate("/profile")}>
           Get Started <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       </div>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import VoiceVideoInterview from '@/components/onboarding/VoiceVideoInterview';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -31,7 +32,9 @@ import {
   Shield,
   AlertCircle,
   TrendingUp,
-  GraduationCap
+  GraduationCap,
+  Crown,
+  Mic
 } from 'lucide-react';
 import { activeCountries } from '@/lib/countries';
 
@@ -126,6 +129,36 @@ const Profile = () => {
       ...formData,
       skills: formData.skills.filter((s) => s !== skill),
     });
+  };
+
+
+  const [voiceUploading, setVoiceUploading] = useState(false);
+
+  const handleVoiceUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !user) return;
+    if (!file.type.startsWith('audio/')) {
+      toast.error('Please upload an audio file');
+      return;
+    }
+    if (file.size > 20 * 1024 * 1024) {
+      toast.error('Voice recording must be under 20MB');
+      return;
+    }
+
+    setVoiceUploading(true);
+    try {
+      const ext = file.name.split('.').pop() || 'webm';
+      const path = `${user.id}/communication-sample.${ext}`;
+      const { error } = await supabase.storage.from('resumes').upload(path, file, { upsert: true });
+      if (error) throw error;
+      await updateProfile({ communication_sample_url: path } as any);
+      toast.success('Voice sample uploaded successfully.');
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to upload voice sample');
+    } finally {
+      setVoiceUploading(false);
+    }
   };
 
   const handleVerifyEmail = async () => {
@@ -243,6 +276,57 @@ const Profile = () => {
           </Card>
 
           <div className="grid gap-6">
+            <Card className="border-primary/20 bg-primary/5">
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <TrendingUp className="h-5 w-5 text-primary" /> Profile Readiness Checker
+                </CardTitle>
+                <CardDescription>
+                  Keep completing your profile to reach 100% and unlock higher visibility.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <Progress value={profile?.profile_completion || 0} className="h-3" />
+                <p className="text-sm text-muted-foreground">Current readiness: <span className="font-semibold text-foreground">{profile?.profile_completion || 0}%</span></p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Crown className="h-5 w-5 text-primary" /> Upgrade To Pro
+                </CardTitle>
+                <CardDescription>Unlock premium interview prep, exclusive job access and higher ranking.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button onClick={() => navigate('/pro')} className="gradient-brand">Upgrade To Pro</Button>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>AI Interview Practice</CardTitle>
+                <CardDescription>Huzzle-style interview flow with spoken prompts, repeat question, and live captions.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <VoiceVideoInterview
+                  firstName={formData.first_name || 'Candidate'}
+                  onComplete={() => toast.success('Interview session complete!')}
+                  onSkip={() => toast.info('Interview skipped for now.')}
+                />
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2"><Mic className="h-5 w-5" /> Communication Voice Sample</CardTitle>
+                <CardDescription>Upload a 1–2 minute voice recording introducing yourself and answering general interview questions.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <Input type="file" accept="audio/*" onChange={handleVoiceUpload} disabled={voiceUploading} />
+                <p className="text-xs text-muted-foreground">Use MP3, WAV, M4A, or WebM. Max 20MB.</p>
+              </CardContent>
+            </Card>
             {/* Basic Info */}
             <Card>
               <CardHeader>

@@ -283,7 +283,7 @@ const KnowledgeHub = () => {
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4">
             <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 lg:grid-cols-7 mb-12">
+              <TabsList className="grid w-full grid-cols-2 lg:grid-cols-7 mb-6">
                 <TabsTrigger value="interview-packs">Interview Packs</TabsTrigger>
                 <TabsTrigger value="templates">Templates</TabsTrigger>
                 <TabsTrigger value="employer">Employer</TabsTrigger>
@@ -295,8 +295,9 @@ const KnowledgeHub = () => {
 
               {/* Interview Packs Section */}
               <TabsContent value="interview-packs" className="space-y-8">
+                <p className="text-sm text-muted-foreground text-center">Select a category above, then explore each title below.</p>
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl md:text-4xl font-bold mb-4">Top 50 Interview Questions by Role</h2>
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4">Interview Prep Packs</h2>
                   <p className="text-muted-foreground max-w-2xl mx-auto">
                     Comprehensive interview packs with questions, scorecards, and model answers for high-demand roles
                   </p>

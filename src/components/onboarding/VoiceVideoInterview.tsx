@@ -36,6 +36,8 @@ const VoiceVideoInterview = ({ firstName, onComplete, onSkip }: Props) => {
   const [listening, setListening] = useState(false);
   const [speaking, setSpeaking] = useState(false);
   const [sttSupported, setSttSupported] = useState(true);
+  const [liveQuestionCaption, setLiveQuestionCaption] = useState("");
+  const [liveAnswerCaption, setLiveAnswerCaption] = useState("");
 
   // ---- Camera ----
   useEffect(() => {
@@ -90,7 +92,9 @@ const VoiceVideoInterview = ({ firstName, onComplete, onSkip }: Props) => {
     r.onresult = (e: any) => {
       let text = "";
       for (let i = e.resultIndex; i < e.results.length; i++) text += e.results[i][0].transcript;
+      const merged = (reply + " " + text).trim();
       setReply((prev) => (prev + " " + text).trim());
+      setLiveAnswerCaption(merged);
     };
     r.onend = () => setListening(false);
     r.onerror = () => setListening(false);
@@ -115,6 +119,7 @@ const VoiceVideoInterview = ({ firstName, onComplete, onSkip }: Props) => {
       if (error) throw error;
       const msg = data?.message || "Hi there! Tell me about your career goals over the next 12-24 months.";
       setChat([{ role: "assistant", content: msg }]);
+      setLiveQuestionCaption(msg);
       speak(msg);
     } catch (e: any) {
       toast.error("Couldn't start interview — you can skip.");
@@ -143,6 +148,8 @@ const VoiceVideoInterview = ({ firstName, onComplete, onSkip }: Props) => {
       } else {
         const msg = data?.message || "Tell me more.";
         setChat([...next, { role: "assistant", content: msg }]);
+        setLiveQuestionCaption(msg);
+        setLiveAnswerCaption("");
         speak(msg);
       }
     } catch {
@@ -198,6 +205,11 @@ const VoiceVideoInterview = ({ firstName, onComplete, onSkip }: Props) => {
       </div>
 
       <div className="space-y-2">
+        <div className="rounded-md border bg-muted/30 p-3 text-sm space-y-2">
+          <p><span className="font-semibold">AI live caption:</span> {liveQuestionCaption || "Waiting for next question..."}</p>
+          <p><span className="font-semibold">Your live caption:</span> {liveAnswerCaption || reply || "Start speaking to see your transcription."}</p>
+        </div>
+
         <Textarea
           value={reply}
           onChange={(e) => setReply(e.target.value)}
@@ -216,6 +228,9 @@ const VoiceVideoInterview = ({ firstName, onComplete, onSkip }: Props) => {
                 <MicOff className="h-4 w-4 mr-1" /> Stop
               </Button>
             )}
+            <Button type="button" variant="outline" onClick={() => { const lastQ = [...chat].reverse().find((m) => m.role === "assistant")?.content; if (lastQ) { setLiveQuestionCaption(lastQ); speak(lastQ); } }} disabled={!chat.length}>
+              Repeat question
+            </Button>
             <Button type="button" variant="ghost" onClick={onSkip}>
               <SkipForward className="h-4 w-4 mr-1" /> Skip
             </Button>
@@ -225,7 +240,7 @@ const VoiceVideoInterview = ({ firstName, onComplete, onSkip }: Props) => {
           </Button>
         </div>
         <p className="text-[11px] text-muted-foreground text-center">
-          Powered by Gemini · We never record or store video.
+          Powered by Gemini · Voice prompt plays before you answer. We never record or store video.
         </p>
       </div>
     </div>
