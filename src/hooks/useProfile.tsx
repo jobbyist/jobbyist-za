@@ -20,8 +20,8 @@ export interface Profile {
   portfolio_url: string | null;
   years_of_experience: number;
   skills: string[];
-  education: any[];
-  work_experience: any[];
+  education: ProfileEducation[];
+  work_experience: ProfileWorkExperience[];
   verification_status: 'pending' | 'under_review' | 'approved' | 'rejected';
   verification_notes: string | null;
   profile_completion: number;
@@ -30,15 +30,38 @@ export interface Profile {
   updated_at: string;
 }
 
+export interface ProfileEducation {
+  institution?: string;
+  degree?: string;
+  field?: string;
+  start_date?: string;
+  end_date?: string;
+  description?: string;
+}
+
+export interface ProfileWorkExperience {
+  company?: string;
+  title?: string;
+  location?: string;
+  start_date?: string;
+  end_date?: string;
+  description?: string;
+}
+
+type ProfileDbRecord = Omit<Profile, 'education' | 'work_experience'> & {
+  education: unknown;
+  work_experience: unknown;
+};
+
 export function useProfile() {
   const { user } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const mapDbToProfile = (data: any): Profile => ({
+  const mapDbToProfile = (data: ProfileDbRecord): Profile => ({
     ...data,
-    education: Array.isArray(data.education) ? data.education : [],
-    work_experience: Array.isArray(data.work_experience) ? data.work_experience : [],
+    education: Array.isArray(data.education) ? (data.education as ProfileEducation[]) : [],
+    work_experience: Array.isArray(data.work_experience) ? (data.work_experience as ProfileWorkExperience[]) : [],
   });
 
   useEffect(() => {
@@ -62,7 +85,7 @@ export function useProfile() {
 
       if (error) throw error;
       setProfile(data ? mapDbToProfile(data) : null);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error fetching profile:', error);
     } finally {
       setLoading(false);
@@ -73,7 +96,7 @@ export function useProfile() {
     if (!user) return { error: new Error('Not authenticated') };
 
     try {
-      const dbUpdates: any = { ...updates };
+      const dbUpdates: Partial<Profile> = { ...updates };
       const { error } = await supabase
         .from('profiles')
         .update(dbUpdates)
@@ -84,7 +107,7 @@ export function useProfile() {
       await fetchProfile();
       toast.success('Profile updated successfully');
       return { error: null };
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error updating profile:', error);
       toast.error('Failed to update profile');
       return { error };
@@ -116,7 +139,7 @@ export function useProfile() {
       await updateProfile({ resume_url: fileName });
       
       return { error: null, url: signedUrlData.signedUrl };
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error uploading resume:', error);
       toast.error('Failed to upload resume');
       return { error, url: null };
@@ -156,7 +179,7 @@ export function useProfile() {
       await updateProfile({ avatar_url: publicUrl });
       
       return { error: null, url: publicUrl };
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error uploading avatar:', error);
       toast.error('Failed to upload avatar');
       return { error, url: null };
