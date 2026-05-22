@@ -75,11 +75,25 @@ const KnowledgeHub = () => {
                 <TabsTrigger value="trends">Trends</TabsTrigger>
               </TabsList>
 
-              {/* Interview Packs Section - text changed, buttons trigger modal */}
+              {/* Interview Packs Section */}
               <TabsContent value="interview-packs" className="space-y-8">
-                <div className="text-center mb-12">
+                <div className="text-center mb-12 max-w-3xl mx-auto">
                   <h2 className="text-3xl md:text-4xl font-bold mb-4">Job Interview Preparation Packs</h2>
-                  {/* ... rest of section with updated Preview and Get Full Pack buttons using openComingSoon */}
+                  <p className="text-muted-foreground mb-6">
+                    Get a personalised Free Resume/CV Audit and an Interview Prep Starter Pack curated for your career goals.
+                  </p>
+                  <div className="flex flex-wrap gap-3 justify-center">
+                    <Button size="lg" variant="brand" className="gap-2" onClick={() => setAuditOpen(true)}>
+                      <Eye className="h-4 w-4" /> Preview
+                    </Button>
+                    <Button size="lg" variant="outline" className="gap-2" onClick={() => openComingSoon({
+                      title: "Full Interview Pack",
+                      description: "Get notified when the full pack with role-specific question banks and STAR templates is ready.",
+                      ctaText: "Notify me",
+                    })}>
+                      <Download className="h-4 w-4" /> Get Full Pack
+                    </Button>
+                  </div>
                 </div>
               </TabsContent>
 
