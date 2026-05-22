@@ -46,6 +46,7 @@ import ProfessionalProfiles from "./pages/ProfessionalProfiles";
 import RecruitmentSuitePage from "./pages/RecruitmentSuite";
 import ThirtyDayJobSprint from "./pages/ThirtyDayJobSprint";
 import Podcast from "./pages/Podcast";
+import Whitepaper from "./pages/Whitepaper";
 import RemoteSprintModal from "./components/RemoteSprintModal";
 import ConciergeChat from "./components/ConciergeChat";
 import NotFound from "./pages/NotFound";
@@ -128,6 +129,7 @@ const App = () => {
               <Route path="/recruitment-suite" element={<RecruitmentSuitePage />} />
               <Route path="/30-day-job-sprint" element={<ThirtyDayJobSprint />} />
               <Route path="/podcast" element={<Podcast />} />
+              <Route path="/whitepaper" element={<Whitepaper />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminLayout />}>
