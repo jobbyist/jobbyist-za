@@ -131,10 +131,4 @@ const KnowledgeHub = () => {
   );
 };
 
-        <Footer />
-      </main>
-    </div>
-  );
-};
-
 export default KnowledgeHub;
