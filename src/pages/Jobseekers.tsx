@@ -140,12 +140,12 @@ const Jobseekers = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30">
       <Navbar />
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-7xl">
           {/* Header */}
-          <div className="mb-8">
+          <div className="mb-8 bg-white/80 backdrop-blur-sm border border-slate-200 rounded-2xl p-6 shadow-sm">
             <h1 className="text-3xl font-bold mb-2">Jobseeker Profiles</h1>
             <p className="text-muted-foreground">
               Discover talented South African professionals ready for their next opportunity
@@ -179,7 +179,7 @@ const Jobseekers = () => {
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                className="pl-10"
+                className="pl-10 bg-white/80 backdrop-blur-sm border-slate-200"
                 placeholder="Search by name, skills, location..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -199,7 +199,7 @@ const Jobseekers = () => {
             {filteredJobseekers.map((jobseeker) => (
               <Card 
                 key={jobseeker.id} 
-                className="hover:shadow-lg transition-shadow cursor-pointer"
+                className="hover:shadow-lg transition-all duration-300 cursor-pointer bg-white/90 backdrop-blur-sm border-slate-200"
                 onClick={() => navigate(`/jobseekers/${jobseeker.id}`)}
               >
                 <CardHeader>

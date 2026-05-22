@@ -26,7 +26,7 @@ const FeaturedCompanies = () => {
     <section id="companies" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured South African Companies</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Companies Hiring Now</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Discover career opportunities with top employers across South Africa
           </p>
