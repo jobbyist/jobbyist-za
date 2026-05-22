@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useJobs } from "@/hooks/useJobs";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -33,6 +33,7 @@ interface Props {
 }
 
 const FacetJobs = ({ mode }: Props) => {
+  const locationState = useLocation();
   const params = useParams<{
     province?: string;
     city?: string;
@@ -101,6 +102,9 @@ const FacetJobs = ({ mode }: Props) => {
 
   // Low-quality facet guard: no province/city + 0 jobs => noindex
   const lowQuality = totalCount === 0 && !category;
+  const hasUnexpectedParams = new URLSearchParams(locationState.search).toString().length > 0;
+  const isIndexableFacetRoute = mode === "province" || mode === "city" || mode === "category";
+  const shouldNoindex = lowQuality || mode === "combo" || mode === "type" || hasUnexpectedParams || !isIndexableFacetRoute;
 
   // Related facets for internal linking
   const relatedFacets = useMemo(() => {
@@ -140,7 +144,7 @@ const FacetJobs = ({ mode }: Props) => {
         canonicalUrl={canonical}
         keywords={[city, province, jobType, category, "South Africa", "Jobbyist ZA"].filter(Boolean) as string[]}
         structuredData={structuredData}
-        noindex={lowQuality}
+        noindex={shouldNoindex}
       />
       <Navbar />
       <main id="main-content" className="pt-24 pb-16">

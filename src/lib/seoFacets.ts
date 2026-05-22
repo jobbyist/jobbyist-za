@@ -173,7 +173,7 @@ export function getFacetDescription(params: FacetParams, jobCount?: number): str
 export function getFacetPath(params: FacetParams): string {
   const { province, city, jobType, category } = params;
   if (city && jobType && category) {
-    return `/jobs/${slugify(city)}/${slugify(jobType)}/${slugify(category)}`;
+    return `/jobs/combo/${slugify(city)}/${slugify(jobType)}/${slugify(category)}`;
   }
   if (city) return `/jobs/cities/${slugify(city)}`;
   if (province) return `/jobs/provinces/${slugify(province)}`;

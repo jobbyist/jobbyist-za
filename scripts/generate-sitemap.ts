@@ -15,8 +15,9 @@ if (!supabaseUrl || !supabaseKey) {
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const canonicalFacets = {
-  locations: ['johannesburg', 'cape-town', 'durban', 'pretoria', 'remote'],
-  categories: ['software-engineering', 'finance', 'marketing', 'sales', 'data-science'],
+  provinces: ['gauteng', 'western-cape', 'kwazulu-natal', 'eastern-cape'],
+  cities: ['johannesburg', 'cape-town', 'durban', 'pretoria', 'sandton', 'gqeberha'],
+  categories: ['software-development', 'finance', 'marketing', 'sales', 'data-and-analytics', 'engineering'],
 };
 
 const safeDate = (value?: string | null) => {
@@ -41,8 +42,9 @@ async function generateSitemap() {
     ['/about', '0.5', 'monthly'],
   ].forEach(([path, priority, changefreq]) => push(`${baseUrl}${path}`, priority, changefreq));
 
-  canonicalFacets.locations.forEach((loc) => push(`${baseUrl}/jobs/${loc}`, '0.8', 'daily'));
-  canonicalFacets.categories.forEach((cat) => push(`${baseUrl}/jobs/category/${cat}`, '0.8', 'daily'));
+  canonicalFacets.provinces.forEach((province) => push(`${baseUrl}/jobs/provinces/${province}`, '0.8', 'daily'));
+  canonicalFacets.cities.forEach((city) => push(`${baseUrl}/jobs/cities/${city}`, '0.8', 'daily'));
+  canonicalFacets.categories.forEach((cat) => push(`${baseUrl}/jobs/categories/${cat}`, '0.8', 'daily'));
 
   const { data: jobs } = await supabase
     .from('jobs')
