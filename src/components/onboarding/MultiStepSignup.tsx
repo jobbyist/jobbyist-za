@@ -45,7 +45,7 @@ const MultiStepSignup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [interviewDone, setInterviewDone] = useState(false);
+  const [onboardingComplete, setOnboardingComplete] = useState(false);
 
   const handleAvatar = (f: File) => {
     if (f.size > 3 * 1024 * 1024) { toast.error("Image must be under 3MB"); return; }
@@ -144,7 +144,7 @@ const MultiStepSignup = () => {
         onboarding_completed_at: new Date().toISOString(),
       }).eq("user_id", u.id);
       toast.success("Account created successfully.");
-      setInterviewDone(true);
+      setOnboardingComplete(true);
     } catch (e: any) {
       toast.error(e.message || "Signup failed");
     } finally {
@@ -153,7 +153,7 @@ const MultiStepSignup = () => {
   }
 
   // ===== Welcome screen (final) =====
-  if (interviewDone) {
+  if (onboardingComplete) {
     return (
       <div className="min-h-[600px] flex flex-col items-center justify-center text-center px-4">
         <img src={welcomeHero} alt="Welcome to Jobbyist" loading="eager"

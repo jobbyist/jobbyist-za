@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import VoiceVideoInterview from '@/components/onboarding/VoiceVideoInterview';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -321,14 +320,16 @@ const Profile = () => {
             <Card>
               <CardHeader>
                 <CardTitle>AI Interview Practice</CardTitle>
-                <CardDescription>Huzzle-style interview flow with spoken prompts, repeat question, and live captions.</CardDescription>
+                <CardDescription>Complete your profile to unlock Huzzle-style AI interview practice (Coming Soon)</CardDescription>
               </CardHeader>
               <CardContent>
-                <VoiceVideoInterview
-                  firstName={formData.first_name || 'Candidate'}
-                  onComplete={() => toast.success('Interview session complete!')}
-                  onSkip={() => toast.info('Interview skipped for now.')}
-                />
+                <div className="text-center py-8">
+                  <Mic className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+                  <p className="text-muted-foreground mb-4">
+                    AI-powered interview practice with spoken prompts and live transcription.
+                  </p>
+                  <Badge variant="secondary">Coming Soon</Badge>
+                </div>
               </CardContent>
             </Card>
 

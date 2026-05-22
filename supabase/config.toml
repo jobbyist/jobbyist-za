@@ -23,3 +23,6 @@ verify_jwt = false
 
 [functions.sitemap]
 verify_jwt = false
+
+[functions.send-job-application]
+verify_jwt = false
