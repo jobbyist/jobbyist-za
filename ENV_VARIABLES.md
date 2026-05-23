@@ -11,6 +11,9 @@ These variables are used by the Vite frontend application and must be prefixed w
 VITE_SUPABASE_PROJECT_ID="vkwnhhwacizjiwusbmcm"
 VITE_SUPABASE_PUBLISHABLE_KEY="your-anon-public-key-here"
 VITE_SUPABASE_URL="https://vkwnhhwacizjiwusbmcm.supabase.co"
+
+# Whitepaper access endpoint override (optional)
+VITE_WHITEPAPER_ACCESS_REQUEST_ENDPOINT="https://your-form-handler.example.com/whitepaper"
 ```
 
 **How to find these values:**
@@ -35,6 +38,11 @@ SUPABASE_SERVICE_ROLE_KEY="your-service-role-key-here"
 
 # Email Service (Required for job application emails)
 RESEND_API_KEY="re_your_resend_api_key"
+
+# Lead form transactional email routing (optional, used by send-lead-form edge function)
+LEAD_FORMS_FROM="Jobbyist Forms <noreply@jobbyist.africa>"
+LEAD_FORMS_TO="support@jobbyist.africa"
+LEAD_FORMS_CC="privacy@jobbyist.africa,partnerships@jobbyist.africa"
 
 # AI Features (Optional - for AI job matching and interview)
 ANTHROPIC_API_KEY="sk-ant-your-anthropic-api-key"

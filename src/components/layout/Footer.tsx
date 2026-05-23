@@ -1,6 +1,16 @@
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import RelatedPlatformsSection from '@/components/sections/RelatedPlatformsSection';
 
 const Footer = () => {
+  const { pathname } = useLocation();
+  const hideRelatedPlatforms = [
+    '/recruitment-suite',
+    '/30-day-job-sprint',
+    '/professional-profiles',
+    '/whitepaper',
+  ].some((excludedPath) => pathname.includes(excludedPath));
+
   const footerLinks = {
     "For Job Seekers": [
       { name: "Browse Jobs", href: "/jobs" },
@@ -29,9 +39,11 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-black text-white py-16">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+    <>
+      {!hideRelatedPlatforms && <RelatedPlatformsSection />}
+      <footer className="bg-black text-white py-16">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* Brand */}
           <div className="lg:col-span-2">
             <img 
@@ -113,9 +125,10 @@ const Footer = () => {
               </ul>
             </div>
           ))}
+          </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 };
 

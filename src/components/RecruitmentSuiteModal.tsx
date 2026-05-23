@@ -13,6 +13,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Rocket, Users, Briefcase } from "lucide-react";
+import { submitLeadForm } from "@/lib/leadForms";
 
 interface RecruitmentSuiteModalProps {
   open: boolean;
@@ -33,6 +34,7 @@ const RecruitmentSuiteModal = ({
     companyName: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,6 +92,22 @@ const RecruitmentSuiteModal = ({
           throw error;
         }
       } else {
+        const leadResult = await submitLeadForm({
+          formType: "Recruitment Suite early access",
+          destination: "partnerships@jobbyist.africa",
+          replyTo: email,
+          honeypot,
+          fields: {
+            firstName,
+            lastName,
+            email,
+            userType,
+            companyName: form.companyName,
+          },
+        });
+        if (!leadResult.ok) {
+          throw new Error(leadResult.error || "Unable to deliver request");
+        }
         toast.success("You've been added to the Early Access Program!");
         setForm({
           email: "",
@@ -98,6 +116,7 @@ const RecruitmentSuiteModal = ({
           userType: "employer",
           companyName: "",
         });
+        setHoneypot("");
         setTimeout(() => onOpenChange(false), MODAL_CLOSE_DELAY);
       }
     } catch (error) {
@@ -166,6 +185,16 @@ const RecruitmentSuiteModal = ({
               value={form.companyName}
               onChange={(e) => setForm({ ...form, companyName: e.target.value })}
               placeholder="Your Company"
+            />
+          </div>
+          <div className="hidden" aria-hidden="true">
+            <Label htmlFor="rs-contact-number">Contact Number</Label>
+            <Input
+              id="rs-contact-number"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(event) => setHoneypot(event.target.value)}
             />
           </div>
 

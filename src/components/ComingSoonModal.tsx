@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { submitLeadForm, validateEmail } from "@/lib/leadForms";
 
 interface ComingSoonModalProps {
   open: boolean;
@@ -31,10 +32,12 @@ const ComingSoonModal = ({
 }: ComingSoonModalProps) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [honeypot, setHoneypot] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const { toast } = useToast();
 
-  const handleNotify = (e: React.FormEvent) => {
+  const handleNotify = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !email.trim()) {
       toast({
@@ -44,8 +47,38 @@ const ComingSoonModal = ({
       });
       return;
     }
-    // Simulate submission - in production, integrate with Supabase waitlist or email service
-    console.log("Notify signup:", { name, email, resource: title });
+
+    if (!validateEmail(email)) {
+      toast({
+        title: "Invalid email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setSubmitting(true);
+    const result = await submitLeadForm({
+      formType: "Coming soon notify request",
+      fields: {
+        resource: title,
+        name,
+        email,
+      },
+      honeypot,
+      replyTo: email,
+    });
+    setSubmitting(false);
+
+    if (!result.ok) {
+      toast({
+        title: "Submission failed",
+        description: result.error || "Please try again in a moment.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setSubmitted(true);
     toast({
       title: "Thank you!",
@@ -60,6 +93,8 @@ const ComingSoonModal = ({
       setSubmitted(false);
       setName("");
       setEmail("");
+      setHoneypot("");
+      setSubmitting(false);
     }, 300);
   };
 
@@ -108,9 +143,19 @@ const ComingSoonModal = ({
                 required 
               />
             </div>
-            <Button type="submit" variant="brand" className="w-full gap-2 mt-2">
+            <div className="hidden" aria-hidden="true">
+              <Label htmlFor="coming-soon-company">Company</Label>
+              <Input
+                id="coming-soon-company"
+                tabIndex={-1}
+                autoComplete="off"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+              />
+            </div>
+            <Button type="submit" variant="brand" className="w-full gap-2 mt-2" disabled={submitting}>
               <Bell className="h-4 w-4" />
-              {ctaText}
+              {submitting ? "Submitting..." : ctaText}
             </Button>
           </form>
         )}

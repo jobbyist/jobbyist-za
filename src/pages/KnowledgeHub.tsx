@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
 import { 
   BookOpen, 
   FileText, 
@@ -24,6 +25,8 @@ import {
   Star,
   Target
 } from "lucide-react";
+import { toast } from "sonner";
+import { submitLeadForm, validateEmail } from "@/lib/leadForms";
 
 const interviewPacks = [
   {
@@ -243,6 +246,37 @@ const industryTrends = [
 
 const ResourceCenter = () => {
   const [selectedTab, setSelectedTab] = useState("interview-packs");
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterHoneypot, setNewsletterHoneypot] = useState("");
+  const [isNewsletterSubmitting, setIsNewsletterSubmitting] = useState(false);
+
+  const handleNewsletterSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!validateEmail(newsletterEmail)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+
+    setIsNewsletterSubmitting(true);
+    const result = await submitLeadForm({
+      formType: "Resource center newsletter",
+      replyTo: newsletterEmail,
+      honeypot: newsletterHoneypot,
+      fields: {
+        email: newsletterEmail,
+      },
+    });
+    setIsNewsletterSubmitting(false);
+
+    if (!result.ok) {
+      toast.error(result.error || "Could not subscribe right now.");
+      return;
+    }
+
+    setNewsletterEmail("");
+    setNewsletterHoneypot("");
+    toast.success("Thanks for subscribing.");
+  };
 
   return (
     <div className="suite-page-shell">
@@ -671,14 +705,30 @@ const ResourceCenter = () => {
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <div className="flex gap-2 max-w-md mx-auto">
-                        <input 
-                          type="email" 
-                          placeholder="Enter your email" 
-                          className="flex-1 px-4 py-2 border rounded-lg"
-                        />
-                        <Button>Subscribe</Button>
-                      </div>
+                      <form onSubmit={handleNewsletterSubmit} className="max-w-md mx-auto space-y-2">
+                        <div className="flex gap-2">
+                          <Input
+                            type="email"
+                            placeholder="Enter your email"
+                            value={newsletterEmail}
+                            onChange={(event) => setNewsletterEmail(event.target.value)}
+                            required
+                          />
+                          <Button type="submit" disabled={isNewsletterSubmitting}>
+                            {isNewsletterSubmitting ? "Submitting..." : "Subscribe"}
+                          </Button>
+                        </div>
+                        <div className="hidden" aria-hidden="true">
+                          <label htmlFor="resource-company">Company</label>
+                          <Input
+                            id="resource-company"
+                            tabIndex={-1}
+                            autoComplete="off"
+                            value={newsletterHoneypot}
+                            onChange={(event) => setNewsletterHoneypot(event.target.value)}
+                          />
+                        </div>
+                      </form>
                     </CardContent>
                   </Card>
                 </div>

@@ -25,6 +25,7 @@ import {
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ArrowRight, Download, PlayCircle } from "lucide-react";
 import { toast } from "sonner";
+import { submitLeadForm, validateEmail } from "@/lib/leadForms";
 
 const WHITEPAPER_URL = "https://za.jobbyist.africa/whitepaper";
 const WHITEPAPER_PDF_PATH = "/whitepaperassets/whitepaper2026-27.pdf";
@@ -218,10 +219,19 @@ const faqs = [
   },
 ];
 
-const submitWhitepaperAccessRequest = async (payload: AccessRequestForm) => {
+const submitWhitepaperAccessRequest = async (payload: AccessRequestForm, honeypot = "") => {
   if (!WHITEPAPER_ACCESS_REQUEST_ENDPOINT) {
-    await new Promise((resolve) => setTimeout(resolve, 550));
-    return { ok: true, placeholder: true };
+    const result = await submitLeadForm({
+      formType: "Whitepaper access request",
+      destination: "partnerships@jobbyist.africa",
+      replyTo: payload.email,
+      honeypot,
+      fields: payload,
+    });
+    if (!result.ok) {
+      throw new Error(result.error || "Unable to submit whitepaper request");
+    }
+    return { ok: true, placeholder: false };
   }
 
   const response = await fetch(WHITEPAPER_ACCESS_REQUEST_ENDPOINT, {
@@ -241,6 +251,7 @@ const Whitepaper = () => {
   const [accessModalOpen, setAccessModalOpen] = useState(false);
   const [videoUnavailable, setVideoUnavailable] = useState(false);
   const [form, setForm] = useState<AccessRequestForm>(EMPTY_FORM);
+  const [honeypot, setHoneypot] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const glassCard = useMemo<React.CSSProperties>(
@@ -306,19 +317,26 @@ const Whitepaper = () => {
       toast.error("Please select stakeholder type and interest area.");
       return;
     }
+    if (!validateEmail(email)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
 
     setIsSubmitting(true);
     try {
-      const result = await submitWhitepaperAccessRequest({ ...form, email });
-      if (result.placeholder) {
-        toast.success("Thanks. Your request has been captured and our team will follow up directly.");
-      } else {
+      const result = await submitWhitepaperAccessRequest({ ...form, email }, honeypot);
+      if (result.ok) {
         toast.success("Thanks. Your access request has been received.");
       }
       setForm(EMPTY_FORM);
+      setHoneypot("");
       setAccessModalOpen(false);
-    } catch {
-      toast.error("We could not submit your request right now. Please check your connection and try again.");
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "We could not submit your request right now. Please check your connection and try again.",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -902,6 +920,16 @@ const Whitepaper = () => {
                 onChange={(event) => setFormField("message")(event.target.value)}
                 rows={4}
                 maxLength={1000}
+              />
+            </div>
+            <div className="hidden" aria-hidden="true">
+              <Label htmlFor="wp-website">Website</Label>
+              <Input
+                id="wp-website"
+                tabIndex={-1}
+                autoComplete="off"
+                value={honeypot}
+                onChange={(event) => setHoneypot(event.target.value)}
               />
             </div>
 

@@ -20,6 +20,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Rocket } from "lucide-react";
+import { submitLeadForm } from "@/lib/leadForms";
 
 export interface RecruitmentSuiteWaitlistModalProps {
   open: boolean;
@@ -58,6 +59,7 @@ const RecruitmentSuiteWaitlistModal = ({
 }: RecruitmentSuiteWaitlistModalProps) => {
   const [form, setForm] = useState<WaitlistForm>(EMPTY_FORM);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
 
   const set = (field: keyof WaitlistForm) => (value: string) =>
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -87,10 +89,6 @@ const RecruitmentSuiteWaitlistModal = ({
 
     setIsSubmitting(true);
     try {
-      // Submit to the existing waiting_list table.
-      // TODO: Extend the backend (edge function or API route) to persist the additional
-      // waitlist fields: phone, companySize, hiringVolume, primaryInterest, message, selectedPlan.
-      // These values are captured in the form state and should be forwarded once the schema is ready.
       const { error } = await supabase.from("waiting_list").insert({
         email,
         first_name: firstName || null,
@@ -106,10 +104,25 @@ const RecruitmentSuiteWaitlistModal = ({
           throw error;
         }
       } else {
+        const leadResult = await submitLeadForm({
+          formType: "Recruitment Suite waitlist",
+          destination: "partnerships@jobbyist.africa",
+          replyTo: email,
+          honeypot,
+          fields: {
+            selectedPlan,
+            ...form,
+            workEmail: email,
+          },
+        });
+        if (!leadResult.ok) {
+          throw new Error(leadResult.error || "Unable to deliver waitlist request");
+        }
         toast.success(
           "You're on the Recruitment Suite waitlist! We'll be in touch before launch."
         );
         setForm(EMPTY_FORM);
+        setHoneypot("");
         setTimeout(() => onOpenChange(false), MODAL_CLOSE_DELAY);
       }
     } catch {
@@ -270,6 +283,16 @@ const RecruitmentSuiteWaitlistModal = ({
               placeholder="Tell us about your hiring needs or any questions you have..."
               rows={3}
               maxLength={1000}
+            />
+          </div>
+          <div className="hidden" aria-hidden="true">
+            <Label htmlFor="rs-website">Website</Label>
+            <Input
+              id="rs-website"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(event) => setHoneypot(event.target.value)}
             />
           </div>
 

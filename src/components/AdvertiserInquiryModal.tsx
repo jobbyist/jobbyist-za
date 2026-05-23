@@ -12,6 +12,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { Megaphone } from 'lucide-react';
+import { submitLeadForm, validateEmail } from '@/lib/leadForms';
 
 interface AdvertiserInquiryModalProps {
   open: boolean;
@@ -23,23 +24,39 @@ const AdvertiserInquiryModal = ({ open, onOpenChange }: AdvertiserInquiryModalPr
   const [company, setCompany] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [honeypot, setHoneypot] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email) return;
+    if (!validateEmail(email)) {
+      toast.error('Please enter a valid work email');
+      return;
+    }
 
     setSubmitting(true);
 
-    const subject = encodeURIComponent(`Advertiser Enquiry – ${company || name}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nCompany: ${company}\nEmail: ${email}\n\nMessage:\n${message}`
-    );
-    const mailto = `mailto:support@jobbyist.africa?cc=primelifer@gmail.com&subject=${subject}&body=${body}`;
+    const result = await submitLeadForm({
+      formType: 'Advertiser enquiry',
+      destination: 'partnerships@jobbyist.africa',
+      replyTo: email,
+      honeypot,
+      fields: {
+        name,
+        company,
+        email,
+        message,
+      },
+    });
 
-    window.location.href = mailto;
+    if (!result.ok) {
+      toast.error(result.error || 'Could not send enquiry right now');
+      setSubmitting(false);
+      return;
+    }
 
-    toast.success("Opening your email client…");
+    toast.success("Enquiry sent successfully");
     setSubmitting(false);
     onOpenChange(false);
 
@@ -48,6 +65,7 @@ const AdvertiserInquiryModal = ({ open, onOpenChange }: AdvertiserInquiryModalPr
     setCompany('');
     setEmail('');
     setMessage('');
+    setHoneypot('');
   };
 
   return (
@@ -107,6 +125,17 @@ const AdvertiserInquiryModal = ({ open, onOpenChange }: AdvertiserInquiryModalPr
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Budget, target audience, campaign goals…"
               rows={3}
+            />
+          </div>
+
+          <div className="hidden" aria-hidden="true">
+            <Label htmlFor="adq-website">Website</Label>
+            <Input
+              id="adq-website"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
             />
           </div>
 

@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 import { ArrowLeft, Bell, MapPin, Users, Briefcase } from 'lucide-react';
 import { getCountryByCode, waitingListCountries, type CountryCode } from '@/lib/countries';
 import logoImage from '@/assets/jobbyist-logo.jpeg';
+import { submitLeadForm } from '@/lib/leadForms';
 
 const WaitingList = () => {
   const { countryCode } = useParams<{ countryCode: string }>();
@@ -23,6 +24,7 @@ const WaitingList = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [honeypot, setHoneypot] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -82,12 +84,28 @@ const WaitingList = () => {
           throw error;
         }
       } else {
+        const leadResult = await submitLeadForm({
+          formType: `Country waitlist (${country.code})`,
+          replyTo: email,
+          honeypot,
+          fields: {
+            firstName,
+            lastName,
+            email,
+            country: country.code,
+            userType,
+          },
+        });
+        if (!leadResult.ok) {
+          throw new Error(leadResult.error || 'Unable to deliver waitlist request');
+        }
         setSubmitted(true);
+        setHoneypot('');
         toast.success('You\'ve been added to the waiting list!');
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error joining waiting list:', error);
-      toast.error('Something went wrong. Please try again.');
+      toast.error(error instanceof Error ? error.message : 'Something went wrong. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -201,6 +219,16 @@ const WaitingList = () => {
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     placeholder="you@example.com"
                     required
+                  />
+                </div>
+                <div className="hidden" aria-hidden="true">
+                  <Label htmlFor="wl-company">Company</Label>
+                  <Input
+                    id="wl-company"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={honeypot}
+                    onChange={(event) => setHoneypot(event.target.value)}
                   />
                 </div>
 

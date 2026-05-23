@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Sparkles, CheckCircle2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { submitLeadForm, validateEmail } from "@/lib/leadForms";
 
 interface ResumeAuditModalProps {
   open: boolean;
@@ -20,12 +21,13 @@ const ResumeAuditModal = ({ open, onOpenChange }: ResumeAuditModalProps) => {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   const [notes, setNotes] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
 
   const reset = () => {
     setTimeout(() => {
-      setName(""); setEmail(""); setRole(""); setNotes(""); setDone(false);
+      setName(""); setEmail(""); setRole(""); setNotes(""); setHoneypot(""); setDone(false);
     }, 300);
   };
 
@@ -33,6 +35,10 @@ const ResumeAuditModal = ({ open, onOpenChange }: ResumeAuditModalProps) => {
     e.preventDefault();
     if (!name.trim() || !email.trim()) {
       toast.error("Name and email are required");
+      return;
+    }
+    if (!validateEmail(email)) {
+      toast.error("Please enter a valid email address");
       return;
     }
     setSubmitting(true);
@@ -45,20 +51,25 @@ const ResumeAuditModal = ({ open, onOpenChange }: ResumeAuditModalProps) => {
         country: "ZA",
         user_type: `resume_audit:${role || "general"}`,
       });
-      // Fire-and-forget notification (relies on send-job-notifications style helper if available)
-      try {
-        await supabase.functions.invoke("send-job-notifications", {
-          body: {
-            to: SUPPORT_EMAIL,
-            subject: "Free Resume Audit request",
-            text: `Name: ${name}\nEmail: ${email}\nTarget role: ${role}\nNotes: ${notes}`,
-          },
-        });
-      } catch { /* non-fatal */ }
+      const leadResult = await submitLeadForm({
+        formType: "Resume audit request",
+        destination: SUPPORT_EMAIL,
+        replyTo: email,
+        honeypot,
+        fields: {
+          name,
+          email,
+          targetRole: role,
+          notes,
+        },
+      });
+      if (!leadResult.ok) {
+        throw new Error(leadResult.error || "Unable to deliver request");
+      }
       setDone(true);
       toast.success("Request received — check your inbox shortly.");
-    } catch (err: any) {
-      toast.error(err.message || "Could not submit, try again");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Could not submit, try again");
     } finally {
       setSubmitting(false);
     }
@@ -100,6 +111,16 @@ const ResumeAuditModal = ({ open, onOpenChange }: ResumeAuditModalProps) => {
             <div className="space-y-1.5">
               <Label htmlFor="ra-notes">Anything to focus on? (optional)</Label>
               <Textarea id="ra-notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Career change, gap year, first job..." />
+            </div>
+            <div className="hidden" aria-hidden="true">
+              <Label htmlFor="ra-company">Company</Label>
+              <Input
+                id="ra-company"
+                tabIndex={-1}
+                autoComplete="off"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+              />
             </div>
             <Button type="submit" className="w-full" disabled={submitting}>
               {submitting ? (<><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Sending…</>) : "Send me my free pack"}
