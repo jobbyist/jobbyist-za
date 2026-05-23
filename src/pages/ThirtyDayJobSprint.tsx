@@ -1,9 +1,11 @@
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { SEOHead, generateBreadcrumbSchema } from "@/components/SEOHead";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useAuth } from "@/hooks/useAuth";
 import {
   Dialog,
   DialogContent,
@@ -20,6 +22,7 @@ import {
   MessageCircle,
   Sparkles,
 } from "lucide-react";
+import { toast } from "sonner";
 
 type CheckoutKey = "lite" | "guided" | "premium";
 
@@ -56,6 +59,7 @@ interface FaqItem {
 }
 
 const PAGE_URL = "https://za.jobbyist.africa/30-day-job-sprint";
+const SERVICE_HANDBOOK_PATH = "/reference/sprint-service-handbook.pdf";
 
 const BUSINESS_CONFIG = {
   whatsappNumber: (import.meta.env.VITE_BUSINESS_WHATSAPP_NUMBER || "").replace(/\D/g, ""),
@@ -361,6 +365,8 @@ const toStructuredPrice = (price: string) => {
 };
 
 const ThirtyDayJobSprint = () => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const [selectedPackage, setSelectedPackage] = useState<PricingPackage>(pricingPackages[1]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number>(0);
@@ -411,6 +417,16 @@ const ThirtyDayJobSprint = () => {
   const packageWhatsAppLink = buildWhatsAppLink(
     `Hello Jobbyist, I am interested in the ${selectedPackage.name} package for the 30-Day Remote Job Search Sprint. Please send me the next steps.`,
   );
+
+  const handleServiceHandbookDownload = () => {
+    if (!user) {
+      toast.error("Please sign in to download the service handbook.");
+      navigate("/auth");
+      return;
+    }
+
+    window.open(SERVICE_HANDBOOK_PATH, "_blank", "noopener,noreferrer");
+  };
 
   return (
     <div
@@ -880,18 +896,18 @@ const ThirtyDayJobSprint = () => {
         <div className="container mx-auto max-w-7xl flex justify-center">
           <button
             type="button"
-            onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+            onClick={handleServiceHandbookDownload}
             className="pointer-events-auto relative isolate w-full max-w-2xl rounded-3xl px-5 py-4 text-white font-black uppercase tracking-wide"
             style={{
               background: "linear-gradient(135deg, #4764f1, #3651e7)",
               boxShadow: "0 24px 56px rgba(69, 98, 238, 0.34)",
             }}
-            aria-label="Compare sprint packages"
+            aria-label="Read The Service Handbook"
           >
             <span className="absolute -inset-[3px] -z-10 rounded-[26px] blur-lg opacity-70 bg-gradient-to-r from-cyan-300 via-purple-400 to-lime-300" aria-hidden="true" />
             <span className="inline-flex items-center gap-2">
               <Sparkles className="h-4 w-4" />
-              Compare packages
+              Read The Service Handbook
             </span>
           </button>
         </div>

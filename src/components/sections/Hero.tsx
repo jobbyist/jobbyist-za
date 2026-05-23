@@ -20,9 +20,17 @@ const Hero = () => {
       <div className="container mx-auto px-4 relative">
         <div className="max-w-4xl mx-auto text-center">
           {/* Main headline */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 animate-slide-up text-foreground">
-            South Africa's Premier{" "}
-            <span className="gradient-brand-text">Job Discovery</span> Platform
+          <h1
+            className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 animate-slide-up"
+            style={{
+              background: "linear-gradient(135deg, #050816 0%, #0a1f5f 45%, #4562ee 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              textShadow: "0 14px 34px rgba(7, 10, 47, 0.28)",
+            }}
+          >
+            South Africa’s Premier Job Discovery &amp; Career Management Platform
           </h1>
 
           {/* Subheadline */}
