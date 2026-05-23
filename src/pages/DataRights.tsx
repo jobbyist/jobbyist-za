@@ -67,7 +67,7 @@ const DataRights = () => {
     }
   };
 
-  const setField = (field: keyof typeof form) => (value: string) =>
+  const setField = (field: keyof typeof form, value: string) =>
     setForm((prev) => ({ ...prev, [field]: value }));
 
   return (
@@ -102,7 +102,7 @@ const DataRights = () => {
                         autoComplete="name"
                         required
                         value={form.fullName}
-                        onChange={(e) => setField("fullName")(e.target.value)}
+                        onChange={(e) => setField("fullName", e.target.value)}
                       />
                     </div>
                     <div className="space-y-2">
@@ -115,7 +115,7 @@ const DataRights = () => {
                         autoComplete="email"
                         required
                         value={form.email}
-                        onChange={(e) => setField("email")(e.target.value)}
+                        onChange={(e) => setField("email", e.target.value)}
                       />
                     </div>
                   </div>
@@ -128,7 +128,7 @@ const DataRights = () => {
                       className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                       required
                       value={form.requestType}
-                      onChange={(e) => setField("requestType")(e.target.value)}
+                      onChange={(e) => setField("requestType", e.target.value)}
                     >
                       <option value="" disabled>Select a request type</option>
                       <option value="access">Access my personal information</option>
@@ -149,7 +149,7 @@ const DataRights = () => {
                       placeholder="Please include enough detail for us to locate your records and process your request."
                       required
                       value={form.details}
-                      onChange={(e) => setField("details")(e.target.value)}
+                      onChange={(e) => setField("details", e.target.value)}
                     />
                   </div>
 
@@ -160,7 +160,7 @@ const DataRights = () => {
                       name="identityNote"
                       placeholder="Reference number, profile email, or account identifier"
                       value={form.identityNote}
-                      onChange={(e) => setField("identityNote")(e.target.value)}
+                      onChange={(e) => setField("identityNote", e.target.value)}
                     />
                   </div>
                   <div className="hidden" aria-hidden="true">
@@ -168,7 +168,7 @@ const DataRights = () => {
                     <Input
                       id="dataRightsWebsite"
                       value={form.website}
-                      onChange={(e) => setField("website")(e.target.value)}
+                      onChange={(e) => setField("website", e.target.value)}
                       autoComplete="off"
                       tabIndex={-1}
                     />

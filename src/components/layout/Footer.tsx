@@ -2,6 +2,27 @@ import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import RelatedPlatformsSection from '@/components/layout/RelatedPlatformsSection';
 
+const RELATED_PLATFORMS_BLOCKED_CONTAINS = [
+  '/recruitment-suite',
+  '/30-day-job-sprint',
+  '/30-day-remote-job-search-sprint',
+  '/professional-profiles',
+  '/whitepaper',
+];
+
+const RELATED_PLATFORMS_BLOCKED_PREFIXES = [
+  '/admin',
+  '/auth',
+  '/profile',
+  '/jobs',
+  '/job/',
+  '/companies',
+  '/company/',
+  '/waiting-list',
+  '/job-matcher',
+  '/jobseekers',
+];
+
 const Footer = () => {
   const { pathname } = useLocation();
   const footerLinks = {
@@ -33,28 +54,8 @@ const Footer = () => {
 
   const shouldShowRelatedPlatforms = () => {
     const lowerPath = pathname.toLowerCase();
-    const blockedContains = [
-      '/recruitment-suite',
-      '/30-day-job-sprint',
-      '/30-day-remote-job-search-sprint',
-      '/professional-profiles',
-      '/whitepaper',
-    ];
-    const blockedPrefixes = [
-      '/admin',
-      '/auth',
-      '/profile',
-      '/jobs',
-      '/job/',
-      '/companies',
-      '/company/',
-      '/waiting-list',
-      '/job-matcher',
-      '/jobseekers',
-    ];
-
-    if (blockedContains.some((segment) => lowerPath.includes(segment))) return false;
-    if (blockedPrefixes.some((prefix) => lowerPath.startsWith(prefix))) return false;
+    if (RELATED_PLATFORMS_BLOCKED_CONTAINS.some((segment) => lowerPath.includes(segment))) return false;
+    if (RELATED_PLATFORMS_BLOCKED_PREFIXES.some((prefix) => lowerPath.startsWith(prefix))) return false;
     return true;
   };
 

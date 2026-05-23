@@ -1,7 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
 
 export const validateEmail = (email: string) => {
-  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,63}$/;
   return emailRegex.test(email.trim());
 };
 

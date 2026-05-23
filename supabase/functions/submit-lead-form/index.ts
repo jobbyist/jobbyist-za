@@ -28,12 +28,13 @@ const DESTINATIONS: Record<string, DestinationConfig> = {
 };
 
 const escapeHtml = (value: string) =>
-  value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+  value.replace(/&(?![a-zA-Z0-9#]{1,20};)|[<>"']/g, (char) => {
+    if (char === "&") return "&amp;";
+    if (char === "<") return "&lt;";
+    if (char === ">") return "&gt;";
+    if (char === '"') return "&quot;";
+    return "&#039;";
+  });
 
 const buildEmailHtml = (payload: LeadFormRequest) => {
   const fieldRows = Object.entries(payload.fields)
