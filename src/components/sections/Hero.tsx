@@ -103,6 +103,8 @@ const Hero = () => {
             controls
             preload="metadata"
             src={digitalLabourMarketReportVideoUrl}
+            title="South Africa’s Digital Labour Market Report In 2026"
+            aria-label="Video player for South Africa’s Digital Labour Market Report in 2026"
           >
             Your browser does not support the video tag.
           </video>
