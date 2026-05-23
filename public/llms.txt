@@ -8,7 +8,7 @@
 - [Browse jobs](/jobs): Filter vacancies by location, type, level, salary, and remote-friendly status.
 - [Companies](/companies): Profiles of South African employers actively hiring.
 - [Jobseekers](/jobseekers): Public talent directory for recruiters.
-- [Knowledge Hub](/knowledge-hub): Interview packs, ATS-friendly CV templates, salary guides, career roadmaps.
+- [Resource Center](/resource-center): Interview packs, ATS-friendly CV templates, salary guides, career roadmaps.
 - [Resume builder](/resume-builder): Free South African CV builder with ATS-ready templates.
 - [Upskilling programs](/upskilling): Curated learning paths for in-demand SA careers.
 - [Job matcher](/job-matcher): AI-powered matching of your CV to live SA jobs.

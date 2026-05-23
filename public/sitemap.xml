@@ -6,7 +6,7 @@
   <url><loc>https://za.jobbyist.africa/jobseekers</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
   <url><loc>https://za.jobbyist.africa/pro</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://za.jobbyist.africa/about</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://za.jobbyist.africa/knowledge-hub</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://za.jobbyist.africa/resource-center</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
   <url><loc>https://za.jobbyist.africa/resume-builder</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://za.jobbyist.africa/upskilling</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://za.jobbyist.africa/job-matcher</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>

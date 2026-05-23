@@ -51,7 +51,7 @@ const PromoStrip = () => {
           </Link>
 
           <p className="text-sm text-primary-foreground/60 mt-6">
-            7-day free trial • Cancel anytime • R99/month
+            30-Day Money Back Guarantee • Cancel anytime • R99/month
           </p>
         </div>
       </div>
