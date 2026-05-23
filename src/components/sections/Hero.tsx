@@ -27,10 +27,10 @@ const Hero = () => {
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
-              textShadow: "0 14px 34px rgba(7, 10, 47, 0.28)",
+              filter: "drop-shadow(0 14px 34px rgba(7, 10, 47, 0.28))",
             }}
           >
-            South Africa’s Premier Job Discovery &amp; Career Management Platform
+            South Africa’s Premier Job Discovery & Career Management Platform
           </h1>
 
           {/* Subheadline */}

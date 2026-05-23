@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import sprintServiceHandbookUrl from "../../reference/sprint-service-handbook.pdf?url";
 import { SEOHead, generateBreadcrumbSchema } from "@/components/SEOHead";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -59,7 +60,7 @@ interface FaqItem {
 }
 
 const PAGE_URL = "https://za.jobbyist.africa/30-day-job-sprint";
-const SERVICE_HANDBOOK_PATH = "/reference/sprint-service-handbook.pdf";
+const SERVICE_HANDBOOK_PATH = sprintServiceHandbookUrl;
 
 const BUSINESS_CONFIG = {
   whatsappNumber: (import.meta.env.VITE_BUSINESS_WHATSAPP_NUMBER || "").replace(/\D/g, ""),

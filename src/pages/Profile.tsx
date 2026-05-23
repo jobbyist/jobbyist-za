@@ -132,12 +132,17 @@ const Profile = () => {
 
 
   const [voiceUploading, setVoiceUploading] = useState(false);
+  const isVoiceUploadDisabled = voiceUploading || subscriptionLoading || !user || !isJobbyistProMember;
 
   const handleVoiceUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file || !user) return;
+    if (!file) return;
+    if (!user) {
+      toast.error('Please sign in to upload your voice sample.');
+      return;
+    }
     if (!isJobbyistProMember) {
-      toast.error('This feature is available to active Jobbyist Pro members only.');
+      toast.error('Voice sample upload is available to active Jobbyist Pro members only.');
       navigate('/pro');
       return;
     }
@@ -282,7 +287,18 @@ const Profile = () => {
                   <p className="text-muted-foreground mb-4">
                     AI-powered interview practice with spoken prompts and live transcription.
                   </p>
-                  <Badge variant="secondary">Jobbyist Pro only</Badge>
+                  {!subscriptionLoading && !isJobbyistProMember ? (
+                    <div className="space-y-3">
+                      <Badge variant="secondary">Jobbyist Pro required</Badge>
+                      <div>
+                        <Button variant="outline" size="sm" onClick={() => navigate('/pro')}>
+                          Upgrade to Jobbyist Pro
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <Badge variant="secondary">Coming Soon</Badge>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -299,13 +315,21 @@ const Profile = () => {
                   type="file"
                   accept="audio/*"
                   onChange={handleVoiceUpload}
-                  disabled={voiceUploading || subscriptionLoading || !isJobbyistProMember}
+                  disabled={isVoiceUploadDisabled}
                 />
                 <p className="text-xs text-muted-foreground">Use MP3, WAV, M4A, or WebM. Max 20MB.</p>
+                {subscriptionLoading && (
+                  <p className="text-xs text-muted-foreground">Checking your Jobbyist Pro membership status...</p>
+                )}
                 {!subscriptionLoading && !isJobbyistProMember && (
-                  <Button variant="outline" size="sm" onClick={() => navigate('/pro')}>
-                    Upgrade to Jobbyist Pro
-                  </Button>
+                  <>
+                    <p className="text-xs text-muted-foreground">
+                      Voice sample upload is available to active Jobbyist Pro members only.
+                    </p>
+                    <Button variant="outline" size="sm" onClick={() => navigate('/pro')}>
+                      Upgrade to Jobbyist Pro
+                    </Button>
+                  </>
                 )}
               </CardContent>
             </Card>
