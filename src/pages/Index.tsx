@@ -2,6 +2,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { SEOHead } from "@/components/SEOHead";
 import Hero from "@/components/sections/Hero";
+import PartnerLogoCarousel from "@/components/sections/PartnerLogoCarousel";
 import FeaturedCompanies from "@/components/sections/FeaturedCompanies";
 import FeaturedJobs from "@/components/sections/FeaturedJobs";
 import UpskillingPrograms from "@/components/sections/UpskillingPrograms";
@@ -24,6 +25,7 @@ const Index = () => {
       <Navbar />
       <main>
         <Hero />
+        <PartnerLogoCarousel />
         <FeaturedCompanies />
         <FeaturedJobs />
         <SponsoredBannerSlot slotKey="homepage_mid" className="container mx-auto px-4" />
