@@ -21,19 +21,35 @@ export default async function handler(req, res) {
       });
     }
 
-    const baseUrl = process.env.JOBBYIST_BASE_URL;
+    const allowedBaseUrl = process.env.JOBBYIST_BASE_URL;
 
-    if (baseUrl && !url.startsWith(baseUrl)) {
+    if (allowedBaseUrl && !url.startsWith(allowedBaseUrl)) {
       return res.status(400).json({
         success: false,
         error: "URL does not match the allowed Jobbyist base URL",
       });
     }
 
+    const requiredEnvVars = [
+      "GOOGLE_INDEXING_CLIENT_EMAIL",
+      "GOOGLE_INDEXING_PRIVATE_KEY",
+      "GOOGLE_INDEXING_PROJECT_ID",
+    ];
+
+    const missingEnvVars = requiredEnvVars.filter((key) => !process.env[key]);
+
+    if (missingEnvVars.length > 0) {
+      return res.status(500).json({
+        success: false,
+        error: "Missing required environment variables",
+        missing: missingEnvVars,
+      });
+    }
+
     const auth = new GoogleAuth({
       credentials: {
         client_email: process.env.GOOGLE_INDEXING_CLIENT_EMAIL,
-        private_key: process.env.GOOGLE_INDEXING_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+        private_key: process.env.GOOGLE_INDEXING_PRIVATE_KEY.replace(/\\n/g, "\n"),
         project_id: process.env.GOOGLE_INDEXING_PROJECT_ID,
         token_uri:
           process.env.GOOGLE_INDEXING_TOKEN_URI ||
@@ -55,6 +71,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       success: true,
+      message: "URL submitted to Google Indexing API",
       data: response.data,
     });
   } catch (error) {
