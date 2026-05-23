@@ -59,7 +59,7 @@ const UpskillingPrograms = () => {
             {features.map((feature) => (
               <div
                 key={feature.title}
-                className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-slate-200 hover:bg-white transition-all duration-300 hover:shadow-lg"
+                className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-border hover:bg-white transition-all duration-300 hover:shadow-lg"
               >
                 <div className="w-12 h-12 gradient-brand rounded-lg flex items-center justify-center mb-4">
                   <feature.icon className="h-6 w-6 text-primary-foreground" />

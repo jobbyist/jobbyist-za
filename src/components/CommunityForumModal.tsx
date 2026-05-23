@@ -14,6 +14,7 @@ interface CommunityForumModalProps {
 }
 
 const WHATSAPP_COMMUNITY_URL = "https://chat.whatsapp.com/E6y1JvZV7CSBWO8E5Z8eKc?mode=gi_t";
+const WHATSAPP_BRAND_GREEN = "#25D366";
 
 const highlights = [
   { icon: Users, text: "Connect with thousands of SA professionals" },
@@ -28,7 +29,7 @@ const CommunityForumModal = ({ open, onOpenChange }: CommunityForumModalProps) =
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
           <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 rounded-full flex items-center justify-center bg-[#25D366]">
+            <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ backgroundColor: WHATSAPP_BRAND_GREEN }}>
               <MessageCircle className="h-8 w-8 text-white" />
             </div>
           </div>
