@@ -1,145 +1,445 @@
+import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { SEOHead } from "@/components/SEOHead";
+import { SEOHead, generateBreadcrumbSchema } from "@/components/SEOHead";
+import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
+import { useSubscription } from "@/hooks/useSubscription";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { 
-  FileText, 
-  Sparkles, 
-  CheckCircle2, 
-  ArrowRight, 
-  Download,
-  Palette,
-  Layout,
-  Target,
-  Zap
-} from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ArrowRight, CheckCircle2, FileCheck2, FileText, Globe, MessageSquareText, Sparkles, Upload, Wand2 } from "lucide-react";
+import { toast } from "sonner";
 
-const features = [
+type ResumeAuditResponse = {
+  summary?: string;
+  score?: number;
+  reportUrl?: string;
+};
+
+type AccessGateKind = "login" | "verify" | "pro" | null;
+
+const resumeServices = [
   {
-    icon: Layout,
-    title: "Professional Templates",
-    description: "Choose from dozens of professionally designed templates tailored for the South African job market.",
+    Icon: FileCheck2,
+    title: "Free Resume/CV Audit",
+    description:
+      "Upload your current Resume/CV and receive practical recommendations to improve structure, clarity, keywords, achievements, and overall presentation.",
   },
   {
-    icon: Target,
-    title: "ATS-Optimized",
-    description: "All templates are optimized for Applicant Tracking Systems to ensure your resume gets through automated screenings.",
+    Icon: Sparkles,
+    title: "Resume/CV Templates",
+    description:
+      "Choose clean, professional templates designed to help your experience read clearly across recruiters, hiring managers, and screening systems.",
   },
   {
-    icon: Sparkles,
-    title: "AI-Powered Suggestions",
-    description: "Get intelligent content recommendations and keyword optimization powered by AI.",
+    Icon: Globe,
+    title: "Resume/CV Website Builder",
+    description:
+      "Create a personal Resume/CV website with a free .cv domain included, giving employers a polished place to view your career profile online.",
   },
   {
-    icon: Palette,
-    title: "Customizable Design",
-    description: "Easily customize colors, fonts, and layouts to match your personal brand.",
+    Icon: FileText,
+    title: "Resume/CV Generator",
+    description:
+      "Generate polished Resume/CV files in PDF and Word document formats, ready for job portals, direct applications, and recruiter requests.",
   },
   {
-    icon: Download,
-    title: "Multiple Export Formats",
-    description: "Download your resume in PDF, Word, or plain text format for maximum compatibility.",
+    Icon: Wand2,
+    title: "Job/Industry-Specific Cover Letters",
+    description:
+      "Create targeted cover letters that match the role, industry, and employer instead of sending the same tired paragraph everywhere.",
   },
   {
-    icon: Zap,
-    title: "Quick & Easy",
-    description: "Build a professional resume in minutes with our intuitive step-by-step builder.",
+    Icon: MessageSquareText,
+    title: "Interview Preparation Packs",
+    description:
+      "Prepare with role-specific interview questions, answer frameworks, talking points, and confidence-building guidance before the real conversation.",
   },
 ];
 
-const templateCategories = [
+const processSteps = [
   {
-    name: "Entry-Level & Graduate",
-    description: "Perfect for recent graduates and those starting their careers",
-    roles: ["Graduate Trainee", "Junior Developer", "Sales Associate", "Admin Assistant"]
+    title: "Upload or start fresh",
+    description: "Begin with your existing Resume/CV or build a new one from your career details.",
   },
   {
-    name: "Professional & Experienced",
-    description: "Designed for mid to senior-level professionals",
-    roles: ["Software Engineer", "Marketing Manager", "Financial Analyst", "Project Manager"]
+    title: "Get clear recommendations",
+    description: "Receive practical guidance on what to improve, remove, rewrite, or strengthen.",
   },
   {
-    name: "Executive & Leadership",
-    description: "Premium templates for C-suite and senior leadership roles",
-    roles: ["CEO", "CFO", "Director", "VP of Operations"]
+    title: "Build your application pack",
+    description:
+      "Create your Resume/CV, cover letter, website profile, and interview preparation materials.",
   },
   {
-    name: "Creative & Design",
-    description: "Visually striking templates for creative professionals",
-    roles: ["Graphic Designer", "UX Designer", "Content Creator", "Photographer"]
+    title: "Apply with confidence",
+    description:
+      "Download polished files, share your online profile, and walk into interviews better prepared.",
   },
 ];
+
+const RESUME_BUILDER_ONBOARDING_URL =
+  "https://profiles.jobbyist.africa/onboarding/resume-builder?source=jobbyist-resume-assistance";
+const PAGE_URL = "https://za.jobbyist.africa/resume-cv-assistance";
 
 const ResumeBuilder = () => {
-  return (
-    <div className="suite-page-shell">
-      <SEOHead
-        title="Resume/CV Assistance | ATS-Optimized CV Templates | Jobbyist ZA"
-        description="Create a professional, ATS-optimized resume in minutes with our AI-powered resume builder. Choose from industry-specific templates designed for the South African job market. Start building your winning CV today!"
-        canonicalUrl="https://za.jobbyist.africa/resume-cv-assistance"
-        keywords={['resume builder', 'CV builder South Africa', 'ATS resume', 'professional CV templates', 'job application CV', 'resume templates SA']}
-        ogType="website"
-      />
-      <Navbar />
-      <main className="pt-16">
-        {/* Hero Section */}
-        <section className="py-20 gradient-brand relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute inset-0" style={{ 
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            }} />
-          </div>
+  const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
+  const { profile, loading: profileLoading } = useProfile();
+  const { hasActiveSubscription, loading: subscriptionLoading } = useSubscription();
 
-          <div className="container mx-auto px-4 relative">
-            <div className="max-w-4xl mx-auto text-center text-primary-foreground">
-              <Badge className="mb-4 bg-background/20 text-primary-foreground border-primary-foreground/20">
-                Resume/CV Assistance
+  const [auditModalOpen, setAuditModalOpen] = useState(false);
+  const [accessModalOpen, setAccessModalOpen] = useState(false);
+  const [accessGate, setAccessGate] = useState<AccessGateKind>(null);
+  const [submittingAudit, setSubmittingAudit] = useState(false);
+  const [auditResponse, setAuditResponse] = useState<ResumeAuditResponse | null>(null);
+  const [auditServerMessage, setAuditServerMessage] = useState<string>("");
+
+  const [fullName, setFullName] = useState("");
+  const [emailAddress, setEmailAddress] = useState("");
+  const [targetRole, setTargetRole] = useState("");
+  const [experienceLevel, setExperienceLevel] = useState("");
+  const [notes, setNotes] = useState("");
+  const [resumeFile, setResumeFile] = useState<File | null>(null);
+
+  const isAuthenticated = Boolean(user);
+  const isProfileVerified = Boolean(
+    profile?.verification_status === "approved" && profile?.profile_completion === 100
+  );
+  const isPro = hasActiveSubscription("jobseeker_pro");
+  const isProVerified = isProfileVerified && isPro;
+  const loadingAccess = authLoading || (isAuthenticated && (profileLoading || subscriptionLoading));
+
+  const currentUserFullName = useMemo(() => {
+    const name = [profile?.first_name, profile?.last_name].filter(Boolean).join(" ").trim();
+    return name || user?.user_metadata?.full_name || user?.user_metadata?.name || "";
+  }, [profile?.first_name, profile?.last_name, user?.user_metadata]);
+
+  const currentUserEmail = user?.email ?? "";
+
+  const accessGateCopy = useMemo(() => {
+    if (accessGate === "login") {
+      return {
+        title: "Sign in required",
+        description: "Please sign in to continue with this action.",
+        actionLabel: "Go to Sign In",
+        action: () => navigate("/auth"),
+      };
+    }
+    if (accessGate === "verify") {
+      return {
+        title: "Profile verification required",
+        description:
+          "Please complete and verify your profile before continuing. This helps us provide better quality support.",
+        actionLabel: "Go to Profile Verification",
+        action: () => navigate("/profile"),
+      };
+    }
+    return {
+      title: "Jobbyist Pro required",
+      description:
+        "This action is available to active verified Jobbyist Pro members. Upgrade to unlock the full assistance suite.",
+      actionLabel: "View Jobbyist Pro",
+      action: () => navigate("/pro"),
+    };
+  }, [accessGate, navigate]);
+
+  const openAccessGate = (gate: AccessGateKind) => {
+    setAccessGate(gate);
+    setAccessModalOpen(true);
+  };
+
+  const openAuditModal = () => {
+    setAuditResponse(null);
+    setAuditServerMessage("");
+    setFullName(currentUserFullName);
+    setEmailAddress(currentUserEmail);
+    setTargetRole("");
+    setExperienceLevel("");
+    setNotes("");
+    setResumeFile(null);
+    setAuditModalOpen(true);
+  };
+
+  const handleBuildResume = () => {
+    if (loadingAccess) return;
+    if (!isAuthenticated) {
+      openAccessGate("login");
+      return;
+    }
+    if (!isProfileVerified) {
+      openAccessGate("verify");
+      return;
+    }
+    if (!isProVerified) {
+      openAccessGate("pro");
+      return;
+    }
+    window.location.assign(RESUME_BUILDER_ONBOARDING_URL);
+  };
+
+  const handleStartAudit = () => {
+    if (loadingAccess) return;
+    if (!isAuthenticated) {
+      openAccessGate("login");
+      return;
+    }
+    if (!isProfileVerified) {
+      openAccessGate("verify");
+      return;
+    }
+    openAuditModal();
+  };
+
+  const handleAuditFileChange = (file: File | undefined) => {
+    if (!file) return;
+    const allowedExtensions = [".pdf", ".doc", ".docx"];
+    const filename = file.name.toLowerCase();
+    const hasAllowedExtension = allowedExtensions.some((ext) => filename.endsWith(ext));
+
+    if (!hasAllowedExtension) {
+      toast.error("Please upload a PDF or Word document.");
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("File size must be 5MB or less.");
+      return;
+    }
+    setResumeFile(file);
+  };
+
+  const handleAuditSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setAuditServerMessage("");
+    setAuditResponse(null);
+
+    if (!resumeFile) {
+      toast.error("Please upload your Resume/CV.");
+      return;
+    }
+
+    setSubmittingAudit(true);
+    try {
+      const formData = new FormData();
+      formData.append("fullName", fullName.trim());
+      formData.append("email", emailAddress.trim());
+      formData.append("targetRole", targetRole.trim());
+      formData.append("experienceLevel", experienceLevel.trim());
+      formData.append("notes", notes.trim());
+      formData.append("resume", resumeFile);
+      formData.append("source", "jobbyist-resume-assistance");
+
+      const response = await fetch("/api/resume-audit", {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
+
+      if (response.status === 401) {
+        setAuditServerMessage("Please sign in to request your free audit.");
+        return;
+      }
+
+      if (response.status === 403) {
+        setAuditServerMessage("Please verify your profile before requesting your free audit.");
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error("We could not generate your audit right now. Please try again.");
+      }
+
+      const data = (await response.json()) as ResumeAuditResponse;
+      setAuditResponse(data || {});
+      setAuditServerMessage("Your free audit is ready.");
+      toast.success("Your free audit is ready.");
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "We could not generate your audit right now. Please try again.";
+      setAuditServerMessage(message);
+      toast.error(message);
+    } finally {
+      setSubmittingAudit(false);
+    }
+  };
+
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "Jobbyist AI-Assisted, Human-Reviewed Resume/CV Assistance",
+    description:
+      "Get AI-assisted, human-reviewed resume/CV support from Jobbyist, including free audits, templates, resume websites, PDF/Word generation, cover letters, and interview preparation packs.",
+    provider: {
+      "@type": "Organization",
+      name: "Jobbyist",
+      url: "https://za.jobbyist.africa",
+    },
+    areaServed: {
+      "@type": "Country",
+      name: "South Africa",
+    },
+  };
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Jobbyist South Africa", url: "https://za.jobbyist.africa" },
+    { name: "Resume/CV Assistance", url: PAGE_URL },
+  ]);
+
+  return (
+    <div className="min-h-screen bg-white">
+      <SEOHead
+        title="Resume/CV Assistance | Jobbyist"
+        description="Get AI-assisted, human-reviewed resume/CV support from Jobbyist, including free audits, templates, resume websites, PDF/Word generation, cover letters, and interview preparation packs."
+        canonicalUrl={PAGE_URL}
+        ogType="website"
+        keywords={[
+          "resume cv assistance",
+          "resume audit South Africa",
+          "cv templates",
+          "cv website",
+          "cover letters",
+          "interview preparation",
+          "Jobbyist",
+        ]}
+        structuredData={[serviceSchema, breadcrumbSchema]}
+      />
+
+      <Navbar />
+
+      <main className="pt-20">
+        <section
+          className="container mx-auto px-4 max-w-7xl py-14 md:py-20"
+          aria-labelledby="resume-assistance-hero-title"
+        >
+          <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-8 md:gap-10 items-center">
+            <div>
+              <Badge className="mb-4 bg-blue-50 text-blue-700 border-blue-200">
+                AI-Assisted, Human-Reviewed Resume/CV Assistance
               </Badge>
-              <h1 className="text-4xl md:text-6xl font-bold mb-6">
-                Build Your Perfect Resume in Minutes
+              <h1
+                id="resume-assistance-hero-title"
+                className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 mb-5"
+              >
+                Turn your experience into a job-winning Resume/CV.
               </h1>
-              <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
-                Create a professional, ATS-optimized resume that gets you noticed by employers. 
-                Choose from industry-specific templates designed for the South African job market.
+              <p className="text-base sm:text-lg text-slate-600 leading-relaxed mb-8 max-w-3xl">
+                Get a cleaner, stronger, and more targeted application package with AI-assisted tools and
+                human-reviewed guidance. Start with a free Resume/CV audit, then upgrade when you are ready
+                for templates, PDF/Word resume generation, a personal .cv website, tailored cover letters, and
+                interview preparation packs.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="https://profiles.jobbyist.africa" target="_blank" rel="noopener noreferrer">
-                  <Button size="lg" className="bg-white text-primary hover:bg-white/90 group">
-                    Start Building Your Resume
-                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform ml-2" />
-                  </Button>
-                </a>
-                <Button size="lg" variant="outline" className="border-primary-foreground/20 text-primary-foreground bg-transparent hover:bg-primary-foreground/10">
-                  View Sample Templates
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Button size="lg" className="gradient-brand text-primary-foreground" onClick={handleBuildResume} disabled={loadingAccess}>
+                  Build My Resume/CV
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Button>
+                <Button size="lg" variant="outline" onClick={handleStartAudit} disabled={loadingAccess}>
+                  Free Resume/CV Audit
                 </Button>
               </div>
             </div>
+
+            <aside className="rounded-[32px] border border-blue-100 bg-white p-6 sm:p-8 shadow-[0_20px_60px_rgba(59,130,246,0.12)] relative overflow-hidden">
+              <div className="absolute -right-20 -top-20 h-44 w-44 rounded-full bg-cyan-100/70 blur-2xl" aria-hidden="true" />
+              <p className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Access snapshot</p>
+              <h2 className="text-2xl font-black text-slate-900 mb-5">Start free. Upgrade when ready.</h2>
+              <div className="space-y-3">
+                <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
+                  <p className="text-sm font-semibold text-slate-900">Free Resume/CV Audit</p>
+                  <p className="text-sm text-slate-600">Available for logged-in, verified profiles.</p>
+                </div>
+                <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
+                  <p className="text-sm font-semibold text-slate-900">Full Resume/CV Builder Suite</p>
+                  <p className="text-sm text-slate-600">Available for active verified Jobbyist Pro members.</p>
+                </div>
+                <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
+                  <p className="text-sm font-semibold text-slate-900">Status</p>
+                  <p className="text-sm text-slate-600">
+                    {loadingAccess
+                      ? "Checking access..."
+                      : isProVerified
+                        ? "You have full access."
+                        : isProfileVerified
+                          ? "You can start with a free audit."
+                          : "Sign in and verify your profile to begin."}
+                  </p>
+                </div>
+              </div>
+            </aside>
           </div>
         </section>
 
-        {/* Features Section */}
-        <section className="py-20 bg-background">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Everything You Need to Create a Winning Resume</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Our resume builder comes packed with features to help you stand out from the competition
-              </p>
+        <section className="py-14 md:py-20 bg-slate-50/70" aria-labelledby="access-section-title">
+          <div className="container mx-auto px-4 max-w-7xl">
+            <p className="text-sm font-bold uppercase tracking-wider text-blue-700 mb-2">Access</p>
+            <h2 id="access-section-title" className="text-3xl md:text-4xl font-black text-slate-900 mb-4">
+              Start free, upgrade when you are ready to apply seriously.
+            </h2>
+            <p className="text-slate-600 max-w-4xl mb-8">
+              Your free audit helps you see what needs work. Jobbyist Pro unlocks the full assistance suite
+              for a polished Resume/CV, personal .cv website, tailored cover letters, and interview preparation support.
+            </p>
+            <div className="grid md:grid-cols-3 gap-6">
+              <Card className="border-blue-100 bg-white shadow-[0_14px_40px_rgba(59,130,246,0.08)]">
+                <CardHeader>
+                  <CardTitle className="text-xl">Free Resume/CV Audit</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-slate-600">
+                    Upload your current Resume/CV and receive clear recommendations on structure, wording,
+                    relevance, formatting, and missing career evidence.
+                  </CardDescription>
+                </CardContent>
+              </Card>
+              <Card className="border-blue-100 bg-white shadow-[0_14px_40px_rgba(59,130,246,0.08)]">
+                <CardHeader>
+                  <CardTitle className="text-xl">Full Resume/CV Assistance Suite</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-slate-600">
+                    Build a professional Resume/CV, choose templates, generate PDF and Word versions, launch a
+                    personal .cv website, and get support for cover letters and interviews.
+                  </CardDescription>
+                </CardContent>
+              </Card>
+              <Card className="border-blue-100 bg-white shadow-[0_14px_40px_rgba(59,130,246,0.08)]">
+                <CardHeader>
+                  <CardTitle className="text-xl">Guided career positioning</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-slate-600">
+                    Shape your experience around the jobs you want, not just the duties you have done.
+                    Stronger positioning means stronger applications.
+                  </CardDescription>
+                </CardContent>
+              </Card>
             </div>
+          </div>
+        </section>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-              {features.map((feature) => (
-                <Card key={feature.title} className="border-border hover:shadow-lg transition-all duration-300">
+        <section className="py-14 md:py-20 bg-white" aria-labelledby="services-section-title">
+          <div className="container mx-auto px-4 max-w-7xl">
+            <h2 id="services-section-title" className="text-3xl md:text-4xl font-black text-slate-900 mb-8">
+              Services built to strengthen every part of your application.
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {resumeServices.map(({ Icon, title, description }) => (
+                <Card key={title} className="border-blue-100 bg-white shadow-[0_16px_45px_rgba(6,95,212,0.10)]">
                   <CardHeader>
-                    <div className="w-12 h-12 gradient-brand rounded-lg flex items-center justify-center mb-4">
-                      <feature.icon className="h-6 w-6 text-primary-foreground" />
+                    <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 text-white flex items-center justify-center mb-3">
+                      <Icon className="h-6 w-6" />
                     </div>
-                    <CardTitle className="text-lg">{feature.title}</CardTitle>
+                    <CardTitle className="text-xl">{title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription>{feature.description}</CardDescription>
+                    <CardDescription className="text-slate-600">{description}</CardDescription>
                   </CardContent>
                 </Card>
               ))}
@@ -147,130 +447,244 @@ const ResumeBuilder = () => {
           </div>
         </section>
 
-        {/* Template Categories Section */}
-        <section className="py-20 bg-muted/30">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Resume Templates for Every Career Stage</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Industry-specific templates designed to highlight your unique skills and experience
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-              {templateCategories.map((category) => (
-                <Card key={category.name} className="border-border">
+        <section className="py-14 md:py-20 bg-slate-50/70" aria-labelledby="how-it-works-title">
+          <div className="container mx-auto px-4 max-w-7xl">
+            <h2 id="how-it-works-title" className="text-3xl md:text-4xl font-black text-slate-900 mb-8">
+              From career chaos to application-ready in four steps.
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {processSteps.map((step, index) => (
+                <Card key={step.title} className="border-blue-100 bg-white shadow-[0_14px_40px_rgba(59,130,246,0.08)]">
                   <CardHeader>
-                    <CardTitle>{category.name}</CardTitle>
-                    <CardDescription>{category.description}</CardDescription>
+                    <div className="h-10 w-10 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white flex items-center justify-center font-bold mb-3">
+                      {index + 1}
+                    </div>
+                    <CardTitle className="text-xl">{step.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="flex flex-wrap gap-2">
-                      {category.roles.map((role) => (
-                        <Badge key={role} variant="secondary">
-                          {role}
-                        </Badge>
-                      ))}
-                    </div>
+                    <CardDescription className="text-slate-600">{step.description}</CardDescription>
                   </CardContent>
                 </Card>
               ))}
             </div>
-
-            <div className="text-center mt-12">
-              <a href="https://profiles.jobbyist.africa" target="_blank" rel="noopener noreferrer">
-                <Button size="lg" variant="outline">
-                  Browse All Templates
-                  <ArrowRight className="h-4 w-4 ml-2" />
-                </Button>
-              </a>
-            </div>
           </div>
         </section>
 
-        {/* How It Works Section */}
-        <section className="py-20 bg-background">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Build your professional resume in three simple steps
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              <Card className="text-center">
+        <section className="py-14 md:py-20 bg-white" aria-labelledby="what-you-get-title">
+          <div className="container mx-auto px-4 max-w-7xl">
+            <p className="text-sm font-bold uppercase tracking-wider text-blue-700 mb-2">What you get</p>
+            <h2 id="what-you-get-title" className="text-3xl md:text-4xl font-black text-slate-900 mb-8">
+              A complete application upgrade, not just a prettier document.
+            </h2>
+            <div className="grid lg:grid-cols-2 gap-6">
+              <Card className="border-blue-100 bg-white shadow-[0_16px_45px_rgba(6,95,212,0.10)]">
                 <CardHeader>
-                  <div className="w-16 h-16 gradient-brand rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl font-bold text-primary-foreground">1</span>
-                  </div>
-                  <CardTitle>Choose a Template</CardTitle>
+                  <CardTitle className="text-2xl">Resume/CV Builder</CardTitle>
+                  <CardDescription className="text-slate-600">
+                    Create a stronger Resume/CV from your career details, then export clean versions for different application channels.
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription>
-                    Select from our library of professional, ATS-optimized templates designed for your industry
-                  </CardDescription>
+                  <ul className="space-y-2 text-slate-700">
+                    {[
+                      "Professional templates for different career levels",
+                      "PDF and Word document generation",
+                      "ATS-conscious content structure",
+                      "Personal Resume/CV website with free .cv domain included",
+                    ].map((item) => (
+                      <li key={item} className="flex gap-2 items-start">
+                        <CheckCircle2 className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </CardContent>
               </Card>
 
-              <Card className="text-center">
+              <Card className="border-blue-100 bg-white shadow-[0_16px_45px_rgba(6,95,212,0.10)]">
                 <CardHeader>
-                  <div className="w-16 h-16 gradient-brand rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl font-bold text-primary-foreground">2</span>
-                  </div>
-                  <CardTitle>Add Your Information</CardTitle>
+                  <CardTitle className="text-2xl">Application Support Packs</CardTitle>
+                  <CardDescription className="text-slate-600">
+                    Go beyond the Resume/CV with tailored cover letters and interview preparation packs built around your target job and industry.
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription>
-                    Fill in your details with AI-powered suggestions and keyword optimization to boost your chances
-                  </CardDescription>
-                </CardContent>
-              </Card>
-
-              <Card className="text-center">
-                <CardHeader>
-                  <div className="w-16 h-16 gradient-brand rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl font-bold text-primary-foreground">3</span>
-                  </div>
-                  <CardTitle>Download & Apply</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription>
-                    Download your polished resume in your preferred format and start applying to jobs with confidence
-                  </CardDescription>
+                  <ul className="space-y-2 text-slate-700">
+                    {[
+                      "Job and industry-specific cover letters",
+                      "Interview question packs and answer frameworks",
+                      "Career positioning recommendations",
+                      "Human-reviewed guidance for higher-quality applications",
+                    ].map((item) => (
+                      <li key={item} className="flex gap-2 items-start">
+                        <CheckCircle2 className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </CardContent>
               </Card>
             </div>
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-20 bg-muted/30">
-          <div className="container mx-auto px-4">
-            <Card className="max-w-4xl mx-auto gradient-brand border-0 text-primary-foreground">
-              <CardHeader className="text-center pb-8">
-                <CardTitle className="text-3xl md:text-4xl font-bold mb-4">
-                  Ready to Build Your Professional Resume?
+        <section className="py-14 md:py-20 bg-slate-50/70" aria-labelledby="resume-assistance-final-cta-title">
+          <div className="container mx-auto px-4 max-w-7xl">
+            <Card className="border-0 rounded-[32px] bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-[0_20px_65px_rgba(14,116,244,0.35)]">
+              <CardHeader className="text-center pb-3">
+                <CardTitle id="resume-assistance-final-cta-title" className="text-3xl md:text-4xl font-black">
+                  Ready to stop sending weak applications?
                 </CardTitle>
-                <CardDescription className="text-primary-foreground/80 text-lg">
-                  Join thousands of job seekers who have landed their dream jobs with our resume builder
+                <CardDescription className="text-white/90 text-base md:text-lg max-w-3xl mx-auto">
+                  Start with a free Resume/CV audit, then upgrade to build a complete application pack that helps you show up sharper, clearer, and better prepared.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="https://profiles.jobbyist.africa" target="_blank" rel="noopener noreferrer">
-                  <Button size="lg" className="bg-white text-primary hover:bg-white/90">
-                    Get Started for Free
-                  </Button>
-                </a>
-                <Button size="lg" variant="outline" className="border-primary-foreground/20 text-primary-foreground bg-transparent hover:bg-primary-foreground/10">
-                  Learn More
+              <CardContent className="flex justify-center">
+                <Button size="lg" className="bg-white text-blue-700 hover:bg-white/90" onClick={handleStartAudit} disabled={loadingAccess}>
+                  Get My Free Resume/CV Audit
                 </Button>
               </CardContent>
             </Card>
           </div>
         </section>
       </main>
+
       <Footer />
+
+      <Dialog open={auditModalOpen} onOpenChange={setAuditModalOpen}>
+        <DialogContent className="sm:max-w-xl max-h-[92vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl">Free Resume/CV Audit</DialogTitle>
+            <DialogDescription>
+              Upload your current Resume/CV and tell us what role you are targeting. You will receive practical recommendations to help improve your application before you send it.
+            </DialogDescription>
+          </DialogHeader>
+
+          <form onSubmit={handleAuditSubmit} className="space-y-4 mt-2">
+            <div className="space-y-1.5">
+              <Label htmlFor="audit-full-name">Full name</Label>
+              <Input
+                id="audit-full-name"
+                value={fullName}
+                onChange={(event) => setFullName(event.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="audit-email">Email address</Label>
+              <Input
+                id="audit-email"
+                type="email"
+                value={emailAddress}
+                onChange={(event) => setEmailAddress(event.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="audit-role">Target role</Label>
+              <Input
+                id="audit-role"
+                value={targetRole}
+                onChange={(event) => setTargetRole(event.target.value)}
+                placeholder="e.g. Operations Coordinator"
+                required
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="audit-experience-level">Experience level</Label>
+              <Select value={experienceLevel} onValueChange={setExperienceLevel} required>
+                <SelectTrigger id="audit-experience-level">
+                  <SelectValue placeholder="Select your level" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="entry-level">Entry level</SelectItem>
+                  <SelectItem value="mid-level">Mid-level</SelectItem>
+                  <SelectItem value="senior-level">Senior level</SelectItem>
+                  <SelectItem value="executive">Executive</SelectItem>
+                  <SelectItem value="career-switcher">Career switcher</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="audit-upload">Resume/CV upload</Label>
+              <Input
+                id="audit-upload"
+                type="file"
+                accept=".pdf,.doc,.docx"
+                onChange={(event) => handleAuditFileChange(event.target.files?.[0])}
+                required
+              />
+              <p className="text-xs text-slate-500 flex items-center gap-1">
+                <Upload className="h-3.5 w-3.5" />
+                Accepted file types: .pdf, .doc, .docx · Max file size: 5MB
+              </p>
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="audit-notes">Notes field</Label>
+              <Textarea
+                id="audit-notes"
+                rows={3}
+                value={notes}
+                onChange={(event) => setNotes(event.target.value)}
+                placeholder="Anything specific you want us to focus on?"
+              />
+            </div>
+
+            {auditServerMessage && (
+              <div className="rounded-lg border border-blue-100 bg-blue-50 px-3 py-2 text-sm text-blue-700">
+                {auditServerMessage}
+              </div>
+            )}
+
+            {auditResponse && (
+              <div className="rounded-lg border border-green-200 bg-green-50 p-3 space-y-2">
+                <p className="font-semibold text-green-800">Your free audit is ready.</p>
+                {typeof auditResponse.score === "number" && (
+                  <p className="text-sm text-green-700">Current score: {auditResponse.score}/100</p>
+                )}
+                {auditResponse.summary && <p className="text-sm text-green-700">{auditResponse.summary}</p>}
+                {auditResponse.reportUrl && (
+                  <a
+                    href={auditResponse.reportUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-sm font-medium text-blue-700 hover:underline"
+                  >
+                    View full report
+                    <ArrowRight className="h-4 w-4 ml-1" />
+                  </a>
+                )}
+              </div>
+            )}
+
+            <Button type="submit" className="w-full" disabled={submittingAudit}>
+              {submittingAudit ? "Generating..." : "Generate Free Audit"}
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={accessModalOpen} onOpenChange={setAccessModalOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>{accessGateCopy.title}</DialogTitle>
+            <DialogDescription>{accessGateCopy.description}</DialogDescription>
+          </DialogHeader>
+          <div className="pt-2 flex gap-3 justify-end">
+            <Button variant="outline" onClick={() => setAccessModalOpen(false)}>
+              Not now
+            </Button>
+            <Button
+              onClick={() => {
+                setAccessModalOpen(false);
+                accessGateCopy.action();
+              }}
+            >
+              {accessGateCopy.actionLabel}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
