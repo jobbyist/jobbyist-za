@@ -105,7 +105,7 @@ Deno.serve(async (req) => {
         }).select("id, slug").single();
         if (!error) {
           created++;
-          await indexInsertedJob(insertedJob);
+          void indexInsertedJob(insertedJob);
         }
       }
     }

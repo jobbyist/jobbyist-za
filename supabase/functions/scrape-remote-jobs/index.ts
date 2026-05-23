@@ -325,7 +325,7 @@ Deno.serve(async (req) => {
 
         if (!jobError) {
           jobsCreated++;
-          await indexInsertedJob(insertedJob);
+          void indexInsertedJob(insertedJob);
         } else {
           console.error(`Error creating job ${job.title}:`, jobError);
         }

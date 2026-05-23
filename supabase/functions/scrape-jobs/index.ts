@@ -202,7 +202,7 @@ Apply now to join our team!
 
       if (!error) {
         jobsCreated++;
-        await indexInsertedJob(insertedJob);
+        void indexInsertedJob(insertedJob);
       } else {
         console.error('Error creating job:', error);
       }

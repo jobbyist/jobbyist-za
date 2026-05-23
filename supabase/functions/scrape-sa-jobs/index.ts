@@ -501,7 +501,7 @@ Deno.serve(async (req) => {
       } else {
         insertedCount += insertedJobs?.length || 0;
         for (const insertedJob of insertedJobs || []) {
-          await indexInsertedJob(insertedJob);
+          void indexInsertedJob(insertedJob);
         }
         console.log(`Inserted batch ${i / batchSize + 1}: ${batch.length} jobs`);
       }

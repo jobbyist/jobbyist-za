@@ -82,15 +82,15 @@ export async function indexJobUrl(jobUrl: string): Promise<void> {
   }
 
   try {
-    const jwtClient = new google.auth.JWT(
-      credentials.clientEmail,
-      undefined,
-      credentials.privateKey,
-      [INDEXING_SCOPE],
-      undefined,
-    );
-
-    (jwtClient as unknown as { tokenUrl?: string }).tokenUrl = credentials.tokenUri;
+    const jwtClient = new google.auth.JWT();
+    jwtClient.fromJSON({
+      type: "service_account",
+      client_email: credentials.clientEmail,
+      private_key: credentials.privateKey,
+      project_id: credentials.projectId,
+      token_uri: credentials.tokenUri,
+    });
+    jwtClient.scopes = [INDEXING_SCOPE];
 
     const indexing = google.indexing({
       version: "v3",
