@@ -1,8 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Briefcase, Building2, TrendingUp, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import digitalLabourMarketReportVideoUrl from "../../../reference/digital-job-market-report.mp4?url";
 
 const Hero = () => {
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+
   const badges = [
     { icon: Briefcase, text: "10,000+ Curated Job Listings" },
     { icon: Building2, text: "Verified SA Companies" },
@@ -19,6 +29,19 @@ const Hero = () => {
 
       <div className="container mx-auto px-4 relative">
         <div className="max-w-4xl mx-auto text-center">
+          <div className="announcement-gradient-border max-w-3xl mx-auto rounded-full px-6 py-4 md:px-8 md:py-5 mb-8 animate-slide-up">
+            <p className="text-base md:text-lg font-semibold text-foreground">
+              South Africa’s Digital Labour Market Report In 2026
+            </p>
+            <button
+              type="button"
+              onClick={() => setIsReportModalOpen(true)}
+              className="mt-1 text-sm md:text-base font-semibold text-[#4f46e5] hover:text-[#4338ca] underline underline-offset-4 transition-colors"
+            >
+              Watch Now
+            </button>
+          </div>
+
           {/* Main headline */}
           <h1
             className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 animate-slide-up"
@@ -69,6 +92,22 @@ const Hero = () => {
           </div>
         </div>
       </div>
+
+      <Dialog open={isReportModalOpen} onOpenChange={setIsReportModalOpen}>
+        <DialogContent className="sm:max-w-3xl">
+          <DialogHeader>
+            <DialogTitle>South Africa’s Digital Labour Market Report In 2026</DialogTitle>
+          </DialogHeader>
+          <video
+            className="w-full rounded-lg"
+            controls
+            preload="metadata"
+            src={digitalLabourMarketReportVideoUrl}
+          >
+            Your browser does not support the video tag.
+          </video>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };
