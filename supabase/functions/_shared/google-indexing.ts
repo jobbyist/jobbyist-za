@@ -82,19 +82,22 @@ export async function indexJobUrl(jobUrl: string): Promise<void> {
   }
 
   try {
-    const jwtClient = new google.auth.JWT();
-    jwtClient.fromJSON({
-      type: "service_account",
-      client_email: credentials.clientEmail,
-      private_key: credentials.privateKey,
-      project_id: credentials.projectId,
-      token_uri: credentials.tokenUri,
+    const auth = new google.auth.GoogleAuth({
+      credentials: {
+        type: "service_account",
+        client_email: credentials.clientEmail,
+        private_key: credentials.privateKey,
+        project_id: credentials.projectId,
+        token_uri: credentials.tokenUri,
+      },
+      scopes: [INDEXING_SCOPE],
     });
-    jwtClient.scopes = [INDEXING_SCOPE];
+
+    const authClient = await auth.getClient();
 
     const indexing = google.indexing({
       version: "v3",
-      auth: jwtClient,
+      auth: authClient,
     });
 
     await indexing.urlNotifications.publish({
