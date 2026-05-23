@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
+import { useSubscription } from '@/hooks/useSubscription';
 import { useUpskilling } from '@/hooks/useUpskilling';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -25,9 +26,6 @@ import {
   FileText, 
   Link as LinkIcon,
   Upload,
-  CheckCircle2,
-  Clock,
-  XCircle,
   Shield,
   AlertCircle,
   TrendingUp,
@@ -41,7 +39,9 @@ const Profile = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
   const { profile, loading: profileLoading, updateProfile, uploadResume, uploadAvatar } = useProfile();
+  const { hasActiveSubscription, loading: subscriptionLoading } = useSubscription();
   const { enrollments, loading: upskillingLoading } = useUpskilling();
+  const isJobbyistProMember = hasActiveSubscription('jobseeker_pro');
   
   const [formData, setFormData] = useState({
     first_name: '',
@@ -132,10 +132,20 @@ const Profile = () => {
 
 
   const [voiceUploading, setVoiceUploading] = useState(false);
+  const isVoiceUploadDisabled = voiceUploading || subscriptionLoading || !user || !isJobbyistProMember;
 
   const handleVoiceUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file || !user) return;
+    if (!file) return;
+    if (!user) {
+      toast.error('Please sign in to upload your voice sample.');
+      return;
+    }
+    if (!isJobbyistProMember) {
+      toast.error('Voice sample upload is available to active Jobbyist Pro members only.');
+      navigate('/pro');
+      return;
+    }
     if (!file.type.startsWith('audio/')) {
       toast.error('Please upload an audio file');
       return;
@@ -175,19 +185,6 @@ const Profile = () => {
     } catch (error: any) {
       console.error('Error sending verification email:', error);
       toast.error('Failed to send verification email');
-    }
-  };
-
-  const getVerificationBadge = () => {
-    switch (profile?.verification_status) {
-      case 'approved':
-        return <Badge className="bg-green-500"><CheckCircle2 className="h-3 w-3 mr-1" /> Verified</Badge>;
-      case 'under_review':
-        return <Badge variant="secondary"><Clock className="h-3 w-3 mr-1" /> Under Review</Badge>;
-      case 'rejected':
-        return <Badge variant="destructive"><XCircle className="h-3 w-3 mr-1" /> Rejected</Badge>;
-      default:
-        return <Badge variant="outline"><Shield className="h-3 w-3 mr-1" /> Pending Verification</Badge>;
     }
   };
 
@@ -234,46 +231,6 @@ const Profile = () => {
             </Card>
           )}
 
-          {/* Profile Completion Card */}
-          <Card className="mb-8">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="flex items-center gap-2">
-                    <TrendingUp className="h-5 w-5" />
-                    Profile Strength
-                    {getVerificationBadge()}
-                  </CardTitle>
-                  <CardDescription>
-                    Complete all fields to reach 100% and become eligible for verification
-                  </CardDescription>
-                </div>
-                <div className="text-right">
-                  <span className="text-3xl font-bold">{profile?.profile_completion || 0}%</span>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {profile?.profile_completion === 100 ? 'Complete' : 
-                     profile?.profile_completion && profile?.profile_completion >= 75 ? 'Strong' :
-                     profile?.profile_completion && profile?.profile_completion >= 50 ? 'Good' :
-                     profile?.profile_completion && profile?.profile_completion >= 25 ? 'Fair' : 'Weak'}
-                  </p>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <Progress value={profile?.profile_completion || 0} className="h-3" />
-              {profile?.verification_status === 'pending' && profile?.profile_completion === 100 && (
-                <p className="text-sm text-muted-foreground mt-4">
-                  Your profile is complete! Our team will review and verify your profile within 24-48 hours.
-                </p>
-              )}
-              {profile?.verification_notes && (
-                <p className="text-sm text-destructive mt-4">
-                  Verification note: {profile.verification_notes}
-                </p>
-              )}
-            </CardContent>
-          </Card>
-
           <div className="grid gap-6">
             <Card className="border-primary/20 bg-primary/5">
               <CardHeader className="pb-3">
@@ -319,8 +276,10 @@ const Profile = () => {
 
             <Card>
               <CardHeader>
-                <CardTitle>AI Interview Practice</CardTitle>
-                <CardDescription>Complete your profile to unlock Huzzle-style AI interview practice (Coming Soon)</CardDescription>
+                <CardTitle>AI Assessment Interview</CardTitle>
+                <CardDescription>
+                  Complete our AI-powered Assessment Interview to enhance the quality of your profile and attract the attention of recruiters and employers. This feature is only available to Jobbyist Pro members.
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="text-center py-8">
@@ -328,7 +287,18 @@ const Profile = () => {
                   <p className="text-muted-foreground mb-4">
                     AI-powered interview practice with spoken prompts and live transcription.
                   </p>
-                  <Badge variant="secondary">Coming Soon</Badge>
+                  {!subscriptionLoading && !isJobbyistProMember ? (
+                    <div className="space-y-3">
+                      <Badge variant="secondary">Jobbyist Pro required</Badge>
+                      <div>
+                        <Button variant="outline" size="sm" onClick={() => navigate('/pro')}>
+                          Upgrade to Jobbyist Pro
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <Badge variant="secondary">Coming Soon</Badge>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -336,11 +306,31 @@ const Profile = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2"><Mic className="h-5 w-5" /> Communication Voice Sample</CardTitle>
-                <CardDescription>Upload a 1–2 minute voice recording introducing yourself and answering general interview questions.</CardDescription>
+                <CardDescription>
+                  Upload a 1–2 minute voice recording introducing yourself and answering general interview questions. This upload is available exclusively to active Jobbyist Pro members.
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                <Input type="file" accept="audio/*" onChange={handleVoiceUpload} disabled={voiceUploading} />
+                <Input
+                  type="file"
+                  accept="audio/*"
+                  onChange={handleVoiceUpload}
+                  disabled={isVoiceUploadDisabled}
+                />
                 <p className="text-xs text-muted-foreground">Use MP3, WAV, M4A, or WebM. Max 20MB.</p>
+                {subscriptionLoading && (
+                  <p className="text-xs text-muted-foreground">Checking your Jobbyist Pro membership status...</p>
+                )}
+                {!subscriptionLoading && !isJobbyistProMember && (
+                  <>
+                    <p className="text-xs text-muted-foreground">
+                      Voice sample upload is available to active Jobbyist Pro members only.
+                    </p>
+                    <Button variant="outline" size="sm" onClick={() => navigate('/pro')}>
+                      Upgrade to Jobbyist Pro
+                    </Button>
+                  </>
+                )}
               </CardContent>
             </Card>
             {/* Basic Info */}
