@@ -337,7 +337,7 @@ const ResourceCenter = () => {
               <TabsContent value="interview-packs" className="space-y-8">
                 <p className="text-sm text-muted-foreground text-center">Select a category above, then explore each title below.</p>
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl md:text-4xl font-bold mb-4">Interview Prep Packs</h2>
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4 suite-heading">Interview Prep Packs</h2>
                   <p className="text-muted-foreground max-w-2xl mx-auto">
                     Comprehensive interview packs with questions, scorecards, and model answers for high-demand roles
                   </p>
@@ -389,7 +389,7 @@ const ResourceCenter = () => {
                     </CardHeader>
                     <CardContent>
                       <Link to="/pro">
-                        <Button size="lg" className="bg-white text-primary hover:bg-white/90">
+                        <Button size="lg" className="bg-white text-primary hover:bg-white/90 btn-gradient-border">
                           Upgrade to Pro
                           <ArrowRight className="h-4 w-4 ml-2" />
                         </Button>
@@ -402,7 +402,7 @@ const ResourceCenter = () => {
               {/* Templates Section */}
               <TabsContent value="templates" className="space-y-8">
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl md:text-4xl font-bold mb-4">Professional Template Library</h2>
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4 suite-heading">Professional Template Library</h2>
                   <p className="text-muted-foreground max-w-2xl mx-auto">
                     Role-specific, ATS-focused CV, cover letter, and LinkedIn templates with real examples
                   </p>
@@ -454,7 +454,7 @@ const ResourceCenter = () => {
               {/* Employer Resources Section */}
               <TabsContent value="employer" className="space-y-8">
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl md:text-4xl font-bold mb-4">Employer Resources</h2>
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4 suite-heading">Employer Resources</h2>
                   <p className="text-muted-foreground max-w-2xl mx-auto">
                     Professional hiring tools and resources to help you find and onboard top talent
                   </p>
@@ -508,7 +508,7 @@ const ResourceCenter = () => {
                           <div className="text-sm text-primary-foreground/80">Expected Launch</div>
                         </div>
                       </div>
-                      <Button size="lg" className="bg-white text-primary hover:bg-white/90">
+                      <Button size="lg" className="bg-white text-primary hover:bg-white/90 btn-gradient-border">
                         Join Waiting List
                         <ArrowRight className="h-4 w-4 ml-2" />
                       </Button>
@@ -520,7 +520,7 @@ const ResourceCenter = () => {
               {/* Certifications Section */}
               <TabsContent value="certifications" className="space-y-8">
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl md:text-4xl font-bold mb-4">Certification & Training Pathways</h2>
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4 suite-heading">Certification & Training Pathways</h2>
                   <p className="text-muted-foreground max-w-2xl mx-auto">
                     Structured learning paths to advance your career with industry-recognized certifications
                   </p>
@@ -565,7 +565,7 @@ const ResourceCenter = () => {
               {/* Career Roadmaps Section */}
               <TabsContent value="roadmaps" className="space-y-8">
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl md:text-4xl font-bold mb-4">Career Roadmaps</h2>
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4 suite-heading">Career Roadmaps</h2>
                   <p className="text-muted-foreground max-w-2xl mx-auto">
                     Visualize your career progression and understand the path to senior roles
                   </p>
@@ -608,7 +608,7 @@ const ResourceCenter = () => {
               {/* Salary Guides Section */}
               <TabsContent value="salary" className="space-y-8">
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl md:text-4xl font-bold mb-4">Salary Guides 2026</h2>
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4 suite-heading">Salary Guides 2026</h2>
                   <p className="text-muted-foreground max-w-2xl mx-auto">
                     Comprehensive salary data for the South African job market by industry and role
                   </p>
@@ -664,7 +664,7 @@ const ResourceCenter = () => {
               {/* Industry Trends Section */}
               <TabsContent value="trends" className="space-y-8">
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl md:text-4xl font-bold mb-4">Industry-Based Trends</h2>
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4 suite-heading">Industry-Based Trends</h2>
                   <p className="text-muted-foreground max-w-2xl mx-auto">
                     Stay ahead with the latest job market trends and insights for South Africa
                   </p>
@@ -753,7 +753,7 @@ const ResourceCenter = () => {
               </CardHeader>
               <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/pro">
-                  <Button size="lg" className="bg-white text-primary hover:bg-white/90">
+                  <Button size="lg" className="bg-white text-primary hover:bg-white/90 btn-gradient-border">
                     Upgrade to Pro
                     <ArrowRight className="h-4 w-4 ml-2" />
                   </Button>

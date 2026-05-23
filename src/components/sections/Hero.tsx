@@ -49,7 +49,7 @@ const Hero = () => {
               </Button>
             </Link>
             <Link to="/recruitment-suite">
-              <Button variant="hero-outline" size="xl">
+              <Button variant="hero-outline" size="xl" className="btn-gradient-border">
                 For Employers &amp; Recruiters
               </Button>
             </Link>

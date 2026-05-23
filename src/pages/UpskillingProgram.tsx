@@ -93,7 +93,7 @@ const partners = [
 
 const UpskillingProgram = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="suite-page-shell">
       <SEOHead
         title="Upskilling Programs | Professional Training & Certifications | Jobbyist ZA"
         description="Advance your career with industry-recognized certifications and training programs. Learn in-demand skills from Google, CompTIA, AWS, and more. Flexible online courses designed for South African professionals."
@@ -125,7 +125,7 @@ const UpskillingProgram = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/resource-center">
-                  <Button size="lg" className="bg-white text-primary hover:bg-white/90 group">
+                  <Button size="lg" className="bg-white text-primary hover:bg-white/90 group btn-gradient-border">
                     Explore Programs
                     <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform ml-2" />
                   </Button>
@@ -142,7 +142,7 @@ const UpskillingProgram = () => {
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Upskill with Jobbyist?</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 suite-heading">Why Upskill with Jobbyist?</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 We partner with leading training providers to offer certifications that South African employers value
               </p>
@@ -170,7 +170,7 @@ const UpskillingProgram = () => {
         <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Training Programs</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 suite-heading">Our Training Programs</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 Choose from a wide range of certification programs across multiple industries
               </p>
@@ -205,7 +205,7 @@ const UpskillingProgram = () => {
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Training Partners</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 suite-heading">Our Training Partners</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 Learn from the best with certifications from industry-leading providers
               </p>
@@ -225,7 +225,7 @@ const UpskillingProgram = () => {
         <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Your Path to Success</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 suite-heading">Your Path to Success</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 Start upskilling today with our simple four-step process
               </p>
@@ -264,7 +264,7 @@ const UpskillingProgram = () => {
               </CardHeader>
               <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/resource-center">
-                  <Button size="lg" className="bg-white text-primary hover:bg-white/90">
+                  <Button size="lg" className="bg-white text-primary hover:bg-white/90 btn-gradient-border">
                     Browse All Programs
                   </Button>
                 </Link>
