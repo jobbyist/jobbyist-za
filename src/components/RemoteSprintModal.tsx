@@ -19,8 +19,9 @@ const RemoteSprintModal = () => {
 
       if (lastShownAt) {
         const lastShownTimestamp = Number(lastShownAt);
+        const now = Date.now();
 
-        if (Number.isFinite(lastShownTimestamp) && Date.now() - lastShownTimestamp < RETURN_VISITOR_DELAY_MS) {
+        if (Number.isFinite(lastShownTimestamp) && lastShownTimestamp <= now && now - lastShownTimestamp < RETURN_VISITOR_DELAY_MS) {
           return;
         }
       }
