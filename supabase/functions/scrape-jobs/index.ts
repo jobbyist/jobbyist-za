@@ -1,4 +1,5 @@
 import { requireAdminOrService } from "../_shared/auth.ts";
+import { indexInsertedJob } from "../_shared/google-indexing.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -178,7 +179,7 @@ Apply now to join our team!
 
       const sourceUrl = `https://jobs.${countryName.toLowerCase().replace(' ', '')}.example.com/job-${i + 1}`;
 
-      const { error } = await supabase.from('jobs').insert({
+      const { data: insertedJob, error } = await supabase.from('jobs').insert({
         company_id: company.id,
         title,
         description,
@@ -197,10 +198,11 @@ Apply now to join our team!
         source_url: sourceUrl,
         source_name: 'JobBoard',
         status: 'active',
-      });
+      }).select('id, slug').single();
 
       if (!error) {
         jobsCreated++;
+        await indexInsertedJob(insertedJob);
       } else {
         console.error('Error creating job:', error);
       }
