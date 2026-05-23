@@ -88,6 +88,7 @@ const processSteps = [
 const RESUME_BUILDER_ONBOARDING_URL =
   "https://profiles.jobbyist.africa/onboarding/resume-builder?source=jobbyist-resume-assistance";
 const PAGE_URL = "https://za.jobbyist.africa/resume-cv-assistance";
+const PROFILE_COMPLETION_REQUIRED = 100;
 
 const ResumeBuilder = () => {
   const navigate = useNavigate();
@@ -111,7 +112,7 @@ const ResumeBuilder = () => {
 
   const isAuthenticated = Boolean(user);
   const isProfileVerified = Boolean(
-    profile?.verification_status === "approved" && profile?.profile_completion === 100
+    profile?.verification_status === "approved" && profile?.profile_completion === PROFILE_COMPLETION_REQUIRED
   );
   const isPro = hasActiveSubscription("jobseeker_pro");
   const isProVerified = isProfileVerified && isPro;
@@ -220,6 +221,11 @@ const ResumeBuilder = () => {
     setAuditServerMessage("");
     setAuditResponse(null);
 
+    if (!fullName.trim() || !emailAddress.trim() || !targetRole.trim() || !experienceLevel.trim()) {
+      toast.error("Please complete all required fields.");
+      return;
+    }
+
     if (!resumeFile) {
       toast.error("Please upload your Resume/CV.");
       return;
@@ -253,7 +259,7 @@ const ResumeBuilder = () => {
       }
 
       if (!response.ok) {
-        throw new Error("We could not generate your audit right now. Please try again.");
+        throw new Error(`We could not generate your audit right now. Please try again. (${response.status})`);
       }
 
       const data = (await response.json()) as ResumeAuditResponse;
@@ -261,6 +267,7 @@ const ResumeBuilder = () => {
       setAuditServerMessage("Your free audit is ready.");
       toast.success("Your free audit is ready.");
     } catch (error) {
+      console.error("Resume audit submission failed:", error);
       const message =
         error instanceof Error ? error.message : "We could not generate your audit right now. Please try again.";
       setAuditServerMessage(message);
@@ -592,7 +599,7 @@ const ResumeBuilder = () => {
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="audit-experience-level">Experience level</Label>
-              <Select value={experienceLevel} onValueChange={setExperienceLevel} required>
+              <Select value={experienceLevel} onValueChange={setExperienceLevel}>
                 <SelectTrigger id="audit-experience-level">
                   <SelectValue placeholder="Select your level" />
                 </SelectTrigger>
