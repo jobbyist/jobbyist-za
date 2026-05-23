@@ -3,28 +3,43 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Sparkles, Target, Users, TrendingUp } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
-const STORAGE_KEY = "remote_sprint_modal_shown_v1";
-const TRIGGER_MS = 5 * 60 * 1000; // 5 minutes
+const STORAGE_KEY = "remote_sprint_modal_last_shown_at_v2";
+const TRIGGER_MS = 120 * 1000; // Show the modal 120 seconds after the app loads.
+const RETURN_VISITOR_DELAY_MS = 30 * 24 * 60 * 60 * 1000; // Wait 30 days before showing the modal again.
 
 const RemoteSprintModal = () => {
-  const { user } = useAuth();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (!user) return;
-    if (localStorage.getItem(STORAGE_KEY)) return;
+    try {
+      const lastShownAt = localStorage.getItem(STORAGE_KEY);
+
+      if (lastShownAt) {
+        const lastShownTimestamp = Number(lastShownAt);
+        const now = Date.now();
+
+        if (Number.isFinite(lastShownTimestamp) && lastShownTimestamp <= now && now - lastShownTimestamp < RETURN_VISITOR_DELAY_MS) {
+          return;
+        }
+      }
+    } catch {
+      // Ignore storage access issues and continue showing the modal.
+    }
 
     const t = setTimeout(() => {
       setOpen(true);
-      localStorage.setItem(STORAGE_KEY, String(Date.now()));
+      try {
+        localStorage.setItem(STORAGE_KEY, String(Date.now()));
+      } catch {
+        // Ignore storage write failures in restricted environments.
+      }
     }, TRIGGER_MS);
 
     return () => clearTimeout(t);
-  }, [user]);
+  }, []);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -47,8 +62,8 @@ const RemoteSprintModal = () => {
 
         <DialogFooter className="gap-2 sm:gap-2">
           <Button variant="ghost" onClick={() => setOpen(false)}>Maybe later</Button>
-          <Button variant="brand" onClick={() => { setOpen(false); navigate("/pro?sprint=1"); }}>
-            Reserve my spot
+          <Button variant="brand" onClick={() => { setOpen(false); navigate("/30-day-job-sprint"); }}>
+            Find Out More
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -24,7 +24,6 @@ const Navbar = () => {
   const [mobileByLocationOpen, setMobileByLocationOpen] = useState(false);
   const [mobileByCategoryOpen, setMobileByCategoryOpen] = useState(false);
   const [mobileByJobTypeOpen, setMobileByJobTypeOpen] = useState(false);
-  const [mobileCareerToolkitOpen, setMobileCareerToolkitOpen] = useState(false);
   const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
   const [isFreelanceModalOpen, setIsFreelanceModalOpen] = useState(false);
   const [isCommunityForumOpen, setIsCommunityForumOpen] = useState(false);
@@ -125,9 +124,9 @@ const Navbar = () => {
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <NavigationMenuTrigger>By Category</NavigationMenuTrigger>
+                <NavigationMenuTrigger>By Job Category</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <div className="w-[640px] p-4 space-y-4">
+                  <div className="w-[420px] p-4">
                     <div>
                       <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">
                         Categories
@@ -142,34 +141,26 @@ const Navbar = () => {
                         ))}
                       </ul>
                     </div>
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">
-                        By Job Type
-                      </p>
-                      <ul className="grid gap-2 md:grid-cols-2">
-                        {byJobTypeItems.map((item) => (
-                          <li key={item.name}>
-                            <NavigationMenuLink asChild>
-                              <Link to={item.href} className="block rounded-md p-2 text-sm hover:bg-accent">{item.name}</Link>
-                            </NavigationMenuLink>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">
-                        Career Toolkit
-                      </p>
-                      <ul className="grid gap-2 md:grid-cols-2">
-                        {careerToolkitItems.map((item) => (
-                          <li key={item.name}>
-                            <NavigationMenuLink asChild>
-                              <Link to={item.href} className="block rounded-md p-2 text-sm hover:bg-accent">{item.name}</Link>
-                            </NavigationMenuLink>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                  </div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>By Job Type</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <div className="w-[360px] p-4">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">
+                      Job Types
+                    </p>
+                    <ul className="grid gap-2">
+                      {byJobTypeItems.map((item) => (
+                        <li key={item.name}>
+                          <NavigationMenuLink asChild>
+                            <Link to={item.href} className="block rounded-md p-2 text-sm hover:bg-accent">{item.name}</Link>
+                          </NavigationMenuLink>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -342,7 +333,7 @@ const Navbar = () => {
               onClick={() => setMobileByCategoryOpen(!mobileByCategoryOpen)}
               className="flex items-center justify-between w-full text-sm font-semibold text-foreground py-2.5 border-t border-border text-left"
             >
-              By Category
+              By Job Category
               {mobileByCategoryOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
             </button>
             {mobileByCategoryOpen && (
@@ -357,50 +348,28 @@ const Navbar = () => {
                     {item.name}
                   </Link>
                 ))}
+              </div>
+            )}
 
-                <button
-                  onClick={() => setMobileByJobTypeOpen(!mobileByJobTypeOpen)}
-                  className="flex items-center justify-between w-full text-sm font-semibold text-foreground py-2.5 border-t border-border text-left mt-1"
-                >
-                  By Job Type
-                  {mobileByJobTypeOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                </button>
-                {mobileByJobTypeOpen && (
-                  <div className="pl-3 flex flex-col gap-1 pb-2">
-                    {byJobTypeItems.map((item) => (
-                      <Link
-                        key={item.name}
-                        to={item.href}
-                        className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-1.5"
-                        onClick={closeMobileMenu}
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
-
-                    <button
-                      onClick={() => setMobileCareerToolkitOpen(!mobileCareerToolkitOpen)}
-                      className="flex items-center justify-between w-full text-sm font-semibold text-foreground py-2.5 border-t border-border text-left mt-1"
-                    >
-                      Career Toolkit
-                      {mobileCareerToolkitOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                    </button>
-                    {mobileCareerToolkitOpen && (
-                      <div className="pl-3 flex flex-col gap-1 pb-2">
-                        {careerToolkitItems.map((item) => (
-                          <Link
-                            key={item.name}
-                            to={item.href}
-                            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-1.5"
-                            onClick={closeMobileMenu}
-                          >
-                            {item.name}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                )}
+            <button
+              onClick={() => setMobileByJobTypeOpen(!mobileByJobTypeOpen)}
+              className="flex items-center justify-between w-full text-sm font-semibold text-foreground py-2.5 border-t border-border text-left"
+            >
+              By Job Type
+              {mobileByJobTypeOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            </button>
+            {mobileByJobTypeOpen && (
+              <div className="pl-4 flex flex-col gap-1 pb-2">
+                {byJobTypeItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-1.5"
+                    onClick={closeMobileMenu}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
               </div>
             )}
 
