@@ -50,15 +50,13 @@ export const sendTransactionalEmail = async (
   return { ok: true };
 };
 
-interface SubmitLeadFormInput extends BuildEmailPayloadInput {}
-
 export const submitLeadForm = async ({
   formType,
   fields,
   honeypot = "",
   destination,
   replyTo,
-}: SubmitLeadFormInput) => {
+}: BuildEmailPayloadInput) => {
   if (honeypot.trim().length > 0) {
     return { ok: true, spamBlocked: true };
   }
