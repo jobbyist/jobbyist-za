@@ -221,7 +221,7 @@ const faqs = [
 const submitWhitepaperAccessRequest = async (payload: AccessRequestForm) => {
   if (!WHITEPAPER_ACCESS_REQUEST_ENDPOINT) {
     await new Promise((resolve) => setTimeout(resolve, 550));
-    return { ok: true };
+    return { ok: true, placeholder: true };
   }
 
   const response = await fetch(WHITEPAPER_ACCESS_REQUEST_ENDPOINT, {
@@ -231,9 +231,9 @@ const submitWhitepaperAccessRequest = async (payload: AccessRequestForm) => {
   });
 
   if (!response.ok) {
-    throw new Error("Request failed");
+    throw new Error(`Request failed with status ${response.status} ${response.statusText}`);
   }
-  return { ok: true };
+  return { ok: true, placeholder: false };
 };
 
 const Whitepaper = () => {
@@ -279,7 +279,7 @@ const Whitepaper = () => {
     name: "The 2026/27 Jobbyist Whitepaper: The Democratisation of the African Job Market",
     description:
       "A strategic whitepaper on South Africa’s labour-market transition, youth pathways, digital work, platform economy dynamics and inclusive employment infrastructure.",
-    url: WHITEPAPER_PDF_PATH,
+    url: `https://za.jobbyist.africa${WHITEPAPER_PDF_PATH}`,
     inLanguage: "en-ZA",
     author: {
       "@type": "Organization",
@@ -297,21 +297,28 @@ const Whitepaper = () => {
   const handleAccessSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const email = form.email.trim();
-    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-
-    if (!emailRegex.test(email)) {
-      toast.error("Please enter a valid email address.");
+    const formElement = event.currentTarget;
+    if (!formElement.checkValidity()) {
+      formElement.reportValidity();
+      return;
+    }
+    if (!form.stakeholderType || !form.interestArea) {
+      toast.error("Please select stakeholder type and interest area.");
       return;
     }
 
     setIsSubmitting(true);
     try {
-      await submitWhitepaperAccessRequest({ ...form, email });
-      toast.success("Thanks. Your access request has been received.");
+      const result = await submitWhitepaperAccessRequest({ ...form, email });
+      if (result.placeholder) {
+        toast.success("Thanks. Your request has been captured and our team will follow up directly.");
+      } else {
+        toast.success("Thanks. Your access request has been received.");
+      }
       setForm(EMPTY_FORM);
       setAccessModalOpen(false);
     } catch {
-      toast.error("We could not submit your request right now. Please try again.");
+      toast.error("We could not submit your request right now. Please check your connection and try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -858,7 +865,7 @@ const Whitepaper = () => {
               <div className="space-y-1.5">
                 <Label htmlFor="wp-stakeholder">Stakeholder type *</Label>
                 <Select value={form.stakeholderType} onValueChange={setFormField("stakeholderType")}>
-                  <SelectTrigger id="wp-stakeholder" aria-label="Select stakeholder type">
+                  <SelectTrigger id="wp-stakeholder" aria-label="Select stakeholder type" aria-required="true">
                     <SelectValue placeholder="Select stakeholder type" />
                   </SelectTrigger>
                   <SelectContent>
@@ -873,7 +880,7 @@ const Whitepaper = () => {
               <div className="space-y-1.5">
                 <Label htmlFor="wp-interest">Interest area *</Label>
                 <Select value={form.interestArea} onValueChange={setFormField("interestArea")}>
-                  <SelectTrigger id="wp-interest" aria-label="Select interest area">
+                  <SelectTrigger id="wp-interest" aria-label="Select interest area" aria-required="true">
                     <SelectValue placeholder="Select interest area" />
                   </SelectTrigger>
                   <SelectContent>
