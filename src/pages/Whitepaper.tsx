@@ -29,6 +29,7 @@ import { toast } from "sonner";
 const WHITEPAPER_URL = "https://za.jobbyist.africa/whitepaper";
 const WHITEPAPER_PDF_PATH = "/whitepaperassets/whitepaper2026-27.pdf";
 const WHITEPAPER_VIDEO_PATH = "/whitepaperassets/whitepaper-explainer-video.mp4";
+const WHITEPAPER_OG_IMAGE_PATH = "/whitepaperassets/whitepaper-infographic.png";
 const WHITEPAPER_ACCESS_REQUEST_ENDPOINT =
   import.meta.env.VITE_WHITEPAPER_ACCESS_REQUEST_ENDPOINT ?? "";
 
@@ -97,36 +98,58 @@ const interestOptions: InterestArea[] = [
 const themeCards = [
   {
     title: "Labour Market at a Crossroads",
-    copy: "South Africa’s labour market remains under pressure, particularly for youth and first-time entrants. The whitepaper frames this as a structural transition challenge that requires digital pathways, practical support and stronger matching between skills and demand.",
+    copy: "South Africa’s labour market is navigating high unemployment, uneven growth and changing hiring models. The report outlines why this is not only a jobs-volume challenge, but a system-design challenge that requires better pathways into work.",
   },
   {
-    title: "Platform Work and the Precariat",
-    copy: "Platform work has expanded income pathways, but often without predictable protection, pay stability or visibility into algorithmic decisions. The report calls for balanced approaches that protect workers while supporting innovation and growth.",
+    title: "Youth Exclusion and the Experience Trap",
+    copy: "Many young candidates remain excluded because they are asked for experience before being given credible entry routes. The whitepaper calls for practical mobility infrastructure that improves readiness, visibility and first-opportunity access.",
+  },
+  {
+    title: "Digital and Resource Exclusion",
+    copy: "Access to stable data, devices, electricity and digital confidence still shapes who can compete. The report treats digital inclusion as employment infrastructure, not an optional add-on.",
   },
   {
     title: "Remote Work Maturity",
-    copy: "Remote and hybrid work are now permanent features of professional life. The opportunity is real, but uneven access to power, broadband and digital tools still shapes who can participate.",
+    copy: "Remote work has shifted from trend to operating reality across many sectors. The opportunity is meaningful, but readiness gaps and compliance complexity still limit participation for both candidates and employers.",
   },
   {
-    title: "Digital Nomad and Global Talent Trends",
-    copy: "Global demand for skills has increased cross-border work possibilities for South Africans. The report highlights the need for verified digital profiles and practical readiness signals that help candidates compete in distributed labour markets.",
+    title: "Platform Work and the Precariat",
+    copy: "Platform work can expand income pathways while exposing workers to volatility and weak protection in some contexts. The report supports balanced market design that protects people without blocking innovation.",
   },
   {
-    title: "Compliance in the Digital Workplace",
-    copy: "As work decentralises, employers should revisit policies on data protection, workplace wellbeing, and remote-work governance. The whitepaper stresses careful compliance review rather than checkbox policy updates.",
+    title: "AI, Automation and Skills Readiness",
+    copy: "AI is reshaping how roles are defined, discovered and screened. The report highlights the need for practical upskilling and transparent, human-supervised adoption that keeps fairness and progression in focus.",
   },
   {
-    title: "PYEI and Pathways From Learning to Earning",
-    copy: "The PYEI and National Pathway Management Network signal a pathway-led approach to youth inclusion. The report positions digital employment infrastructure as a bridge between programmes, employers and real opportunities.",
+    title: "SME Growth and Hiring Infrastructure",
+    copy: "SMEs remain central to job creation, but often lack efficient hiring systems and affordable talent access tools. The whitepaper positions better recruitment infrastructure as a business-growth lever.",
   },
   {
-    title: "SME Growth and Industrial Deepening",
-    copy: "SMEs remain central to job creation and economic depth. The whitepaper argues that hiring infrastructure, finance pathways and practical talent access should be treated as business enablers, not only social interventions.",
+    title: "Jobbyist as a Jobseeker-First Market Gateway",
+    copy: "Jobbyist is positioned as practical career infrastructure that improves discoverability, credibility and matching quality. The model combines accessible free tools with premium pathways for deeper support when required.",
   },
-  {
-    title: "AI, Industry 5.0 and the 2027 Workforce",
-    copy: "AI is reshaping task design, candidate screening and productivity expectations. The report encourages human-centred adoption that improves efficiency while keeping fairness, transparency and worker development in view.",
-  },
+];
+
+const bridgePillars = [
+  "AI-powered job matching to reduce search friction and improve relevance.",
+  "Professional profile visibility with stronger candidate credibility signals.",
+  "Jobbyist Pro for enhanced exposure, positioning support and career acceleration.",
+  "30-Day Remote Job Search Sprint execution support for focused campaigns.",
+  "Career coaching and upskilling pathways aligned with role-readiness goals.",
+  "Global talent hubbing support for cross-border and distributed work opportunities.",
+  "Employer and recruiter access through Recruitment Suite workflows.",
+  "Free access with meaningful limits for everyday job seekers, with optional upgrades.",
+];
+
+const reportChapters = [
+  "South Africa’s Labour-Market Crossroads",
+  "The Platform Economy and Precarious Work",
+  "Remote Work, Compliance and Digital Access",
+  "AI Integration and the 2027 Workforce",
+  "Youth Employment, Skills and Pathways",
+  "SME Growth and Private-Sector Participation",
+  "The Jobbyist Solution Framework",
+  "Strategic Recommendations for Stakeholders",
 ];
 
 const recommendationCards = [
@@ -194,12 +217,12 @@ const faqs = [
   {
     question: "Is the full report free to download?",
     answer:
-      "The report is available through an access-request process so Jobbyist can share the right supporting resources and webinar updates with relevant stakeholders.",
+      "Yes. You can download the report directly, and you can also request access for extended briefings, webinar invitations and partner-facing resources.",
   },
   {
     question: "How can I request access to the webinar series?",
     answer:
-      "Click “Request Webinar Access” or “Request Access To The Full Report” and complete the access form. The same request channel covers report and webinar updates.",
+      "Click “Request Webinar Access” or “Request Access To The Full Report & Webinar Series” and complete the access form. The same request channel covers report and webinar updates.",
   },
   {
     question: "Is Jobbyist a recruitment agency?",
@@ -212,7 +235,7 @@ const faqs = [
       "No. Jobbyist does not guarantee jobs, interviews, income, visas, sponsorships or hiring outcomes. Outcomes depend on multiple factors outside platform control.",
   },
   {
-    question: "How can employers or partners work with Jobbyist?",
+    question: "How can employers, sponsors or partners work with Jobbyist?",
     answer:
       "Employers and partners can request access for full report briefings, webinar participation, partnership exploration, Recruitment Suite pathways and co-created youth employment initiatives.",
   },
@@ -265,7 +288,7 @@ const Whitepaper = () => {
     name: "2026/27 Jobbyist Whitepaper | The Democratisation of the African Job Market",
     url: WHITEPAPER_URL,
     description:
-      "Download the 2026/27 Jobbyist Whitepaper on South Africa’s employment crossroads, platform work, remote work, youth employment, SME growth, AI and the future of African job-market infrastructure.",
+      "Download the 2026/27 Jobbyist Whitepaper on South Africa’s labour-market transition, youth employment, remote work, platform work, AI-era skills and jobseeker-first career infrastructure.",
     isPartOf: {
       "@type": "WebSite",
       name: "Jobbyist South Africa",
@@ -286,6 +309,19 @@ const Whitepaper = () => {
       name: "Jobbyist",
       url: "https://za.jobbyist.africa",
     },
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
   };
 
   const setFormField = (field: keyof AccessRequestForm) => (value: string) => {
@@ -337,8 +373,9 @@ const Whitepaper = () => {
     >
       <SEOHead
         title="2026/27 Jobbyist Whitepaper | The Democratisation of the African Job Market"
-        description="Download the 2026/27 Jobbyist Whitepaper on South Africa’s employment crossroads, platform work, remote work, youth employment, SME growth, AI and the future of African job-market infrastructure."
+        description="Download the 2026/27 Jobbyist Whitepaper on South Africa’s labour-market transition, youth employment, remote work, platform work, AI-era skills and jobseeker-first career infrastructure."
         canonicalUrl={WHITEPAPER_URL}
+        ogImage={`https://za.jobbyist.africa${WHITEPAPER_OG_IMAGE_PATH}`}
         ogType="article"
         keywords={[
           "Jobbyist Whitepaper",
@@ -353,7 +390,7 @@ const Whitepaper = () => {
           "Recruitment Suite",
           "Jobbyist Pro",
         ]}
-        structuredData={[webPageSchema, reportSchema, breadcrumbSchema]}
+        structuredData={[webPageSchema, reportSchema, breadcrumbSchema, faqSchema]}
       />
 
       <Navbar />
@@ -377,30 +414,31 @@ const Whitepaper = () => {
                   backgroundClip: "text",
                 }}
               >
-                Jobbyist Whitepaper 2026/27
+                The 2026/27 Jobbyist Whitepaper
               </h1>
 
               <p className="text-lg sm:text-xl font-bold mb-3 text-slate-800">
                 The Democratisation of the African Job Market
               </p>
               <p className="text-base leading-relaxed text-slate-600 mb-8">
-                The Democratisation of the African Job Market explores how South Africa can move from fragmented
-                job search, youth unemployment and platform-work precarity toward a more inclusive, digital-first
-                employment ecosystem. The report positions Jobbyist as a jobseeker-first career infrastructure
-                platform built to improve access, visibility and opportunity across South Africa and the wider African
-                job marketplace.
+                This flagship report examines South Africa’s labour-market crossroads across youth unemployment, remote
+                work readiness, platform work, AI-era skills and SME hiring capacity. It sets out why job seekers,
+                employers, recruiters, partners and policymakers need jobseeker-first digital career infrastructure that
+                improves access, matching quality, visibility and practical mobility.
               </p>
 
               <div className="flex flex-wrap gap-3 mb-8">
                 <div className="chatbot-gradient-border border border-transparent rounded-full p-[1px]">
-                  <Button
-                    size="lg"
-                    className="rounded-full bg-white text-slate-900 hover:bg-white/95 font-bold"
-                    onClick={() => setVideoModalOpen(true)}
-                    aria-label="Watch the whitepaper explainer video"
-                  >
-                    <PlayCircle className="h-4 w-4" />
-                    Watch The Explainer Video
+                  <Button asChild size="lg" className="rounded-full bg-white text-slate-900 hover:bg-white/95 font-bold">
+                    <a
+                      href={WHITEPAPER_PDF_PATH}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Download the full whitepaper PDF in a new tab"
+                    >
+                      <Download className="h-4 w-4" />
+                      Download The Full Report
+                    </a>
                   </Button>
                 </div>
 
@@ -409,9 +447,19 @@ const Whitepaper = () => {
                   variant="outline"
                   className="rounded-full"
                   onClick={openAccessModal}
-                  aria-label="Request access to the full whitepaper report"
+                  aria-label="Request access to the full report and webinar series"
                 >
-                  Request Access To The Full Report
+                  Request Access To The Full Report &amp; Webinar Series
+                </Button>
+                <Button
+                  size="lg"
+                  variant="ghost"
+                  className="rounded-full"
+                  onClick={() => setVideoModalOpen(true)}
+                  aria-label="Watch the whitepaper explainer video"
+                >
+                  <PlayCircle className="h-4 w-4" />
+                  Watch The Explainer Video
                 </Button>
               </div>
 
@@ -468,37 +516,36 @@ const Whitepaper = () => {
           </h2>
           <div className="space-y-4 text-slate-700 leading-relaxed">
             <p>
-              The whitepaper argues that persistent unemployment, especially among young people, cannot be solved by
-              legacy recruitment models alone. South Africa’s labour-market challenge is increasingly about visibility,
-              navigability and practical pathways from learning to earning.
+              South Africa is facing more than a jobs shortage. The whitepaper frames the challenge as an access,
+              matching, readiness and visibility gap that affects job seekers, employers and recruiters across the
+              employment value chain.
             </p>
             <p>
-              Remote work, platform labour and AI-enabled hiring systems are creating new routes into work while also
-              creating new exclusions. Candidates without strong digital signals, stable connectivity or clear market
-              positioning are often left behind in systems that reward discoverability and speed.
+              Traditional job search is still fragmented, expensive and discouraging for many candidates. Repeated
+              low-response applications, weak feedback loops and limited professional signalling make progression harder,
+              especially for first-time entrants and under-resourced communities.
             </p>
             <p>
-              The report highlights risks that now sit at the centre of employment strategy: algorithmic opacity,
-              wage insecurity in platform contexts, privacy and data-management pressure, compliance blind spots and
-              burnout in distributed work environments.
+              Remote work, digital platforms, AI-enabled workflows and verified profiles are opening new routes into
+              opportunity. At the same time, they create new risks when inclusion, worker protection and transparency
+              are not designed in from the start.
             </p>
             <p>
-              In this environment, Jobbyist is positioned as practical employment infrastructure: accessible tools for
-              job discovery, candidate visibility, career management and employer-recruiter access, with affordability
-              designed for ordinary South Africans.
+              Employers and recruiters also need better infrastructure to source, screen and connect with future-ready
+              talent at speed, without sacrificing quality, fairness or compliance discipline.
             </p>
             <p>
-              The strategy is ecosystem-driven rather than platform-isolated. The report encourages stronger links
-              between job seekers, employers, recruiters, youth pathways, skilling systems and private-sector partners
-              so that digital participation can translate into real opportunity.
+              Jobbyist is positioned as a jobseeker-first platform designed to improve access, credibility, visibility
+              and practical career mobility while enabling stronger hiring pathways for employers, recruiters and
+              ecosystem partners.
             </p>
           </div>
         </section>
 
         <section className="container mx-auto px-4 max-w-7xl py-12" aria-labelledby="key-themes-title">
-          <p className="text-xs font-black uppercase tracking-widest mb-3 text-blue-700">Key themes</p>
+          <p className="text-xs font-black uppercase tracking-widest mb-3 text-blue-700">Key insights</p>
           <h2 id="key-themes-title" className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 mb-8">
-            Strategic insights from the 2026/27 whitepaper
+            Strategic insights shaping the 2026/27 outlook
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {themeCards.map((card) => (
@@ -608,18 +655,14 @@ const Whitepaper = () => {
 
         <section className="container mx-auto px-4 max-w-6xl py-12" aria-labelledby="jobbyist-solution-title">
           <h2 id="jobbyist-solution-title" className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 mb-6">
-            The Jobbyist solution in this ecosystem
+            How Jobbyist Bridges the Gap
           </h2>
+          <p className="text-slate-700 leading-relaxed mb-6">
+            Jobbyist combines candidate-first tools with employer-facing infrastructure to close practical gaps between
+            potential and placement. The platform model is designed for credibility, affordability and measurable market access.
+          </p>
           <div className="grid md:grid-cols-2 gap-5">
-            {[
-              "Job discovery pathways across South Africa and broader African opportunity channels",
-              "Career management tools that support practical progression, not one-click applications only",
-              "Candidate profiles and verified professional visibility to improve discoverability",
-              "Remote-job readiness support for distributed and cross-border digital work contexts",
-              "Employer and recruiter access pathways through Recruitment Suite",
-              "Jobbyist Pro depth support for job seekers who need stronger market positioning",
-              "Affordable access design with meaningful free-tier utility and premium upgrade options",
-            ].map((item) => (
+            {bridgePillars.map((item) => (
               <div key={item} className="rounded-2xl p-4 border border-slate-200 bg-white/80 backdrop-blur-sm">
                 <p className="text-slate-700 leading-relaxed">{item}</p>
               </div>
@@ -628,6 +671,23 @@ const Whitepaper = () => {
           <p className="text-sm text-slate-500 mt-5">
             Jobbyist does not guarantee jobs, interviews, income, visas, sponsorships or hiring outcomes.
           </p>
+        </section>
+
+        <section className="container mx-auto px-4 max-w-7xl py-12" aria-labelledby="report-preview-title">
+          <p className="text-xs font-black uppercase tracking-widest mb-3 text-blue-700">Report content preview</p>
+          <h2 id="report-preview-title" className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 mb-8">
+            What’s Inside The Report
+          </h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {reportChapters.map((chapter, index) => (
+              <Card key={chapter} className="rounded-[22px] border-slate-200 bg-white/85 backdrop-blur-sm">
+                <CardContent className="p-5">
+                  <p className="text-xs font-black tracking-widest text-blue-700 mb-2">Chapter {index + 1}</p>
+                  <h3 className="font-bold text-slate-900 leading-snug">{chapter}</h3>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </section>
 
         <section className="container mx-auto px-4 max-w-7xl py-12" aria-labelledby="recommendations-title">
@@ -662,7 +722,7 @@ const Whitepaper = () => {
               </h2>
               <p className="text-slate-600 leading-relaxed mb-6">
                 Request access to upcoming sessions unpacking the report for employers, recruiters, job seekers,
-                corporate partners, sponsors, public-sector stakeholders and development organisations.
+                corporate partners, sponsors, public-sector stakeholders, development organisations and media/research audiences.
               </p>
               <Button size="lg" className="rounded-full" onClick={openAccessModal}>
                 Request Webinar Access
@@ -720,9 +780,9 @@ const Whitepaper = () => {
                 Source notes
               </h2>
               <p className="text-sm text-slate-600 leading-relaxed">
-                This page summarises the 2026/27 Jobbyist Whitepaper and draws on public labour-market, policy, digital-work,
-                and development-finance references. Figures and policy interpretation should be read with the underlying
-                official publications.
+                This page summarises the 2026/27 Jobbyist Whitepaper and is informed by credible labour-market, policy,
+                digital work and employment ecosystem research. Interpretations are aligned with available public sources
+                and support the broader direction of inclusive, jobseeker-first labour-market development.
               </p>
               <ul className="text-sm text-slate-600 space-y-2 list-disc pl-5">
                 <li>
@@ -801,7 +861,7 @@ const Whitepaper = () => {
             </p>
           )}
           <Button variant="outline" onClick={openAccessModal} className="w-full">
-            Request Access To The Full Report
+            Request Access To The Full Report &amp; Webinar Series
           </Button>
         </DialogContent>
       </Dialog>
@@ -851,7 +911,7 @@ const Whitepaper = () => {
                 />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="wp-role">Role title</Label>
+                <Label htmlFor="wp-role">Role or stakeholder focus</Label>
                 <Input
                   id="wp-role"
                   value={form.roleTitle}
