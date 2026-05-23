@@ -6,7 +6,7 @@ import { Sparkles, Target, Users, TrendingUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const STORAGE_KEY = "remote_sprint_modal_last_shown_at_v2";
-const TRIGGER_MS = 120 * 1000; // Show the modal after a visitor has been active for 120 seconds.
+const TRIGGER_MS = 120 * 1000; // Show the modal 120 seconds after the app loads.
 const RETURN_VISITOR_DELAY_MS = 30 * 24 * 60 * 60 * 1000; // Wait 30 days before showing the modal again.
 
 const RemoteSprintModal = () => {
@@ -18,9 +18,9 @@ const RemoteSprintModal = () => {
       const lastShownAt = localStorage.getItem(STORAGE_KEY);
 
       if (lastShownAt) {
-        const elapsedSinceLastView = Date.now() - Number(lastShownAt);
+        const lastShownTimestamp = Number(lastShownAt);
 
-        if (Number.isFinite(elapsedSinceLastView) && elapsedSinceLastView < RETURN_VISITOR_DELAY_MS) {
+        if (Number.isFinite(lastShownTimestamp) && Date.now() - lastShownTimestamp < RETURN_VISITOR_DELAY_MS) {
           return;
         }
       }
