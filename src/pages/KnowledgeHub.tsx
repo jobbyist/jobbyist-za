@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { SEOHead } from "@/components/SEOHead";
 import SponsoredBannerSlot from "@/components/SponsoredBannerSlot";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -24,6 +25,8 @@ import {
   Star,
   Target
 } from "lucide-react";
+import { toast } from "sonner";
+import { submitLeadForm, validateEmail } from "@/lib/forms";
 
 const interviewPacks = [
   {
@@ -243,6 +246,40 @@ const industryTrends = [
 
 const ResourceCenter = () => {
   const [selectedTab, setSelectedTab] = useState("interview-packs");
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterWebsite, setNewsletterWebsite] = useState("");
+  const [newsletterSubmitting, setNewsletterSubmitting] = useState(false);
+
+  const handleTrendSubscribe = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (newsletterSubmitting) return;
+    if (!newsletterEmail.trim() || !validateEmail(newsletterEmail)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+    setNewsletterSubmitting(true);
+    try {
+      await submitLeadForm({
+        formType: "resource_newsletter",
+        subject: "Resource Center monthly trends subscription",
+        replyTo: newsletterEmail,
+        sourcePage: window.location.pathname,
+        honeypot: newsletterWebsite,
+        fields: {
+          email: newsletterEmail,
+          source: "Knowledge Hub trends tab",
+        },
+      });
+      toast.success("You're subscribed. We'll send monthly trend updates.");
+      setNewsletterEmail("");
+      setNewsletterWebsite("");
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Please try again.";
+      toast.error(message);
+    } finally {
+      setNewsletterSubmitting(false);
+    }
+  };
 
   return (
     <div className="suite-page-shell">
@@ -671,14 +708,27 @@ const ResourceCenter = () => {
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <div className="flex gap-2 max-w-md mx-auto">
-                        <input 
-                          type="email" 
-                          placeholder="Enter your email" 
-                          className="flex-1 px-4 py-2 border rounded-lg"
+                      <form onSubmit={handleTrendSubscribe} className="flex gap-2 max-w-md mx-auto">
+                        <Input
+                          type="email"
+                          placeholder="Enter your email"
+                          value={newsletterEmail}
+                          onChange={(event) => setNewsletterEmail(event.target.value)}
+                          required
+                          aria-label="Email address for monthly trend reports"
                         />
-                        <Button>Subscribe</Button>
-                      </div>
+                        <Input
+                          className="hidden"
+                          tabIndex={-1}
+                          autoComplete="off"
+                          value={newsletterWebsite}
+                          onChange={(event) => setNewsletterWebsite(event.target.value)}
+                          aria-hidden="true"
+                        />
+                        <Button type="submit" disabled={newsletterSubmitting}>
+                          {newsletterSubmitting ? "Subscribing..." : "Subscribe"}
+                        </Button>
+                      </form>
                     </CardContent>
                   </Card>
                 </div>

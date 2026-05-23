@@ -12,6 +12,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { Megaphone } from 'lucide-react';
+import { submitLeadForm, validateEmail } from '@/lib/forms';
 
 interface AdvertiserInquiryModalProps {
   open: boolean;
@@ -23,31 +24,46 @@ const AdvertiserInquiryModal = ({ open, onOpenChange }: AdvertiserInquiryModalPr
   const [company, setCompany] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [website, setWebsite] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email) return;
+    if (submitting) return;
+    if (!name.trim() || !email.trim()) return;
+    if (!validateEmail(email)) {
+      toast.error('Please enter a valid work email address.');
+      return;
+    }
 
     setSubmitting(true);
-
-    const subject = encodeURIComponent(`Advertiser Enquiry – ${company || name}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nCompany: ${company}\nEmail: ${email}\n\nMessage:\n${message}`
-    );
-    const mailto = `mailto:support@jobbyist.africa?cc=primelifer@gmail.com&subject=${subject}&body=${body}`;
-
-    window.location.href = mailto;
-
-    toast.success("Opening your email client…");
-    setSubmitting(false);
-    onOpenChange(false);
-
-    // Reset
-    setName('');
-    setCompany('');
-    setEmail('');
-    setMessage('');
+    try {
+      await submitLeadForm({
+        formType: 'advertiser_inquiry',
+        subject: `Advertiser enquiry — ${company || name}`,
+        replyTo: email,
+        sourcePage: window.location.pathname,
+        honeypot: website,
+        fields: {
+          name,
+          company,
+          email,
+          message,
+        },
+      });
+      toast.success('Thanks! Our ads team will contact you within one business day.');
+      onOpenChange(false);
+      setName('');
+      setCompany('');
+      setEmail('');
+      setMessage('');
+      setWebsite('');
+    } catch (error) {
+      const messageText = error instanceof Error ? error.message : 'Please try again.';
+      toast.error(messageText);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -107,6 +123,16 @@ const AdvertiserInquiryModal = ({ open, onOpenChange }: AdvertiserInquiryModalPr
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Budget, target audience, campaign goals…"
               rows={3}
+            />
+          </div>
+          <div className="hidden" aria-hidden="true">
+            <Label htmlFor="adq-website">Website</Label>
+            <Input
+              id="adq-website"
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
             />
           </div>
 

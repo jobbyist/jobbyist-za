@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 import { ArrowLeft, Bell, MapPin, Users, Briefcase } from 'lucide-react';
 import { getCountryByCode, waitingListCountries, type CountryCode } from '@/lib/countries';
 import logoImage from '@/assets/jobbyist-logo.jpeg';
+import { submitLeadForm, validateEmail } from '@/lib/forms';
 
 const WaitingList = () => {
   const { countryCode } = useParams<{ countryCode: string }>();
@@ -23,6 +24,7 @@ const WaitingList = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [website, setWebsite] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,8 +37,7 @@ const WaitingList = () => {
     const userType = form.userType;
 
     // Validate email format
-    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/i;
-    if (!emailRegex.test(email)) {
+    if (!validateEmail(email)) {
       toast.error('Please enter a valid email address');
       return;
     }
@@ -82,12 +83,27 @@ const WaitingList = () => {
           throw error;
         }
       } else {
+        await submitLeadForm({
+          formType: 'waiting_list',
+          subject: `Country waitlist signup (${country.code})`,
+          replyTo: email,
+          sourcePage: window.location.pathname,
+          honeypot: website,
+          fields: {
+            email,
+            firstName,
+            lastName,
+            userType,
+            country: country.code,
+          },
+        });
         setSubmitted(true);
         toast.success('You\'ve been added to the waiting list!');
       }
-    } catch (error: any) {
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Something went wrong. Please try again.';
       console.error('Error joining waiting list:', error);
-      toast.error('Something went wrong. Please try again.');
+      toast.error(message);
     } finally {
       setIsSubmitting(false);
     }
@@ -201,6 +217,16 @@ const WaitingList = () => {
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     placeholder="you@example.com"
                     required
+                  />
+                </div>
+                <div className="hidden" aria-hidden="true">
+                  <Label htmlFor="waitingListWebsite">Website</Label>
+                  <Input
+                    id="waitingListWebsite"
+                    value={website}
+                    onChange={(e) => setWebsite(e.target.value)}
+                    autoComplete="off"
+                    tabIndex={-1}
                   />
                 </div>
 
