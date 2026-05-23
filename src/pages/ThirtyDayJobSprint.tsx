@@ -72,6 +72,8 @@ const CHECKOUT_LINKS: Record<CheckoutKey, string> = {
   premium: import.meta.env.VITE_JOB_SPRINT_CHECKOUT_PREMIUM || "#",
 };
 
+const LIMITED_OFFER_FEATURE = "14-Day Extension Available If Required At No Extra Cost";
+
 const pricingPackages: PricingPackage[] = [
   {
     id: "lite",
@@ -88,6 +90,7 @@ const pricingPackages: PricingPackage[] = [
       "5 cover letter templates",
       "1 online check-in",
       "Remote job-board setup guide",
+      LIMITED_OFFER_FEATURE,
     ],
   },
   {
@@ -110,6 +113,7 @@ const pricingPackages: PricingPackage[] = [
       "Voice note and Loom prep",
       "FlexJobs 14-day access budget",
       "One-page resume website template/setup",
+      LIMITED_OFFER_FEATURE,
     ],
   },
   {
@@ -129,6 +133,7 @@ const pricingPackages: PricingPackage[] = [
       "Full interview story bank",
       "Personal website with custom domain guidance",
       "Custom email setup guidance",
+      LIMITED_OFFER_FEATURE,
     ],
   },
 ];
