@@ -13,6 +13,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Rocket, Users, Briefcase } from "lucide-react";
+import { submitLeadForm, validateEmail } from "@/lib/forms";
 
 interface RecruitmentSuiteModalProps {
   open: boolean;
@@ -33,6 +34,7 @@ const RecruitmentSuiteModal = ({
     companyName: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [website, setWebsite] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,8 +46,7 @@ const RecruitmentSuiteModal = ({
     const userType = form.userType;
 
     // Validate email format
-    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/i;
-    if (!emailRegex.test(email)) {
+    if (!validateEmail(email)) {
       toast.error("Please enter a valid email address");
       return;
     }
@@ -90,6 +91,20 @@ const RecruitmentSuiteModal = ({
           throw error;
         }
       } else {
+        await submitLeadForm({
+          formType: "recruitment_suite_early_access",
+          subject: "Recruitment Suite early access signup",
+          replyTo: email,
+          sourcePage: window.location.pathname,
+          honeypot: website,
+          fields: {
+            firstName,
+            lastName,
+            email,
+            companyName: form.companyName,
+            userType,
+          },
+        });
         toast.success("You've been added to the Early Access Program!");
         setForm({
           email: "",
@@ -98,6 +113,7 @@ const RecruitmentSuiteModal = ({
           userType: "employer",
           companyName: "",
         });
+        setWebsite("");
         setTimeout(() => onOpenChange(false), MODAL_CLOSE_DELAY);
       }
     } catch (error) {
@@ -166,6 +182,16 @@ const RecruitmentSuiteModal = ({
               value={form.companyName}
               onChange={(e) => setForm({ ...form, companyName: e.target.value })}
               placeholder="Your Company"
+            />
+          </div>
+          <div className="hidden" aria-hidden="true">
+            <Label htmlFor="early-access-website">Website</Label>
+            <Input
+              id="early-access-website"
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
             />
           </div>
 

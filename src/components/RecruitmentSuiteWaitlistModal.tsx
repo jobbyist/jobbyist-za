@@ -20,6 +20,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Rocket } from "lucide-react";
+import { submitLeadForm, validateEmail } from "@/lib/forms";
 
 export interface RecruitmentSuiteWaitlistModalProps {
   open: boolean;
@@ -57,6 +58,7 @@ const RecruitmentSuiteWaitlistModal = ({
   selectedPlan = "",
 }: RecruitmentSuiteWaitlistModalProps) => {
   const [form, setForm] = useState<WaitlistForm>(EMPTY_FORM);
+  const [website, setWebsite] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const set = (field: keyof WaitlistForm) => (value: string) =>
@@ -68,8 +70,7 @@ const RecruitmentSuiteWaitlistModal = ({
     const email = form.workEmail.trim();
     const fullName = form.fullName.trim();
 
-    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-    if (!emailRegex.test(email)) {
+    if (!validateEmail(email)) {
       toast.error("Please enter a valid work email address.");
       return;
     }
@@ -87,10 +88,6 @@ const RecruitmentSuiteWaitlistModal = ({
 
     setIsSubmitting(true);
     try {
-      // Submit to the existing waiting_list table.
-      // TODO: Extend the backend (edge function or API route) to persist the additional
-      // waitlist fields: phone, companySize, hiringVolume, primaryInterest, message, selectedPlan.
-      // These values are captured in the form state and should be forwarded once the schema is ready.
       const { error } = await supabase.from("waiting_list").insert({
         email,
         first_name: firstName || null,
@@ -106,14 +103,34 @@ const RecruitmentSuiteWaitlistModal = ({
           throw error;
         }
       } else {
+        await submitLeadForm({
+          formType: "recruitment_suite_waitlist",
+          subject: "Recruitment Suite waitlist request",
+          replyTo: email,
+          sourcePage: window.location.pathname,
+          honeypot: website,
+          fields: {
+            fullName,
+            companyName: form.companyName,
+            workEmail: email,
+            phone: form.phone,
+            companySize: form.companySize,
+            hiringVolume: form.hiringVolume,
+            primaryInterest: form.primaryInterest,
+            selectedPlan: selectedPlan || "Not specified",
+            message: form.message,
+          },
+        });
         toast.success(
           "You're on the Recruitment Suite waitlist! We'll be in touch before launch."
         );
         setForm(EMPTY_FORM);
+        setWebsite("");
         setTimeout(() => onOpenChange(false), MODAL_CLOSE_DELAY);
       }
-    } catch {
-      toast.error("Something went wrong. Please try again.");
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Something went wrong. Please try again.";
+      toast.error(message);
     } finally {
       setIsSubmitting(false);
     }
@@ -270,6 +287,16 @@ const RecruitmentSuiteWaitlistModal = ({
               placeholder="Tell us about your hiring needs or any questions you have..."
               rows={3}
               maxLength={1000}
+            />
+          </div>
+          <div className="hidden" aria-hidden="true">
+            <Label htmlFor="rs-website">Website</Label>
+            <Input
+              id="rs-website"
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
             />
           </div>
 

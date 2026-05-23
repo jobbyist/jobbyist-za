@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { submitLeadForm, validateEmail } from "@/lib/forms";
 
 interface ComingSoonModalProps {
   open: boolean;
@@ -31,11 +32,15 @@ const ComingSoonModal = ({
 }: ComingSoonModalProps) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [website, setWebsite] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const handleNotify = (e: React.FormEvent) => {
+  const handleNotify = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+
     if (!name.trim() || !email.trim()) {
       toast({
         title: "Please fill in all fields",
@@ -44,13 +49,45 @@ const ComingSoonModal = ({
       });
       return;
     }
-    // Simulate submission - in production, integrate with Supabase waitlist or email service
-    console.log("Notify signup:", { name, email, resource: title });
-    setSubmitted(true);
-    toast({
-      title: "Thank you!",
-      description: "We'll notify you as soon as it's available.",
-    });
+
+    if (!validateEmail(email)) {
+      toast({
+        title: "Please enter a valid email",
+        description: "We need a valid email address to notify you.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await submitLeadForm({
+        formType: "coming_soon",
+        subject: `Coming soon signup: ${title}`,
+        replyTo: email,
+        sourcePage: window.location.pathname,
+        honeypot: website,
+        fields: {
+          name,
+          email,
+          resource: title,
+        },
+      });
+      setSubmitted(true);
+      toast({
+        title: "Thank you!",
+        description: "We'll notify you as soon as it's available.",
+      });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Please try again.";
+      toast({
+        title: "Could not submit your request",
+        description: message,
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleClose = () => {
@@ -60,6 +97,8 @@ const ComingSoonModal = ({
       setSubmitted(false);
       setName("");
       setEmail("");
+      setWebsite("");
+      setIsSubmitting(false);
     }, 300);
   };
 
@@ -108,9 +147,19 @@ const ComingSoonModal = ({
                 required 
               />
             </div>
-            <Button type="submit" variant="brand" className="w-full gap-2 mt-2">
+            <div className="hidden" aria-hidden="true">
+              <Label htmlFor="website">Website</Label>
+              <Input
+                id="website"
+                tabIndex={-1}
+                autoComplete="off"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+              />
+            </div>
+            <Button type="submit" variant="brand" className="w-full gap-2 mt-2" disabled={isSubmitting}>
               <Bell className="h-4 w-4" />
-              {ctaText}
+              {isSubmitting ? "Submitting..." : ctaText}
             </Button>
           </form>
         )}

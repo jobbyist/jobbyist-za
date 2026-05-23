@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Sparkles, CheckCircle2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { submitLeadForm, validateEmail } from "@/lib/forms";
 
 interface ResumeAuditModalProps {
   open: boolean;
@@ -20,12 +21,13 @@ const ResumeAuditModal = ({ open, onOpenChange }: ResumeAuditModalProps) => {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   const [notes, setNotes] = useState("");
+  const [website, setWebsite] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
 
   const reset = () => {
     setTimeout(() => {
-      setName(""); setEmail(""); setRole(""); setNotes(""); setDone(false);
+      setName(""); setEmail(""); setRole(""); setNotes(""); setWebsite(""); setDone(false);
     }, 300);
   };
 
@@ -35,30 +37,42 @@ const ResumeAuditModal = ({ open, onOpenChange }: ResumeAuditModalProps) => {
       toast.error("Name and email are required");
       return;
     }
+    if (!validateEmail(email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
     setSubmitting(true);
     try {
       // Persist to waiting_list as a lightweight lead capture (no schema change needed)
-      await supabase.from("waiting_list").insert({
+      const { error: leadError } = await supabase.from("waiting_list").insert({
         first_name: name.split(" ")[0] || name,
         last_name: name.split(" ").slice(1).join(" ") || null,
-        email,
+        email: email.trim(),
         country: "ZA",
-        user_type: `resume_audit:${role || "general"}`,
+        user_type: "job_seeker",
       });
-      // Fire-and-forget notification (relies on send-job-notifications style helper if available)
-      try {
-        await supabase.functions.invoke("send-job-notifications", {
-          body: {
-            to: SUPPORT_EMAIL,
-            subject: "Free Resume Audit request",
-            text: `Name: ${name}\nEmail: ${email}\nTarget role: ${role}\nNotes: ${notes}`,
-          },
-        });
-      } catch { /* non-fatal */ }
+      if (leadError && leadError.code !== "23505") {
+        throw new Error(leadError.message);
+      }
+      await submitLeadForm({
+        formType: "resume_audit",
+        subject: "Free Resume Audit request",
+        replyTo: email,
+        sourcePage: window.location.pathname,
+        honeypot: website,
+        fields: {
+          name,
+          email,
+          targetRole: role || "General",
+          notes,
+          destination: SUPPORT_EMAIL,
+        },
+      });
       setDone(true);
       toast.success("Request received — check your inbox shortly.");
-    } catch (err: any) {
-      toast.error(err.message || "Could not submit, try again");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Could not submit, try again";
+      toast.error(message);
     } finally {
       setSubmitting(false);
     }
@@ -100,6 +114,16 @@ const ResumeAuditModal = ({ open, onOpenChange }: ResumeAuditModalProps) => {
             <div className="space-y-1.5">
               <Label htmlFor="ra-notes">Anything to focus on? (optional)</Label>
               <Textarea id="ra-notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Career change, gap year, first job..." />
+            </div>
+            <div className="hidden" aria-hidden="true">
+              <Label htmlFor="ra-website">Website</Label>
+              <Input
+                id="ra-website"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+              />
             </div>
             <Button type="submit" className="w-full" disabled={submitting}>
               {submitting ? (<><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Sending…</>) : "Send me my free pack"}
