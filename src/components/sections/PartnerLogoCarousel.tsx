@@ -9,16 +9,18 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-import absaLogo from "../../../partnerlogos/absa.svg";
-import discoveryLogo from "../../../partnerlogos/discovery.svg";
-import econoLogo from "../../../partnerlogos/econo.svg";
-import fnbLogo from "../../../partnerlogos/fnb.svg";
-import mtnLogo from "../../../partnerlogos/mtn.svg";
-import nedbankLogo from "../../../partnerlogos/nedbank.svg";
-import sanlamLogo from "../../../partnerlogos/sanlam.svg";
-import shopriteLogo from "../../../partnerlogos/shoprite.svg";
-import standardLogo from "../../../partnerlogos/standard.svg";
-import vodacomLogo from "../../../partnerlogos/vodacom.svg";
+import logo1 from "../../../homepageassets/1.svg";
+import logo2 from "../../../homepageassets/2.svg";
+import logo3 from "../../../homepageassets/3.svg";
+import logo4 from "../../../homepageassets/4.svg";
+import logo5 from "../../../homepageassets/5.svg";
+import logo6 from "../../../homepageassets/6.svg";
+import logo7 from "../../../homepageassets/7.svg";
+import logo8 from "../../../homepageassets/8.svg";
+import logo9 from "../../../homepageassets/9.svg";
+import logo10 from "../../../homepageassets/10.svg";
+import logo11 from "../../../homepageassets/11.svg";
+import logo12 from "../../../homepageassets/12.svg";
 
 type PartnerLogo = {
   name: string;
@@ -31,16 +33,18 @@ type PartnerLogoCarouselProps = {
 };
 
 const defaultLogos: PartnerLogo[] = [
-  { name: "Absa", src: absaLogo, alt: "Jobbyist - Powered by Absa" },
-  { name: "Discovery", src: discoveryLogo, alt: "Jobbyist - Powered by Discovery" },
-  { name: "Econo", src: econoLogo, alt: "Jobbyist - Powered by Econo" },
-  { name: "FNB", src: fnbLogo, alt: "Jobbyist - Powered by FNB" },
-  { name: "MTN", src: mtnLogo, alt: "Jobbyist - Powered by MTN" },
-  { name: "Nedbank", src: nedbankLogo, alt: "Jobbyist - Powered by Nedbank" },
-  { name: "Sanlam", src: sanlamLogo, alt: "Jobbyist - Powered by Sanlam" },
-  { name: "Shoprite", src: shopriteLogo, alt: "Jobbyist - Powered by Shoprite" },
-  { name: "Standard", src: standardLogo, alt: "Jobbyist - Powered by Standard" },
-  { name: "Vodacom", src: vodacomLogo, alt: "Jobbyist - Powered by Vodacom" },
+  { name: "Partner 1", src: logo1, alt: "Jobbyist partner logo 1" },
+  { name: "Partner 2", src: logo2, alt: "Jobbyist partner logo 2" },
+  { name: "Partner 3", src: logo3, alt: "Jobbyist partner logo 3" },
+  { name: "Partner 4", src: logo4, alt: "Jobbyist partner logo 4" },
+  { name: "Partner 5", src: logo5, alt: "Jobbyist partner logo 5" },
+  { name: "Partner 6", src: logo6, alt: "Jobbyist partner logo 6" },
+  { name: "Partner 7", src: logo7, alt: "Jobbyist partner logo 7" },
+  { name: "Partner 8", src: logo8, alt: "Jobbyist partner logo 8" },
+  { name: "Partner 9", src: logo9, alt: "Jobbyist partner logo 9" },
+  { name: "Partner 10", src: logo10, alt: "Jobbyist partner logo 10" },
+  { name: "Partner 11", src: logo11, alt: "Jobbyist partner logo 11" },
+  { name: "Partner 12", src: logo12, alt: "Jobbyist partner logo 12" },
 ];
 
 const placeholderLogos = Array.from({ length: 8 }, (_, index) => ({
