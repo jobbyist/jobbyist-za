@@ -9,18 +9,18 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-import logo1 from "../../../homepageassets/1.svg";
-import logo2 from "../../../homepageassets/2.svg";
-import logo3 from "../../../homepageassets/3.svg";
-import logo4 from "../../../homepageassets/4.svg";
-import logo5 from "../../../homepageassets/5.svg";
-import logo6 from "../../../homepageassets/6.svg";
-import logo7 from "../../../homepageassets/7.svg";
-import logo8 from "../../../homepageassets/8.svg";
-import logo9 from "../../../homepageassets/9.svg";
-import logo10 from "../../../homepageassets/10.svg";
-import logo11 from "../../../homepageassets/11.svg";
-import logo12 from "../../../homepageassets/12.svg";
+import homepageLogo01 from "../../../homepageassets/1.svg";
+import homepageLogo02 from "../../../homepageassets/2.svg";
+import homepageLogo03 from "../../../homepageassets/3.svg";
+import homepageLogo04 from "../../../homepageassets/4.svg";
+import homepageLogo05 from "../../../homepageassets/5.svg";
+import homepageLogo06 from "../../../homepageassets/6.svg";
+import homepageLogo07 from "../../../homepageassets/7.svg";
+import homepageLogo08 from "../../../homepageassets/8.svg";
+import homepageLogo09 from "../../../homepageassets/9.svg";
+import homepageLogo10 from "../../../homepageassets/10.svg";
+import homepageLogo11 from "../../../homepageassets/11.svg";
+import homepageLogo12 from "../../../homepageassets/12.svg";
 
 type PartnerLogo = {
   name: string;
@@ -33,18 +33,18 @@ type PartnerLogoCarouselProps = {
 };
 
 const defaultLogos: PartnerLogo[] = [
-  { name: "Partner 1", src: logo1, alt: "Jobbyist partner logo 1" },
-  { name: "Partner 2", src: logo2, alt: "Jobbyist partner logo 2" },
-  { name: "Partner 3", src: logo3, alt: "Jobbyist partner logo 3" },
-  { name: "Partner 4", src: logo4, alt: "Jobbyist partner logo 4" },
-  { name: "Partner 5", src: logo5, alt: "Jobbyist partner logo 5" },
-  { name: "Partner 6", src: logo6, alt: "Jobbyist partner logo 6" },
-  { name: "Partner 7", src: logo7, alt: "Jobbyist partner logo 7" },
-  { name: "Partner 8", src: logo8, alt: "Jobbyist partner logo 8" },
-  { name: "Partner 9", src: logo9, alt: "Jobbyist partner logo 9" },
-  { name: "Partner 10", src: logo10, alt: "Jobbyist partner logo 10" },
-  { name: "Partner 11", src: logo11, alt: "Jobbyist partner logo 11" },
-  { name: "Partner 12", src: logo12, alt: "Jobbyist partner logo 12" },
+  { name: "Partner 1", src: homepageLogo01, alt: "" },
+  { name: "Partner 2", src: homepageLogo02, alt: "" },
+  { name: "Partner 3", src: homepageLogo03, alt: "" },
+  { name: "Partner 4", src: homepageLogo04, alt: "" },
+  { name: "Partner 5", src: homepageLogo05, alt: "" },
+  { name: "Partner 6", src: homepageLogo06, alt: "" },
+  { name: "Partner 7", src: homepageLogo07, alt: "" },
+  { name: "Partner 8", src: homepageLogo08, alt: "" },
+  { name: "Partner 9", src: homepageLogo09, alt: "" },
+  { name: "Partner 10", src: homepageLogo10, alt: "" },
+  { name: "Partner 11", src: homepageLogo11, alt: "" },
+  { name: "Partner 12", src: homepageLogo12, alt: "" },
 ];
 
 const placeholderLogos = Array.from({ length: 8 }, (_, index) => ({
