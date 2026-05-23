@@ -17,6 +17,7 @@ import { useAdmin } from "@/hooks/useAdmin";
 import { cn } from "@/lib/utils";
 import { categories, locationSlugs } from "@/lib/categories";
 import ComingSoonModal from "@/components/ComingSoonModal";
+import CommunityForumModal from "@/components/CommunityForumModal";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,6 +27,7 @@ const Navbar = () => {
   const [mobileCareerToolkitOpen, setMobileCareerToolkitOpen] = useState(false);
   const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
   const [isFreelanceModalOpen, setIsFreelanceModalOpen] = useState(false);
+  const [isCommunityForumOpen, setIsCommunityForumOpen] = useState(false);
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
   const { isAdmin } = useAdmin();
@@ -216,6 +218,15 @@ const Navbar = () => {
                             </NavigationMenuLink>
                           </li>
                         ))}
+                        <li>
+                          <button
+                            type="button"
+                            onClick={() => setIsCommunityForumOpen(true)}
+                            className="block w-full rounded-md p-2 text-sm text-left transition-colors hover:bg-accent hover:text-accent-foreground"
+                          >
+                            Community Forum
+                          </button>
+                        </li>
                         <li>
                           <button
                             type="button"
@@ -425,6 +436,16 @@ const Navbar = () => {
                 <button
                   type="button"
                   onClick={() => {
+                    setIsCommunityForumOpen(true);
+                    closeMobileMenu();
+                  }}
+                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-1.5 text-left"
+                >
+                  Community Forum
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
                     setIsFreelanceModalOpen(true);
                     closeMobileMenu();
                   }}
@@ -465,6 +486,10 @@ const Navbar = () => {
         onOpenChange={setIsFreelanceModalOpen}
         title="Freelance Gigs Coming Soon"
         description="We’re building a dedicated freelance marketplace experience. Join the list and we’ll notify you as soon as it launches."
+      />
+      <CommunityForumModal
+        open={isCommunityForumOpen}
+        onOpenChange={setIsCommunityForumOpen}
       />
     </header>
   );

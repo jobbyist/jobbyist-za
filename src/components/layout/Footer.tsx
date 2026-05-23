@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import RelatedPlatformsSection from '@/components/layout/RelatedPlatformsSection';
+import CommunityForumModal from '@/components/CommunityForumModal';
 
 const RELATED_PLATFORMS_BLOCKED_CONTAINS = [
   '/recruitment-suite',
@@ -25,6 +27,7 @@ const RELATED_PLATFORMS_BLOCKED_PREFIXES = [
 
 const Footer = () => {
   const { pathname } = useLocation();
+  const [isCommunityForumOpen, setIsCommunityForumOpen] = useState(false);
   const footerLinks = {
     "For Job Seekers": [
       { name: "Browse Jobs", href: "/jobs" },
@@ -33,6 +36,7 @@ const Footer = () => {
       { name: "Resume/CV Assistance", href: "/resume-cv-assistance" },
       { name: "30-Day Job Sprint", href: "/30-day-job-sprint" },
       { name: "Resource Center", href: "/resource-center" },
+      { name: "Community Forum", href: "#community-forum" },
     ],
     "For Employers": [
       { name: "Company Directory", href: "/companies" },
@@ -62,6 +66,7 @@ const Footer = () => {
   return (
     <>
       {shouldShowRelatedPlatforms() && <RelatedPlatformsSection />}
+      <CommunityForumModal open={isCommunityForumOpen} onOpenChange={setIsCommunityForumOpen} />
       <footer className="bg-black text-white py-16">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
@@ -126,7 +131,15 @@ const Footer = () => {
                 <ul className="space-y-3">
                   {links.map((link) => (
                     <li key={link.name}>
-                      {link.href.startsWith('#') ? (
+                      {link.href === '#community-forum' ? (
+                        <button
+                          type="button"
+                          onClick={() => setIsCommunityForumOpen(true)}
+                          className="text-sm text-white/70 hover:text-white transition-colors text-left"
+                        >
+                          {link.name}
+                        </button>
+                      ) : link.href.startsWith('#') ? (
                         <a
                           href={link.href}
                           className="text-sm text-white/70 hover:text-white transition-colors"

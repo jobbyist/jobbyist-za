@@ -84,7 +84,7 @@ const JobMatcher = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/pro">
-                  <Button size="lg" className="bg-white text-primary hover:bg-white/90 group">
+                  <Button size="lg" className="bg-white text-primary hover:bg-white/90 group btn-gradient-border">
                     Upgrade to Pro
                     <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform ml-2" />
                   </Button>
@@ -101,7 +101,7 @@ const JobMatcher = () => {
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">How Job Matcher Works</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 suite-heading">How Job Matcher Works</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 Our AI-powered system continuously searches and matches jobs to your profile, 
                 saving you time and helping you find the perfect opportunity.
@@ -135,7 +135,7 @@ const JobMatcher = () => {
                   <Badge variant="secondary" className="mb-4">
                     Benefits
                   </Badge>
-                  <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                  <h2 className="text-3xl md:text-4xl font-bold mb-6 suite-heading">
                     Why Use Job Matcher?
                   </h2>
                   <ul className="space-y-4">
@@ -201,7 +201,7 @@ const JobMatcher = () => {
               </CardHeader>
               <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/pro">
-                  <Button size="lg" className="bg-white text-primary hover:bg-white/90">
+                  <Button size="lg" className="bg-white text-primary hover:bg-white/90 btn-gradient-border">
                     Start 7-Day Money-Back Guarantee
                   </Button>
                 </Link>

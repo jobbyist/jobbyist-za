@@ -33,7 +33,7 @@ const UpskillingPrograms = () => {
         title="Learning Paths Coming Soon!"
         description="We're building comprehensive learning paths to help you master in-demand skills. From frontend development to data science, our structured courses will give you the training you need to advance your career."
       />
-    <section id="upskilling" className="py-20 bg-muted/30 relative overflow-hidden">
+    <section id="upskilling" className="py-20 suite-section-bg relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-brand-pink/5 rounded-full blur-3xl" />
@@ -46,7 +46,7 @@ const UpskillingPrograms = () => {
             <Badge variant="secondary" className="mb-4 gradient-brand text-primary-foreground">
               New Feature
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Upskilling Programs</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 suite-heading">Upskilling Programs</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Master in-demand skills with our comprehensive learning paths. From frontend 
               development to data science, get the training you need to advance your career 
@@ -59,7 +59,7 @@ const UpskillingPrograms = () => {
             {features.map((feature) => (
               <div
                 key={feature.title}
-                className="bg-card rounded-xl p-6 border border-border hover:shadow-lg transition-all duration-300"
+                className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-border hover:bg-white transition-all duration-300 hover:shadow-lg"
               >
                 <div className="w-12 h-12 gradient-brand rounded-lg flex items-center justify-center mb-4">
                   <feature.icon className="h-6 w-6 text-primary-foreground" />

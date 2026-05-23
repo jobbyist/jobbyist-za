@@ -12,7 +12,7 @@ const benefits = [
 
 const ResumeBuilder = () => {
   return (
-    <section id="resume" className="py-20 bg-muted/30">
+    <section id="resume" className="py-20 suite-section-bg">
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -21,7 +21,7 @@ const ResumeBuilder = () => {
               <Badge variant="secondary" className="mb-4">
                 Jobbyist Pro Exclusive
               </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 suite-heading">
                 AI-Powered Job Matcher
               </h2>
               <p className="text-muted-foreground mb-8">
