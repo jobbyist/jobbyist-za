@@ -1,5 +1,6 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { requireAdminOrService } from "../_shared/auth.ts";
+import { indexInsertedJob } from "../_shared/google-indexing.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -490,12 +491,18 @@ Deno.serve(async (req) => {
     
     for (let i = 0; i < jobs.length; i += batchSize) {
       const batch = jobs.slice(i, i + batchSize);
-      const { error } = await supabase.from('jobs').insert(batch);
+      const { data: insertedJobs, error } = await supabase
+        .from('jobs')
+        .insert(batch)
+        .select('id, slug');
       
       if (error) {
         console.error(`Error inserting batch ${i / batchSize + 1}:`, error);
       } else {
-        insertedCount += batch.length;
+        insertedCount += insertedJobs?.length || 0;
+        for (const insertedJob of insertedJobs || []) {
+          void indexInsertedJob(insertedJob);
+        }
         console.log(`Inserted batch ${i / batchSize + 1}: ${batch.length} jobs`);
       }
     }

@@ -1,4 +1,5 @@
 import { requireAdminOrService } from "../_shared/auth.ts";
+import { indexInsertedJob } from "../_shared/google-indexing.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -296,7 +297,7 @@ Deno.serve(async (req) => {
         }
 
         // Create job
-        const { error: jobError } = await supabase
+        const { data: insertedJob, error: jobError } = await supabase
           .from('jobs')
           .insert({
             company_id: companyId,
@@ -318,10 +319,13 @@ Deno.serve(async (req) => {
             source_name: 'Remote Job Scraper',
             external_url: job.url,
             status: 'active',
-          });
+          })
+          .select('id, slug')
+          .single();
 
         if (!jobError) {
           jobsCreated++;
+          void indexInsertedJob(insertedJob);
         } else {
           console.error(`Error creating job ${job.title}:`, jobError);
         }

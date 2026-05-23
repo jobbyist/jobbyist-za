@@ -2,6 +2,7 @@
 // Requires ADZUNA_APP_ID + ADZUNA_APP_KEY (free tier).
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { requireAdminOrService } from "../_shared/auth.ts";
+import { indexInsertedJob } from "../_shared/google-indexing.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -88,7 +89,7 @@ Deno.serve(async (req) => {
         if (dup) continue;
 
         const loc = j.location?.display_name || "South Africa";
-        const { error } = await supabase.from("jobs").insert({
+        const { data: insertedJob, error } = await supabase.from("jobs").insert({
           company_id: companyId,
           title: j.title,
           description: (j.description || "").slice(0, 8000),
@@ -109,8 +110,11 @@ Deno.serve(async (req) => {
           source: "adzuna",
           status: "active",
           posted_at: j.created || new Date().toISOString(),
-        });
-        if (!error) created++;
+        }).select("id, slug").single();
+        if (!error) {
+          created++;
+          void indexInsertedJob(insertedJob);
+        }
       }
     }
 

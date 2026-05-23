@@ -2,6 +2,7 @@
 // Requires JOOBLE_API_KEY (free).
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { requireAdminOrService } from "../_shared/auth.ts";
+import { indexInsertedJob } from "../_shared/google-indexing.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -82,7 +83,7 @@ Deno.serve(async (req) => {
         if (dup) continue;
 
         const description = (j.snippet || "").replace(/<[^>]+>/g, "").slice(0, 8000);
-        const { error } = await supabase.from("jobs").insert({
+        const { data: insertedJob, error } = await supabase.from("jobs").insert({
           company_id: companyId,
           title: j.title,
           description,
@@ -101,8 +102,11 @@ Deno.serve(async (req) => {
           source: "jooble",
           status: "active",
           posted_at: j.updated || new Date().toISOString(),
-        });
-        if (!error) created++;
+        }).select("id, slug").single();
+        if (!error) {
+          created++;
+          void indexInsertedJob(insertedJob);
+        }
       }
     }
 
