@@ -26,7 +26,7 @@ Deno.serve(async (req) => {
     push(`${BASE}/companies`, "0.8", "weekly");
     push(`${BASE}/pro`, "0.7", "monthly");
     push(`${BASE}/about`, "0.5", "monthly");
-    push(`${BASE}/knowledge-hub`, "0.7", "weekly");
+    push(`${BASE}/resource-center`, "0.7", "weekly");
     push(`${BASE}/resume-builder`, "0.6", "monthly");
     push(`${BASE}/upskilling`, "0.6", "monthly");
     push(`${BASE}/job-matcher`, "0.7", "weekly");
