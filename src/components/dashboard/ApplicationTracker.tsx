@@ -17,11 +17,13 @@ import {
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 
+type AppStatus = 'submitted' | 'reviewing' | 'shortlisted' | 'rejected' | 'hired';
+
 interface Application {
   id: string;
   created_at: string;
   updated_at: string;
-  status: 'pending' | 'under_review' | 'accepted' | 'rejected';
+  status: AppStatus;
   cover_letter: string | null;
   reviewed_at: string | null;
   notes: string | null;
@@ -44,7 +46,7 @@ interface ApplicationTrackerProps {
 const ApplicationTracker = ({ userId }: ApplicationTrackerProps) => {
   const [applications, setApplications] = useState<Application[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState<'all' | 'pending' | 'under_review' | 'accepted' | 'rejected'>('all');
+  const [filter, setFilter] = useState<'all' | AppStatus>('all');
 
   useEffect(() => {
     fetchApplications();
