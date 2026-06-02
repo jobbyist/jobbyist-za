@@ -28,6 +28,7 @@ import {
   Upload,
   Shield,
   AlertCircle,
+  CheckCircle2,
   TrendingUp,
   GraduationCap,
   Crown,

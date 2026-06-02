@@ -81,11 +81,12 @@ const ApplicationTracker = ({ userId }: ApplicationTrackerProps) => {
 
   const getStatusIcon = (status: Application['status']) => {
     switch (status) {
-      case 'pending':
+      case 'submitted':
         return <Clock className="h-4 w-4" />;
-      case 'under_review':
+      case 'reviewing':
         return <AlertCircle className="h-4 w-4" />;
-      case 'accepted':
+      case 'shortlisted':
+      case 'hired':
         return <CheckCircle2 className="h-4 w-4" />;
       case 'rejected':
         return <XCircle className="h-4 w-4" />;
@@ -94,11 +95,12 @@ const ApplicationTracker = ({ userId }: ApplicationTrackerProps) => {
 
   const getStatusColor = (status: Application['status']) => {
     switch (status) {
-      case 'pending':
+      case 'submitted':
         return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
-      case 'under_review':
+      case 'reviewing':
         return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
-      case 'accepted':
+      case 'shortlisted':
+      case 'hired':
         return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
       case 'rejected':
         return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
@@ -106,9 +108,7 @@ const ApplicationTracker = ({ userId }: ApplicationTrackerProps) => {
   };
 
   const getStatusLabel = (status: Application['status']) => {
-    return status.split('_').map(word => 
-      word.charAt(0).toUpperCase() + word.slice(1)
-    ).join(' ');
+    return status.charAt(0).toUpperCase() + status.slice(1);
   };
 
   const filteredApplications = applications.filter(app => 
@@ -117,9 +117,9 @@ const ApplicationTracker = ({ userId }: ApplicationTrackerProps) => {
 
   const stats = {
     total: applications.length,
-    pending: applications.filter(a => a.status === 'pending').length,
-    under_review: applications.filter(a => a.status === 'under_review').length,
-    accepted: applications.filter(a => a.status === 'accepted').length,
+    submitted: applications.filter(a => a.status === 'submitted').length,
+    reviewing: applications.filter(a => a.status === 'reviewing').length,
+    hired: applications.filter(a => a.status === 'hired').length,
     rejected: applications.filter(a => a.status === 'rejected').length,
   };
 
@@ -164,36 +164,36 @@ const ApplicationTracker = ({ userId }: ApplicationTrackerProps) => {
           </CardContent>
         </Card>
 
-        <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => setFilter('under_review')}>
+        <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => setFilter('reviewing')}>
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Under Review</p>
-                <p className="text-3xl font-bold text-blue-600">{stats.under_review}</p>
+                <p className="text-3xl font-bold text-blue-600">{stats.reviewing}</p>
               </div>
               <AlertCircle className="h-8 w-8 text-blue-600" />
             </div>
           </CardContent>
         </Card>
 
-        <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => setFilter('accepted')}>
+        <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => setFilter('hired')}>
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Accepted</p>
-                <p className="text-3xl font-bold text-green-600">{stats.accepted}</p>
+                <p className="text-sm text-muted-foreground">Hired</p>
+                <p className="text-3xl font-bold text-green-600">{stats.hired}</p>
               </div>
               <CheckCircle2 className="h-8 w-8 text-green-600" />
             </div>
           </CardContent>
         </Card>
 
-        <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => setFilter('pending')}>
+        <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => setFilter('submitted')}>
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Pending</p>
-                <p className="text-3xl font-bold text-yellow-600">{stats.pending}</p>
+                <p className="text-sm text-muted-foreground">Submitted</p>
+                <p className="text-3xl font-bold text-yellow-600">{stats.submitted}</p>
               </div>
               <Clock className="h-8 w-8 text-yellow-600" />
             </div>
@@ -215,9 +215,10 @@ const ApplicationTracker = ({ userId }: ApplicationTrackerProps) => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Applications</SelectItem>
-                <SelectItem value="pending">Pending</SelectItem>
-                <SelectItem value="under_review">Under Review</SelectItem>
-                <SelectItem value="accepted">Accepted</SelectItem>
+                <SelectItem value="submitted">Submitted</SelectItem>
+                <SelectItem value="reviewing">Reviewing</SelectItem>
+                <SelectItem value="shortlisted">Shortlisted</SelectItem>
+                <SelectItem value="hired">Hired</SelectItem>
                 <SelectItem value="rejected">Rejected</SelectItem>
               </SelectContent>
             </Select>

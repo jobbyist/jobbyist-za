@@ -99,7 +99,7 @@ export function useProfile() {
       const dbUpdates: Partial<Profile> = { ...updates };
       const { error } = await supabase
         .from('profiles')
-        .update(dbUpdates)
+        .update(dbUpdates as never)
         .eq('user_id', user.id);
 
       if (error) throw error;
