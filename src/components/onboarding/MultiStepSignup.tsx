@@ -37,8 +37,10 @@ const MultiStepSignup = () => {
   // Step 3 — resume
   const [resumeFile, setResumeFile] = useState<File | null>(null);
 
-  // Step 4 — Pro
-  const [proInterest, setProInterest] = useState(false);
+  // Step 4 — Plan choice (Free vs Pro)
+  const [selectedPlan, setSelectedPlan] = useState<"free" | "pro" | null>(null);
+  const proInterest = selectedPlan === "pro";
+
 
   // Step 5 — account
   const [username, setUsername] = useState("");
@@ -64,6 +66,11 @@ const MultiStepSignup = () => {
     if (s === 1) {
       if (!firstName.trim() || !lastName.trim() || !location.trim()) {
         toast.error("Name and city are required"); return false;
+      }
+    }
+    if (s === 4) {
+      if (!selectedPlan) {
+        toast.error("Please choose a plan to continue"); return false;
       }
     }
     if (s === 5) {
@@ -179,7 +186,7 @@ const MultiStepSignup = () => {
             {step === 1 && "About you"}
             {step === 2 && "Profile picture"}
             {step === 3 && "Your CV"}
-            {step === 4 && "Jobbyist Pro"}
+            {step === 4 && "Choose your plan"}
             {step === 5 && "Login details"}
           </h2>
           <span className="text-sm text-muted-foreground">Step {step} of {TOTAL}</span>
@@ -193,14 +200,14 @@ const MultiStepSignup = () => {
             {step === 1 && "Let's start with the basics"}
             {step === 2 && "Add a friendly face"}
             {step === 3 && "Upload your CV"}
-            {step === 4 && "Become a Pro (optional)"}
+            {step === 4 && "Choose your plan"}
             {step === 5 && "Create your account"}
           </CardTitle>
           <CardDescription>
             {step === 1 && "Help SA employers find you"}
             {step === 2 && "Profiles with photos are 14× more likely to be viewed"}
             {step === 3 && "We'll auto-fill your skills and experience from this"}
-            {step === 4 && "Unlock Pro tools — you can subscribe later"}
+            {step === 4 && "Pick the plan that fits — you can upgrade anytime"}
             {step === 5 && "Pick a username and a strong password"}
           </CardDescription>
         </CardHeader>
@@ -251,24 +258,66 @@ const MultiStepSignup = () => {
           )}
 
           {step === 4 && (
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 gradient-brand text-primary-foreground">
-                <Crown className="h-6 w-6 mb-2" />
-                <h3 className="font-semibold text-lg">Jobbyist Pro — R99/month</h3>
-                <ul className="text-sm space-y-1 mt-2 opacity-90">
-                  <li>• Apply directly to verified employers</li>
-                  <li>• AI job matching tuned to your CV</li>
-                  <li>• Priority profile visibility</li>
-                  <li>• Resume builder & career coaching</li>
+            <div className="space-y-3">
+              <button
+                type="button"
+                onClick={() => setSelectedPlan("free")}
+                className={`w-full text-left rounded-lg border-2 p-5 transition-all ${
+                  selectedPlan === "free"
+                    ? "border-primary bg-primary/5 ring-2 ring-primary/20"
+                    : "border-border hover:border-primary/50"
+                }`}
+              >
+                <div className="flex items-start justify-between mb-2">
+                  <div>
+                    <h3 className="font-semibold text-lg">Jobbyist Free</h3>
+                    <p className="text-2xl font-bold mt-1">R0<span className="text-sm font-normal text-muted-foreground">/month</span></p>
+                  </div>
+                  {selectedPlan === "free" && <Check className="h-5 w-5 text-primary" />}
+                </div>
+                <p className="text-sm text-muted-foreground mb-3">Browse and apply to a limited number of jobs each month.</p>
+                <ul className="text-sm space-y-1.5">
+                  <li className="flex items-start gap-2"><Check className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />Browse all SA job listings</li>
+                  <li className="flex items-start gap-2"><Check className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />Up to 5 applications / month</li>
+                  <li className="flex items-start gap-2"><Check className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />Save jobs to your shortlist</li>
+                  <li className="flex items-start gap-2 text-muted-foreground"><span className="h-4 w-4 mt-0.5 shrink-0">•</span>Contains ads</li>
                 </ul>
-              </div>
-              <div className="flex items-center justify-between p-4 border rounded-lg">
-                <div><p className="font-medium">Interested in Pro?</p>
-                  <p className="text-xs text-muted-foreground">No payment now — we'll send you a link when checkout is ready</p></div>
-                <Switch checked={proInterest} onCheckedChange={setProInterest} />
-              </div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setSelectedPlan("pro")}
+                className={`w-full text-left rounded-lg border-2 p-5 transition-all relative overflow-hidden ${
+                  selectedPlan === "pro"
+                    ? "border-primary ring-2 ring-primary/20"
+                    : "border-border hover:border-primary/50"
+                }`}
+              >
+                <div className="absolute top-0 right-0 bg-gradient-to-r from-primary to-primary/70 text-primary-foreground text-xs font-semibold px-3 py-1 rounded-bl-lg">
+                  RECOMMENDED
+                </div>
+                <div className="flex items-start justify-between mb-2 mt-1">
+                  <div>
+                    <h3 className="font-semibold text-lg flex items-center gap-2"><Crown className="h-5 w-5 text-amber-500" />Jobbyist Pro</h3>
+                    <p className="text-2xl font-bold mt-1">R99<span className="text-sm font-normal text-muted-foreground">/month</span></p>
+                  </div>
+                  {selectedPlan === "pro" && <Check className="h-5 w-5 text-primary" />}
+                </div>
+                <p className="text-sm text-muted-foreground mb-3">Unlimited access, premium features, ad-free browsing.</p>
+                <ul className="text-sm space-y-1.5">
+                  <li className="flex items-start gap-2"><Sparkles className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />Unlimited applications</li>
+                  <li className="flex items-start gap-2"><Sparkles className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />AI job matching tuned to your CV</li>
+                  <li className="flex items-start gap-2"><Sparkles className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />Priority profile visibility to recruiters</li>
+                  <li className="flex items-start gap-2"><Sparkles className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />Resume builder & career coaching</li>
+                  <li className="flex items-start gap-2"><Sparkles className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />Ad-free browsing experience</li>
+                </ul>
+              </button>
+              <p className="text-xs text-muted-foreground text-center pt-1">
+                No payment required now — Pro members will receive a checkout link by email.
+              </p>
             </div>
           )}
+
 
           {step === 5 && (
             <div className="space-y-3">

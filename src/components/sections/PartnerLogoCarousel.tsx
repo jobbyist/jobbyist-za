@@ -112,8 +112,8 @@ const PartnerLogoCarousel = ({ logos = defaultLogos }: PartnerLogoCarouselProps)
                   <div className="h-[126px] rounded-xl border border-border/80 bg-background/90 p-4 flex items-center justify-center">
                     {hasRealLogos && "src" in logo ? (
                       <img
-                        src={logo.src}
-                        alt={logo.alt}
+                        src={(logo as PartnerLogo).src}
+                        alt={(logo as PartnerLogo).alt}
                         loading="lazy"
                         className="max-h-14 w-auto object-contain"
                       />
