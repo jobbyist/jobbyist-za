@@ -37,8 +37,10 @@ const MultiStepSignup = () => {
   // Step 3 — resume
   const [resumeFile, setResumeFile] = useState<File | null>(null);
 
-  // Step 4 — Pro
-  const [proInterest, setProInterest] = useState(false);
+  // Step 4 — Plan choice (Free vs Pro)
+  const [selectedPlan, setSelectedPlan] = useState<"free" | "pro" | null>(null);
+  const proInterest = selectedPlan === "pro";
+
 
   // Step 5 — account
   const [username, setUsername] = useState("");
@@ -64,6 +66,11 @@ const MultiStepSignup = () => {
     if (s === 1) {
       if (!firstName.trim() || !lastName.trim() || !location.trim()) {
         toast.error("Name and city are required"); return false;
+      }
+    }
+    if (s === 4) {
+      if (!selectedPlan) {
+        toast.error("Please choose a plan to continue"); return false;
       }
     }
     if (s === 5) {
@@ -179,7 +186,7 @@ const MultiStepSignup = () => {
             {step === 1 && "About you"}
             {step === 2 && "Profile picture"}
             {step === 3 && "Your CV"}
-            {step === 4 && "Jobbyist Pro"}
+            {step === 4 && "Choose your plan"}
             {step === 5 && "Login details"}
           </h2>
           <span className="text-sm text-muted-foreground">Step {step} of {TOTAL}</span>
@@ -193,14 +200,14 @@ const MultiStepSignup = () => {
             {step === 1 && "Let's start with the basics"}
             {step === 2 && "Add a friendly face"}
             {step === 3 && "Upload your CV"}
-            {step === 4 && "Become a Pro (optional)"}
+            {step === 4 && "Choose your plan"}
             {step === 5 && "Create your account"}
           </CardTitle>
           <CardDescription>
             {step === 1 && "Help SA employers find you"}
             {step === 2 && "Profiles with photos are 14× more likely to be viewed"}
             {step === 3 && "We'll auto-fill your skills and experience from this"}
-            {step === 4 && "Unlock Pro tools — you can subscribe later"}
+            {step === 4 && "Pick the plan that fits — you can upgrade anytime"}
             {step === 5 && "Pick a username and a strong password"}
           </CardDescription>
         </CardHeader>
