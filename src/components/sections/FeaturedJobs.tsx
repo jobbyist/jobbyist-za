@@ -105,14 +105,19 @@ const FeaturedJobs = () => {
                   {job.experience_level && (
                     <Badge variant="outline" className="text-xs">{job.experience_level}</Badge>
                   )}
+                  <JobMetaBadges job={job} />
                 </div>
 
                 {/* Salary */}
-                {formatSalary(job.salary_min, job.salary_max, job.salary_currency) && (
-                  <p className="text-sm font-semibold gradient-brand-text mb-3">
-                    {formatSalary(job.salary_min, job.salary_max, job.salary_currency)}
-                  </p>
-                )}
+                <p className="text-sm font-semibold gradient-brand-text mb-3">
+                  {formatSalaryRange({
+                    min: job.salary_min,
+                    max: job.salary_max,
+                    currency: job.salary_currency,
+                    period: job.salary_period,
+                    country: job.country,
+                  })}
+                </p>
 
                 {/* Description */}
                 <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
