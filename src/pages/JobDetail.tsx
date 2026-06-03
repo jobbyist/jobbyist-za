@@ -124,14 +124,19 @@ const JobDetail = () => {
     if (!user || !job) return;
 
     if (!canApplyToJobs) {
-      toast.error('Complete your profile and get verified to apply');
+      toast.error('Complete your profile 100% and get verified to apply');
       navigate('/profile');
+      return;
+    }
+
+    if (!quota.canApply) {
+      toast.error(`You've used all ${FREE_MONTHLY_LIMIT} free applications this month. Upgrade to Pro for unlimited.`);
+      navigate('/pro');
       return;
     }
 
     setIsApplying(true);
     try {
-      // Save application to database
       const { error } = await supabase.from('job_applications').insert({
         job_id: job.id,
         user_id: user.id,
