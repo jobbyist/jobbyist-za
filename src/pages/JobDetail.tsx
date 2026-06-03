@@ -181,6 +181,7 @@ const JobDetail = () => {
 
       setHasApplied(true);
       setShowApplyDialog(false);
+      quota.refresh();
     } catch (error: any) {
       console.error('Error applying to job:', error);
       toast.error('Failed to submit application');
