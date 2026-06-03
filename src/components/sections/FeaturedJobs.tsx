@@ -44,16 +44,7 @@ const FeaturedJobs = () => {
     return colors[index];
   };
 
-  const formatSalary = (min?: number | null, max?: number | null, currency?: string | null) => {
-    if (!min && !max) return null;
-    const curr = currency || 'ZAR';
-    if (min && max) {
-      return `${curr} ${(min / 1000).toFixed(0)}K - ${(max / 1000).toFixed(0)}K`;
-    }
-    if (min) return `From ${curr} ${(min / 1000).toFixed(0)}K`;
-    if (max) return `Up to ${curr} ${(max / 1000).toFixed(0)}K`;
-    return null;
-  };
+  // (salary formatting moved to formatSalaryRange util)
 
   return (
     <section id="jobs" className="py-20">
