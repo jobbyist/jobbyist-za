@@ -4,6 +4,8 @@ import { MapPin, ArrowRight, Wifi, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useJobs } from "@/hooks/useJobs";
 import { generateJobListSchema } from "@/components/SEOHead";
+import { formatSalaryRange } from "@/lib/salary";
+import { JobMetaBadges } from "@/components/JobBadges";
 import { useEffect } from "react";
 
 const FeaturedJobs = () => {
@@ -42,16 +44,7 @@ const FeaturedJobs = () => {
     return colors[index];
   };
 
-  const formatSalary = (min?: number | null, max?: number | null, currency?: string | null) => {
-    if (!min && !max) return null;
-    const curr = currency || 'ZAR';
-    if (min && max) {
-      return `${curr} ${(min / 1000).toFixed(0)}K - ${(max / 1000).toFixed(0)}K`;
-    }
-    if (min) return `From ${curr} ${(min / 1000).toFixed(0)}K`;
-    if (max) return `Up to ${curr} ${(max / 1000).toFixed(0)}K`;
-    return null;
-  };
+  // (salary formatting moved to formatSalaryRange util)
 
   return (
     <section id="jobs" className="py-20">
@@ -112,14 +105,19 @@ const FeaturedJobs = () => {
                   {job.experience_level && (
                     <Badge variant="outline" className="text-xs">{job.experience_level}</Badge>
                   )}
+                  <JobMetaBadges job={job} />
                 </div>
 
                 {/* Salary */}
-                {formatSalary(job.salary_min, job.salary_max, job.salary_currency) && (
-                  <p className="text-sm font-semibold gradient-brand-text mb-3">
-                    {formatSalary(job.salary_min, job.salary_max, job.salary_currency)}
-                  </p>
-                )}
+                <p className="text-sm font-semibold gradient-brand-text mb-3">
+                  {formatSalaryRange({
+                    min: job.salary_min,
+                    max: job.salary_max,
+                    currency: job.salary_currency,
+                    period: job.salary_period,
+                    country: job.country,
+                  })}
+                </p>
 
                 {/* Description */}
                 <p className="text-sm text-muted-foreground mb-4 line-clamp-2">

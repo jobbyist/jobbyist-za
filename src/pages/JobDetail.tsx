@@ -11,18 +11,21 @@ import { useJob } from '@/hooks/useJobs';
 import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
 import { useSubscription } from '@/hooks/useSubscription';
+import { useApplicationQuota, FREE_MONTHLY_LIMIT } from '@/hooks/useApplicationQuota';
 import { supabase } from '@/integrations/supabase/client';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { SEOHead, generateJobPostingSchema } from '@/components/SEOHead';
 import ExpiredBadge from '@/components/ExpiredBadge';
+import { JobMetaBadges } from '@/components/JobBadges';
 import { isJobExpired } from '@/lib/jobUtils';
+import { formatSalaryRange } from '@/lib/salary';
 import { toast } from 'sonner';
 import { 
   ArrowLeft, MapPin, Wifi, Building2, Clock, DollarSign,
   Briefcase, CheckCircle2, ExternalLink, Share2, Bookmark, BookmarkCheck, Lock, Crown, Flag
 } from 'lucide-react';
-import { formatSalary, getCountryByCode, type CountryCode } from '@/lib/countries';
+import { getCountryByCode, type CountryCode } from '@/lib/countries';
 
 const JobDetail = () => {
   const { jobId } = useParams<{ jobId: string }>();
@@ -30,6 +33,7 @@ const JobDetail = () => {
   const { user } = useAuth();
   const { profile, canApplyToJobs } = useProfile();
   const { hasActiveSubscription, loading: subLoading } = useSubscription();
+  const quota = useApplicationQuota();
   const { job, loading } = useJob(jobId);
   const isPro = hasActiveSubscription();
   const expired = isJobExpired(job?.posted_at);
@@ -120,14 +124,19 @@ const JobDetail = () => {
     if (!user || !job) return;
 
     if (!canApplyToJobs) {
-      toast.error('Complete your profile and get verified to apply');
+      toast.error('Complete your profile 100% and get verified to apply');
       navigate('/profile');
+      return;
+    }
+
+    if (!quota.canApply) {
+      toast.error(`You've used all ${FREE_MONTHLY_LIMIT} free applications this month. Upgrade to Pro for unlimited.`);
+      navigate('/pro');
       return;
     }
 
     setIsApplying(true);
     try {
-      // Save application to database
       const { error } = await supabase.from('job_applications').insert({
         job_id: job.id,
         user_id: user.id,
@@ -172,6 +181,7 @@ const JobDetail = () => {
 
       setHasApplied(true);
       setShowApplyDialog(false);
+      quota.refresh();
     } catch (error: any) {
       console.error('Error applying to job:', error);
       toast.error('Failed to submit application');
@@ -306,12 +316,17 @@ const JobDetail = () => {
               <div className="flex flex-wrap gap-2">
                 <Badge variant="secondary">{job.job_type}</Badge>
                 {job.experience_level && <Badge variant="outline">{job.experience_level}</Badge>}
-                {job.salary_min && job.salary_max && (
-                  <Badge className="bg-primary/10 text-primary hover:bg-primary/20">
-                    <DollarSign className="h-3 w-3 mr-1" />
-                    {formatSalary(job.salary_min, job.country as CountryCode)} - {formatSalary(job.salary_max, job.country as CountryCode)}/{job.salary_period}
-                  </Badge>
-                )}
+                <Badge className="bg-primary/10 text-primary hover:bg-primary/20">
+                  <DollarSign className="h-3 w-3 mr-1" />
+                  {formatSalaryRange({
+                    min: job.salary_min,
+                    max: job.salary_max,
+                    currency: job.salary_currency,
+                    period: job.salary_period,
+                    country: job.country,
+                  })}
+                </Badge>
+                <JobMetaBadges job={job} />
                 {expired && <ExpiredBadge />}
               </div>
 
