@@ -310,12 +310,17 @@ const JobDetail = () => {
               <div className="flex flex-wrap gap-2">
                 <Badge variant="secondary">{job.job_type}</Badge>
                 {job.experience_level && <Badge variant="outline">{job.experience_level}</Badge>}
-                {job.salary_min && job.salary_max && (
-                  <Badge className="bg-primary/10 text-primary hover:bg-primary/20">
-                    <DollarSign className="h-3 w-3 mr-1" />
-                    {formatSalary(job.salary_min, job.country as CountryCode)} - {formatSalary(job.salary_max, job.country as CountryCode)}/{job.salary_period}
-                  </Badge>
-                )}
+                <Badge className="bg-primary/10 text-primary hover:bg-primary/20">
+                  <DollarSign className="h-3 w-3 mr-1" />
+                  {formatSalaryRange({
+                    min: job.salary_min,
+                    max: job.salary_max,
+                    currency: job.salary_currency,
+                    period: job.salary_period,
+                    country: job.country,
+                  })}
+                </Badge>
+                <JobMetaBadges job={job} />
                 {expired && <ExpiredBadge />}
               </div>
 
