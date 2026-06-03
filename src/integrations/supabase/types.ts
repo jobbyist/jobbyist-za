@@ -452,6 +452,39 @@ export type Database = {
           },
         ]
       }
+      scrape_runs: {
+        Row: {
+          error: string | null
+          finished_at: string | null
+          id: string
+          results: Json
+          started_at: string
+          status: string
+          total_created: number
+          triggered_by: string
+        }
+        Insert: {
+          error?: string | null
+          finished_at?: string | null
+          id?: string
+          results?: Json
+          started_at?: string
+          status?: string
+          total_created?: number
+          triggered_by?: string
+        }
+        Update: {
+          error?: string | null
+          finished_at?: string | null
+          id?: string
+          results?: Json
+          started_at?: string
+          status?: string
+          total_created?: number
+          triggered_by?: string
+        }
+        Relationships: []
+      }
       subscriptions: {
         Row: {
           cancelled_at: string | null
@@ -562,10 +595,12 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      applications_this_month: { Args: { _user_id: string }; Returns: number }
       calculate_profile_completion: {
         Args: { _profile: Database["public"]["Tables"]["profiles"]["Row"] }
         Returns: number
       }
+      delete_expired_jobs: { Args: never; Returns: number }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
