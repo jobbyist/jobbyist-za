@@ -4,6 +4,8 @@ import { MapPin, ArrowRight, Wifi, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useJobs } from "@/hooks/useJobs";
 import { generateJobListSchema } from "@/components/SEOHead";
+import { formatSalaryRange } from "@/lib/salary";
+import { JobMetaBadges } from "@/components/JobBadges";
 import { useEffect } from "react";
 
 const FeaturedJobs = () => {
