@@ -11,18 +11,21 @@ import { useJob } from '@/hooks/useJobs';
 import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
 import { useSubscription } from '@/hooks/useSubscription';
+import { useApplicationQuota, FREE_MONTHLY_LIMIT } from '@/hooks/useApplicationQuota';
 import { supabase } from '@/integrations/supabase/client';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { SEOHead, generateJobPostingSchema } from '@/components/SEOHead';
 import ExpiredBadge from '@/components/ExpiredBadge';
+import { JobMetaBadges } from '@/components/JobBadges';
 import { isJobExpired } from '@/lib/jobUtils';
+import { formatSalaryRange } from '@/lib/salary';
 import { toast } from 'sonner';
 import { 
   ArrowLeft, MapPin, Wifi, Building2, Clock, DollarSign,
   Briefcase, CheckCircle2, ExternalLink, Share2, Bookmark, BookmarkCheck, Lock, Crown, Flag
 } from 'lucide-react';
-import { formatSalary, getCountryByCode, type CountryCode } from '@/lib/countries';
+import { getCountryByCode, type CountryCode } from '@/lib/countries';
 
 const JobDetail = () => {
   const { jobId } = useParams<{ jobId: string }>();
@@ -30,6 +33,7 @@ const JobDetail = () => {
   const { user } = useAuth();
   const { profile, canApplyToJobs } = useProfile();
   const { hasActiveSubscription, loading: subLoading } = useSubscription();
+  const quota = useApplicationQuota();
   const { job, loading } = useJob(jobId);
   const isPro = hasActiveSubscription();
   const expired = isJobExpired(job?.posted_at);
