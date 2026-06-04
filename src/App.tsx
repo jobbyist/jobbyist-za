@@ -13,6 +13,7 @@ import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import Jobs from "./pages/Jobs";
 import CountryJobs from "./pages/CountryJobs";
+import CountryCityJobsPage from "./pages/CountryCityJobsPage";
 import JobDetail from "./pages/JobDetail";
 import Companies from "./pages/Companies";
 import CompanyDetail from "./pages/CompanyDetail";
@@ -104,6 +105,7 @@ const App = () => {
               <Route path="/jobs/categories/:category" element={<FacetJobs mode="category" />} />
               <Route path="/jobs/combo/:location/:jobType/:category" element={<FacetJobs mode="combo" />} />
               <Route path="/jobs/country/:countryCode" element={<CountryJobs />} />
+              <Route path="/jobs/:category/:city" element={<CountryCityJobsPage />} />
               <Route path="/jobs/:location" element={<LocationJobs />} />
               <Route path="/job/:jobId" element={<JobDetail />} />
               <Route path="/sitemap.xml" element={<SitemapRedirect />} />
