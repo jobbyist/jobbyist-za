@@ -16,6 +16,8 @@ import { useUpskilling } from '@/hooks/useUpskilling';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import SavedJobsCard from '@/components/SavedJobsCard';
+import AccountSecurityCard from '@/components/dashboard/AccountSecurityCard';
+import ApplicationTracker from '@/components/dashboard/ApplicationTracker';
 import { toast } from 'sonner';
 import { 
   User, 
@@ -581,6 +583,22 @@ const Profile = () => {
 
             {/* Saved Jobs */}
             <SavedJobsCard />
+
+            {/* Application Tracker — Pro only */}
+            {isJobbyistProMember && user && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2"><Briefcase className="h-5 w-5" /> Application Tracker</CardTitle>
+                  <CardDescription>Track every job you've applied to. Exclusive to Jobbyist Pro members.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ApplicationTracker userId={user.id} />
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Account security + deletion */}
+            <AccountSecurityCard />
 
             {/* Upskilling Progress */}
             {enrollments && enrollments.length > 0 && (
