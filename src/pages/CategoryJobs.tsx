@@ -61,7 +61,7 @@ const CategoryJobs = () => {
     ? `Browse ${totalCount}+ ${cat!.name.toLowerCase()} jobs in ${loc.name}. ${cat!.description}`
     : `Find ${totalCount}+ ${cat!.name.toLowerCase()} jobs across South Africa. ${cat!.description}`;
   const canonical = loc
-    ? `https://za.jobbyist.africa/jobs/category/${cat!.slug}/${loc.slug}`
+    ? `https://za.jobbyist.africa/jobs/${cat!.slug}/${loc.slug}`
     : `https://za.jobbyist.africa/jobs/category/${cat!.slug}`;
 
   return (
@@ -136,7 +136,7 @@ const CategoryJobs = () => {
             <h2 className="text-xl font-semibold mb-4">Explore {cat!.name} jobs by city</h2>
             <div className="flex flex-wrap gap-2">
               {locationSlugs.map(l => (
-                <Link key={l.slug} to={`/jobs/category/${cat!.slug}/${l.slug}`}>
+                <Link key={l.slug} to={`/jobs/${cat!.slug}/${l.slug}`}>
                   <Badge variant={l.slug === loc?.slug ? "default" : "outline"} className="cursor-pointer">
                     {cat!.name} in {l.name}
                   </Badge>
@@ -149,7 +149,7 @@ const CategoryJobs = () => {
             <h2 className="text-xl font-semibold mb-4">Browse other categories</h2>
             <div className="flex flex-wrap gap-2">
               {categories.filter(c => c.slug !== cat!.slug).map(c => (
-                <Link key={c.slug} to={`/jobs/category/${c.slug}${loc ? "/" + loc.slug : ""}`}>
+                <Link key={c.slug} to={loc ? `/jobs/${c.slug}/${loc.slug}` : `/jobs/category/${c.slug}`}>
                   <Badge variant="secondary" className="cursor-pointer">{c.name}</Badge>
                 </Link>
               ))}
