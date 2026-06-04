@@ -160,8 +160,18 @@ export function getCategory(slug?: string) {
 export function getLocation(slug?: string) {
   return locationSlugs.find((l) => l.slug === slug);
 }
-export function getProgrammaticCategory(slug?: string) {
-  return programmaticJobCategories.find((c) => c.slug === slugify(slug || ""));
+export function getProgrammaticCategory(slug?: string): ProgrammaticJobCategory | undefined {
+  const normalizedSlug = slugify(slug || "");
+  const exactCategory = programmaticJobCategories.find((c) => c.slug === normalizedSlug);
+  if (exactCategory) return exactCategory;
+
+  const legacyCategory = categories.find((c) => c.slug === normalizedSlug);
+  if (!legacyCategory) return undefined;
+
+  return {
+    ...legacyCategory,
+    titleTerms: legacyCategory.keywords,
+  };
 }
 export function getProgrammaticCity(slug?: string) {
   return programmaticCities.find((c) => c.slug === slugify(slug || ""));
