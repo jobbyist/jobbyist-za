@@ -8,3 +8,4 @@ User-agent: Bingbot
 Allow: /
 
 Sitemap: https://za.jobbyist.africa/sitemap.xml
+Sitemap: https://za.jobbyist.africa/sitemap-programmatic-jobs.xml
