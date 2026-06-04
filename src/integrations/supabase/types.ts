@@ -345,6 +345,9 @@ export type Database = {
           onboarding_completed_at: string | null
           phone: string | null
           portfolio_url: string | null
+          preferred_industries: string[]
+          preferred_job_titles: string[]
+          preferred_job_types: string[]
           pro_interest: boolean
           profile_completion: number
           resume_url: string | null
@@ -354,6 +357,8 @@ export type Database = {
           username: string | null
           verification_notes: string | null
           verification_status: Database["public"]["Enums"]["verification_status"]
+          whatsapp_joined: boolean
+          whatsapp_number: string | null
           work_experience: Json | null
           years_of_experience: number | null
         }
@@ -377,6 +382,9 @@ export type Database = {
           onboarding_completed_at?: string | null
           phone?: string | null
           portfolio_url?: string | null
+          preferred_industries?: string[]
+          preferred_job_titles?: string[]
+          preferred_job_types?: string[]
           pro_interest?: boolean
           profile_completion?: number
           resume_url?: string | null
@@ -386,6 +394,8 @@ export type Database = {
           username?: string | null
           verification_notes?: string | null
           verification_status?: Database["public"]["Enums"]["verification_status"]
+          whatsapp_joined?: boolean
+          whatsapp_number?: string | null
           work_experience?: Json | null
           years_of_experience?: number | null
         }
@@ -409,6 +419,9 @@ export type Database = {
           onboarding_completed_at?: string | null
           phone?: string | null
           portfolio_url?: string | null
+          preferred_industries?: string[]
+          preferred_job_titles?: string[]
+          preferred_job_types?: string[]
           pro_interest?: boolean
           profile_completion?: number
           resume_url?: string | null
@@ -418,6 +431,8 @@ export type Database = {
           username?: string | null
           verification_notes?: string | null
           verification_status?: Database["public"]["Enums"]["verification_status"]
+          whatsapp_joined?: boolean
+          whatsapp_number?: string | null
           work_experience?: Json | null
           years_of_experience?: number | null
         }
@@ -601,6 +616,7 @@ export type Database = {
         Returns: number
       }
       delete_expired_jobs: { Args: never; Returns: number }
+      delete_my_account: { Args: never; Returns: undefined }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
