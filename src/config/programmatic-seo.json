@@ -1,0 +1,89 @@
+{
+  "minJobsPerCombo": 3,
+  "baseUrl": "https://za.jobbyist.africa",
+  "categories": [
+    {
+      "slug": "software-developer",
+      "name": "Software Developer",
+      "description": "Frontend, backend, full-stack and application developer roles across South Africa.",
+      "keywords": ["software developer", "developer", "software engineer", "programmer", "frontend", "front-end", "backend", "back-end", "full stack", "full-stack", "react", "javascript", "typescript", "python", "java"],
+      "titleTerms": ["software developer", "developer", "software engineer", "programmer", "frontend", "backend", "full stack"]
+    },
+    {
+      "slug": "accountant",
+      "name": "Accountant",
+      "description": "Accountant, bookkeeper, auditor and finance operations roles for South African professionals.",
+      "keywords": ["accountant", "accounting", "bookkeeper", "auditor", "finance", "tax", "payroll", "creditors", "debtors", "ca(sa)", "cima"],
+      "titleTerms": ["accountant", "bookkeeper", "auditor", "finance officer", "financial accountant"]
+    },
+    {
+      "slug": "data-analyst",
+      "name": "Data Analyst",
+      "description": "BI, analytics, reporting, data science and insights roles in South Africa.",
+      "keywords": ["data analyst", "data", "analytics", "bi", "business intelligence", "sql", "power bi", "tableau", "reporting", "insights", "data scientist"],
+      "titleTerms": ["data analyst", "business intelligence", "bi analyst", "data scientist", "reporting analyst"]
+    },
+    {
+      "slug": "digital-marketer",
+      "name": "Digital Marketer",
+      "description": "SEO, PPC, growth, content, brand and social media marketing jobs.",
+      "keywords": ["digital marketing", "marketing", "seo", "ppc", "google ads", "paid media", "content", "brand", "social media", "growth"],
+      "titleTerms": ["digital marketer", "marketing", "seo", "ppc", "social media", "content marketer"]
+    },
+    {
+      "slug": "sales-representative",
+      "name": "Sales Representative",
+      "description": "Sales representative, account executive, business development and customer growth roles.",
+      "keywords": ["sales", "sales representative", "account executive", "business development", "bdr", "sdr", "key account", "commercial", "customer acquisition"],
+      "titleTerms": ["sales representative", "sales", "account executive", "business development", "bdr", "sdr"]
+    },
+    {
+      "slug": "customer-support",
+      "name": "Customer Support",
+      "description": "Customer service, customer success, helpdesk and contact centre jobs.",
+      "keywords": ["customer support", "customer service", "customer success", "support", "helpdesk", "call centre", "contact centre", "client service"],
+      "titleTerms": ["customer support", "customer service", "customer success", "support consultant", "helpdesk"]
+    },
+    {
+      "slug": "project-manager",
+      "name": "Project Manager",
+      "description": "Project manager, delivery lead, scrum master and programme coordination jobs.",
+      "keywords": ["project manager", "project management", "programme manager", "program manager", "scrum master", "delivery lead", "agile", "pmp", "prince2"],
+      "titleTerms": ["project manager", "programme manager", "scrum master", "delivery lead"]
+    },
+    {
+      "slug": "human-resources",
+      "name": "Human Resources",
+      "description": "HR, recruitment, talent acquisition and people operations roles.",
+      "keywords": ["human resources", "hr", "recruiter", "talent acquisition", "people operations", "payroll", "hr business partner"],
+      "titleTerms": ["human resources", "hr", "recruiter", "talent acquisition", "people operations"]
+    },
+    {
+      "slug": "graphic-designer",
+      "name": "Graphic Designer",
+      "description": "Graphic design, UI design, brand design and creative production roles.",
+      "keywords": ["graphic designer", "designer", "ui designer", "ux", "creative", "brand designer", "adobe", "figma", "illustrator", "photoshop"],
+      "titleTerms": ["graphic designer", "designer", "ui designer", "brand designer", "creative designer"]
+    },
+    {
+      "slug": "operations-manager",
+      "name": "Operations Manager",
+      "description": "Operations, logistics, supply chain, warehouse and process improvement jobs.",
+      "keywords": ["operations", "operations manager", "logistics", "supply chain", "warehouse", "process improvement", "procurement", "inventory"],
+      "titleTerms": ["operations manager", "operations", "logistics", "supply chain", "warehouse manager"]
+    }
+  ],
+  "cities": [
+    { "slug": "johannesburg", "name": "Johannesburg", "province": "Gauteng", "aliases": ["johannesburg", "joburg", "jhb", "sandton", "rosebank", "midrand"] },
+    { "slug": "cape-town", "name": "Cape Town", "province": "Western Cape", "aliases": ["cape town", "cpt", "stellenbosch", "bellville", "claremont"] },
+    { "slug": "durban", "name": "Durban", "province": "KwaZulu-Natal", "aliases": ["durban", "umhlanga", "pinetown", "kloof", "ballito"] },
+    { "slug": "pretoria", "name": "Pretoria", "province": "Gauteng", "aliases": ["pretoria", "tshwane", "centurion", "menlyn", "hatfield"] },
+    { "slug": "gqeberha", "name": "Gqeberha", "province": "Eastern Cape", "aliases": ["gqeberha", "port elizabeth", "pe"] },
+    { "slug": "bloemfontein", "name": "Bloemfontein", "province": "Free State", "aliases": ["bloemfontein", "mangaung"] },
+    { "slug": "east-london", "name": "East London", "province": "Eastern Cape", "aliases": ["east london"] },
+    { "slug": "polokwane", "name": "Polokwane", "province": "Limpopo", "aliases": ["polokwane", "pietersburg"] },
+    { "slug": "nelspruit", "name": "Nelspruit", "province": "Mpumalanga", "aliases": ["nelspruit", "mbombela"] },
+    { "slug": "kimberley", "name": "Kimberley", "province": "Northern Cape", "aliases": ["kimberley"] },
+    { "slug": "remote", "name": "Remote", "aliases": ["remote", "work from home", "hybrid"] }
+  ]
+}
