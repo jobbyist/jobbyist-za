@@ -41,8 +41,7 @@ const Footer = () => {
     "For Employers": [
       { name: "Company Directory", href: "/companies" },
       { name: "Browse Candidates", href: "/professional-profiles" },
-      { name: "Claim Your Profile", href: "#claim-profile" },
-      { name: "Freelance Gigs", href: "#" },
+      { name: "Whitepaper 2026/27", href: "/whitepaper" },
       { name: "Recruitment Suite", href: "/recruitment-suite" },
       { name: "The Job Post Series", href: "/podcast" },
     ],
