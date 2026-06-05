@@ -413,16 +413,13 @@ const Navbar = () => {
                 >
                   Community Forum
                 </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsFreelanceModalOpen(true);
-                    closeMobileMenu();
-                  }}
+                <Link
+                  to="/whitepaper"
+                  onClick={closeMobileMenu}
                   className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-1.5 text-left"
                 >
-                  Freelance Gigs
-                </button>
+                  Whitepaper 2026/27
+                </Link>
               </div>
             )}
 
