@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 import { Settings, Users, CreditCard, Calendar } from "lucide-react";
 
 const features = [
