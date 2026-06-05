@@ -848,9 +848,6 @@ const Whitepaper = () => {
               The explainer video is currently unavailable. Please request access below and our team will share the latest viewing link.
             </p>
           )}
-          <Button variant="outline" onClick={openAccessModal} className="w-full">
-            Request Access To The Full Report &amp; Webinar Series
-          </Button>
         </DialogContent>
       </Dialog>
 
