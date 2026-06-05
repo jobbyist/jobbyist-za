@@ -46,7 +46,8 @@ const locations = {
 type LocationKey = keyof typeof locations;
 
 const LocationJobs = () => {
-  const { location } = useParams<{ location: string }>();
+  const params = useParams<{ location?: string; slug?: string }>();
+  const location = params.location || params.slug;
   const [searchParams, setSearchParams] = useSearchParams();
   
   const [search, setSearch] = useState(searchParams.get('search') || '');
