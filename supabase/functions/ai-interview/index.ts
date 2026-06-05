@@ -22,7 +22,29 @@ Deno.serve(async (req) => {
     const apiKey = Deno.env.get("LOVABLE_API_KEY");
     if (!apiKey) throw new Error("LOVABLE_API_KEY missing");
 
-    const { messages, finalize, userId } = await req.json();
+    // Require authenticated user — derive userId from the verified JWT.
+    const authHeader = req.headers.get("Authorization") || "";
+    const token = authHeader.replace(/^Bearer\s+/i, "").trim();
+    if (!token) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const authClient = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_ANON_KEY")!,
+      { global: { headers: { Authorization: `Bearer ${token}` } } },
+    );
+    const { data: userData, error: authError } = await authClient.auth.getUser();
+    if (authError || !userData?.user) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    const verifiedUserId = userData.user.id;
+
+    const { messages, finalize } = await req.json();
 
     const payload: any = {
       model: "google/gemini-2.5-flash",
@@ -50,7 +72,7 @@ Deno.serve(async (req) => {
     const data = await res.json();
     const content = data.choices?.[0]?.message?.content || "";
 
-    if (finalize && userId) {
+    if (finalize) {
       try {
         const summary = JSON.parse(content);
         const supabase = createClient(
@@ -62,7 +84,7 @@ Deno.serve(async (req) => {
           interview_completed_at: new Date().toISOString(),
           headline: summary.ideal_role || undefined,
           bio: summary.summary || undefined,
-        }).eq("user_id", userId);
+        }).eq("user_id", verifiedUserId);
       } catch (e) {
         console.error("Failed to persist interview:", e);
       }
