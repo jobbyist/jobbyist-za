@@ -444,15 +444,6 @@ const Whitepaper = () => {
 
                 <Button
                   size="lg"
-                  variant="outline"
-                  className="rounded-full"
-                  onClick={openAccessModal}
-                  aria-label="Request access to the full report and webinar series"
-                >
-                  Request Access To The Full Report &amp; Webinar Series
-                </Button>
-                <Button
-                  size="lg"
                   variant="ghost"
                   className="rounded-full"
                   onClick={() => setVideoModalOpen(true)}
