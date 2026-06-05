@@ -219,13 +219,14 @@ const Navbar = () => {
                           </button>
                         </li>
                         <li>
-                          <button
-                            type="button"
-                            onClick={() => setIsFreelanceModalOpen(true)}
-                            className="block w-full rounded-md p-2 text-sm text-left transition-colors hover:bg-accent hover:text-accent-foreground"
-                          >
-                            Freelance Gigs
-                          </button>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              to="/whitepaper"
+                              className="block w-full rounded-md p-2 text-sm text-left transition-colors hover:bg-accent hover:text-accent-foreground"
+                            >
+                              Whitepaper 2026/27
+                            </Link>
+                          </NavigationMenuLink>
                         </li>
                       </ul>
                     </div>
