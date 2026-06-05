@@ -43,11 +43,11 @@ Deno.serve(async (req) => {
 
     // Active jobs
     const { data: jobs } = await supabase.from("jobs").select("id, updated_at, posted_at").eq("status", "active").order("posted_at", { ascending: false }).limit(5000);
-    jobs?.forEach((j: any) => push(`${BASE}/job/${j.id}`, "0.8", "weekly", new Date(j.updated_at || j.posted_at).toISOString().split("T")[0]));
+    jobs?.forEach((j: any) => push(`${BASE}/jobs/${j.id}`, "0.8", "weekly", new Date(j.updated_at || j.posted_at).toISOString().split("T")[0]));
 
     // Companies
     const { data: companies } = await supabase.from("companies").select("slug, updated_at").eq("is_active", true).limit(2000);
-    companies?.forEach((c: any) => push(`${BASE}/company/${c.slug}`, "0.7", "weekly", new Date(c.updated_at).toISOString().split("T")[0]));
+    companies?.forEach((c: any) => push(`${BASE}/companies/${c.slug}`, "0.7", "weekly", new Date(c.updated_at).toISOString().split("T")[0]));
 
     // Blog posts
     const { data: posts } = await supabase.from("blog_posts").select("slug, updated_at").eq("is_published", true).limit(2000);

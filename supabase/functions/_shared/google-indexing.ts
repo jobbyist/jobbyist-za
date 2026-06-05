@@ -43,7 +43,7 @@ function buildCanonicalJobUrl(insertedJob: InsertedJob): string | null {
   }
 
   if (insertedJob.id) {
-    return `${baseUrl}/job/${insertedJob.id}`;
+    return `${baseUrl}/jobs/${insertedJob.id}`;
   }
 
   return null;
