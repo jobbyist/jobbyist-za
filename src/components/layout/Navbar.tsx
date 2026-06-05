@@ -219,13 +219,14 @@ const Navbar = () => {
                           </button>
                         </li>
                         <li>
-                          <button
-                            type="button"
-                            onClick={() => setIsFreelanceModalOpen(true)}
-                            className="block w-full rounded-md p-2 text-sm text-left transition-colors hover:bg-accent hover:text-accent-foreground"
-                          >
-                            Freelance Gigs
-                          </button>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              to="/whitepaper"
+                              className="block w-full rounded-md p-2 text-sm text-left transition-colors hover:bg-accent hover:text-accent-foreground"
+                            >
+                              Whitepaper 2026/27
+                            </Link>
+                          </NavigationMenuLink>
                         </li>
                       </ul>
                     </div>
@@ -412,16 +413,13 @@ const Navbar = () => {
                 >
                   Community Forum
                 </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsFreelanceModalOpen(true);
-                    closeMobileMenu();
-                  }}
+                <Link
+                  to="/whitepaper"
+                  onClick={closeMobileMenu}
                   className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-1.5 text-left"
                 >
-                  Freelance Gigs
-                </button>
+                  Whitepaper 2026/27
+                </Link>
               </div>
             )}
 

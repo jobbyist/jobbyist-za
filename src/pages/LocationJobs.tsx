@@ -46,7 +46,8 @@ const locations = {
 type LocationKey = keyof typeof locations;
 
 const LocationJobs = () => {
-  const { location } = useParams<{ location: string }>();
+  const params = useParams<{ location?: string; slug?: string }>();
+  const location = params.location || params.slug;
   const [searchParams, setSearchParams] = useSearchParams();
   
   const [search, setSearch] = useState(searchParams.get('search') || '');
@@ -231,7 +232,7 @@ const LocationJobs = () => {
                   {jobs.map((job) => (
                     <Link
                       key={job.id}
-                      to={`/job/${job.id}`}
+                      to={`/jobs/${job.id}`}
                       className="block group"
                     >
                       <div className="border rounded-lg p-6 h-full hover:shadow-lg transition-all bg-card">

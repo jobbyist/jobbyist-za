@@ -157,7 +157,7 @@ Deno.serve(async (req) => {
       <div style="margin-top: 30px; padding: 20px; background: white; border-radius: 8px;">
         <p><strong>What's Next?</strong></p>
         <p>Review the application and reach out to the candidate directly at <a href="mailto:${application.applicantEmail}">${application.applicantEmail}</a></p>
-        <p><a href="https://za.jobbyist.africa/job/${application.jobId}" class="button">View Job Listing</a></p>
+        <p><a href="https://za.jobbyist.africa/jobs/${application.jobId}" class="button">View Job Listing</a></p>
       </div>
     </div>
 

@@ -28,7 +28,8 @@ import {
 import { getCountryByCode, type CountryCode } from '@/lib/countries';
 
 const JobDetail = () => {
-  const { jobId } = useParams<{ jobId: string }>();
+  const params = useParams<{ jobId?: string; slug?: string }>();
+  const jobId = params.jobId || params.slug;
   const navigate = useNavigate();
   const { user } = useAuth();
   const { profile, canApplyToJobs } = useProfile();

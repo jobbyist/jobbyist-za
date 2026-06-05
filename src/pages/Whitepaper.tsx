@@ -444,15 +444,6 @@ const Whitepaper = () => {
 
                 <Button
                   size="lg"
-                  variant="outline"
-                  className="rounded-full"
-                  onClick={openAccessModal}
-                  aria-label="Request access to the full report and webinar series"
-                >
-                  Request Access To The Full Report &amp; Webinar Series
-                </Button>
-                <Button
-                  size="lg"
                   variant="ghost"
                   className="rounded-full"
                   onClick={() => setVideoModalOpen(true)}
@@ -748,9 +739,6 @@ const Whitepaper = () => {
                   Download The Full Report
                 </a>
               </Button>
-              <Button size="lg" variant="outline" className="rounded-full" onClick={openAccessModal}>
-                Request Access To The Full Report &amp; Webinar Series
-              </Button>
             </div>
           </div>
         </section>
@@ -860,9 +848,6 @@ const Whitepaper = () => {
               The explainer video is currently unavailable. Please request access below and our team will share the latest viewing link.
             </p>
           )}
-          <Button variant="outline" onClick={openAccessModal} className="w-full">
-            Request Access To The Full Report &amp; Webinar Series
-          </Button>
         </DialogContent>
       </Dialog>
 

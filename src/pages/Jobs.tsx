@@ -251,7 +251,7 @@ const Jobs = () => {
             const renderJobCard = (job: typeof jobs[number]) => (
               <Link
                 key={job.id}
-                to={`/job/${job.id}`}
+                to={`/jobs/${job.id}`}
                 className="group bg-card rounded-xl p-6 border hover:border-primary/20 hover:shadow-xl transition-all duration-300"
               >
                 {/* Header */}

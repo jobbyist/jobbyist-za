@@ -49,7 +49,7 @@ const ProgrammaticJobCard = ({ job }: { job: ProgrammaticSeoJob }) => {
   const salary = formatSalaryRange(job);
 
   return (
-    <Link to={`/job/${job.id}`} className="group block h-full">
+    <Link to={`/jobs/${job.id}`} className="group block h-full">
       <Card className="h-full p-5 transition hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg">
         <div className="flex items-start gap-4">
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10">

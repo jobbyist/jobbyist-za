@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 import { Settings, Users, CreditCard, Calendar } from "lucide-react";
 
 const features = [
@@ -47,11 +48,11 @@ const RecruitmentSuite = () => {
             ))}
           </div>
 
-          <a href="https://za.jobbyist.africa/recruitment-suite">
+          <Link to="/recruitment-suite">
             <Button size="lg" className="gradient-brand text-white hover:opacity-95">
               Learn More
             </Button>
-          </a>
+          </Link>
 
           <p className="text-sm text-muted-foreground mt-6 flex items-center justify-center gap-2">
             <Calendar className="h-4 w-4" />

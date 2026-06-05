@@ -306,7 +306,7 @@ const ApplicationTracker = ({ userId }: ApplicationTrackerProps) => {
                       </div>
 
                       {/* Actions */}
-                      <Link to={`/job/${application.job?.id}`}>
+                      <Link to={`/jobs/${application.job?.id}`}>
                         <Button variant="outline" size="sm">
                           View Job <ExternalLink className="h-3 w-3 ml-1" />
                         </Button>

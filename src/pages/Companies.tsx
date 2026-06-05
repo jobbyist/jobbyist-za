@@ -115,7 +115,7 @@ const Companies = () => {
                 ))
             ) : filteredCompanies && filteredCompanies.length > 0 ? (
               filteredCompanies.map((company) => (
-                <Link key={company.id} to={`/company/${company.slug}`}>
+                <Link key={company.id} to={`/companies/${company.slug}`}>
                   <Card className="h-full hover:shadow-lg hover:border-primary/50 transition-all duration-300 cursor-pointer">
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between mb-4">

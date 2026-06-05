@@ -43,7 +43,7 @@ async function generateSitemap() {
   if (jobs) {
     jobs.forEach(job => {
       xml += '  <url>\n';
-      xml += `    <loc>${baseUrl}/job/${job.id}</loc>\n`;
+      xml += `    <loc>${baseUrl}/jobs/${job.id}</loc>\n`;
       xml += `    <lastmod>${new Date(job.updated_at || job.posted_at).toISOString().split('T')[0]}</lastmod>\n`;
       xml += '    <changefreq>weekly</changefreq>\n';
       xml += '    <priority>0.8</priority>\n';
@@ -61,7 +61,7 @@ async function generateSitemap() {
   if (companies) {
     companies.forEach(company => {
       xml += '  <url>\n';
-      xml += `    <loc>${baseUrl}/company/${company.slug}</loc>\n`;
+      xml += `    <loc>${baseUrl}/companies/${company.slug}</loc>\n`;
       xml += `    <lastmod>${new Date(company.updated_at).toISOString().split('T')[0]}</lastmod>\n`;
       xml += '    <changefreq>weekly</changefreq>\n';
       xml += '    <priority>0.7</priority>\n';
