@@ -739,9 +739,6 @@ const Whitepaper = () => {
                   Download The Full Report
                 </a>
               </Button>
-              <Button size="lg" variant="outline" className="rounded-full" onClick={openAccessModal}>
-                Request Access To The Full Report &amp; Webinar Series
-              </Button>
             </div>
           </div>
         </section>
