@@ -41,7 +41,40 @@ Deno.serve(async (req) => {
       );
     }
 
-    const application: JobApplication = await req.json();
+    // Require authenticated user; derive applicant email from the verified JWT.
+    const authHeader = req.headers.get('Authorization') || '';
+    const token = authHeader.replace(/^Bearer\s+/i, '').trim();
+    if (!token) {
+      return new Response(JSON.stringify({ success: false, error: 'Unauthorized' }), {
+        status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    const authClient = createClient(
+      Deno.env.get('SUPABASE_URL')!,
+      Deno.env.get('SUPABASE_ANON_KEY')!,
+      { global: { headers: { Authorization: `Bearer ${token}` } } },
+    );
+    const { data: userData, error: authErr } = await authClient.auth.getUser();
+    if (authErr || !userData?.user?.email) {
+      return new Response(JSON.stringify({ success: false, error: 'Unauthorized' }), {
+        status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    const verifiedEmail = userData.user.email;
+
+    const raw: JobApplication = await req.json();
+    const escapeHtml = (v: string = '') =>
+      String(v).replace(/&(?![a-zA-Z0-9#]{1,20};)|[<>"']/g, (c) =>
+        c === '&' ? '&amp;' : c === '<' ? '&lt;' : c === '>' ? '&gt;' : c === '"' ? '&quot;' : '&#039;');
+    const application = {
+      jobId: escapeHtml(raw.jobId),
+      jobTitle: escapeHtml(raw.jobTitle),
+      companyName: escapeHtml(raw.companyName),
+      applicantName: escapeHtml(raw.applicantName),
+      applicantEmail: verifiedEmail,
+      coverLetter: raw.coverLetter ? escapeHtml(raw.coverLetter) : undefined,
+      resumeUrl: raw.resumeUrl,
+    } as JobApplication;
 
     // Create Supabase client to get resume signed URL if needed
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
