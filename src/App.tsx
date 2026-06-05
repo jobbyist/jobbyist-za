@@ -108,11 +108,12 @@ const App = () => {
               <Route path="/jobs/combo/:location/:jobType/:category" element={<FacetJobs mode="combo" />} />
               <Route path="/jobs/country/:countryCode" element={<CountryJobs />} />
               <Route path="/jobs/:category/:city" element={<CountryCityJobsPage />} />
-              <Route path="/jobs/:location" element={<LocationJobs />} />
-              <Route path="/job/:jobId" element={<JobDetail />} />
+              <Route path="/jobs/:slug" element={<JobsSlugDispatcher />} />
+              <Route path="/job/:jobId" element={<LegacyJobRedirect />} />
               <Route path="/sitemap.xml" element={<SitemapRedirect />} />
               <Route path="/companies" element={<Companies />} />
-              <Route path="/company/:slug" element={<CompanyDetail />} />
+              <Route path="/companies/:slug" element={<CompanyDetail />} />
+              <Route path="/company/:slug" element={<LegacyCompanyRedirect />} />
               <Route path="/waiting-list/:countryCode" element={<WaitingList />} />
               <Route path="/builder" element={<Builder />} />
               <Route path="/job-matcher" element={<JobMatcher />} />
