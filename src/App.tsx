@@ -27,6 +27,8 @@ import AdminCompanies from "./pages/admin/AdminCompanies";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminScraper from "./pages/admin/AdminScraper";
 import Builder from "./pages/Builder";
+import JobsSlugDispatcher from "./pages/JobsSlugDispatcher";
+import { LegacyJobRedirect, LegacyCompanyRedirect } from "./pages/LegacyRedirects";
 import JobMatcher from "./pages/JobMatcher";
 import Jobseekers from "./pages/Jobseekers";
 import JobseekerDetail from "./pages/JobseekerDetail";
