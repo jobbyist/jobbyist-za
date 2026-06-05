@@ -113,7 +113,7 @@ const App = () => {
               <Route path="/sitemap.xml" element={<SitemapRedirect />} />
               <Route path="/companies" element={<Companies />} />
               <Route path="/companies/:slug" element={<CompanyDetail />} />
-              <Route path="/companies/:slug" element={<LegacyCompanyRedirect />} />
+              <Route path="/company/:slug" element={<LegacyCompanyRedirect />} />
               <Route path="/waiting-list/:countryCode" element={<WaitingList />} />
               <Route path="/builder" element={<Builder />} />
               <Route path="/job-matcher" element={<JobMatcher />} />
