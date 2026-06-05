@@ -36,7 +36,7 @@ export function MatchedJobCard({ match, onStatusChange, onApply }: MatchedJobCar
 
   const handleViewDetails = () => {
     onStatusChange(match.id, 'viewed');
-    navigate(`/job/${job.id}`);
+    navigate(`/jobs/${job.id}`);
   };
 
   const handleSave = () => {

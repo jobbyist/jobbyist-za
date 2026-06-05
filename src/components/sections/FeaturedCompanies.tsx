@@ -46,7 +46,7 @@ const FeaturedCompanies = () => {
             companies.map((company) => (
               <Link
                 key={company.id}
-                to={`/company/${company.slug}`}
+                to={`/companies/${company.slug}`}
                 className="group bg-card rounded-xl p-6 border border-border hover:border-primary/20 hover:shadow-lg transition-all duration-300 cursor-pointer"
               >
                 <CompanyLogo 

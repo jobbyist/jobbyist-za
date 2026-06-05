@@ -197,7 +197,7 @@ const FacetJobs = ({ mode }: Props) => {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
               {jobs.map((job) => (
-                <Link key={job.id} to={`/job/${job.id}`} className="group">
+                <Link key={job.id} to={`/jobs/${job.id}`} className="group">
                   <Card className="p-5 h-full hover:border-primary/30 hover:shadow-md transition">
                     <div className="flex items-start gap-3 mb-3">
                       <div className="w-10 h-10 rounded bg-primary/10 flex items-center justify-center flex-shrink-0">

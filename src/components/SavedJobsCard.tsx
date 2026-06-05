@@ -85,7 +85,7 @@ const SavedJobsCard = () => {
             <div className="flex items-center gap-1 shrink-0">
               {r.job && (
                 <Button asChild size="sm" variant="ghost">
-                  <Link to={`/job/${r.job.id}`}><ExternalLink className="h-4 w-4" /></Link>
+                  <Link to={`/jobs/${r.job.id}`}><ExternalLink className="h-4 w-4" /></Link>
                 </Button>
               )}
               <Button size="sm" variant="ghost" onClick={() => remove(r.id)} aria-label="Remove">

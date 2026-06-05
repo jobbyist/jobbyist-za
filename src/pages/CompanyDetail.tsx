@@ -175,7 +175,7 @@ const CompanyDetail = () => {
             ) : jobs && jobs.length > 0 ? (
               <div className="space-y-4">
                 {jobs.map((job) => (
-                  <Link key={job.id} to={`/job/${job.id}`}>
+                  <Link key={job.id} to={`/jobs/${job.id}`}>
                     <Card className="hover:border-primary/50 transition-colors cursor-pointer">
                       <CardContent className="p-6">
                         <div className="flex justify-between items-start mb-2">

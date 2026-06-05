@@ -232,7 +232,7 @@ const LocationJobs = () => {
                   {jobs.map((job) => (
                     <Link
                       key={job.id}
-                      to={`/job/${job.id}`}
+                      to={`/jobs/${job.id}`}
                       className="block group"
                     >
                       <div className="border rounded-lg p-6 h-full hover:shadow-lg transition-all bg-card">
