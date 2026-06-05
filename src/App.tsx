@@ -109,7 +109,7 @@ const App = () => {
               <Route path="/jobs/country/:countryCode" element={<CountryJobs />} />
               <Route path="/jobs/:category/:city" element={<CountryCityJobsPage />} />
               <Route path="/jobs/:slug" element={<JobsSlugDispatcher />} />
-              <Route path="/jobs/:jobId" element={<LegacyJobRedirect />} />
+              <Route path="/job/:jobId" element={<LegacyJobRedirect />} />
               <Route path="/sitemap.xml" element={<SitemapRedirect />} />
               <Route path="/companies" element={<Companies />} />
               <Route path="/companies/:slug" element={<CompanyDetail />} />
