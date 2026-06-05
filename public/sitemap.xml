@@ -1,29 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://za.jobbyist.africa/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
-  <url><loc>https://za.jobbyist.africa/jobs</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://za.jobbyist.africa/companies</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://za.jobbyist.africa/jobseekers</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://za.jobbyist.africa/pro</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://za.jobbyist.africa/about</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://za.jobbyist.africa/resource-center</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://za.jobbyist.africa/resume-builder</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://za.jobbyist.africa/upskilling</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://za.jobbyist.africa/job-matcher</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://za.jobbyist.africa/ads</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://za.jobbyist.africa/jobs/johannesburg</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://za.jobbyist.africa/jobs/pretoria</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://za.jobbyist.africa/jobs/cape-town</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://za.jobbyist.africa/jobs/durban</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://za.jobbyist.africa/jobs/remote</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://za.jobbyist.africa/jobs/category/software-engineering</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://za.jobbyist.africa/jobs/category/finance</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://za.jobbyist.africa/jobs/category/marketing</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://za.jobbyist.africa/jobs/category/sales</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://za.jobbyist.africa/jobs/category/design</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://za.jobbyist.africa/jobs/category/data-science</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://za.jobbyist.africa/jobs/category/customer-support</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://za.jobbyist.africa/jobs/category/human-resources</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://za.jobbyist.africa/jobs/category/operations</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://za.jobbyist.africa/jobs/category/healthcare</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-</urlset>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://vkwnhhwacizjiwusbmcm.supabase.co/functions/v1/sitemap</loc>
+  </sitemap>
+</sitemapindex>
