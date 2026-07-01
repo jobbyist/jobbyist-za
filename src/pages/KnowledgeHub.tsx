@@ -244,11 +244,34 @@ const industryTrends = [
   },
 ];
 
+import ResourceLockedModal from "@/components/ResourceLockedModal";
+import { useSubscription } from "@/hooks/useSubscription";
+
 const ResourceCenter = () => {
   const [selectedTab, setSelectedTab] = useState("interview-packs");
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterWebsite, setNewsletterWebsite] = useState("");
   const [newsletterSubmitting, setNewsletterSubmitting] = useState(false);
+  const [lockedOpen, setLockedOpen] = useState(false);
+  const { hasActiveSubscription, loading: subLoading } = useSubscription();
+  const isPro = hasActiveSubscription();
+
+  const handleGatedClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
+    if (subLoading || isPro) return;
+    const target = event.target as HTMLElement;
+    // Allow the top upgrade CTA (link to /pro) and the newsletter form to work
+    const anchor = target.closest("a");
+    if (anchor && (anchor.getAttribute("href") === "/pro" || anchor.getAttribute("href")?.startsWith("http"))) return;
+    const form = target.closest("form");
+    if (form) return;
+    const actionable = target.closest("button, a");
+    if (!actionable) return;
+    // Allow tab triggers (they have role="tab")
+    if (actionable.getAttribute("role") === "tab") return;
+    event.preventDefault();
+    event.stopPropagation();
+    setLockedOpen(true);
+  };
 
   const handleTrendSubscribe = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -283,9 +306,10 @@ const ResourceCenter = () => {
 
   return (
     <div className="suite-page-shell">
+      <ResourceLockedModal open={lockedOpen} onOpenChange={setLockedOpen} />
       <SEOHead
         title="Resource Center | Interview Guides, CV Templates & Career Resources | Jobbyist ZA"
-        description="Access comprehensive interview packs, ATS-optimized CV templates, career roadmaps, salary guides, and industry trends for the South African job market. Free resources for job seekers and employers."
+        description="Access comprehensive interview packs, ATS-optimized CV templates, career roadmaps, salary guides, and industry trends for the South African job market. Available exclusively to Jobbyist Pro members."
         canonicalUrl="https://za.jobbyist.co.za/resource-center"
         keywords={['interview questions', 'CV templates South Africa', 'career roadmap', 'salary guide SA', 'job market trends', 'employer resources', 'career certification']}
         ogType="website"
