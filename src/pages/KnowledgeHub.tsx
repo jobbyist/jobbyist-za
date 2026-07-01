@@ -346,6 +346,20 @@ const ResourceCenter = () => {
           <div className="container mx-auto px-4">
             {/* Guide top banner — after hero, before tabs */}
             <SponsoredBannerSlot slotKey="guide_top" className="mb-8" />
+
+            {!isPro && !subLoading && (
+              <div className="mb-6 rounded-2xl border border-primary/20 bg-primary/5 p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="text-center sm:text-left">
+                  <p className="font-semibold">These resources are available exclusively to Jobbyist Pro members.</p>
+                  <p className="text-sm text-muted-foreground">Preview and browse freely — upgrade to unlock every download and action.</p>
+                </div>
+                <Link to="/pro">
+                  <Button variant="brand" size="lg">Upgrade to Pro</Button>
+                </Link>
+              </div>
+            )}
+
+            <div onClickCapture={handleGatedClick}>
             <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
               <TabsList className="grid w-full grid-cols-2 lg:grid-cols-7 mb-6">
                 <TabsTrigger value="interview-packs">Interview Packs</TabsTrigger>
