@@ -9,7 +9,7 @@ const Terms = () => {
       <SEOHead
         title="Terms of Service | Jobbyist ZA"
         description="Read Jobbyist ZA's terms of service, including platform usage rules, user responsibilities, and legal conditions."
-        canonicalUrl="https://za.jobbyist.africa/terms"
+        canonicalUrl="https://za.jobbyist.co.za/terms"
         noindex={false}
       />
       <Navbar />
@@ -75,8 +75,8 @@ const Terms = () => {
                 <CardContent className="prose prose-gray dark:prose-invert max-w-none">
                   <p>
                     For terms-related questions, email us at{" "}
-                    <a href="mailto:legal@jobbyist.africa" className="text-primary hover:underline">
-                      legal@jobbyist.africa
+                    <a href="mailto:legal@jobbyist.co.za" className="text-primary hover:underline">
+                      legal@jobbyist.co.za
                     </a>{" "}
                     or contact us through our Contact page.
                   </p>

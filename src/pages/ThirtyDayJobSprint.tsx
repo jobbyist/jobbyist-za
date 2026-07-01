@@ -59,7 +59,7 @@ interface FaqItem {
   answer: string;
 }
 
-const PAGE_URL = "https://za.jobbyist.africa/30-day-job-sprint";
+const PAGE_URL = "https://za.jobbyist.co.za/30-day-job-sprint";
 const SERVICE_HANDBOOK_PATH = sprintServiceHandbookUrl;
 
 const BUSINESS_CONFIG = {
@@ -383,7 +383,7 @@ const ThirtyDayJobSprint = () => {
   }, []);
 
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Jobbyist South Africa", url: "https://za.jobbyist.africa" },
+    { name: "Jobbyist South Africa", url: "https://za.jobbyist.co.za" },
     { name: "30-Day Job Sprint", url: PAGE_URL },
   ]);
 
@@ -396,7 +396,7 @@ const ThirtyDayJobSprint = () => {
     provider: {
       "@type": "Organization",
       name: "Jobbyist",
-      url: "https://za.jobbyist.africa",
+      url: "https://za.jobbyist.co.za",
     },
     areaServed: {
       "@type": "Country",

@@ -166,14 +166,14 @@ const CountryCityJobsPage = () => {
     return <Navigate to="/jobs" replace />;
   }
 
-  const canonicalUrl = `https://za.jobbyist.africa/jobs/${categoryConfig.slug}/${cityConfig.slug}`;
+  const canonicalUrl = `https://za.jobbyist.co.za/jobs/${categoryConfig.slug}/${cityConfig.slug}`;
   const noindex = !loading && (!data || data.totalJobs < MIN_INDEXABLE_JOBS);
   const structuredData = data
     ? [
         generateBreadcrumbSchema([
-          { name: 'Home', url: 'https://za.jobbyist.africa/' },
-          { name: 'Jobs', url: 'https://za.jobbyist.africa/jobs' },
-          { name: data.category.name, url: `https://za.jobbyist.africa/jobs/category/${data.category.slug}` },
+          { name: 'Home', url: 'https://za.jobbyist.co.za/' },
+          { name: 'Jobs', url: 'https://za.jobbyist.co.za/jobs' },
+          { name: data.category.name, url: `https://za.jobbyist.co.za/jobs/category/${data.category.slug}` },
           { name: `${data.category.name} jobs in ${data.city.name}`, url: canonicalUrl },
         ]),
         {
@@ -188,7 +188,7 @@ const CountryCityJobsPage = () => {
             itemListElement: data.topJobs.map((job, index) => ({
               '@type': 'ListItem',
               position: index + 1,
-              url: `https://za.jobbyist.africa/job/${job.id}`,
+              url: `https://za.jobbyist.co.za/job/${job.id}`,
               name: job.title,
             })),
           },

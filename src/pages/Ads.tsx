@@ -21,7 +21,7 @@ const Ads = () => {
       <SEOHead
         title="Premium Advertising on Jobbyist | Reach South African Talent"
         description="Promote your brand to South Africa's most engaged audience of job seekers, graduates and working professionals. Sponsored listings, banner placements, newsletter takeovers and more."
-        canonicalUrl="https://za.jobbyist.africa/ads"
+        canonicalUrl="https://za.jobbyist.co.za/ads"
         keywords={["advertise on jobbyist", "South Africa recruitment advertising", "employer branding SA", "sponsored jobs"]}
       />
       <Navbar />
@@ -36,7 +36,7 @@ const Ads = () => {
             freelancers and working professionals — across web, PWA and email.
           </p>
           <div className="flex flex-wrap gap-3 mb-12">
-            <a href="mailto:support@jobbyist.africa?cc=primelifer@gmail.com&subject=Premium%20Ads%20Enquiry">
+            <a href="mailto:support@jobbyist.co.za?cc=primelifer@gmail.com&subject=Premium%20Ads%20Enquiry">
               <Button variant="brand" size="lg" className="gap-2"><Mail className="h-4 w-4" /> Talk to our ads team</Button>
             </a>
             <a href="#placements"><Button variant="outline" size="lg">View placements</Button></a>
@@ -62,7 +62,7 @@ const Ads = () => {
                 </CardHeader>
                 <CardContent className="flex items-center justify-between">
                   <span className="text-sm font-semibold gradient-brand-text">{p.price}</span>
-                  <a href="mailto:support@jobbyist.africa?cc=primelifer@gmail.com&subject=Ads%20Enquiry%20-%20{encodeURIComponent(p.name)}">
+                  <a href="mailto:support@jobbyist.co.za?cc=primelifer@gmail.com&subject=Ads%20Enquiry%20-%20{encodeURIComponent(p.name)}">
                     <Button size="sm" variant="outline">Enquire</Button>
                   </a>
                 </CardContent>
@@ -73,8 +73,8 @@ const Ads = () => {
           <Card className="bg-primary/5 border-primary/20">
             <CardContent className="pt-6 text-center">
               <h3 className="text-2xl font-bold mb-2">Ready to launch your campaign?</h3>
-              <p className="text-muted-foreground mb-4">Email <strong>support@jobbyist.africa</strong> and our team will respond within one business day.</p>
-              <a href="mailto:support@jobbyist.africa?cc=primelifer@gmail.com&subject=Premium%20Ads%20Enquiry">
+              <p className="text-muted-foreground mb-4">Email <strong>support@jobbyist.co.za</strong> and our team will respond within one business day.</p>
+              <a href="mailto:support@jobbyist.co.za?cc=primelifer@gmail.com&subject=Premium%20Ads%20Enquiry">
                 <Button variant="brand" size="lg">Get in touch</Button>
               </a>
             </CardContent>

@@ -86,8 +86,8 @@ const processSteps = [
 ];
 
 const RESUME_BUILDER_ONBOARDING_URL =
-  "https://profiles.jobbyist.africa/onboarding/resume-builder?source=jobbyist-resume-assistance";
-const PAGE_URL = "https://za.jobbyist.africa/resume-cv-assistance";
+  "https://profiles.jobbyist.co.za/onboarding/resume-builder?source=jobbyist-resume-assistance";
+const PAGE_URL = "https://za.jobbyist.co.za/resume-cv-assistance";
 const PROFILE_COMPLETION_REQUIRED = 100;
 
 const ResumeBuilder = () => {
@@ -286,7 +286,7 @@ const ResumeBuilder = () => {
     provider: {
       "@type": "Organization",
       name: "Jobbyist",
-      url: "https://za.jobbyist.africa",
+      url: "https://za.jobbyist.co.za",
     },
     areaServed: {
       "@type": "Country",
@@ -295,7 +295,7 @@ const ResumeBuilder = () => {
   };
 
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Jobbyist South Africa", url: "https://za.jobbyist.africa" },
+    { name: "Jobbyist South Africa", url: "https://za.jobbyist.co.za" },
     { name: "Resume/CV Assistance", url: PAGE_URL },
   ]);
 

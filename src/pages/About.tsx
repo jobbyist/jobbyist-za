@@ -11,7 +11,7 @@ const About = () => {
       <SEOHead
         title="About Jobbyist | Fighting Unemployment in South Africa"
         description="Jobbyist is a South African social-benefit job platform tackling unemployment, built by Gravitas Industries in Johannesburg."
-        canonicalUrl="https://za.jobbyist.africa/about"
+        canonicalUrl="https://za.jobbyist.co.za/about"
         keywords={['about jobbyist', 'gravitas industries', 'youth employment south africa', 'social benefit startup', 'johannesburg startup']}
       />
       <Navbar />

@@ -257,7 +257,7 @@ const JobDetail = () => {
       <SEOHead
         title={`${job.title} at ${job.company?.name} | Jobbyist`}
         description={job.description?.substring(0, 160) + '...' || 'Job opportunity in South Africa'}
-        canonicalUrl={`https://za.jobbyist.africa/job/${job.id}`}
+        canonicalUrl={`https://za.jobbyist.co.za/job/${job.id}`}
         ogImage={job.company?.logo_url || undefined}
         structuredData={jobSchema}
         keywords={[
@@ -519,7 +519,7 @@ const JobDetail = () => {
                         <DialogTitle>Report this job</DialogTitle>
                         <DialogDescription>
                           Flag inappropriate, inaccurate, fraudulent or misleading listings.
-                          Reports go to our trust &amp; safety team at feedback@jobbyist.africa.
+                          Reports go to our trust &amp; safety team at feedback@jobbyist.co.za.
                         </DialogDescription>
                       </DialogHeader>
                       <div className="space-y-3">

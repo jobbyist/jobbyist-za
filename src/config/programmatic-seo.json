@@ -1,6 +1,6 @@
 {
   "minJobsPerCombo": 3,
-  "baseUrl": "https://za.jobbyist.africa",
+  "baseUrl": "https://za.jobbyist.co.za",
   "categories": [
     {
       "slug": "software-developer",

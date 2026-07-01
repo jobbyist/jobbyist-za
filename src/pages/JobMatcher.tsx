@@ -55,7 +55,7 @@ const JobMatcher = () => {
       <SEOHead
         title="AI-Powered Job Matcher | Automated Job Search & Applications | Jobbyist Pro"
         description="Let AI find your perfect job match. Our intelligent Job Matcher automatically scans LinkedIn, Indeed, Careers24 and more, providing real-time notifications and automated applications. Exclusive to Jobbyist Pro members."
-        canonicalUrl="https://za.jobbyist.africa/job-matcher"
+        canonicalUrl="https://za.jobbyist.co.za/job-matcher"
         keywords={['AI job matcher', 'automated job search', 'job matching algorithm', 'smart job hunting', 'automated applications', 'job search automation SA']}
         ogType="website"
       />

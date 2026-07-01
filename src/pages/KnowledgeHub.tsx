@@ -286,7 +286,7 @@ const ResourceCenter = () => {
       <SEOHead
         title="Resource Center | Interview Guides, CV Templates & Career Resources | Jobbyist ZA"
         description="Access comprehensive interview packs, ATS-optimized CV templates, career roadmaps, salary guides, and industry trends for the South African job market. Free resources for job seekers and employers."
-        canonicalUrl="https://za.jobbyist.africa/resource-center"
+        canonicalUrl="https://za.jobbyist.co.za/resource-center"
         keywords={['interview questions', 'CV templates South Africa', 'career roadmap', 'salary guide SA', 'job market trends', 'employer resources', 'career certification']}
         ogType="website"
       />

@@ -75,7 +75,7 @@ const DataRights = () => {
       <SEOHead
         title="Data Rights Request | Jobbyist ZA"
         description="Submit a POPIA data rights request for access, correction, deletion, portability, or objections on Jobbyist ZA."
-        canonicalUrl="https://za.jobbyist.africa/data-rights"
+        canonicalUrl="https://za.jobbyist.co.za/data-rights"
       />
       <Navbar />
       <main className="pt-16">
@@ -176,7 +176,7 @@ const DataRights = () => {
 
                   <div className="rounded-lg border bg-muted/30 p-4 text-sm text-muted-foreground">
                     We may contact you for identity verification before actioning your request. You can also send rights requests to
-                    {" "}<a href="mailto:privacy@jobbyist.africa" className="text-primary hover:underline">privacy@jobbyist.africa</a>.
+                    {" "}<a href="mailto:privacy@jobbyist.co.za" className="text-primary hover:underline">privacy@jobbyist.co.za</a>.
                   </div>
 
                   <Button type="submit" className="w-full md:w-auto" disabled={isSubmitting}>

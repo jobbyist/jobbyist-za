@@ -14,7 +14,7 @@ import { Search, Crown, Building2, Shield, TrendingUp } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const PROFILES_PER_PAGE = 10;
-const BASE_URL = "https://za.jobbyist.africa/professional-profiles";
+const BASE_URL = "https://za.jobbyist.co.za/professional-profiles";
 
 const ProfessionalProfiles = () => {
   const { pageNum } = useParams<{ pageNum?: string }>();
@@ -98,7 +98,7 @@ const ProfessionalProfiles = () => {
     isPartOf: {
       "@type": "WebSite",
       name: "Jobbyist South Africa",
-      url: "https://za.jobbyist.africa"
+      url: "https://za.jobbyist.co.za"
     },
     breadcrumb: {
       "@id": `${canonicalUrl}#breadcrumb`
@@ -106,7 +106,7 @@ const ProfessionalProfiles = () => {
   };
 
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Jobbyist South Africa", url: "https://za.jobbyist.africa" },
+    { name: "Jobbyist South Africa", url: "https://za.jobbyist.co.za" },
     { name: "Professional Profiles", url: BASE_URL },
     ...(currentPage > 1 ? [{ name: `Page ${currentPage}`, url: canonicalUrl }] : [])
   ]);

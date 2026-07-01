@@ -68,7 +68,7 @@ const Pro = () => {
       <SEOHead
         title="Jobbyist Pro — Unlimited Applications, AI Matching & Ad-Free | South Africa"
         description={`Upgrade to Jobbyist Pro from R99/month. Get unlimited job applications, AI-powered matching, priority recruiter visibility, and an ad-free experience. Free plan also available (${FREE_MONTHLY_LIMIT} applications/month).`}
-        canonicalUrl="https://za.jobbyist.africa/pro"
+        canonicalUrl="https://za.jobbyist.co.za/pro"
         keywords={["Jobbyist Pro", "premium job search South Africa", "unlimited applications", "AI job matching", "Pro membership"]}
       />
       <Navbar />

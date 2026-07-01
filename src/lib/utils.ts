@@ -16,7 +16,7 @@ export function formatSalaryRange(min?: number | null, max?: number | null, curr
   return `Up to ${currency}${max?.toLocaleString()}`;
 }
 
-export const SITE_ORIGIN = 'https://za.jobbyist.africa';
+export const SITE_ORIGIN = 'https://za.jobbyist.co.za';
 
 /**
  * Build a canonical absolute URL for a given path.

@@ -11,7 +11,7 @@ const Podcast = () => {
       <SEOHead
         title="The Job Post Series | Jobbyist ZA"
         description="The Job Post Series by Jobbyist ZA is launching soon. Stay tuned for interviews, career stories, and hiring insights."
-        canonicalUrl="https://za.jobbyist.africa/podcast"
+        canonicalUrl="https://za.jobbyist.co.za/podcast"
       />
       <Navbar />
       <main className="pt-24 pb-16">
