@@ -434,9 +434,10 @@ const JobDetail = () => {
                         <Lock className="h-6 w-6 text-primary" />
                       </div>
                       <div>
-                        <p className="font-semibold">Pro membership required</p>
+                        <p className="font-semibold">Premium job listing — Pro required</p>
                         <p className="text-sm text-muted-foreground">
-                          Upgrade to Jobbyist Pro to apply directly to verified employers — from R99/month.
+                          Direct applications on Jobbyist are reserved for Jobbyist Pro members (from R99/month).
+                          Free users can browse and apply to aggregated jobs at our Career Hub.
                         </p>
                       </div>
                       <Link to="/pro">
@@ -445,6 +446,11 @@ const JobDetail = () => {
                           Upgrade to Pro to Apply
                         </Button>
                       </Link>
+                      <a href="https://careers.jobbyist.co.za" target="_blank" rel="noopener noreferrer" className="block">
+                        <Button variant="outline" className="w-full" size="lg">
+                          Browse free jobs on Career Hub
+                        </Button>
+                      </a>
                     </div>
                   ) : canApplyToJobs ? (
                     <Dialog open={showApplyDialog} onOpenChange={setShowApplyDialog}>
