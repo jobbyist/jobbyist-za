@@ -772,6 +772,7 @@ const ResourceCenter = () => {
                 </div>
               </TabsContent>
             </Tabs>
+            </div>
             {/* Guide bottom banner — after tabs, before CTA */}
             <SponsoredBannerSlot slotKey="guide_bottom" className="mt-8" />
           </div>
