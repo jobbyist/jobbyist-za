@@ -83,7 +83,7 @@ const Jobs = () => {
   };
 
   const getFullPageUrl = (page: number) => {
-    return `https://za.jobbyist.africa/jobs${getPageUrl(page)}`;
+    return `https://za.jobbyist.co.za/jobs${getPageUrl(page)}`;
   };
 
 
@@ -92,7 +92,7 @@ const Jobs = () => {
       <SEOHead
         title={`Jobs in South Africa${currentPage > 1 ? ` - Page ${currentPage}` : ''} | Find SA Job Opportunities | Jobbyist`}
         description={`Browse ${totalCount}+ verified job opportunities in South Africa. Find full-time, part-time, remote & contract jobs in Johannesburg, Cape Town, Durban & more.`}
-        canonicalUrl={`https://za.jobbyist.africa/jobs${currentPage > 1 ? `?page=${currentPage}` : ''}`}
+        canonicalUrl={`https://za.jobbyist.co.za/jobs${currentPage > 1 ? `?page=${currentPage}` : ''}`}
         keywords={['jobs South Africa', 'SA jobs', 'Johannesburg jobs', 'Cape Town jobs', 'Durban jobs', 'remote jobs SA', 'IT jobs South Africa', 'finance jobs SA']}
       />
       {hasPrevPage && (
@@ -108,14 +108,21 @@ const Jobs = () => {
           <div className="mb-8">
             <h1 className="text-3xl md:text-4xl font-bold mb-4">
               {locationFilter ? (
-                <>Jobs in <span className="gradient-brand-text">{locationFilter}</span></>
+                <>Premium job listings in <span className="gradient-brand-text">{locationFilter}</span></>
               ) : (
-                <>Jobs in <span className="gradient-brand-text">South Africa</span></>
+                <>Premium job listings in <span className="gradient-brand-text">South Africa</span></>
               )}
             </h1>
             <p className="text-muted-foreground">
-              Explore {totalCount}+ curated job opportunities {locationFilter ? `in ${locationFilter}` : 'across South Africa'}
+              Explore {totalCount}+ curated Premium job listings {locationFilter ? `in ${locationFilter}` : 'across South Africa'}
               {currentPage > 1 && ` - Page ${currentPage} of ${totalPages}`}
+            </p>
+            <p className="text-sm text-muted-foreground mt-2">
+              Free jobseekers can browse and apply to aggregated listings at our{" "}
+              <a href="https://careers.jobbyist.co.za" target="_blank" rel="noopener noreferrer" className="text-primary underline font-medium">
+                Career Hub
+              </a>{" "}
+              — direct applications on Jobbyist require a Jobbyist Pro subscription.
             </p>
             {locationFilter && (
               <div className="mt-3 flex items-center gap-2">

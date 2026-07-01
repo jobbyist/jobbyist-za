@@ -7,5 +7,5 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
-Sitemap: https://za.jobbyist.africa/sitemap.xml
-Sitemap: https://za.jobbyist.africa/sitemap-programmatic-jobs.xml
+Sitemap: https://za.jobbyist.co.za/sitemap.xml
+Sitemap: https://za.jobbyist.co.za/sitemap-programmatic-jobs.xml

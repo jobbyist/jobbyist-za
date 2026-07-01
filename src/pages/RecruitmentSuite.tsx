@@ -280,7 +280,7 @@ const comparisonRows: ComparisonRow[] = [
 
 // ────────────────────────── COMPONENT ──────────────────────────────────────
 
-const PAGE_URL = "https://za.jobbyist.africa/recruitment-suite";
+const PAGE_URL = "https://za.jobbyist.co.za/recruitment-suite";
 
 const RecruitmentSuitePage = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -293,7 +293,7 @@ const RecruitmentSuitePage = () => {
   };
 
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Jobbyist South Africa", url: "https://za.jobbyist.africa" },
+    { name: "Jobbyist South Africa", url: "https://za.jobbyist.co.za" },
     { name: "Recruitment Suite", url: PAGE_URL },
   ]);
 
@@ -306,7 +306,7 @@ const RecruitmentSuitePage = () => {
     provider: {
       "@type": "Organization",
       name: "Jobbyist",
-      url: "https://za.jobbyist.africa",
+      url: "https://za.jobbyist.co.za",
     },
     areaServed: {
       "@type": "Country",

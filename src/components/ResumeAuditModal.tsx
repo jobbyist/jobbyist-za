@@ -14,7 +14,7 @@ interface ResumeAuditModalProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const SUPPORT_EMAIL = "support@jobbyist.africa";
+const SUPPORT_EMAIL = "support@jobbyist.co.za";
 
 const ResumeAuditModal = ({ open, onOpenChange }: ResumeAuditModalProps) => {
   const [name, setName] = useState("");

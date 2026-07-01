@@ -50,9 +50,18 @@ const FeaturedJobs = () => {
     <section id="jobs" className="py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Discover the latest jobs in South Africa</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Premium job listings from across South Africa</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Explore our expertly curated job directory featuring the latest opportunities for South African jobseekers handpicked from our network of trusted job sites, global companies and recruiters across the globe
+            Explore our expertly curated Premium job listings for South African jobseekers, handpicked from our
+            network of trusted job sites, global companies and recruiters. Not a Pro member?{" "}
+            <a
+              href="https://careers.jobbyist.co.za"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary underline underline-offset-2 font-semibold"
+            >
+              Browse and apply to aggregated jobs for free at our Career Hub
+            </a>.
           </p>
         </div>
 

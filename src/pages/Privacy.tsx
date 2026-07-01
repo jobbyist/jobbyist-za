@@ -9,7 +9,7 @@ const Privacy = () => {
       <SEOHead
         title="Privacy Notice | Jobbyist ZA"
         description="Read the Jobbyist ZA privacy notice, including POPIA rights, legal grounds, security safeguards, retention, and regulator complaint routes."
-        canonicalUrl="https://za.jobbyist.africa/privacy"
+        canonicalUrl="https://za.jobbyist.co.za/privacy"
         noindex={false}
       />
       <Navbar />
@@ -24,7 +24,7 @@ const Privacy = () => {
                 <CardHeader><CardTitle>1) Responsible party and contact details</CardTitle></CardHeader>
                 <CardContent className="prose prose-gray dark:prose-invert max-w-none">
                   <p>Jobbyist ZA ("Jobbyist", "we", "us", "our") is the responsible party for personal information processed through our South African website and related services.</p>
-                  <p>Privacy contact: <a href="mailto:privacy@jobbyist.africa" className="text-primary hover:underline">privacy@jobbyist.africa</a>.</p>
+                  <p>Privacy contact: <a href="mailto:privacy@jobbyist.co.za" className="text-primary hover:underline">privacy@jobbyist.co.za</a>.</p>
                   <p>General support: <a href="/contact" className="text-primary hover:underline">Contact page</a>.</p>
                 </CardContent>
               </Card>
@@ -93,7 +93,7 @@ const Privacy = () => {
               <Card>
                 <CardHeader><CardTitle>8) Children and minors</CardTitle></CardHeader>
                 <CardContent className="prose prose-gray dark:prose-invert max-w-none">
-                  <p>Our services are intended for users aged 18 and older. We do not knowingly collect personal information from children. If you believe a minor has provided information, contact us at <a href="mailto:privacy@jobbyist.africa" className="text-primary hover:underline">privacy@jobbyist.africa</a> so we can investigate and take appropriate action.</p>
+                  <p>Our services are intended for users aged 18 and older. We do not knowingly collect personal information from children. If you believe a minor has provided information, contact us at <a href="mailto:privacy@jobbyist.co.za" className="text-primary hover:underline">privacy@jobbyist.co.za</a> so we can investigate and take appropriate action.</p>
                 </CardContent>
               </Card>
 
@@ -101,7 +101,7 @@ const Privacy = () => {
                 <CardHeader><CardTitle>9) Your data subject rights under POPIA</CardTitle></CardHeader>
                 <CardContent className="prose prose-gray dark:prose-invert max-w-none">
                   <p>Subject to applicable law, you may request access, correction, deletion, objection/restriction, and in appropriate cases portability or withdrawal of consent.</p>
-                  <p>Submit requests via the <a href="/data-rights" className="text-primary hover:underline">Data Rights Request page</a> or by emailing <a href="mailto:privacy@jobbyist.africa" className="text-primary hover:underline">privacy@jobbyist.africa</a>.</p>
+                  <p>Submit requests via the <a href="/data-rights" className="text-primary hover:underline">Data Rights Request page</a> or by emailing <a href="mailto:privacy@jobbyist.co.za" className="text-primary hover:underline">privacy@jobbyist.co.za</a>.</p>
                 </CardContent>
               </Card>
 

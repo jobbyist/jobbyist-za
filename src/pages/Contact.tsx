@@ -9,7 +9,7 @@ const Contact = () => {
       <SEOHead
         title="Contact Jobbyist ZA | Support and Business Enquiries"
         description="Get in touch with Jobbyist ZA for support, business partnerships, legal requests, and privacy queries."
-        canonicalUrl="https://za.jobbyist.africa/contact"
+        canonicalUrl="https://za.jobbyist.co.za/contact"
         noindex={false}
       />
       <Navbar />
@@ -38,10 +38,10 @@ const Contact = () => {
                 </CardHeader>
                 <CardContent className="prose prose-gray dark:prose-invert max-w-none">
                   <ul>
-                    <li>General support: support@jobbyist.africa</li>
-                    <li>Privacy: privacy@jobbyist.africa</li>
-                    <li>Legal: legal@jobbyist.africa</li>
-                    <li>Business enquiries: partnerships@jobbyist.africa</li>
+                    <li>General support: support@jobbyist.co.za</li>
+                    <li>Privacy: privacy@jobbyist.co.za</li>
+                    <li>Legal: legal@jobbyist.co.za</li>
+                    <li>Business enquiries: partnerships@jobbyist.co.za</li>
                   </ul>
                 </CardContent>
               </Card>

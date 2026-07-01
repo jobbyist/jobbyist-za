@@ -61,8 +61,8 @@ const CategoryJobs = () => {
     ? `Browse ${totalCount}+ ${cat!.name.toLowerCase()} jobs in ${loc.name}. ${cat!.description}`
     : `Find ${totalCount}+ ${cat!.name.toLowerCase()} jobs across South Africa. ${cat!.description}`;
   const canonical = loc
-    ? `https://za.jobbyist.africa/jobs/${cat!.slug}/${loc.slug}`
-    : `https://za.jobbyist.africa/jobs/category/${cat!.slug}`;
+    ? `https://za.jobbyist.co.za/jobs/${cat!.slug}/${loc.slug}`
+    : `https://za.jobbyist.co.za/jobs/category/${cat!.slug}`;
 
   return (
     <div className="suite-page-shell">

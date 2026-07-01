@@ -97,7 +97,7 @@ const UpskillingProgram = () => {
       <SEOHead
         title="Upskilling Programs | Professional Training & Certifications | Jobbyist ZA"
         description="Advance your career with industry-recognized certifications and training programs. Learn in-demand skills from Google, CompTIA, AWS, and more. Flexible online courses designed for South African professionals."
-        canonicalUrl="https://za.jobbyist.africa/upskilling"
+        canonicalUrl="https://za.jobbyist.co.za/upskilling"
         keywords={['upskilling programs', 'professional training South Africa', 'career certifications', 'online courses SA', 'CompTIA training', 'Google certificates', 'career development']}
         ogType="website"
       />

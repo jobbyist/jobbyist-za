@@ -48,7 +48,7 @@ const Companies = () => {
       <SEOHead
         title="Top Companies Hiring in South Africa | Browse 100+ Leading Employers | Jobbyist"
         description="Discover 100+ leading companies in South Africa actively hiring. Browse verified employers across technology, finance, healthcare, retail and more industries. Find your ideal workplace today."
-        canonicalUrl="https://za.jobbyist.africa/companies"
+        canonicalUrl="https://za.jobbyist.co.za/companies"
         keywords={['companies in South Africa', 'SA employers', 'top companies hiring', 'best companies to work for SA', 'South African businesses', 'company directory SA']}
         ogType="website"
       />

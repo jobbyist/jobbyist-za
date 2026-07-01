@@ -208,7 +208,7 @@ const fallbackRelatedCategories = (cityJobs: ProgrammaticSeoJob[], city: Program
         totalJobs: matched.length,
         averageSalary: calculateAverageSalary(matched),
         topCompanies: getTopCompanies(matched),
-        url: `https://za.jobbyist.africa/jobs/${category.slug}/${city.slug}`,
+        url: `https://za.jobbyist.co.za/jobs/${category.slug}/${city.slug}`,
         lastmod: new Date().toISOString().slice(0, 10),
       } satisfies ProgrammaticComboIndexItem;
     })
@@ -231,7 +231,7 @@ const fallbackRelatedCities = async (category: ProgrammaticJobCategory, currentC
           totalJobs: matched.length,
           averageSalary: calculateAverageSalary(matched),
           topCompanies: getTopCompanies(matched),
-          url: `https://za.jobbyist.africa/jobs/${category.slug}/${city.slug}`,
+          url: `https://za.jobbyist.co.za/jobs/${category.slug}/${city.slug}`,
           lastmod: new Date().toISOString().slice(0, 10),
         } satisfies ProgrammaticComboIndexItem;
       })

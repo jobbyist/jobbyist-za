@@ -57,10 +57,10 @@ const Navbar = () => {
   ];
 
   const moreItems = [
-    { name: "30-Day Job Sprint", href: "/30-day-job-sprint" },
+    { name: "90-Day Job Sprint", href: "/sprint" },
     { name: "Company Directory", href: "/companies" },
     { name: "The Job Post Series", href: "/podcast" },
-    { name: "Contact", href: "/contact" },
+    { name: "Help Center", href: "/help-center" },
   ];
 
   const handleSignOut = async () => {
@@ -210,13 +210,16 @@ const Navbar = () => {
                           </li>
                         ))}
                         <li>
-                          <button
-                            type="button"
-                            onClick={() => setIsCommunityForumOpen(true)}
-                            className="block w-full rounded-md p-2 text-sm text-left transition-colors hover:bg-accent hover:text-accent-foreground"
-                          >
-                            Community Forum
-                          </button>
+                          <NavigationMenuLink asChild>
+                            <a
+                              href="https://chat.whatsapp.com/EGeranViu3KG5lF2jDDBqE"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block w-full rounded-md p-2 text-sm text-left transition-colors hover:bg-accent hover:text-accent-foreground"
+                            >
+                              Community Forum
+                            </a>
+                          </NavigationMenuLink>
                         </li>
                         <li>
                           <NavigationMenuLink asChild>
@@ -403,16 +406,15 @@ const Navbar = () => {
                     {item.name}
                   </Link>
                 ))}
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsCommunityForumOpen(true);
-                    closeMobileMenu();
-                  }}
+                <a
+                  href="https://chat.whatsapp.com/EGeranViu3KG5lF2jDDBqE"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={closeMobileMenu}
                   className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-1.5 text-left"
                 >
                   Community Forum
-                </button>
+                </a>
                 <Link
                   to="/whitepaper"
                   onClick={closeMobileMenu}

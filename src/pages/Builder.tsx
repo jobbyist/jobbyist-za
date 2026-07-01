@@ -43,7 +43,7 @@ const Builder = () => {
                     ))}
                   </ul>
 
-                  <a href="https://profiles.jobbyist.africa" target="_blank" rel="noopener noreferrer">
+                  <a href="https://profiles.jobbyist.co.za" target="_blank" rel="noopener noreferrer">
                     <Button variant="brand" size="lg" className="group">
                       Get Started with Job Matcher
                       <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -70,7 +70,7 @@ const Builder = () => {
                       based on your resume and career goals.
                     </p>
 
-                    <a href="https://profiles.jobbyist.africa" target="_blank" rel="noopener noreferrer">
+                    <a href="https://profiles.jobbyist.co.za" target="_blank" rel="noopener noreferrer">
                       <Button variant="outline" className="w-full group">
                         <Sparkles className="h-4 w-4 mr-2 text-primary" />
                         How It Works

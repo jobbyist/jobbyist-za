@@ -244,11 +244,34 @@ const industryTrends = [
   },
 ];
 
+import ResourceLockedModal from "@/components/ResourceLockedModal";
+import { useSubscription } from "@/hooks/useSubscription";
+
 const ResourceCenter = () => {
   const [selectedTab, setSelectedTab] = useState("interview-packs");
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterWebsite, setNewsletterWebsite] = useState("");
   const [newsletterSubmitting, setNewsletterSubmitting] = useState(false);
+  const [lockedOpen, setLockedOpen] = useState(false);
+  const { hasActiveSubscription, loading: subLoading } = useSubscription();
+  const isPro = hasActiveSubscription();
+
+  const handleGatedClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
+    if (subLoading || isPro) return;
+    const target = event.target as HTMLElement;
+    // Allow the top upgrade CTA (link to /pro) and the newsletter form to work
+    const anchor = target.closest("a");
+    if (anchor && (anchor.getAttribute("href") === "/pro" || anchor.getAttribute("href")?.startsWith("http"))) return;
+    const form = target.closest("form");
+    if (form) return;
+    const actionable = target.closest("button, a");
+    if (!actionable) return;
+    // Allow tab triggers (they have role="tab")
+    if (actionable.getAttribute("role") === "tab") return;
+    event.preventDefault();
+    event.stopPropagation();
+    setLockedOpen(true);
+  };
 
   const handleTrendSubscribe = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -283,10 +306,11 @@ const ResourceCenter = () => {
 
   return (
     <div className="suite-page-shell">
+      <ResourceLockedModal open={lockedOpen} onOpenChange={setLockedOpen} />
       <SEOHead
         title="Resource Center | Interview Guides, CV Templates & Career Resources | Jobbyist ZA"
-        description="Access comprehensive interview packs, ATS-optimized CV templates, career roadmaps, salary guides, and industry trends for the South African job market. Free resources for job seekers and employers."
-        canonicalUrl="https://za.jobbyist.africa/resource-center"
+        description="Access comprehensive interview packs, ATS-optimized CV templates, career roadmaps, salary guides, and industry trends for the South African job market. Available exclusively to Jobbyist Pro members."
+        canonicalUrl="https://za.jobbyist.co.za/resource-center"
         keywords={['interview questions', 'CV templates South Africa', 'career roadmap', 'salary guide SA', 'job market trends', 'employer resources', 'career certification']}
         ogType="website"
       />
@@ -322,6 +346,20 @@ const ResourceCenter = () => {
           <div className="container mx-auto px-4">
             {/* Guide top banner — after hero, before tabs */}
             <SponsoredBannerSlot slotKey="guide_top" className="mb-8" />
+
+            {!isPro && !subLoading && (
+              <div className="mb-6 rounded-2xl border border-primary/20 bg-primary/5 p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="text-center sm:text-left">
+                  <p className="font-semibold">These resources are available exclusively to Jobbyist Pro members.</p>
+                  <p className="text-sm text-muted-foreground">Preview and browse freely — upgrade to unlock every download and action.</p>
+                </div>
+                <Link to="/pro">
+                  <Button variant="brand" size="lg">Upgrade to Pro</Button>
+                </Link>
+              </div>
+            )}
+
+            <div onClickCapture={handleGatedClick}>
             <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
               <TabsList className="grid w-full grid-cols-2 lg:grid-cols-7 mb-6">
                 <TabsTrigger value="interview-packs">Interview Packs</TabsTrigger>
@@ -734,6 +772,7 @@ const ResourceCenter = () => {
                 </div>
               </TabsContent>
             </Tabs>
+            </div>
             {/* Guide bottom banner — after tabs, before CTA */}
             <SponsoredBannerSlot slotKey="guide_bottom" className="mt-8" />
           </div>

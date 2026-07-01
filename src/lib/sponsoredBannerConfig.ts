@@ -8,7 +8,7 @@
  *  - Dashboard / admin
  *  - Pro / payment / checkout pages
  *  - Waiting-list pages
- *  - Key landing pages: Recruitment Suite, Professional Profiles, 30-Day Remote Job Sprint
+ *  - Key landing pages: Recruitment Suite, Professional Profiles, 90-Day Job Sprint
  *  - Resume-builder / job-matcher tools
  */
 export const BANNER_BLOCKLIST: RegExp[] = [
@@ -25,7 +25,7 @@ export const BANNER_BLOCKLIST: RegExp[] = [
   /^\/resume-cv-assistance/,
   /^\/professional-profiles/,
   /^\/recruitment-suite/,
-  /^\/30-day-job-sprint/,
+  /^\/sprint/,
   /^\/admin/,
   /^\/waiting-list/,
   /^\/onboarding/,

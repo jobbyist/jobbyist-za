@@ -9,7 +9,7 @@ const Cookies = () => {
       <SEOHead
         title="Cookie Policy | Jobbyist ZA"
         description="Learn about how Jobbyist uses cookies and similar technologies to provide, improve, and protect our services."
-        canonicalUrl="https://za.jobbyist.africa/cookies"
+        canonicalUrl="https://za.jobbyist.co.za/cookies"
       />
       <Navbar />
       <main className="pt-16">
@@ -114,8 +114,8 @@ const Cookies = () => {
                 <CardContent className="prose prose-gray dark:prose-invert max-w-none">
                   <p>
                     If you have any questions about our use of cookies, please contact us at{" "}
-                    <a href="mailto:privacy@jobbyist.africa" className="text-primary hover:underline">
-                      privacy@jobbyist.africa
+                    <a href="mailto:privacy@jobbyist.co.za" className="text-primary hover:underline">
+                      privacy@jobbyist.co.za
                     </a>
                   </p>
                 </CardContent>

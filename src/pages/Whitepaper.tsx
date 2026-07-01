@@ -26,7 +26,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { ArrowRight, Download, PlayCircle } from "lucide-react";
 import { toast } from "sonner";
 
-const WHITEPAPER_URL = "https://za.jobbyist.africa/whitepaper";
+const WHITEPAPER_URL = "https://za.jobbyist.co.za/whitepaper";
 const WHITEPAPER_PDF_PATH = "/whitepaperassets/whitepaper2026-27.pdf";
 const WHITEPAPER_VIDEO_PATH = "/whitepaperassets/whitepaper-explainer-video.mp4";
 const WHITEPAPER_OG_IMAGE_PATH = "/whitepaperassets/whitepaper-infographic.png";
@@ -134,7 +134,7 @@ const bridgePillars = [
   "AI-powered job matching to reduce search friction and improve relevance.",
   "Professional profile visibility with stronger candidate credibility signals.",
   "Jobbyist Pro for enhanced exposure, positioning support and career acceleration.",
-  "30-Day Remote Job Search Sprint execution support for focused campaigns.",
+  "90-Day Job Search Sprint execution support for focused campaigns.",
   "Career coaching and upskilling pathways aligned with role-readiness goals.",
   "Global talent hubbing support for cross-border and distributed work opportunities.",
   "Employer and recruiter access through Recruitment Suite workflows.",
@@ -278,7 +278,7 @@ const Whitepaper = () => {
   );
 
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Jobbyist South Africa", url: "https://za.jobbyist.africa" },
+    { name: "Jobbyist South Africa", url: "https://za.jobbyist.co.za" },
     { name: "Whitepaper", url: WHITEPAPER_URL },
   ]);
 
@@ -292,7 +292,7 @@ const Whitepaper = () => {
     isPartOf: {
       "@type": "WebSite",
       name: "Jobbyist South Africa",
-      url: "https://za.jobbyist.africa",
+      url: "https://za.jobbyist.co.za",
     },
   };
 
@@ -302,12 +302,12 @@ const Whitepaper = () => {
     name: "The 2026/27 Jobbyist Whitepaper: The Democratisation of the African Job Market",
     description:
       "A strategic whitepaper on South Africa’s labour-market transition, youth pathways, digital work, platform economy dynamics and inclusive employment infrastructure.",
-    url: `https://za.jobbyist.africa${WHITEPAPER_PDF_PATH}`,
+    url: `https://za.jobbyist.co.za${WHITEPAPER_PDF_PATH}`,
     inLanguage: "en-ZA",
     author: {
       "@type": "Organization",
       name: "Jobbyist",
-      url: "https://za.jobbyist.africa",
+      url: "https://za.jobbyist.co.za",
     },
   };
 
@@ -375,7 +375,7 @@ const Whitepaper = () => {
         title="2026/27 Jobbyist Whitepaper | The Democratisation of the African Job Market"
         description="Download the 2026/27 Jobbyist Whitepaper on South Africa’s labour-market transition, youth employment, remote work, platform work, AI-era skills and jobseeker-first career infrastructure."
         canonicalUrl={WHITEPAPER_URL}
-        ogImage={`https://za.jobbyist.africa${WHITEPAPER_OG_IMAGE_PATH}`}
+        ogImage={`https://za.jobbyist.co.za${WHITEPAPER_OG_IMAGE_PATH}`}
         ogType="article"
         keywords={[
           "Jobbyist Whitepaper",

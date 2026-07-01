@@ -6,8 +6,8 @@ import CommunityForumModal from '@/components/CommunityForumModal';
 
 const RELATED_PLATFORMS_BLOCKED_CONTAINS = [
   '/recruitment-suite',
-  '/30-day-job-sprint',
-  '/30-day-remote-job-search-sprint',
+  '/sprint',
+  '/sprint',
   '/professional-profiles',
   '/whitepaper',
 ];
@@ -34,9 +34,9 @@ const Footer = () => {
       { name: "Job Matcher", href: "/job-matcher" },
       { name: "Upskilling", href: "/upskilling" },
       { name: "Resume/CV Assistance", href: "/resume-cv-assistance" },
-      { name: "30-Day Job Sprint", href: "/30-day-job-sprint" },
+      { name: "90-Day Job Sprint", href: "/sprint" },
       { name: "Resource Center", href: "/resource-center" },
-      { name: "Community Forum", href: "#community-forum" },
+      { name: "Community Forum", href: "https://chat.whatsapp.com/EGeranViu3KG5lF2jDDBqE", external: true },
     ],
     "For Employers": [
       { name: "Company Directory", href: "/companies" },
@@ -51,20 +51,16 @@ const Footer = () => {
       { name: "Privacy", href: "/privacy" },
       { name: "Cookies", href: "/cookies" },
       { name: "Data Rights", href: "/data-rights" },
-      { name: "Contact", href: "/contact" },
+      { name: "Help Center", href: "/help-center" },
     ],
   };
 
-  const shouldShowRelatedPlatforms = () => {
-    const lowerPath = pathname.toLowerCase();
-    if (RELATED_PLATFORMS_BLOCKED_CONTAINS.some((segment) => lowerPath.includes(segment))) return false;
-    if (RELATED_PLATFORMS_BLOCKED_PREFIXES.some((prefix) => lowerPath.startsWith(prefix))) return false;
-    return true;
-  };
+  // Related platforms section is hidden site-wide per product decision.
+  void pathname;
+  void RelatedPlatformsSection;
 
   return (
     <>
-      {shouldShowRelatedPlatforms() && <RelatedPlatformsSection />}
       <CommunityForumModal open={isCommunityForumOpen} onOpenChange={setIsCommunityForumOpen} />
       <footer className="bg-black text-white py-16">
         <div className="container mx-auto px-4">
@@ -130,17 +126,11 @@ const Footer = () => {
                 <ul className="space-y-3">
                   {links.map((link) => (
                     <li key={link.name}>
-                      {link.href === '#community-forum' ? (
-                        <button
-                          type="button"
-                          onClick={() => setIsCommunityForumOpen(true)}
-                          className="text-sm text-white/70 hover:text-white transition-colors text-left"
-                        >
-                          {link.name}
-                        </button>
-                      ) : link.href.startsWith('#') ? (
+                      {'external' in link && link.external ? (
                         <a
                           href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="text-sm text-white/70 hover:text-white transition-colors"
                         >
                           {link.name}

@@ -59,7 +59,7 @@ interface FaqItem {
   answer: string;
 }
 
-const PAGE_URL = "https://za.jobbyist.africa/30-day-job-sprint";
+const PAGE_URL = "https://za.jobbyist.co.za/30-day-job-sprint";
 const SERVICE_HANDBOOK_PATH = sprintServiceHandbookUrl;
 
 const BUSINESS_CONFIG = {
@@ -383,7 +383,7 @@ const ThirtyDayJobSprint = () => {
   }, []);
 
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Jobbyist South Africa", url: "https://za.jobbyist.africa" },
+    { name: "Jobbyist South Africa", url: "https://za.jobbyist.co.za" },
     { name: "30-Day Job Sprint", url: PAGE_URL },
   ]);
 
@@ -396,7 +396,7 @@ const ThirtyDayJobSprint = () => {
     provider: {
       "@type": "Organization",
       name: "Jobbyist",
-      url: "https://za.jobbyist.africa",
+      url: "https://za.jobbyist.co.za",
     },
     areaServed: {
       "@type": "Country",
@@ -742,7 +742,7 @@ const ThirtyDayJobSprint = () => {
 
         <section id="process" className="container mx-auto px-4 max-w-7xl py-14" aria-labelledby="process-title">
           <div className="mb-8">
-            <p className="text-xs font-black uppercase tracking-widest text-blue-600 mb-3">30-day operating rhythm</p>
+            <p className="text-xs font-black uppercase tracking-widest text-blue-600 mb-3">90-day operating rhythm</p>
             <h2 id="process-title" className="text-4xl md:text-5xl font-black leading-[0.95] tracking-tight text-slate-950 max-w-4xl">
               Simple enough to follow. Structured enough to measure.
             </h2>
@@ -900,22 +900,23 @@ const ThirtyDayJobSprint = () => {
 
       <div className="fixed inset-x-0 bottom-0 z-20 px-4 pb-4 pointer-events-none">
         <div className="container mx-auto max-w-7xl flex justify-center">
-          <button
-            type="button"
-            onClick={handleServiceHandbookDownload}
-            className="pointer-events-auto relative isolate w-full max-w-2xl rounded-3xl px-5 py-4 text-white font-black uppercase tracking-wide"
+          <a
+            href="https://sprinter.jobbyist.co.za"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="pointer-events-auto relative isolate w-full max-w-2xl rounded-3xl px-5 py-4 text-white font-black uppercase tracking-wide text-center"
             style={{
               background: "linear-gradient(135deg, #4764f1, #3651e7)",
               boxShadow: "0 24px 56px rgba(69, 98, 238, 0.34)",
             }}
-            aria-label="Read The Service Handbook"
+            aria-label="Start My Sprint"
           >
             <span className="absolute -inset-[3px] -z-10 rounded-[26px] blur-lg opacity-70 bg-gradient-to-r from-cyan-300 via-purple-400 to-lime-300" aria-hidden="true" />
-            <span className="inline-flex items-center gap-2">
+            <span className="inline-flex items-center gap-2 justify-center">
               <Sparkles className="h-4 w-4" />
-              Read The Service Handbook
+              Start My Sprint
             </span>
-          </button>
+          </a>
         </div>
       </div>
 

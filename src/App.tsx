@@ -48,6 +48,7 @@ import Ads from "./pages/Ads";
 import ProfessionalProfiles from "./pages/ProfessionalProfiles";
 import RecruitmentSuitePage from "./pages/RecruitmentSuite";
 import ThirtyDayJobSprint from "./pages/ThirtyDayJobSprint";
+import HelpCenter from "./pages/HelpCenter";
 import Podcast from "./pages/Podcast";
 import Whitepaper from "./pages/Whitepaper";
 import RemoteSprintModal from "./components/RemoteSprintModal";
@@ -132,7 +133,9 @@ const App = () => {
               <Route path="/professional-profiles" element={<ProfessionalProfiles />} />
               <Route path="/professional-profiles/page/:pageNum" element={<ProfessionalProfiles />} />
               <Route path="/recruitment-suite" element={<RecruitmentSuitePage />} />
+              <Route path="/sprint" element={<ThirtyDayJobSprint />} />
               <Route path="/30-day-job-sprint" element={<ThirtyDayJobSprint />} />
+              <Route path="/help-center" element={<HelpCenter />} />
               <Route path="/podcast" element={<Podcast />} />
               <Route path="/whitepaper" element={<Whitepaper />} />
               

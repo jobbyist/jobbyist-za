@@ -116,7 +116,7 @@ const LocationJobs = () => {
       <SEOHead
         title={`${locationData.name} Jobs | Find Employment in ${locationData.name} | Jobbyist ZA`}
         description={locationData.description}
-        canonicalUrl={`https://za.jobbyist.africa/jobs/${location}`}
+        canonicalUrl={`https://za.jobbyist.co.za/jobs/${location}`}
         keywords={[locationData.keywords]}
         ogType="website"
       />
