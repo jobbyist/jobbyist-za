@@ -134,7 +134,7 @@ const bridgePillars = [
   "AI-powered job matching to reduce search friction and improve relevance.",
   "Professional profile visibility with stronger candidate credibility signals.",
   "Jobbyist Pro for enhanced exposure, positioning support and career acceleration.",
-  "30-Day Remote Job Search Sprint execution support for focused campaigns.",
+  "90-Day Job Search Sprint execution support for focused campaigns.",
   "Career coaching and upskilling pathways aligned with role-readiness goals.",
   "Global talent hubbing support for cross-border and distributed work opportunities.",
   "Employer and recruiter access through Recruitment Suite workflows.",

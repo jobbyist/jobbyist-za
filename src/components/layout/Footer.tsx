@@ -6,8 +6,8 @@ import CommunityForumModal from '@/components/CommunityForumModal';
 
 const RELATED_PLATFORMS_BLOCKED_CONTAINS = [
   '/recruitment-suite',
-  '/30-day-job-sprint',
-  '/30-day-remote-job-search-sprint',
+  '/sprint',
+  '/sprint',
   '/professional-profiles',
   '/whitepaper',
 ];

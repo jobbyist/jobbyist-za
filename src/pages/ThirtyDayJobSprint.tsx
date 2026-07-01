@@ -900,22 +900,23 @@ const ThirtyDayJobSprint = () => {
 
       <div className="fixed inset-x-0 bottom-0 z-20 px-4 pb-4 pointer-events-none">
         <div className="container mx-auto max-w-7xl flex justify-center">
-          <button
-            type="button"
-            onClick={handleServiceHandbookDownload}
-            className="pointer-events-auto relative isolate w-full max-w-2xl rounded-3xl px-5 py-4 text-white font-black uppercase tracking-wide"
+          <a
+            href="https://sprinter.jobbyist.co.za"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="pointer-events-auto relative isolate w-full max-w-2xl rounded-3xl px-5 py-4 text-white font-black uppercase tracking-wide text-center"
             style={{
               background: "linear-gradient(135deg, #4764f1, #3651e7)",
               boxShadow: "0 24px 56px rgba(69, 98, 238, 0.34)",
             }}
-            aria-label="Read The Service Handbook"
+            aria-label="Start My Sprint"
           >
             <span className="absolute -inset-[3px] -z-10 rounded-[26px] blur-lg opacity-70 bg-gradient-to-r from-cyan-300 via-purple-400 to-lime-300" aria-hidden="true" />
-            <span className="inline-flex items-center gap-2">
+            <span className="inline-flex items-center gap-2 justify-center">
               <Sparkles className="h-4 w-4" />
-              Read The Service Handbook
+              Start My Sprint
             </span>
-          </button>
+          </a>
         </div>
       </div>
 
