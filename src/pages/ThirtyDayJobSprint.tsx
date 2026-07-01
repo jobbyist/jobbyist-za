@@ -742,7 +742,7 @@ const ThirtyDayJobSprint = () => {
 
         <section id="process" className="container mx-auto px-4 max-w-7xl py-14" aria-labelledby="process-title">
           <div className="mb-8">
-            <p className="text-xs font-black uppercase tracking-widest text-blue-600 mb-3">30-day operating rhythm</p>
+            <p className="text-xs font-black uppercase tracking-widest text-blue-600 mb-3">90-day operating rhythm</p>
             <h2 id="process-title" className="text-4xl md:text-5xl font-black leading-[0.95] tracking-tight text-slate-950 max-w-4xl">
               Simple enough to follow. Structured enough to measure.
             </h2>
