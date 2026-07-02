@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
+    "build:dev": "next build",
     "prebuild": "node scripts/generate-programmatic-seo.mjs",
     "build": "next build",
     "start": "next start",
