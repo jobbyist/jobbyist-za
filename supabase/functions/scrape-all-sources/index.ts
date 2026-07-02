@@ -15,6 +15,10 @@ const COOLDOWN_MS = 5 * 60 * 1000;
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
+  const unauthorized = await requireAdminOrService(req);
+  if (unauthorized) return unauthorized;
+
+
   const now = Date.now();
   if (now - lastRunAt < COOLDOWN_MS) {
     return new Response(
