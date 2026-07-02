@@ -3,6 +3,8 @@ import { MessageCircle, X, Send, User, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/hooks/useAuth";
+import { useSubscription } from "@/hooks/useSubscription";
+import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import { useLocation } from "react-router-dom";
 
@@ -15,8 +17,30 @@ interface Message {
 const PREWRITTEN_QUERIES = [
   "How do I update my CV?",
   "How soon will I get a job?",
-  "Can I get a refund if I don’t get a job?",
+  "Can I get a refund if I don't get a job?",
 ];
+
+const FREE_QUESTION_LIMIT = 1;
+const FREE_USED_KEY = "jobbyist:concierge:free-used";
+
+const readFreeUsed = (): number => {
+  try {
+    const v = localStorage.getItem(FREE_USED_KEY);
+    const n = v ? parseInt(v, 10) : 0;
+    return Number.isFinite(n) ? n : 0;
+  } catch {
+    return 0;
+  }
+};
+
+const bumpFreeUsed = () => {
+  try {
+    const n = readFreeUsed() + 1;
+    localStorage.setItem(FREE_USED_KEY, String(n));
+  } catch {
+    /* ignore */
+  }
+};
 
 const ConciergeChat = () => {
   const { pathname } = useLocation();
@@ -24,82 +48,82 @@ const ConciergeChat = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
-      text: "Hello, Concierge here - your personal AI assistant. Please feel free to let me know if you need help with anything, I'm always happy to help 🙂",
+      text: "Hello, Concierge here — your personal AI assistant. Please feel free to let me know if you need help with anything, I'm always happy to help 🙂",
       isBot: true,
     },
   ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const { user } = useAuth();
-  const hiddenPathPrefixes = ["/recruitment-suite", "/30-day-job-sprint", "/professional-profiles"];
-  const isHidden = hiddenPathPrefixes.some((prefix) => pathname.startsWith(prefix));
+  const { hasActiveSubscription } = useSubscription();
+  const isPro = hasActiveSubscription("jobseeker_pro");
 
+  const hiddenPathPrefixes = [
+    "/recruitment-suite",
+    "/30-day-job-sprint",
+    "/sprint",
+    "/professional-profiles",
+  ];
+  const isHidden = hiddenPathPrefixes.some((prefix) => pathname.startsWith(prefix));
   if (isHidden) return null;
 
-  const toggleChat = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleChat = () => setIsOpen(!isOpen);
 
   const addMessage = (text: string, isBot: boolean) => {
-    const newMessage: Message = {
-      id: Date.now(),
-      text,
-      isBot,
-    };
-    setMessages((prev) => [...prev, newMessage]);
-  };
-
-  const getConciergeResponse = (userMessage: string): string => {
-    const lowerMsg = userMessage.toLowerCase();
-
-    if (lowerMsg.includes("cv") || lowerMsg.includes("resume")) {
-      return "Great question! You can update your CV using our Resume/CV Assistance tool at /resume-cv-assistance. It helps optimize for ATS and highlights your strengths. Pro members get AI-powered suggestions too! Would you like tips on tailoring it for a specific role?";
-    }
-    if (lowerMsg.includes("how soon") || lowerMsg.includes("get a job") || lowerMsg.includes("timeline")) {
-      return "It depends on your industry, experience, and how actively you're applying. Many job seekers on Jobbyist land interviews within 2-4 weeks with consistent applications (10-15/week). Use our AI Job Matcher and set up alerts! Stay persistent and tailor applications.";
-    }
-    if (lowerMsg.includes("refund") || lowerMsg.includes("money back") || lowerMsg.includes("guarantee")) {
-      return "Yes! We offer a 30-Day Money Back Guarantee on Jobbyist Pro. If you don't land a job or aren't satisfied within 30 days, contact support for a full refund. No questions asked. Pro users also get priority support.";
-    }
-    if (lowerMsg.includes("pro") || lowerMsg.includes("upgrade")) {
-      return "Jobbyist Pro unlocks unlimited AI Concierge access, exclusive jobs, advanced matching, and more for just R99/month. You can upgrade anytime from the /pro page. It includes our 30-Day Money Back Guarantee too!";
-    }
-    if (lowerMsg.includes("hello") || lowerMsg.includes("hi") || lowerMsg.includes("hey")) {
-      return "Hi there! 😊 How can I assist you with your job search today? Feel free to ask about CVs, interviews, job applications, or anything career-related.";
-    }
-
-    return "Thanks for asking! As your Concierge, I can help with CV advice, interview prep, job search strategies, understanding Pro benefits, or navigating the platform. What specifically are you looking for help with? For personalized guidance, Pro members get deeper insights.";
+    setMessages((prev) => [...prev, { id: Date.now() + Math.random(), text, isBot }]);
   };
 
   const sendMessage = async (messageText?: string) => {
-    const textToSend = messageText || input.trim();
-    if (!textToSend) return;
+    const textToSend = (messageText || input).trim();
+    if (!textToSend || isTyping) return;
+
+    // Rate limit for free users (client-side gate; server also has its own limits)
+    if (!isPro) {
+      const used = readFreeUsed();
+      if (used >= FREE_QUESTION_LIMIT) {
+        addMessage(textToSend, false);
+        setInput("");
+        setTimeout(() => {
+          addMessage(
+            "You've reached the free question limit. Upgrade to Jobbyist Pro (R99/month) for unlimited Concierge access, unlimited applications, and AI matching. Visit /pro to upgrade.",
+            true,
+          );
+        }, 400);
+        return;
+      }
+    }
 
     addMessage(textToSend, false);
     setInput("");
-
-    if (!user) {
-      setTimeout(() => {
-        addMessage(
-          "Sorry, I'd love to help, but this service is reserved for verified Jobbyist community members only. Sign up for free to get limited access or Upgrade to Jobbyist Pro for just R99 per month to unlock full access to this feature 😉",
-          true
-        );
-        setIsTyping(false);
-      }, 800);
-      return;
-    }
-
     setIsTyping(true);
-    setTimeout(() => {
-      const response = getConciergeResponse(textToSend);
-      addMessage(response, true);
+
+    try {
+      const history = [...messages, { id: 0, text: textToSend, isBot: false }]
+        .filter((m) => m.id !== 1 || m.isBot === false) // skip initial greeting for context
+        .map((m) => ({ role: m.isBot ? "assistant" : "user", content: m.text }));
+
+      const { data, error } = await supabase.functions.invoke("concierge-chat", {
+        body: { messages: history },
+      });
+
+      if (error) throw error;
+      const reply =
+        data?.reply ||
+        data?.error ||
+        "Sorry, I couldn't reach the assistant right now. Please try again.";
+      addMessage(reply, true);
+      if (!isPro && !data?.error) bumpFreeUsed();
+    } catch (e) {
+      addMessage(
+        "Sorry, I couldn't reach the assistant right now. Please try again or contact support@jobbyist.co.za.",
+        true,
+      );
+    } finally {
       setIsTyping(false);
-    }, 1200);
+    }
   };
 
-  const handlePrewrittenClick = (query: string) => {
-    sendMessage(query);
-  };
+  const handlePrewrittenClick = (query: string) => sendMessage(query);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -110,14 +134,13 @@ const ConciergeChat = () => {
 
   return (
     <>
-      {/* Floating Concierge Pill */}
       <button
         onClick={toggleChat}
         className={cn(
           "fixed bottom-6 right-6 z-[60] flex items-center gap-2 h-12 px-5 rounded-full text-black font-medium text-sm shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 border-2 border-transparent bg-white",
           "chatbot-gradient-border",
           "shadow-[0_8px_24px_-6px_rgba(0,0,0,0.25)] hover:shadow-[0_12px_32px_-6px_rgba(0,0,0,0.35)]",
-          isOpen && "ring-2 ring-white/40"
+          isOpen && "ring-2 ring-white/40",
         )}
         aria-label="Open Concierge AI Chat"
       >
@@ -144,7 +167,8 @@ const ConciergeChat = () => {
               <div>
                 <div className="font-semibold text-sm">Concierge</div>
                 <div className="text-xs text-muted-foreground flex items-center gap-1">
-                  <span className="inline-block w-2 h-2 bg-green-500 rounded-full animate-pulse" /> AI Assistant • Gemini Powered
+                  <span className="inline-block w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                  AI Assistant
                 </div>
               </div>
             </div>
@@ -157,10 +181,7 @@ const ConciergeChat = () => {
             {messages.map((msg) => (
               <div
                 key={msg.id}
-                className={cn(
-                  "flex gap-2",
-                  msg.isBot ? "justify-start" : "justify-end"
-                )}
+                className={cn("flex gap-2", msg.isBot ? "justify-start" : "justify-end")}
               >
                 {msg.isBot && (
                   <div className="w-7 h-7 rounded-full gradient-brand flex-shrink-0 flex items-center justify-center mt-0.5">
@@ -169,10 +190,10 @@ const ConciergeChat = () => {
                 )}
                 <div
                   className={cn(
-                    "max-w-[80%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed",
-                    msg.isBot 
-                      ? "bg-muted text-foreground rounded-tl-none" 
-                      : "bg-brand-pink text-white rounded-tr-none"
+                    "max-w-[80%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap",
+                    msg.isBot
+                      ? "bg-muted text-foreground rounded-tl-none"
+                      : "bg-brand-pink text-white rounded-tr-none",
                   )}
                 >
                   {msg.text}
@@ -227,8 +248,8 @@ const ConciergeChat = () => {
                 className="flex-1 text-sm"
                 disabled={isTyping}
               />
-              <Button 
-                onClick={() => sendMessage()} 
+              <Button
+                onClick={() => sendMessage()}
                 disabled={!input.trim() || isTyping}
                 size="icon"
                 className="shrink-0"
@@ -237,7 +258,9 @@ const ConciergeChat = () => {
               </Button>
             </div>
             <p className="text-[10px] text-center text-muted-foreground mt-2">
-              {!user ? "Limited access • Upgrade to Pro for full AI features" : "Powered by Gemini • Private & secure"}
+              {isPro
+                ? "Unlimited access • Private & secure"
+                : `Free plan: ${FREE_QUESTION_LIMIT} question • Upgrade to Pro for unlimited`}
             </p>
           </div>
         </div>
