@@ -2,6 +2,7 @@
 // and ensures a daily minimum of 10 new jobs. Triggered by pg_cron at 07:00 UTC (09:00 SAST).
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { requireAdminOrService } from "../_shared/auth.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
