@@ -8,7 +8,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import digitalLabourMarketReportVideoUrl from "../../../reference/digital-job-market-report.mp4?url";
+import digitalLabourMarketReportVideoAsset from "@/assets/digital-job-market-report.mp4.asset.json";
+const digitalLabourMarketReportVideoUrl = digitalLabourMarketReportVideoAsset.url;
 
 const Hero = () => {
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
