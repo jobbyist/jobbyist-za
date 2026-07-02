@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import sprintServiceHandbookUrl from "../../reference/sprint-service-handbook.pdf?url";
+const sprintServiceHandbookUrl = "/media/sprint-service-handbook.pdf";
 import { SEOHead, generateBreadcrumbSchema } from "@/components/SEOHead";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
