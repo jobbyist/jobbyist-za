@@ -83,11 +83,17 @@ Deno.serve(async (req) => {
 
     let resumeDownloadUrl = application.resumeUrl;
     if (application.resumeUrl && !application.resumeUrl.startsWith('http')) {
-      // Generate signed URL for resume (valid for 7 days)
+      // Enforce that the storage path belongs to the authenticated user to prevent cross-user access
+      const expectedPrefix = `${userData.user.id}/`;
+      if (!application.resumeUrl.startsWith(expectedPrefix)) {
+        return new Response(
+          JSON.stringify({ success: false, error: 'Forbidden: resume path does not belong to caller' }),
+          { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+        );
+      }
       const { data, error } = await supabase.storage
         .from('resumes')
-        .createSignedUrl(application.resumeUrl, 604800); // 7 days
-      
+        .createSignedUrl(application.resumeUrl, 604800);
       if (!error && data) {
         resumeDownloadUrl = data.signedUrl;
       }
