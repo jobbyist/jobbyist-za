@@ -68,12 +68,12 @@ const App = () => {
 
   useEffect(() => {
     if (!isLoading) return;
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-      try { sessionStorage.setItem('jobbyist:preloader-shown', '1'); } catch {
-        // Ignore sessionStorage write failures in restricted environments.
-      }
-    }, 5000);
+    // Set flag immediately so any concurrent mount (StrictMode, remounts, etc.)
+    // doesn't trigger a second preloader within the same tab session.
+    try { sessionStorage.setItem('jobbyist:preloader-shown', '1'); } catch {
+      // Ignore sessionStorage write failures in restricted environments.
+    }
+    const timer = setTimeout(() => setIsLoading(false), 5000);
     return () => clearTimeout(timer);
   }, [isLoading]);
 

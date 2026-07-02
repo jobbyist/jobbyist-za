@@ -31,8 +31,8 @@ const Footer = () => {
   const footerLinks = {
     "For Job Seekers": [
       { name: "Browse Jobs", href: "/jobs" },
-      { name: "Job Matcher", href: "/job-matcher" },
-      { name: "Upskilling", href: "/upskilling" },
+      { name: "AI Job Matcher", href: "/job-matcher" },
+      { name: "Upskilling Program", href: "/upskilling" },
       { name: "Resume/CV Assistance", href: "/resume-cv-assistance" },
       { name: "90-Day Job Sprint", href: "/sprint" },
       { name: "Resource Center", href: "/resource-center" },
