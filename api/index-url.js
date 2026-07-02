@@ -11,6 +11,16 @@ export default async function handler(req, res) {
     });
   }
 
+  // Require pre-shared secret header for authentication
+  const providedKey = req.headers["x-internal-key"];
+  const expectedKey = process.env.INDEXING_INTERNAL_KEY;
+  if (!expectedKey || !providedKey || providedKey !== expectedKey) {
+    return res.status(401).json({
+      success: false,
+      error: "Unauthorized",
+    });
+  }
+
   try {
     const { url, type = "URL_UPDATED" } = req.body || {};
 
@@ -22,8 +32,13 @@ export default async function handler(req, res) {
     }
 
     const allowedBaseUrl = process.env.JOBBYIST_BASE_URL;
-
-    if (allowedBaseUrl && !url.startsWith(allowedBaseUrl)) {
+    if (!allowedBaseUrl) {
+      return res.status(500).json({
+        success: false,
+        error: "Server misconfigured",
+      });
+    }
+    if (!url.startsWith(allowedBaseUrl)) {
       return res.status(400).json({
         success: false,
         error: "URL does not match the allowed Jobbyist base URL",
@@ -39,10 +54,10 @@ export default async function handler(req, res) {
     const missingEnvVars = requiredEnvVars.filter((key) => !process.env[key]);
 
     if (missingEnvVars.length > 0) {
+      console.error("Missing required env vars for indexing:", missingEnvVars);
       return res.status(500).json({
         success: false,
-        error: "Missing required environment variables",
-        missing: missingEnvVars,
+        error: "Server misconfigured",
       });
     }
 
