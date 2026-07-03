@@ -51,6 +51,7 @@ import ThirtyDayJobSprint from "./pages/ThirtyDayJobSprint";
 import HelpCenter from "./pages/HelpCenter";
 import Podcast from "./pages/Podcast";
 import Whitepaper from "./pages/Whitepaper";
+import ConciergePage from "./pages/Concierge";
 import RemoteSprintModal from "./components/RemoteSprintModal";
 import ConciergeChat from "./components/ConciergeChat";
 import NotFound from "./pages/NotFound";
@@ -138,6 +139,7 @@ const App = () => {
               <Route path="/help-center" element={<HelpCenter />} />
               <Route path="/podcast" element={<Podcast />} />
               <Route path="/whitepaper" element={<Whitepaper />} />
+              <Route path="/concierge" element={<ConciergePage />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminLayout />}>
