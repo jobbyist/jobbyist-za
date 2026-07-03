@@ -63,6 +63,7 @@ const ConciergeChat = () => {
     "/30-day-job-sprint",
     "/sprint",
     "/professional-profiles",
+    "/concierge",
   ];
   const isHidden = hiddenPathPrefixes.some((prefix) => pathname.startsWith(prefix));
   if (isHidden) return null;
