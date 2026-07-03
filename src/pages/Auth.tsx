@@ -33,8 +33,20 @@ const Auth = () => {
   const [password, setPassword] = useState('');
   const [magicEmail, setMagicEmail] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [magicStatus, setMagicStatus] = useState<
+    | { kind: 'idle' }
+    | { kind: 'sent'; email: string; at: number }
+    | { kind: 'error'; message: string }
+  >({ kind: 'idle' });
+  const [resendCooldown, setResendCooldown] = useState(0);
 
   useEffect(() => { if (user) navigate('/'); }, [user, navigate]);
+
+  useEffect(() => {
+    if (resendCooldown <= 0) return;
+    const t = setInterval(() => setResendCooldown((s) => Math.max(0, s - 1)), 1000);
+    return () => clearInterval(t);
+  }, [resendCooldown]);
 
   const handleGoogle = async () => {
     setIsSubmitting(true);
@@ -81,18 +93,36 @@ const Auth = () => {
     }
   };
 
-  const handleMagicLink = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!magicEmail.trim()) { toast.error('Enter your email'); return; }
+  const sendMagic = async (email: string) => {
     setIsSubmitting(true);
+    setMagicStatus({ kind: 'idle' });
     const { error } = await supabase.auth.signInWithOtp({
-      email: magicEmail.trim(),
+      email,
       options: { emailRedirectTo: `${window.location.origin}/` },
     });
     setIsSubmitting(false);
-    if (error) toast.error(error.message);
-    else toast.success('Magic link sent — check your email');
+    if (error) {
+      setMagicStatus({ kind: 'error', message: error.message });
+      toast.error(error.message);
+    } else {
+      setMagicStatus({ kind: 'sent', email, at: Date.now() });
+      setResendCooldown(30);
+      toast.success('Magic link sent — check your email');
+    }
   };
+
+  const handleMagicLink = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const email = magicEmail.trim();
+    if (!email) { toast.error('Enter your email'); return; }
+    await sendMagic(email);
+  };
+
+  const handleResendMagic = async () => {
+    if (magicStatus.kind !== 'sent' || resendCooldown > 0) return;
+    await sendMagic(magicStatus.email);
+  };
+
 
   if (loading) {
     return (
@@ -170,6 +200,39 @@ const Auth = () => {
                     <Button type="submit" variant="secondary" disabled={isSubmitting}>Send link</Button>
                   </div>
                   <p className="text-xs text-muted-foreground">We'll email you a one-tap sign-in link.</p>
+
+                  {magicStatus.kind === 'sent' && (
+                    <div className="rounded-md border border-emerald-500/30 bg-emerald-500/10 p-3 text-xs space-y-2">
+                      <p className="text-emerald-700 dark:text-emerald-300 font-medium">
+                        ✓ Magic link sent to <span className="font-semibold">{magicStatus.email}</span>.
+                      </p>
+                      <p className="text-muted-foreground">
+                        Check your inbox and spam folder. Links expire after 60 minutes.
+                        If it doesn't arrive within 2 minutes, resend below or use password sign-in.
+                      </p>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        className="w-full"
+                        disabled={resendCooldown > 0 || isSubmitting}
+                        onClick={handleResendMagic}
+                      >
+                        {resendCooldown > 0 ? `Resend magic link (${resendCooldown}s)` : 'Resend magic link'}
+                      </Button>
+                    </div>
+                  )}
+
+                  {magicStatus.kind === 'error' && (
+                    <div className="rounded-md border border-destructive/40 bg-destructive/10 p-3 text-xs space-y-1">
+                      <p className="text-destructive font-medium">Couldn't send the magic link.</p>
+                      <p className="text-muted-foreground">{magicStatus.message}</p>
+                      <p className="text-muted-foreground">
+                        Email delivery may be temporarily unavailable. Try password sign-in, or contact
+                        support@jobbyist.co.za if this persists.
+                      </p>
+                    </div>
+                  )}
                 </form>
               </TabsContent>
 
