@@ -51,7 +51,7 @@ const Auth = () => {
   const handleGoogle = async () => {
     setIsSubmitting(true);
     try {
-      const result = await lovable.auth.signInWithOAuth('google', { redirect_uri: window.location.origin });
+      const result = await lovable.auth.signInWithOAuth('google', { redirect_uri: `${window.location.origin}/auth/callback` });
       if (result.error) toast.error(result.error.message || 'Google sign-in failed');
     } finally { setIsSubmitting(false); }
   };

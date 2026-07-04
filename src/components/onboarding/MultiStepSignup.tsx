@@ -128,7 +128,7 @@ const MultiStepSignup = () => {
   const handleGoogleSignUp = async () => {
     setSubmitting(true);
     try {
-      const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
+      const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: `${window.location.origin}/auth/callback` });
       if (result.error) toast.error(result.error.message || "Google sign-in failed");
     } finally {
       setSubmitting(false);
@@ -183,7 +183,18 @@ const MultiStepSignup = () => {
           await supabase.from("subscriptions").insert({
             user_id: u.id, subscription_type: "jobseeker_pro",
             plan_tier: "premium", status: "pending",
-          });
+          } as never);
+          // Kick off Payfast checkout immediately so Pro takes effect on success.
+          try {
+            const { data: checkout } = await supabase.functions.invoke("create-payfast-checkout", { body: { plan: "monthly" } });
+            if ((checkout as any)?.url) {
+              window.location.href = (checkout as any).url;
+              return;
+            }
+          } catch (err) {
+            console.warn("payfast checkout failed", err);
+            toast.message("We'll email you a payment link shortly.");
+          }
         }
       } else {
         // Stash preferences locally so we can persist after verification.
