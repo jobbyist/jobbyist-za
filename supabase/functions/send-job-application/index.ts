@@ -175,42 +175,26 @@ Deno.serve(async (req) => {
 </html>
     `;
 
-    // Send email via Resend
-    const emailResponse = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${resendApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: 'Jobbyist Applications <noreply@jobbyist.africa>',
-        to: ['zajobs@jobbyist.africa'],
-        cc: ['support@jobbyist.africa'],
-        reply_to: application.applicantEmail,
-        subject: `New Application: ${application.jobTitle} - ${application.applicantName}`,
-        html: emailHtml,
-      }),
+    // Send via unified Resend module
+    const emailResult = await sendEmail({
+      to: 'zajobs@jobbyist.co.za',
+      cc: 'support@jobbyist.co.za',
+      replyTo: application.applicantEmail,
+      subject: `New Application: ${application.jobTitle} - ${application.applicantName}`,
+      html: emailHtml,
     });
 
-    const emailData = await emailResponse.json();
-
-    if (!emailResponse.ok) {
-      console.error('Resend API error:', emailData);
-      throw new Error(`Failed to send email: ${JSON.stringify(emailData)}`);
+    if (!emailResult.success) {
+      throw new Error(`Failed to send email: ${emailResult.error}`);
     }
 
-    console.log('Application email sent successfully:', emailData);
-
     return new Response(
-      JSON.stringify({ 
-        success: true, 
+      JSON.stringify({
+        success: true,
         message: 'Application email sent successfully',
-        emailId: emailData.id 
+        emailId: emailResult.id,
       }),
-      { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200 
-      }
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 },
     );
 
   } catch (error) {
