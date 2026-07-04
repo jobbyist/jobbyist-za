@@ -64,9 +64,7 @@ Deno.serve(async (req) => {
     const verifiedEmail = userData.user.email;
 
     const raw: JobApplication = await req.json();
-    const escapeHtml = (v: string = '') =>
-      String(v).replace(/&(?![a-zA-Z0-9#]{1,20};)|[<>"']/g, (c) =>
-        c === '&' ? '&amp;' : c === '<' ? '&lt;' : c === '>' ? '&gt;' : c === '"' ? '&quot;' : '&#039;');
+    const escapeHtml = esc;
     const application = {
       jobId: escapeHtml(raw.jobId),
       jobTitle: escapeHtml(raw.jobTitle),
