@@ -22,7 +22,7 @@ const COMPARISON: PlanRow[] = [
   { feature: "Browse all South African jobs", free: true, pro: true },
   { feature: "Save jobs to your dashboard", free: true, pro: true },
   { feature: "Personal profile & CV builder", free: true, pro: true },
-  { feature: `Monthly job applications`, free: `${FREE_MONTHLY_LIMIT} / month`, pro: "Unlimited" },
+  { feature: "Access to premium job listings", free: false, pro: true },
   { feature: "AI-powered job matching", free: false, pro: true },
   { feature: "Priority profile visibility to employers", free: false, pro: true },
   { feature: "Early access to new listings", free: false, pro: true },
