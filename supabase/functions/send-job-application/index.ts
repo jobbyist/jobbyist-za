@@ -1,6 +1,7 @@
-// Edge function to send job application emails via Resend
-// Sends to zajobs@jobbyist.africa with CC to support@jobbyist.africa
+// Edge function to send job application emails via the unified Resend module.
+// Sends to zajobs@jobbyist.co.za with CC to support@jobbyist.co.za.
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { sendEmail, escapeHtml as esc } from '../_shared/email.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
