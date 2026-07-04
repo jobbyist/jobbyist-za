@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
-import { Facebook, Linkedin, Youtube, Music2, Mail, Phone, MapPin, Globe, BookOpen, MessageCircle } from 'lucide-react';
+import { Facebook, Linkedin, Youtube, Mail, Phone, MapPin, Globe } from 'lucide-react';
 import CommunityForumModal from '@/components/CommunityForumModal';
 
 // Brand X (Twitter) icon
