@@ -10,6 +10,7 @@ import PWAInstallPrompt from "@/components/PWAInstallPrompt";
 import ScrollToTop from "@/components/ScrollToTop";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
+import AuthCallback from "./pages/AuthCallback";
 import Profile from "./pages/Profile";
 import Jobs from "./pages/Jobs";
 import CountryJobs from "./pages/CountryJobs";
@@ -96,6 +97,8 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/auth/callback" element={<AuthCallback />} />
+              <Route path="/auth/callback/google" element={<AuthCallback />} />
               <Route path="/ads" element={<Ads />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/pro" element={<Pro />} />

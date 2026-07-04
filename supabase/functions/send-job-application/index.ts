@@ -1,6 +1,7 @@
-// Edge function to send job application emails via Resend
-// Sends to zajobs@jobbyist.africa with CC to support@jobbyist.africa
+// Edge function to send job application emails via the unified Resend module.
+// Sends to zajobs@jobbyist.co.za with CC to support@jobbyist.co.za.
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { sendEmail, escapeHtml as esc } from '../_shared/email.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -63,9 +64,7 @@ Deno.serve(async (req) => {
     const verifiedEmail = userData.user.email;
 
     const raw: JobApplication = await req.json();
-    const escapeHtml = (v: string = '') =>
-      String(v).replace(/&(?![a-zA-Z0-9#]{1,20};)|[<>"']/g, (c) =>
-        c === '&' ? '&amp;' : c === '<' ? '&lt;' : c === '>' ? '&gt;' : c === '"' ? '&quot;' : '&#039;');
+    const escapeHtml = esc;
     const application = {
       jobId: escapeHtml(raw.jobId),
       jobTitle: escapeHtml(raw.jobTitle),
@@ -176,42 +175,26 @@ Deno.serve(async (req) => {
 </html>
     `;
 
-    // Send email via Resend
-    const emailResponse = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${resendApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: 'Jobbyist Applications <noreply@jobbyist.africa>',
-        to: ['zajobs@jobbyist.africa'],
-        cc: ['support@jobbyist.africa'],
-        reply_to: application.applicantEmail,
-        subject: `New Application: ${application.jobTitle} - ${application.applicantName}`,
-        html: emailHtml,
-      }),
+    // Send via unified Resend module
+    const emailResult = await sendEmail({
+      to: 'zajobs@jobbyist.co.za',
+      cc: 'support@jobbyist.co.za',
+      replyTo: application.applicantEmail,
+      subject: `New Application: ${application.jobTitle} - ${application.applicantName}`,
+      html: emailHtml,
     });
 
-    const emailData = await emailResponse.json();
-
-    if (!emailResponse.ok) {
-      console.error('Resend API error:', emailData);
-      throw new Error(`Failed to send email: ${JSON.stringify(emailData)}`);
+    if (!emailResult.success) {
+      throw new Error(`Failed to send email: ${emailResult.error}`);
     }
 
-    console.log('Application email sent successfully:', emailData);
-
     return new Response(
-      JSON.stringify({ 
-        success: true, 
+      JSON.stringify({
+        success: true,
         message: 'Application email sent successfully',
-        emailId: emailData.id 
+        emailId: emailResult.id,
       }),
-      { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200 
-      }
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 },
     );
 
   } catch (error) {
