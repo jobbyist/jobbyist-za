@@ -31,7 +31,7 @@ const WHITEPAPER_PDF_PATH = "/whitepaperassets/whitepaper2026-27.pdf";
 const WHITEPAPER_VIDEO_PATH = "/whitepaperassets/whitepaper-explainer-video.mp4";
 const WHITEPAPER_OG_IMAGE_PATH = "/whitepaperassets/whitepaper-infographic.png";
 const WHITEPAPER_ACCESS_REQUEST_ENDPOINT =
-  import.meta.env.VITE_WHITEPAPER_ACCESS_REQUEST_ENDPOINT ?? "";
+  process.env.NEXT_PUBLIC_WHITEPAPER_ACCESS_REQUEST_ENDPOINT ?? "";
 
 type StakeholderType =
   | "Job seeker"
