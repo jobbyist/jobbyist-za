@@ -1,0 +1,35 @@
+name: Daily Job Scraper
+
+on:
+  schedule:
+    # Run daily at 6 AM SAST (4 AM UTC)
+    - cron: '0 4 * * *'
+  workflow_dispatch:  # Allow manual trigger from GitHub UI
+
+jobs:
+  scrape-jobs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Run daily job scraper
+        run: |
+          response=$(curl -s -w "
+            '${{ secrets.SUPABASE_URL }}/functions/v1/daily-job-scraper' \
+            -H 'Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}' \
+            -H 'Content-Type: application/json' \
+            -d '{"targetCount": 20}')
+          
+          http_code=$(echo "$response" | tail -n1)
+          body=$(echo "$response" | sed '$d')
+          
+          echo "Response: $body"
+          echo "HTTP Status: $http_code"
+          
+          if [ "$http_code" != "200" ]; then
+            echo "Error: Daily job scraper failed with status $http_code"
+            exit 1
+          fi
+          
+          echo "Daily job scraper completed successfully"
+
